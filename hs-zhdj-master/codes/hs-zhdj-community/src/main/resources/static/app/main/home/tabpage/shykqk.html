@@ -1,0 +1,74 @@
+<!--<div class="header">-->
+    <!--<div panel-title data-title="'三会一课情况信息'"></div>-->
+    <!--<ul class="header-dropdown m-r&#45;&#45;5">-->
+        <!--<li class="dropdown demo-icon-container more">-->
+            <!--<a bs-ui-sref="home.shykTotal" class="dropdown-toggle demo-google-material-icon">-->
+                <!--<span class="icon-name">更多</span>-->
+                <!--<i class="material-icons" style="color: red">keyboard_arrow_right</i>-->
+            <!--</a>-->
+        <!--</li>-->
+    <!--</ul>-->
+<!--</div>-->
+<div class="dj-formtable">
+    <div class="table-responsive list-table-panel">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th style="width: 200px;">组织名称</th>
+                <th>季度</th>
+                <th>类别</th>
+                <th>指标</th>
+                <th>第1月</th>
+                <th>第2月</th>
+                <th>第3月</th>
+                <th>季度总数</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in shykTotalList">
+                <td rowspan="4" ng-if="$index==0 || ($index>=4 && $index%4==0)"
+                    style="background-color: #fff;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                    <a href="javascript:void(0);"
+                       style="width: 200px;display: inline-block;color: #333;text-decoration:none;"
+                       title="{{it.DZZMC}}">
+                        {{it.DZZMC}}
+                    </a>
+                </td>
+                <td rowspan="4" ng-if="$index==0 || ($index>=4 && $index%4==0)"
+                    style="background-color: #fff;">
+                    {{it.YY}}年第{{it.QUARTER}}季度
+                </td>
+                <td>{{it.SHYKTYPENAME}}</td>
+                <td>{{it.PLANTYPENAME}}</td>
+                <td class="text-center" ng-class="it.firstWarn=='1'?'warnbox':''">
+                    <!--<div class="box-con"></div>
+                    <div class="box-con2"></div>-->
+                    <a ng-click="showMeeting(it,0,false)">{{it.MONTH_FIRST}}</a>
+                    <div class="red_line"></div>
+                </td>
+                <td class="text-center" ng-class="it.secondWarn=='1'?'warnbox':''">
+                    <!--<div class="box-con"></div>
+                    <div class="box-con2"></div>-->
+                    <a ng-click="showMeeting(it,1,false)">{{it.MONTH_SECOND}}</a>
+                    <div class="red_line"></div>
+                </td>
+                <td class="text-center" ng-class="it.thirdWarn=='1'?'warnbox':''">
+                    <!--<div class="box-con"></div>
+                    <div class="box-con2"></div>-->
+                    <a ng-click="showMeeting(it,2,false)">{{it.MONTH_THIRD}}</a>
+                    <div class="red_line"></div>
+                </td>
+                <td class="text-center" ng-class="it.totalWarn=='1'?'warnbox':''">
+                    <!--<div class="box-con"></div>
+                    <div class="box-con2"></div>-->
+                    <a ng-click="showMeeting(it,0,true)">{{it.MONTH_FIRST+it.MONTH_SECOND+it.MONTH_THIRD}}</a>
+                    <div class="red_line"></div>
+                </td>
+            </tr>
+            <tr ng-if="dataList.length<=0">
+                <td colspan="10" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

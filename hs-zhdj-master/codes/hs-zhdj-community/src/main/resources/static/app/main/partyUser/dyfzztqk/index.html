@@ -1,0 +1,134 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="dj-list-content">
+            <div class="card">
+                <div class="body" >
+                    <div class="header">
+                            <div panel-title data-title="nd+'年发展党员计划'"></div>
+                        <ul class="header-dropdown m-r--5">
+                            <li class="dropdown demo-icon-container more">
+                                <a bs-ui-sref="home.pe_UserTotal" class="dropdown-toggle demo-google-material-icon">
+                                    <span class="icon-name">更多</span>
+                                    <i class="material-icons" style="color: red">keyboard_arrow_right</i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <br/>
+                    <div class="body">
+                        <div class="table-responsive list-table-panel table-dyfzztqk">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                <thead>
+                                <tr>
+                                    <th style="background-color: #FF4545">{{nd}}年计划发展党员数量</th>
+                                    <th valign="middle" style="background-color: #FF9616">女</th>
+                                    <th style="background-color: #FF9616">少数名族</th>
+                                    <th style="background-color: #FF9616">35及以下</th>
+                                    <th style="background-color: #FF9616">大专及以上学历</th>
+                                    <th style="background-color: #FF9616">工人</th>
+                                    <th style="background-color: #FFBA75">生产、工作第一线</th>
+                                    <th style="background-color: #FFBA75">企业生产第一线</th>
+                                    <th style="background-color: #FFBA75">运输第一线</th>
+                                    <th style="background-color: #FFBA75">班组长</th>
+                                    <th style="background-color: #FFC107">高铁领域</th>
+                                    <th style="background-color: #FFC107">高铁乘务领域</th>
+                                    <th style="background-color: #FFE69F">劳务派遣工</th>
+                                    <th style="background-color: #FFE69F">先进模范人物</th>
+                                    <th style="background-color: #FFE69F">高知识群体</th>
+                                    <th style="background-color: #FFE69F">共青团员</th>
+                                    <th style="background-color: #FFE2C5">目前无党员班组数</th>
+                                    <th style="background-color: #FFE2C5">{{nd}}年计划发展数</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dyfzqk_dataList" style="height: 50px;">
+                                    <td align="center" style="color: red; font-weight: bold">
+                                        {{it.jhfzdysl}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.nv}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.ssmz}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.swjyx}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.dzjysxl}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.gr}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.scgzdyx}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.qyscdyx}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.ysdyx}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.bzz}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.gtly}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.gtcwly}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.lwpqg}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.xjmfrw}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.gzsqt}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.gqty}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.mqwdybzs}}
+                                    </td>
+                                    <td align="center">
+                                        {{it.jhfzs}}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="header">
+                            <div panel-title data-title="'近三年发展党员情况图'"></div>
+                    </div>
+                    <br>
+                    <div style=" width: calc(100vw - 410px);text-align: center;margin: 10px 0px;"></div>
+
+                    <div e-chart ec-data="pieOption"
+                         style='height: 450px;  max-width: 100%;   width: calc(100vw - 320px);'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table-dyfzztqk > .table > thead > tr > th {
+        color: #0b0b0b;
+        vertical-align: middle;
+    }
+
+    .table-dyfzztqk > .table tbody tr td, .table tbody tr th {
+        border: 1px solid #EDEDED;
+        color: #EA2568;
+        font-size: 16px;
+        background-color: #ffffff;
+    }
+
+</style>

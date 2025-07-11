@@ -1,0 +1,206 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div panel-title data-title="'党员基本信息'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>姓名<span style="color: red">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.xm.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="xm" ng-model="uservm.xm"
+                                   class="form-control" ng-required="true"/>
+                        </td>
+                        <th>党员编码<span style="color: red">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.rybm.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="rybm" ng-model="dyvm.rybm"
+                                   class="form-control" ng-required="true" disabled/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所在党支部<span style="color: red">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.szdzbmc.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 title="选择党组织" ng-click="selectParty()">
+                                <input name="szdzbmc" type="text" ng-model="szdzbmc"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.szdzbmc.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>民族<span style="color: red">*</span></th>
+                        <td>
+                            <select class="form-control show-tick" ng-model="uservm.mz"
+                                    ng-options="type.BM as type.HZMC for type in mzList"
+                                    class="form-control"
+                                    name="mz">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>性别<span style="color: red">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.xb.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick" ng-model="uservm.xb"
+                                    ng-options="type.BM as type.HZMC for type in xbList"
+                                    class="form-control"
+                                    name="xb" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <span ng-show="this.editForm.xb.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>出生日期<span style="color: red">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.csrq.$invalid &&  this.editForm.$submitted}">
+                            <input name="csrq" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="uservm.csrq"
+                                   placeholder="" bs-datepicker ng-required="true"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>身份证号<span style="color: red">*</span></th>
+                        <td>
+                            <input type="text" name="sfzh" ng-model="uservm.sfzh"
+                                   class="form-control"/>
+                        </td>
+                        <th>籍贯<span style="color: red">*</span></th>
+                        <td>
+                            <input type="text" name="jg" ng-model="uservm.jg"
+                                   class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>政治面貌<span style="color: red">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.ryzt.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick" ng-model="dyvm.ryzt"
+                                    ng-options="type.bm as type.hzmc for type in ryztList"
+                                    class="form-control"
+                                    name="ryzt" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <span ng-show="this.editForm.ryzt.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>入党日期<span style="color: red">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.jrzgzzrq.$invalid &&  this.editForm.$submitted}">
+                            <input name="jrzgzzrq" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="djxxModel.jrzgzzrq"
+                                   placeholder="" bs-datepicker ng-required="true"/>
+                        </td>
+                    </tr>
+                        <th>是否学生身份<span style="color: red">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.isstudent.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="fbModel.isstudent"
+                                    ng-options="type.dickey as type.dicvalue for type in boolList"
+                                    class="form-control"
+                                    name="isstudent" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <span ng-show="this.editForm.isstudent.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>学号/工号（登录帐号）<span style="color: red">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.mobile.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="mobile" ng-model="mobile" maxlength="200"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.mobile.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>年级</th>
+                        <td>
+                            <input type="text" name="gradeName" ng-model="fbModel.gradename"
+                                   class="form-control"/>
+                        </td>
+                        <th>班级</th>
+                        <td>
+                            <input type="text" name="className" ng-model="fbModel.classname"
+                                   class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>学历<span style="color: red">*</span></th>
+                        <td>
+                            <select class="form-control show-tick" ng-model="uservm.qrzxl"
+                                    ng-options="type.BM as type.HZMC for type in xlList"
+                                    class="form-control"
+                                    name="qrzxl">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                        </td>
+                        <th>技术职务</th>
+                        <td>
+                            <input type="text" name="technologyposition" ng-model="fbModel.technologyposition"
+                                   class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>最高学历入学日期</th>
+                        <td>
+                            <input name="enrollmentDate" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date" ng-model="fbModel.enrollmentdate"
+                                   class="form-control" bs-datepicker/>
+                        </td>
+                        <th>最高学历毕业日期</th>
+                        <td>
+                            <input name="graduateDate" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date" ng-model="fbModel.graduatedate"
+                                   class="form-control" bs-datepicker/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>工作时间</th>
+                        <td>
+                            <input name="workDate" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date" ng-model="fbModel.workdate"
+                                   class="form-control" bs-datepicker/>
+                        </td>
+                        <th>联系电话<span style="color: red">*</span></th>
+                        <td>
+                            <input type="text" name="contactMobile" ng-model="fbModel.mobile"
+                                   class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            党费起缴年月<span style="color: red">*</span>
+                        </th>
+                        <td>
+                            <input name="partyDuesStartMonth" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-min-view="1" data-start-view="1"
+                                   data-date-format="yyyyMM" data-date-type="string" ng-model="fbModel.partyduesstartmonth"
+                                   class="form-control" bs-datepicker ng-required="true"/>
+                        </td>
+                        <th></th><td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit" class="btn btn-primary"
+                        ng-click="submitDyUser(this.editForm.$valid)"
+                        ng-if="isDetail">保存
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

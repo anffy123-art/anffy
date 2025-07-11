@@ -1,0 +1,110 @@
+<div class="card">
+    <titlemenu></titlemenu>
+    <div class="body">
+        <div class="row clearfix">
+            <div class="col-md-3 col-lg-3 col-xs-3 col-sm-3">
+                <div activate-select class="card pt-header">
+                    <div class="header " style="cursor: pointer;min-height: 35px;">
+                        <div style="display: flex;">
+                            <label style="padding-top: 5px;">分组：</label>
+                            <div class="form-line" style="width: 150px;">
+                                <select class="form-control show-tick" ng-model="selectparams.jgfzid"
+                                        ng-options="type.jgfzid as type.fzmc for type in treeData"
+                                        name="jgfzid">
+                                    <option value="" selected>--全部分组--</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body treebody">
+
+                        <div class="menu" ng-style="{'height':height!=null?height+'vh':'82vh'}">
+                            <script type="text/ng-template" id="nodes.html">
+                                <li class="row">
+                                    <div ng-click="nodeClick(party)"
+                                         ng-class="selectparams.fjgfzid ==party.jgfzid?'party_active':'' ">
+                                        <i ng-if="party.childCount>0 " class="material-icons">{{party.expand ?
+                                            'expand_more' :
+                                            'chevron_right'}}</i>
+                                        <span class="icon-name" ng-class="party.childCount>0?'':'icon-name-spac'">{{party.fzmc}}</span>
+                                    </div>
+                                    <div ng-hide="!party.expand">
+                                        <div class="treeitem"
+                                             ng-repeat="party in party.childs" ng-include="'nodes.html'"></div>
+                                    </div>
+                                </li>
+                            </script>
+                            <ul class="pt-body" ng-repeat="party in pagetreeData"
+                                ng-include="'nodes.html'">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div  class="card" style=" padding: 5px 10px;">
+                    <div>
+                        <button class="btn btn-default1" role-permission-code="partyOrg.btn.btnAdd"
+                                ng-if="selectparams.fjgfzid==''||selectparams.fjgfzid==null"
+                                ng-click="AddModal()">添加分组
+                        </button>
+                        <button class="btn btn-default1" role-permission-code="partyOrg.btn.btnAdd"
+                                ng-if="selectparams.fjgfzid!=''&&selectparams.fjgfzid!=null"
+                                ng-click="AddModal()">添加子分组
+                        </button>
+                        <button class="btn btn-default1" role-permission-code=""
+                                ng-if="selectparams.fjgfzid!=''&&selectparams.fjgfzid!=null"
+                                ng-click="deleteNode()">删除分组
+                        </button>
+                        <button class="btn btn-default1" role-permission-code="partyOrg.btn.btnEdit"
+                                ng-if="selectNode!=null"
+                                ng-click="EditModal()">修改名称
+                        </button>
+                        <button class="btn btn-default1" role-permission-code="partyOrg.btn.btnSave"
+                                ng-click="Save()">保存关联
+                        </button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="header">
+                        <h2 class="demo-icon-container">
+                            <div class="demo-google-material-icon">
+                                <i class="material-icons col-red">import_contacts</i>
+                                <span class="icon-name"
+                                      style="font-size: 14px;">关联组织</span>
+                            </div>
+                        </h2>
+                    </div>
+                    <div class="body" style="padding:0px 10px">
+                        <div activate-select>
+                            <div class="body treebody">
+                                <div class="menu" ng-style="{'height':height!=null?height+'vh':'70vh'}">
+                                    <script type="text/ng-template" id="nodes2.html">
+                                        <li class="row">
+                                            <span>
+                                                <a href="" class="glyphicon {{party.CHILDSHOW>0?'glyphicon-chevron-down':'glyphicon-chevron-right'}}"
+                                                   ng-click="loadChildParty(party)"></a>
+                                                <input type="checkbox" id="{{party.DZZDM}}"
+                                                       class="filled-in chk-col-cyan"
+                                                       ng-model="party.isChecked" ng-click="chkchildren(party)"/>
+                                                <label for="{{party.DZZDM}}">{{party.DZZMC}}</label>
+                                            </span>
+                                            <div ng-hide="party.CHILDSHOW==0">
+                                                <div class="treeitem"
+                                                     ng-repeat="party in party.CHILDPARTYS"
+                                                     ng-include="'nodes2.html'"></div>
+                                            </div>
+                                        </li>
+                                    </script>
+                                    <ul class="pt-body" ng-repeat="party in treeList"
+                                        ng-include="'nodes2.html'">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

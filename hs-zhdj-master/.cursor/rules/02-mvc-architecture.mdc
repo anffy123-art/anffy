@@ -1,0 +1,43 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# MVC架构
+
+智慧党建项目采用经典的MVC（Model-View-Controller）架构模式，结合Spring Boot框架实现。
+
+## 模型层（Model）
+模型层主要由以下部分组成：
+- [model目录](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/model) - 包含所有数据模型类
+- [mapper目录](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/mapper) - 包含MyBatis数据访问接口
+- [service目录](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/service) - 包含业务逻辑服务类
+
+主要数据模型包括：
+- `CfUsers` - 用户信息
+- `CfUsersinfo` - 用户详细信息
+- `CfRoles` - 角色信息
+- `DjTask` - 党建任务
+- `DjFundsbudget` - 党费预算
+- `DjZtdrxx` - 主题党日信息
+
+## 控制器层（Controller）
+控制器层主要由以下部分组成：
+- [controller目录](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/controller) - 包含所有API接口控制器
+
+主要控制器包括：
+- `UserController` - 用户管理相关接口
+- `PartyUserController` - 党员用户管理接口
+- `MenuManageController` - 菜单管理接口
+- `FileMgrController` - 文件管理接口
+- `FundsController` - 经费管理接口
+
+## 视图层（View）
+视图层主要由以下部分组成：
+- [resources/static目录](mdc:codes/hs-zhdj-community/src/main/resources/static) - 包含静态资源
+- 前端页面通过API接口获取数据，使用前端框架渲染视图
+
+## 其他关键组件
+- [vo目录](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/vo) - 包含视图对象类
+- [util目录](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/util) - 包含各种工具类
+- [shiro目录](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/shiro) - 包含Shiro安全框架配置

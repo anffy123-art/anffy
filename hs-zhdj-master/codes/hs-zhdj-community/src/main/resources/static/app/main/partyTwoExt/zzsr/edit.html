@@ -1,0 +1,94 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" novalidate
+              name="editForm">
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所在组织</th>
+                        <td colspan="3" ng-class="{ 'focused error' : this.editForm.dzzmc.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 title="选择党组织" ng-click="selectParty()">
+                                <input name="dzzmc" type="text" ng-model="dataModel.dzzmc"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.dzzmc.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>标题</th>
+                        <td colspan="3" ng-class="{ 'focused error' : this.editForm.title.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="title" ng-model="dataModel.title"
+                                   maxlength="2000"
+                                   class="form-control" ng-required="true"/>
+                            <label ng-show="this.editForm.title.$invalid &&  this.editForm.$submitted"
+                                   class="error">必填.</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>活动时间</th>
+                        <td ng-class="{ 'focused error' : this.editForm.activitytime.$invalid &&  this.editForm.$submitted}">
+                            <input name="activitytime" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.activitytime"
+                                   ng-required="true"
+                                   data-max-date="{{maxDate}}"
+                                   placeholder="" bs-datepicker/>
+                            <label ng-show="this.editForm.activitytime.$invalid &&  this.editForm.$submitted"
+                                   class="error">必填.</label>
+                        </td>
+                        <th>主题</th>
+                        <td ng-class="{ 'focused error' : this.editForm.subjecttype.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.subjecttype"
+                                    ng-options="type.dickey as type.dicvalue for type in positionLevelList"
+                                    class="form-control"
+                                    name="subjecttype" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <label ng-show="this.editForm.subjecttype.$invalid &&  this.editForm.$submitted"
+                                   class="error">必填.</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>地点</th>
+                        <td colspan="3" ng-class="{ 'focused error' : this.editForm.location.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="location" ng-model="dataModel.location"
+                                   maxlength="2000"
+                                   class="form-control" ng-required="true"/>
+                            <label ng-show="this.editForm.location.$invalid &&  this.editForm.$submitted"
+                                   class="error">必填.</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>内容</th>
+                        <td colspan="3" >
+                            <textarea ng-model="dataModel.subjectcontent" ui-ueditor
+                            ></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>活动照片</th>
+                        <td colspan="3" >
+                            <bsfiles ng-model="img_ReqFileModel"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot" >
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)"
+                        ng-if="isDetail">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

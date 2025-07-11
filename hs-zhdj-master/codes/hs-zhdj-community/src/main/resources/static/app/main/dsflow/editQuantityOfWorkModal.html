@@ -1,0 +1,94 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{params.title}}</h3>
+
+            </div>
+            <form class="form-horizontal formtable1 panel-body modal-body"
+                  ng-submit="saveQuantityOfWork(QuantityOfWorkForm.$valid)" role="form" id="QuantityOfWorkForm"
+                  name="QuantityOfWorkForm" style="padding: 10px; margin: 10px;" novalidate>
+                <table class="table table-bordered tform">
+                    <tr>
+                        <th class="col-md-2"><span style="color:red;">*</span>工作类型:</th>
+                        <td ng-class="{ 'has-error' : QuantityOfWorkForm.WorkType.$invalid && QuantityOfWorkForm.$submitted }">
+                            <select name="WorkType" disabled class="form-control" required ng-model="content.WorkType"
+                                    ng-options="x.DicKey as x.DicValue for x in DicValueList">
+                                <option value="">--------------------------------请选择--------------------------------
+                                </option>
+                            </select>
+                            <span class="help-block"
+                                  ng-show="QuantityOfWorkForm.WorkType.$invalid && QuantityOfWorkForm.$submitted">
+                                工作类型不能为空
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red;">*</span>成员姓名:</th>
+                        <td ng-class="{ 'has-error' : QuantityOfWorkForm.Name.$invalid && QuantityOfWorkForm.$submitted }">
+                            <label class="input-group">
+                                <input name="Name" type="text" ng-model="content.Name" class="form-control"
+                                       ng-click="change()" required/>
+                                <span class="input-group-addon" data-url="../../api/MemManage/FindMemebersdata"
+                                      data-datatext="content.Name" data-aid="{{params.fid}}"
+                                      data-dataval="content.UserID" title="团队人员选择" bsselectdata><i
+                                        class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+                            <span class="help-block"
+                                  ng-show="QuantityOfWorkForm.Name.$invalid && QuantityOfWorkForm.$submitted">
+                                成员姓名不能为空
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red;">*</span>成员角色:</th>
+                        <td ng-class="{ 'has-error' : QuantityOfWorkForm.roleName.$invalid && QuantityOfWorkForm.$submitted }">
+                            <label class="input-group">
+                                <input name="roleName" type="text" ng-model="content.roleName" class="form-control"
+                                       required/>
+                                <span class="input-group-addon" data-url="../../api/MemManage/FindMemeberRolesdata"
+                                      data-datatext="content.roleName" data-aid="{{params.fid}}+{{content.UserID}}"
+                                      data-dataval="content.QWorkRoleID" title="团队人员对应的角色选择" bsselectdata><i
+                                        class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+                            <span class="help-block"
+                                  ng-show="QuantityOfWorkForm.roleName.$invalid && QuantityOfWorkForm.$submitted">
+                                成员角色不能为空
+                            </span>
+                        </td>
+                    </tr>
+                    <tr ng-class="{ 'has-error' : QuantityOfWorkForm.ValueOfDate.$invalid && QuantityOfWorkForm.$submitted }">
+                        <th class="col-md-2"><span style="color:red;">*</span>工作人天:</th>
+                        <td>
+                            <input name="ValueOfDate" type="number" step="0.01" min="0" ng-model="content.ValueOfDate"
+                                   class="form-control" required/>
+                            <span class="help-block"
+                                  ng-show="QuantityOfWorkForm.ValueOfDate.$invalid && QuantityOfWorkForm.$submitted">
+                                请输入正确的工作量
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">备注信息:</th>
+                        <td>
+                            <input name="Note" type="text" ng-model="content.Note" class="form-control"
+                                   value={{content.Note}}/>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="form_foot">
+                    <button id="submit" class="btn btn-danger" style="padding:4px 20px 4px 20px" type="submit"
+                            form="QuantityOfWorkForm">提交
+                    </button>
+                    <button id="cancel" type="button" class="btn btn-default" style="padding:4px 20px 4px 20px"
+                            ng-click="$hide()">取消
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,93 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form  role="form" novalidate
+               name="editForm" >
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所在组织</th>
+                        <td ng-class="{ 'focused error' : this.editForm.dzzmc.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 title="选择党组织" ng-click="selectParty()">
+                                <input name="dzzmc" type="text" ng-model="dataModel.dzzmc"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.dzzmc.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>年度</th>
+                        <td  ng-class="{ 'focused error' : this.editForm.year.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.year"
+                                    ng-options="type.dickey as type.dicvalue for type in yearList"
+                                    class="form-control"
+                                    name="year" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <label ng-show="this.editForm.year.$invalid &&  this.editForm.$submitted"
+                                   class="error">必填.</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>一季度评分</th>
+                        <td ng-class="{ 'focused error' : this.editForm.quarter1.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="quarter1" ng-model="dataModel.quarter1"
+                                   class="form-control" />
+                        </td>
+                        <th>二季度评分</th>
+                        <td  ng-class="{ 'focused error' : this.editForm.quarter2.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="quarter2" ng-model="dataModel.quarter2"
+                                   class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>三季度评分</th>
+                        <td ng-class="{ 'focused error' : this.editForm.quarter3.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="quarter3" ng-model="dataModel.quarter3"
+                                   class="form-control"/>
+                        </td>
+                        <th>四季度评分</th>
+                        <td  ng-class="{ 'focused error' : this.editForm.quarter4.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="quarter4" ng-model="dataModel.quarter4"
+                                   class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>评定等级</th>
+                        <td colspan="3"  ng-class="{ 'focused error' : this.editForm.judgelevel.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.judgelevel"
+                                    ng-options="type.dickey as type.dicvalue for type in judgeLevelList"
+                                    class="form-control"
+                                    name="judgelevel">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <label ng-show="this.editForm.judgeLevel.$invalid &&  this.editForm.$submitted"
+                                   class="error">必填.</label>
+                        </td>
+                        <!--<th><span ng-if="type=='1'">年度评分</span></th>
+                        <td ng-class="{ 'focused error' : this.editForm.annualscore.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="annualscore" ng-model="dataModel.annualscore" ng-if="type=='1'"
+                                   class="form-control"/>
+                        </td>-->
+                    </tr>
+                </table>
+            </div>
+           <!-- <div class="table-responsive list-table-panel" style="margin-bottom: 20px;">
+                <bsfiles ng-model="reqFileModel"/>
+            </div>-->
+
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button  type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)"
+                        ng-if="isDetail">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

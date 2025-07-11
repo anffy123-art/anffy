@@ -1,0 +1,79 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form class="form-horizontal" role="form" name="editForm" novalidate>
+            <div ng-include="'../main/shyk/meetingmodel.html'"></div>
+            <div panel-title data-title="'录入会议决议'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>决议回复类别</th>
+                        <td>
+                            <div class="form-control-radio"
+                                 ng-class="{ 'focused error' : this.editForm.decisiontype.$invalid &&  editMenuForm.$submitted}">
+                                <input name="istemp" type="radio" ng-model="dataModel.decisiontype" value="1"
+                                       ng-checked="dataModel.decisiontype==1" class="with-gap" id="istemp1"/>
+                                <label for="istemp1">报告（可以不回复）</label>
+                                <input name="istemp" type="radio" ng-model="dataModel.decisiontype" value="2"
+                                       ng-checked="dataModel.decisiontype==2" class="with-gap" id="istemp2"/>
+                                <label for="istemp2">请示（必须回复）</label>
+                            </div>
+                        </td>
+                        <th style="background-color: white;border-left: none;border-right: none;"></th>
+                        <td style="border-left: none;text-align: right;padding-right: 10px;">
+                            <button type="button" class="btn btn-primary dropdown-toggle"
+                                    title="添加决议"
+                                    ng-click="addDecision()">
+                                添加决议
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div ng-repeat="it in jyDataList">
+                <div class="card" style="box-shadow: none;border: 1px solid rgba(204, 204, 204, 0.35);">
+                    <div class="header" style="display:flex;justify-content: space-between;">
+                        <h2>
+                            会议决议 {{$index+1}}
+                        </h2>
+                        <button type="button" class="btn btn-default"
+                                ng-click="deleteDecision(it.meetingdecisionid,$index);">删除
+                        </button>
+                    </div>
+                    <div class="body">
+                        <div class="dj-formtable">
+                            <table class="dj-table dj-table2">
+                                <tr>
+                                    <th>会议决议模板</th>
+                                    <td colspan="3">
+                                        <select class="form-control show-tick" ng-model="it.jymbid"
+                                                ng-options="type.ID as type.MBMC for type in jymbList"
+                                                class="form-control"
+                                                name="jymbmc_{{$index+1}}" id="jymbmc_{{$index+1}}">
+                                            <option value="" selected>--请选择--</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>决议内容</th>
+                                    <td colspan="3">
+                                        <textarea ng-model="it.content" ui-ueditor></textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">返回</button>
+                <button class="btn btn-primary"
+                        ng-click="saveData(0)">保存
+                </button>
+                <button class="btn btn-primary"
+                        ng-click="saveData(1)">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+﻿.dutypanel {
+    display: block;
+    position: relative;
+    z-index: 2;
+}
+
+.dutypanel canvas {
+    top: 51px;
+    left: 0;
+    margin: 0;
+    z-index: 3;
+    display: block;
+    position: absolute;
+}
+
+.x_axis_div {
+    display: flex;
+    z-index: 4;
+    justify-content: flex-start;
+}
+
+.x_axis_div div {
+    display: flex;
+    width: 250px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    justify-content: center;
+    z-index: 5;
+}
+
+.tree_node {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 5;
+}
+
+.tree_div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 5;
+}
+
+.tree_head {
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    z-index: 5;
+}
+
+.tree_body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+}
+
+.item_panel {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    z-index: 10;
+    align-items: center;
+    justify-content: center;
+}
+
+.item_col1 {
+    width: 152px;
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+}
+
+.item_col2 {
+    width: 152px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.item_chk {
+    display: flex;
+    order: 1;
+    width: 16px;
+}
+
+.item_col2_addchild {
+    display: flex;
+    order: 3;
+    width: 16px;
+}
+
+.item_col3 {
+    width: 152px;
+    display: flex;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+}
+
+.item_div {
+    order: 2;
+    display: flex;
+    width: 120px;
+    justify-content: flex-start;
+    align-items: center;
+    line-height: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

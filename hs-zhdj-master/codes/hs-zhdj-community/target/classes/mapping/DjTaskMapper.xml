@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DjTaskMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.DjTask">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="TASKNAME" jdbcType="VARCHAR" property="taskname" />
+    <result column="TASKTIME" jdbcType="TIMESTAMP" property="tasktime" />
+    <result column="ENDTIME" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="SENDDEPART" jdbcType="VARCHAR" property="senddepart" />
+    <result column="TASKCONTENT" jdbcType="VARCHAR" property="taskcontent" />
+    <result column="CREATEUSERID" jdbcType="VARCHAR" property="createuserid" />
+    <result column="CREATEUSERNAME" jdbcType="VARCHAR" property="createusername" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="UPDATEUSERID" jdbcType="VARCHAR" property="updateuserid" />
+    <result column="UPDATEUSERNAME" jdbcType="VARCHAR" property="updateusername" />
+    <result column="OPERATETIME" jdbcType="TIMESTAMP" property="operatetime" />
+    <result column="OPERATESTATE" jdbcType="VARCHAR" property="operatestate" />
+    <result column="SYNCSTATE" jdbcType="VARCHAR" property="syncstate" />
+    <result column="TASKTYPE" jdbcType="DECIMAL" property="tasktype" />
+    <result column="ISTERMINATE" jdbcType="DECIMAL" property="isterminate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, TASKNAME, TASKTIME, ENDTIME, SENDDEPART, TASKCONTENT, CREATEUSERID, CREATEUSERNAME, 
+    UPDATETIME, UPDATEUSERID, UPDATEUSERNAME, OPERATETIME, OPERATESTATE, SYNCSTATE, TASKTYPE, 
+    ISTERMINATE
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.DjTaskExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dj_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dj_task
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dj_task
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.DjTaskExample">
+    delete from dj_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.DjTask">
+    insert into dj_task (ID, TASKNAME, TASKTIME, 
+      ENDTIME, SENDDEPART, TASKCONTENT, 
+      CREATEUSERID, CREATEUSERNAME, UPDATETIME, 
+      UPDATEUSERID, UPDATEUSERNAME, OPERATETIME, 
+      OPERATESTATE, SYNCSTATE, TASKTYPE, 
+      ISTERMINATE)
+    values (#{id,jdbcType=VARCHAR}, #{taskname,jdbcType=VARCHAR}, #{tasktime,jdbcType=TIMESTAMP}, 
+      #{endtime,jdbcType=TIMESTAMP}, #{senddepart,jdbcType=VARCHAR}, #{taskcontent,jdbcType=VARCHAR}, 
+      #{createuserid,jdbcType=VARCHAR}, #{createusername,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{updateuserid,jdbcType=VARCHAR}, #{updateusername,jdbcType=VARCHAR}, #{operatetime,jdbcType=TIMESTAMP}, 
+      #{operatestate,jdbcType=VARCHAR}, #{syncstate,jdbcType=VARCHAR}, #{tasktype,jdbcType=DECIMAL}, 
+      #{isterminate,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.DjTask">
+    insert into dj_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="taskname != null">
+        TASKNAME,
+      </if>
+      <if test="tasktime != null">
+        TASKTIME,
+      </if>
+      <if test="endtime != null">
+        ENDTIME,
+      </if>
+      <if test="senddepart != null">
+        SENDDEPART,
+      </if>
+      <if test="taskcontent != null">
+        TASKCONTENT,
+      </if>
+      <if test="createuserid != null">
+        CREATEUSERID,
+      </if>
+      <if test="createusername != null">
+        CREATEUSERNAME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+      <if test="updateuserid != null">
+        UPDATEUSERID,
+      </if>
+      <if test="updateusername != null">
+        UPDATEUSERNAME,
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME,
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE,
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE,
+      </if>
+      <if test="tasktype != null">
+        TASKTYPE,
+      </if>
+      <if test="isterminate != null">
+        ISTERMINATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="taskname != null">
+        #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="tasktime != null">
+        #{tasktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="senddepart != null">
+        #{senddepart,jdbcType=VARCHAR},
+      </if>
+      <if test="taskcontent != null">
+        #{taskcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="createuserid != null">
+        #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetime != null">
+        #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        #{syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="tasktype != null">
+        #{tasktype,jdbcType=DECIMAL},
+      </if>
+      <if test="isterminate != null">
+        #{isterminate,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.DjTaskExample" resultType="java.lang.Long">
+    select count(*) from dj_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dj_task
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskname != null">
+        TASKNAME = #{record.taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tasktime != null">
+        TASKTIME = #{record.tasktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null">
+        ENDTIME = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.senddepart != null">
+        SENDDEPART = #{record.senddepart,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskcontent != null">
+        TASKCONTENT = #{record.taskcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createuserid != null">
+        CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createusername != null">
+        CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null">
+        UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateuserid != null">
+        UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateusername != null">
+        UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatetime != null">
+        OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatestate != null">
+        OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.syncstate != null">
+        SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tasktype != null">
+        TASKTYPE = #{record.tasktype,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isterminate != null">
+        ISTERMINATE = #{record.isterminate,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dj_task
+    set ID = #{record.id,jdbcType=VARCHAR},
+      TASKNAME = #{record.taskname,jdbcType=VARCHAR},
+      TASKTIME = #{record.tasktime,jdbcType=TIMESTAMP},
+      ENDTIME = #{record.endtime,jdbcType=TIMESTAMP},
+      SENDDEPART = #{record.senddepart,jdbcType=VARCHAR},
+      TASKCONTENT = #{record.taskcontent,jdbcType=VARCHAR},
+      CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      TASKTYPE = #{record.tasktype,jdbcType=DECIMAL},
+      ISTERMINATE = #{record.isterminate,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.DjTask">
+    update dj_task
+    <set>
+      <if test="taskname != null">
+        TASKNAME = #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="tasktime != null">
+        TASKTIME = #{tasktime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="senddepart != null">
+        SENDDEPART = #{senddepart,jdbcType=VARCHAR},
+      </if>
+      <if test="taskcontent != null">
+        TASKCONTENT = #{taskcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="createuserid != null">
+        CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="tasktype != null">
+        TASKTYPE = #{tasktype,jdbcType=DECIMAL},
+      </if>
+      <if test="isterminate != null">
+        ISTERMINATE = #{isterminate,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.DjTask">
+    update dj_task
+    set TASKNAME = #{taskname,jdbcType=VARCHAR},
+      TASKTIME = #{tasktime,jdbcType=TIMESTAMP},
+      ENDTIME = #{endtime,jdbcType=TIMESTAMP},
+      SENDDEPART = #{senddepart,jdbcType=VARCHAR},
+      TASKCONTENT = #{taskcontent,jdbcType=VARCHAR},
+      CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      TASKTYPE = #{tasktype,jdbcType=DECIMAL},
+      ISTERMINATE = #{isterminate,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

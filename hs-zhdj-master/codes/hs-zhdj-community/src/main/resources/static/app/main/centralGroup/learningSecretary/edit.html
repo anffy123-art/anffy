@@ -1,0 +1,97 @@
+<style>
+    .mt_topic {
+        display: flex;
+        flex-flow: wrap;
+    }
+
+    .col_margin_bottom_0 {
+        margin-bottom: 0px !important;
+    }
+
+    .panel-danger {
+        border: 1px solid #ddd !important;;
+    }
+
+    .panel-group .panel-danger .panel-title {
+        background-color: #ddd !important;
+        color: #F44336;
+    }
+
+</style>
+<!--<div class="card">
+    <titlemenu data-parentno="parentUrl"></titlemenu>
+    <div activate-input activate-select class="body">
+        <form class="form-horizontal" role="form" name="editForm" novalidate>
+            <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                    <label>党总支名称 :</label>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="hidden" name="dzzdm" ng-model="changevm.dzzdm" class="form-control"/>
+                            <input type="text" name="dwName" ng-model="dwName" readonly class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                    <label>选择人员 :</label>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                    <div class="form-group">
+                        <div class="form-line" style=" overflow:hidden; zoom:1;">
+                            <input type="hidden" name="rydm" ng-model="changevm.rydm" class="form-control"/>
+                            <input type="text" name="rydmName" ng-model="rydmName" ng-click="xuanzeUser()" readonly
+                                   class="form-control" style="width: 88%;float:left"/>
+                            <button type="button" class="btn btn-default" ng-click="qingkongrenyuan();"
+                                    style="float:left; padding:5px 0; width: 10%; margin-left:1%;">清空
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit" class="btn btn-primary" ng-click="submitData(this.editForm)">保存
+                </button>
+            </div>
+        </form>
+    </div>
+</div>-->
+
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table dj-table2">
+                    <tr>
+                        <th>党总支名称</th>
+                        <td>
+                            <input type="hidden" name="dzzdm" ng-model="changevm.dzzdm" class="form-control"/>
+                            <input type="text" name="dwName" ng-model="dwName" readonly class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>选择人员</th>
+                        <td>
+                            <input type="hidden" name="rydm" ng-model="changevm.rydm" class="form-control"/>
+                            <input type="text" name="rydmName" ng-model="rydmName" ng-click="xuanzeUser()" readonly
+                                   class="form-control" style="width: 88%;float:left"/>
+                            <button type="button" class="btn btn-default" ng-click="qingkongrenyuan();"
+                                    style="float:left; padding:5px 0; width: 10%; margin-left:1%;margin-top: 3px;">清空
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit" class="btn btn-primary" ng-click="submitData(this.editForm)">保存
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

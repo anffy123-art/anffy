@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.ZzLearningmeetingCQuery">
+    <select id="selectLearningmeetingList" resultType="java.util.HashMap">
+        select
+          lm.*, zz.dzzmc,
+          (select group_concat(us.username) from zz_learningmeetingusers us  where us.meetingId=lm.meetingId and us.usertype=1 )as recordUserNames,
+          (select group_concat(us.username) from zz_learningmeetingusers us  where us.meetingId=lm.meetingId and us.usertype=3 )as attendUserNames
+        from zz_learningmeeting lm
+        inner join ZZ_ZZQKXX zz on lm.dzzdm=zz.DZZDM
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and zz.DZZDM like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="meetingName != null and meetingName != ''">
+            and lm.meetingName like concat('%',#{meetingName},'%')
+        </if>
+        <if test="recordUserName != null and recordUserName != ''">
+            and  lm.meetingId in(select meetingId from zz_learningmeetingusers us where us.username =#{recordUserName} and us.usertype=1)
+        </if>
+        <if test="location != null and location != ''">
+            and lm.location like concat('%',#{location},'%')
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and meetingDate <![CDATA[ >= ]]> date_format(#{beginTime},"%Y%m%d")
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and meetingDate <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        order by lm.meetingDate desc
+    </select>
+    <select id="selectLearningmeetingTotalList" resultType="java.util.HashMap">
+        select p.ZZQKXXBS,  p.DZZMC,fb.ZZLB, fb.JCZZFL, p.JLDZZRQ, p.SCYTDZB, p.KZPYRQ, p.JSPYRQ, p.YL01, p.YL02,
+        p.YL03, p.YL04, p.YL05,z.HZMC as ZZLBMC,j.HZMC as JCZZFLMC,
+        p.DZZDM NODECODE,SUBSTR(p.DZZDM,1,LENGTH(p.DZZDM)-3) PARENTCODE,
+        ifnull(fb.ZGRS,0) as ZGRS,fb.LDJTJC,bz.LDJTDXRQ as SCHJSJ,bz.GJJMRQ,
+        ifnull(fb.DYZS,0) as USERCOUNT,
+        pmettings.DZZDM,ifnull(pmettings.m1,0) m1,
+        ifnull(pmettings.m2,0) m2,
+        ifnull(pmettings.m3,0) m3,
+        ifnull(pmettings.m4,0) m4,
+        ifnull(pmettings.m5,0) m5,
+        ifnull(pmettings.m6,0) m6,
+        ifnull(pmettings.m7,0) m7,
+        ifnull(pmettings.m8,0) m8,
+        ifnull(pmettings.m9,0) m9,
+        ifnull(pmettings.m10,0) m10,
+        ifnull(pmettings.m11,0) m11,
+        ifnull(pmettings.m12,0) m12,
+        ifnull(pmettings.yearTotal,0) yearTotal
+
+        from ZZ_ZZQKXX p
+               left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+               left join zzzd_zzlbdmnew z on fb.ZZLB = z.BM
+               left join zzzd_jczzflnew j on fb.JCZZFL = j.BM
+               left join ZZ_BZJCXX bz on p.DZZDM = bz.DZZDM and bz.LDJTJC = fb.LDJTJC
+               left join ZZ_ZZQKXX dw on SUBSTR(p.DZZDM,1,12)=dw.DZZDM
+               left join VM_PARTYGROUP partyGroup on dw.DZZDM = partyGroup.DZZDM
+        left join(
+               select p.DZZDM,
+                      sum(mettings.m1) m1,
+                      sum(mettings.m2) m2,
+                      sum(mettings.m3) m3,
+                      sum(mettings.m4) m4,
+                      sum(mettings.m5) m5,
+                      sum(mettings.m6) m6,
+                      sum(mettings.m7) m7,
+                      sum(mettings.m8) m8,
+                      sum(mettings.m9) m9,
+                      sum(mettings.m10) m10,
+                      sum(mettings.m11) m11,
+                      sum(mettings.m12) m12,
+                      sum(mettings.yearTotal) yearTotal
+               from ZZ_ZZQKXX p
+                           inner join(
+                      select dzzdm,
+                             sum(CASE month(meetingDate) WHEN '1' THEN 1 ELSE 0 END)  AS "m1",
+                             sum(CASE month(meetingDate) WHEN '2' THEN 1 ELSE 0 END)  AS "m2",
+                             sum(CASE month(meetingDate) WHEN '3' THEN 1 ELSE 0 END)  AS "m3",
+                             sum(CASE month(meetingDate) WHEN '4' THEN 1 ELSE 0 END)  AS "m4",
+                             sum(CASE month(meetingDate) WHEN '5' THEN 1 ELSE 0 END)  AS "m5",
+                             sum(CASE month(meetingDate) WHEN '6' THEN 1 ELSE 0 END)  AS "m6",
+                             sum(CASE month(meetingDate) WHEN '7' THEN 1 ELSE 0 END)  AS "m7",
+                             sum(CASE month(meetingDate) WHEN '8' THEN 1 ELSE 0 END)  AS "m8",
+                             sum(CASE month(meetingDate) WHEN '9' THEN 1 ELSE 0 END)  AS "m9",
+                             sum(CASE month(meetingDate) WHEN '10' THEN 1 ELSE 0 END) AS "m10",
+                             sum(CASE month(meetingDate) WHEN '11' THEN 1 ELSE 0 END) AS "m11",
+                             sum(CASE month(meetingDate) WHEN '12' THEN 1 ELSE 0 END) AS "m12",
+                             sum(CASE WHEN 1 = 1 THEN 1 ELSE 0 END)                   AS "yearTotal"
+                      from zz_learningmeeting lm
+                      where date_format(lm.meetingDate, '%Y') = #{year}
+                      group by dzzdm
+               )mettings on mettings.DZZDM  like concat('',p.DZZDM,'%')
+               group by p.DZZDM
+               )pmettings on p.DZZDM=pmettings.DZZDM
+        where 1=1 and p.DZZDM like concat('',#{gddwdm},'%')
+        and fb.ZZLB in(300)
+        <if test="dzzdm != null and dzzdm != ''">
+            and p.DZZDM like concat('%',#{dzzdm},'%')
+        </if>
+                                          order by PARENTCODE,NODECODE
+    </select>
+    <select id="selectAttendLearningmeetingList" resultType="java.util.HashMap">
+        select
+        lm.*, zz.dzzmc,
+        (select group_concat(us.username) from zz_learningmeetingusers us  where us.meetingId=lm.meetingId and us.usertype=1 )as recordUserNames,
+        (select group_concat(us.username) from zz_learningmeetingusers us  where us.meetingId=lm.meetingId and us.usertype=3 )as attendUserNames
+        from zz_learningmeeting lm
+        inner join ZZ_ZZQKXX zz on lm.dzzdm=zz.DZZDM
+        where 1=1
+        <if test="attendUserid != null and attendUserid != ''">
+            and  lm.meetingId in(select meetingId from zz_learningmeetingusers us where us.userid =#{attendUserid} and us.usertype=1)
+        </if>
+        <if test="day != null and day != '' ">
+            and date_format(lm.meetingDate,'%Y-%m-%d') = #{day}
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and meetingDate <![CDATA[ >= ]]> date_format(#{beginTime},"%Y%m%d")
+        </if>
+        order by lm.meetingDate desc
+    </select>
+</mapper>

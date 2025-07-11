@@ -1,0 +1,74 @@
+<titlemenu>
+</titlemenu>
+<div class="dj-card">
+
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" novalidate
+              name="editForm">
+            <div panel-title data-title="'投稿信息'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>单位</th>
+                        <td colspan="3">
+                            {{dataModel.dwName}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>对应约稿</th>
+                        <td colspan="3">
+                            {{dataModel.ygmc}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>标题</th>
+                        <td colspan="3">
+                            {{dataModel.title}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>栏目</th>
+                        <td ng-class="{ 'focused error' : this.editForm.topicvalue.$invalid &&  this.editForm.$submitted}">
+                            <select name="topicvalue" ng-model="dataModel.topicvalue"
+                                    ng-options="op.val as op.label for op in ndList"
+                                    ng-required="true"
+                                    required>
+                            </select>
+                            <label class="error"
+                                   ng-show="this.editForm.topicvalue.$invalid &&  this.editForm.$submitted">必填.</label>
+                        </td>
+                        <th>作者</th>
+                        <td>
+                            {{dataModel.author}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>职务</th>
+                        <td>
+                            {{dataModel.post}}
+                        </td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>文章附件(word/pdf)</th>
+                        <td colspan="3">
+                            {{dataModel.newsname}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>其他附件(照片)</th>
+                        <td colspan="3">
+                            {{dataModel.photoname}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button class="btn btn-default" ng-click="approve(3);" role-permission-code="fqtgapprove.btn.usable" type="button">可用</button>
+                <button class="btn btn-primary" ng-click="approve(4);" role-permission-code="fqtgapprove.btn.disable" type="button">不可用</button>
+                <button class="btn btn-primary" ng-click="approve(2);" role-permission-code="fqtgapprove.btn.return"type="button">退回</button>
+            </div>
+        </form>
+    </div>
+</div>

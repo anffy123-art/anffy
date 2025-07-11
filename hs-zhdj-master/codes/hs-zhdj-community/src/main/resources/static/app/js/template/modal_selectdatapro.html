@@ -1,0 +1,88 @@
+<style>
+    .table > thead > tr > th > label, .table > tbody > tr > td > label {
+        height: 10px !important;
+    }
+
+    .table > tbody > tr > td > label:before {
+        top: 1px !important;
+        left: 2px !important;
+    }
+
+    .table > thead > tr > th > label:before {
+        top: 1px !important;
+    }
+
+    .th-checkbox {
+        text-align: left !important;
+    }
+</style>
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:75%;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h5 class="modal-title">{{fdata.title}}</h5>
+            </div>
+            <div class="body" style="padding: 10px 10px 5px 10px;">
+                <div class="search-param-panel">
+                    <div class="search-input">
+                        <form class="form-inline formquery" activate-input>
+                            $$selectdate$$
+                        </form>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div class="form-group formquery-btns-panel">
+                            <!--<button class="btn btn-default" ng-click="findSData()"><i
+                                    class="glyphicon glyphicon-zoom-in"></i></button>-->
+                            <button type="button" class="btn bg-red waves-effect" ng-click="findSData()">
+                                <i class="material-icons">search</i>
+                                <span>查询</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="min-height: 500px;">
+                    <div class="{{fdata.isMulti==true?'col-md-8':'col-md-12'}}" style="margin-bottom: 0px;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">查询列表</div>
+                            <div style="overflow: auto;">
+                                <bs-dtable datarows="fdata.items" datacols="fdata.columns"
+                                           ismulti="fdata.isMulti"></bs-dtable>
+                            </div>
+                            <pagination data-pageindex="fdata.selectParams.pageindex"
+                                        data-pagesize="fdata.selectParams.pagesize"
+                                        data-ptotal="fdata.ptotal"></pagination>
+                        </div>
+                    </div>
+                    <div class="col-md-1" style="height: 420px;" ng-show="fdata.isMulti">
+                        <div class="maddleButton" style="margin-top: 100px;display: inline-block;width: auto;">
+                            <div class="midbtn">
+                                <button type="button" class="btn btn-success midbtn" ng-click="addItem()">添加</button>
+                            </div>
+                            <div class="midbtn">
+                                <button type="button" class="btn btn-danger midbtn" ng-click="deleteItem()">删除</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3" ng-show="fdata.isMulti">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">已选择</div>
+                            <div class="panel-body" style="overflow: auto; padding: 0px;">
+                                <select class="form-control"
+                                        style="padding: 5px 0px 5px 10px; font-size: 12px;overflow-y: auto;height: 450px !important;"
+                                        multiple="multiple" ng-model="fdata.selectTemp"
+                                        ng-options="it.$$itemlabel$$ for it in fdata.selectedJData"
+                                        ng-dblclick="deleteItem(it)"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer" style="padding: 0px 10px 10px 10px;">
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="selectedData()">选择</button>
+            </div>
+        </div>
+    </div>
+</div>

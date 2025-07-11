@@ -1,0 +1,4 @@
+spring:
+  resources:
+    #TODO 静态资源路径,管理端页面路径
+    static-locations: file:/Users/asus/Desktop/java/dangjian/sjb/mysql/JY-ZHDJ-GZDJ-SERVER/src/main/resources/static

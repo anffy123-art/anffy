@@ -1,0 +1,515 @@
+<div>
+
+<div class="topBox">
+  <div>
+      <div class="oneBox">
+          <img src="images/sy_01.png" alt="" class="oneBox_img">
+          <div class="oneBox_post">
+              <img src="images/headImg.png" alt="" class="oneBox_headImg">
+              <div class="oneBox_msg">用户{{fristName}}</div>
+              <div class="oneBox_remark">亥时科技总部-{{fristName}}</div>
+          </div>
+      </div>
+      <div class="threeBox">
+          <div cd-option="cdOption" gt-calendar></div>
+      </div>
+
+  </div>
+
+    <!---权限配置 党委（党工委）工作情况-->
+    <!-- <div class="twoBox" role-permission-code="mainindex.dwgzqk">
+        <div class="twoBox_title">
+            党委基本情况
+            <div class="twoBox_title_line"></div>
+        </div>
+                <div class="dj-formtable twoBox_table">
+                    <table class="dj-table dj-table3">
+                        <tr>
+                            <th style="width: 20%;">党委名称</th>
+                            <td colspan="5">
+                                {{partyUserInfo.dw_partyInfo.dzzmc}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="width: 18%;">组织类别</th>
+                            <td>
+                                {{partyUserInfo.dw_partyZZLBMC}}
+                            </td>
+                            <th style="width: 18%;">成立时间</th>
+                            <td>
+                                {{partyUserInfo.dw_partyInfo.jldzzrq}}
+                            </td>
+                            <th style="width: 18%;">委员数</th>
+                            <td>
+                                {{dw_partyInfo_Ext.wys}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>所属党组织数</th>
+                            <td>
+                                {{partyUserInfo.dw_partyChildCount}}
+                            </td>
+                            <th>党总支数</th>
+                            <td>
+                                {{dw_partyTotalList[1].NUM}}
+                            </td>
+                            <th>党支部数</th>
+                            <td>
+                                {{dw_partyTotalList[2].NUM}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>党小组数</th>
+                            <td>
+                                {{dw_partyTotalList[3].NUM}}
+                            </td>
+                            <th>党员数</th>
+                            <td>
+                                {{dw_partyInfo_Ext.dys}}
+                            </td>
+                            <th>申请入党人数</th>
+                            <td>
+                                {{dw_partyInfo_Ext.sqrds}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>入党积极分子数</th>
+                            <td>
+                                {{dw_partyInfo_Ext.rdjjfzs}}
+                            </td>
+                            <th>预备党员数</th>
+                            <td>
+                                {{dw_partyInfo_Ext.ybdys}}
+                            </td>
+                            <th></th>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div work-tabs data-worktype="2" data-dzzdm="dataDzzdm"></div>
+    </div> -->
+
+</div>
+<!---->
+
+
+</div>
+<!--<div class="main-f-index">-->
+<!--    <div class="main-f-left">-->
+
+<!--&lt;!&ndash;        &ndash;&gt;-->
+<!--        <div class="main-f-first">-->
+<!--            <div class="main-schedule">-->
+<!--                <div class="card">-->
+<!--                    <div class="header">-->
+<!--                        <h2 class="demo-icon-container">-->
+<!--                            <div class="demo-google-material-icon">-->
+<!--                                &lt;!&ndash;<i class="material-icons col-red">date_range</i>&ndash;&gt;-->
+<!--                                <span class="main-card-title">我的待办</span>-->
+<!--                            </div>-->
+<!--                        </h2>-->
+<!--                        <ul class="header-dropdown m-r&#45;&#45;5">-->
+<!--                            <li class="dropdown demo-icon-container main-card-more">-->
+<!--                                &lt;!&ndash;<a bs-ui-sref="home.todolist" class="dropdown-toggle demo-google-material-icon">-->
+<!--                                    <span class="icon-name">更多</span>-->
+<!--                                    <i class="material-icons">keyboard_arrow_right</i>-->
+<!--                                </a>&ndash;&gt;-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                    <div class="body" style="display:flex;">-->
+<!--                        <div style="padding-right: 0px; min-width: 200px;">-->
+<!--                            <div cd-option="cdOption" gt-calendar></div>-->
+<!--                        </div>-->
+<!--                        <div class="card">-->
+<!--                            <ul class="nav nav-tabs tab-col-deep-orange" role="tablist" style="margin-left: 15px">-->
+<!--                                <li ng-repeat="item in mspageList" ng-class="{active:selectmsTab==item.id}">-->
+<!--                                    <a ng-click="ms_selectTab(item.id)" data-toggle="tab"-->
+<!--                                       style="cursor:pointer;padding: 10px 20px;">-->
+<!--                                        {{item.title+"("+item.number+")"}}-->
+<!--                                    </a>-->
+<!--                                </li>-->
+<!--                                <li style="float: right" ng-if="selectmsTab==2">-->
+<!--                                    <a ng-click="showMytask()"  style="cursor:pointer;padding: 12px 20px;font-size:10px;">-->
+<!--                                    更多-->
+<!--                                </a></li>-->
+<!--                            </ul>-->
+<!--                            <div ng-repeat="item in mspageList" class="list-group"-->
+<!--                                 ng-show="selectmsTab==item.id" ng-include="item.url"></div>-->
+<!--                            &lt;!&ndash;<div class="list-group" ng-show="selectmsTab == 1">-->
+<!--                                <div class="list-group-item" style="border : 0px;padding-left: 30px">-->
+<!--                                    <div>召开支委会<span style="float: right">4-6</span></div>-->
+<!--                                </div>-->
+<!--                                <div class="list-group-item" style="border : 0px;padding-left: 30px">-->
+<!--                                    <div>召开党员大会<span style="float: right">4-27</span></div>-->
+<!--                                </div>-->
+<!--                                <div class="list-group-item" style="border : 0px;padding-left: 30px">-->
+<!--                                    <div>上党课<span style="float: right">4-27</span></div>-->
+<!--                                </div>-->
+<!--                                &lt;!&ndash;                                <li class="list-group-item">-->
+<!--                                                                    <a href="">召开党员大会  4月27日</a>-->
+<!--                                                                </li>-->
+<!--                                                                <li class="list-group-item">-->
+<!--                                                                    <a href="">上党课   4月27日</a>-->
+<!--                                                                </li>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                            <ul class="list-group" ng-show="selectmsTab == 2" style="text-align: center">-->
+<!--                                <br>-->
+<!--                                <br>-->
+<!--                                <span>暂无公文数据</span>-->
+<!--                            </ul>-->
+<!--                            <ul class="list-group" ng-show="selectmsTab == 3" style="text-align: center">-->
+<!--                                <br>-->
+<!--                                <br>-->
+<!--                                <span>暂无邮件数据</span>-->
+<!--                            </ul>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash;<div class="main_list" style="overflow: hidden;">&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;<ul class="list-group" ng-if="cdData.length>0">&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;<li class="list-group-item" ng-repeat="it in cdData">&ndash;&gt;&ndash;&gt;-->
+
+<!--                        &lt;!&ndash;&lt;!&ndash;<a ng-if="it.url!=null"&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;href="#!/{{it.url}}?messageid={{it.messageid}}&businessid={{it.businessid}}">&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;{{it.sendtime|date:'yyyy-MM-dd'}}{{it.msgtitle}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;<a ng-if="it.url==null" ng-click="messageDetail(it)">&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;{{it.sendtime|date:'yyyy-MM-dd'}}{{it.msgtitle}}</a>&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;</ul>&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;<div ng-if="cdData.length<=0" class="not-notify">&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;<img class="building-img" src="../../content/images/message-warn.png"&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;style="width: 230px;height: 230px">&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;<p class="building-text">暂无消息</p>&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--                        &lt;!&ndash;</div>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="main-meeting">-->
+<!--                <div class="card">-->
+<!--                    <div class="header">-->
+<!--                        <h2 class="demo-icon-container">-->
+<!--                            <div class="demo-google-material-icon">-->
+<!--                                &lt;!&ndash;<i class="material-icons col-red">date_range</i>&ndash;&gt;-->
+<!--                                <span class="main-card-title">工作提醒</span>-->
+<!--                            </div>-->
+<!--                        </h2>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;工作提醒-权限配置&ndash;&gt;-->
+<!--                    <div class="body"-->
+<!--                         style="padding-top: 0px;">-->
+<!--                        <div panel-title data-title="'领导人员落实组织生活制度情况'"></div>-->
+<!--                        <div class="main_list" style="overflow: hidden;">-->
+<!--                            <ul class="list-group" style="margin: 0 5px;">-->
+<!--                                <li class="" style="padding: 5px 0;">-->
+<!--                                    <span>暂无</span>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <div panel-title data-title="'换届选举'"></div>-->
+<!--                        <div class="main_list" style="overflow: hidden;">-->
+<!--                            <ul class="list-group" style="margin: 0 5px;">-->
+<!--                                <li class="" style="padding: 5px 0;">-->
+<!--                                    <span ng-if="partyUserInfo.isGroupReplace">党支部将于{{partyUserInfo.dzz_gjjmrq | date:'yyyy年MM月dd日'}}到期换届</span>-->
+<!--                                    <span ng-if="!partyUserInfo.isGroupReplace">暂无</span>-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="main-f-bottom">-->
+<!--            <div class="card">-->
+<!--                <div class="header">-->
+<!--                    <h2 class="demo-icon-container">-->
+<!--                        <div class="demo-google-material-icon">-->
+<!--                            <span class="main-card-title">我的组织</span>-->
+<!--                        </div>-->
+<!--                    </h2>-->
+<!--                    <ul class="header-dropdown m-r&#45;&#45;5">-->
+<!--                        <li class="dropdown demo-icon-container main-card-more">-->
+<!--                            <a ng-click="showMyPartyUserInfo()" class="dropdown-toggle demo-google-material-icon">-->
+<!--                                <span class="icon-name">更多</span>-->
+<!--                                <i class="material-icons">keyboard_arrow_right</i>-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <div class="body" style="padding-top: 0px;">-->
+<!--                    <div class="dj-formtable">-->
+<!--                        <table class="dj-table">-->
+<!--                            <tr>-->
+<!--                                <th style="width: 20%;">所在党委</th>-->
+<!--                                <td>-->
+<!--                                    {{partyUserInfo.dwName}}-->
+<!--                                </td>-->
+
+<!--                                <th>所在支部</th>-->
+<!--                                <td>-->
+<!--                                    {{partyUserInfo.DZZMC}}-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th>党内职务</th>-->
+<!--                                <td>-->
+<!--                                    {{partyUserInfo.ZWMC}}-->
+<!--                                </td>-->
+
+<!--                                <th>入党时间</th>-->
+<!--                                <td>-->
+<!--                                    {{partyUserInfo.djxxModel.jrzgzzrq}}-->
+<!--                                </td>-->
+<!--                            </tr>-->
+
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="header" ng-if="partyUserInfo.RYZT=='2' || partyUserInfo.RYZT=='3'">-->
+<!--                    <h2 class="demo-icon-container">-->
+<!--                        <div class="demo-google-material-icon">-->
+<!--                            <span class="main-card-title">我的党费 <span style="font-weight: normal;font-size: 14px;">({{selectDuesYear}}年缴费记录，每月应缴{{myPartyDuesInfo.money==null?0:myPartyDuesInfo.money}}元)</span></span>-->
+<!--                        </div>-->
+<!--                    </h2>-->
+<!--                </div>-->
+<!--                <div class="body" style="padding-top: 0px;" ng-if="partyUserInfo.RYZT=='2' || partyUserInfo.RYZT=='3'">-->
+<!--                    <div class="fee-content" ng-if="myPartyDuesList.length>0">-->
+<!--                        <ul class="fee-list">-->
+<!--                            <li style="display: flex;" ng-repeat="it in myPartyDuesList"-->
+<!--                                ng-class="$last?'feeitem_last':'feeitem'">-->
+<!--                                <div class="fee-icon">-->
+<!--                                    <img ng-if="it.payState==1" src="../../../content/images/fee_yet.svg"/>-->
+<!--                                    <img ng-if="it.payState!=1" src="../../../content/images/fee_not.svg"/>-->
+<!--                                    <p style="margin: 0;">{{it.MONTH}}月</p>-->
+<!--                                    &lt;!&ndash;<p style="margin: 0;" ng-if="it.ISHAV">已缴{{it.MONEY}}元</p>-->
+<!--                                    <p style="cursor: pointer;border: 1px solid #E91E63;background-color: #E91E63;color: white;border-radius: 5px;" ng-if="it.isPay" ng-click="payDues(it.MONTH,it.userName,it.DETAILID,it.MONEY)">缴费<span style="font-size: 8px;">▶</span></p>&ndash;&gt;-->
+<!--                                </div>-->
+<!--                                <div class="fee-line" ng-if="!$last"></div>-->
+<!--                            </li>-->
+<!--                            &lt;!&ndash;<li style="width: 50px;"><span class="iconfont iconjiantou-qian"-->
+<!--                                      style="color:#CA4F45;"></span></li>&ndash;&gt;-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                    <div ng-if="myPartyDuesList.length==0">-->
+<!--                        暂无记录-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;-权限配置 集团情况一览&ndash;&gt;-->
+<!--        &lt;!&ndash;<div class="main-f-bottom" role-permission-code="mainindex.jtqkyl">&ndash;&gt;-->
+<!--            &lt;!&ndash;<div class="card">&ndash;&gt;-->
+<!--                &lt;!&ndash;<div class="header">&ndash;&gt;-->
+<!--                    &lt;!&ndash;<h2 class="demo-icon-container">&ndash;&gt;-->
+<!--                        &lt;!&ndash;<div class="demo-google-material-icon">&ndash;&gt;-->
+<!--                            &lt;!&ndash;<span class="main-card-title">全校党组织情况一览</span>&ndash;&gt;-->
+<!--                        &lt;!&ndash;</div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;</h2>&ndash;&gt;-->
+<!--                &lt;!&ndash;</div>&ndash;&gt;-->
+<!--                &lt;!&ndash;<div class="body" style="padding-top: 0px;">&ndash;&gt;-->
+<!--                    &lt;!&ndash;<div class="dj-formtable">&ndash;&gt;-->
+<!--                        &lt;!&ndash;<table class="dj-table dj-table3">&ndash;&gt;-->
+<!--                            &lt;!&ndash;<tr>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>党组织数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyTotal}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>党委数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyTotalList[0].NUM}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>党总支数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyTotalList[1].NUM}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                            &lt;!&ndash;</tr>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<tr>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>党支部数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyTotalList[2].NUM}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>党小组数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyTotalList[3].NUM}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th></th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                            &lt;!&ndash;</tr>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<tr>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>党员总数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyTotal_User.dys}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>在岗党员数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyTotal_User.zgcount}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>离退休党员数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyTotal_User.ltxcount}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                            &lt;!&ndash;</tr>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<tr>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>预备党员数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyTotal_User.ybdys}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>发展对象数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyTotal_User.fzdys}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>本校级党内品牌数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{dnppCount}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                            &lt;!&ndash;</tr>&ndash;&gt;-->
+<!--                        &lt;!&ndash;</table>&ndash;&gt;-->
+<!--                    &lt;!&ndash;</div>&ndash;&gt;-->
+<!--                &lt;!&ndash;</div>&ndash;&gt;-->
+<!--                &lt;!&ndash;<div class="header" style="padding-top: 0px;">&ndash;&gt;-->
+<!--                    &lt;!&ndash;<h2 class="demo-icon-container">&ndash;&gt;-->
+<!--                        &lt;!&ndash;<div class="demo-google-material-icon">&ndash;&gt;-->
+<!--                            &lt;!&ndash;<span class="main-card-title">工作导航</span>&ndash;&gt;-->
+<!--                        &lt;!&ndash;</div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;</h2>&ndash;&gt;-->
+<!--                &lt;!&ndash;</div>&ndash;&gt;-->
+<!--                &lt;!&ndash;<div class="body" style="padding-top: 0px;">&ndash;&gt;-->
+<!--                    &lt;!&ndash;<div class="main-bottom-link">&ndash;&gt;-->
+<!--                        &lt;!&ndash;<ul>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a ng-click="toReport('home.djjq_partyViewCS')"><span&ndash;&gt;-->
+<!--                                    &lt;!&ndash;class="iconfont icondangjianjuqing"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;style="color:#CA4F45;"></span><span>党建局情</span></a></li>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a ng-click="toReport('home.dzzztqk_partyViewCS')"><span&ndash;&gt;-->
+<!--                                    &lt;!&ndash;class="iconfont iconzuzhiguanli"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;style="color:#F7B500;"></span><span>党组织整体情况</span></a></li>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a ng-click="toReport('home.dzzhjqk_partyViewCS')"><span class="iconfont iconhuanjie"&ndash;&gt;-->
+<!--                                                                                         &lt;!&ndash;style="color:#0091FF;"></span><span>党组织换届情况</span></a>&ndash;&gt;-->
+<!--                            &lt;!&ndash;</li>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a ng-click="toReport('home.dyxxqk_partyViewCS')"><span&ndash;&gt;-->
+<!--                                    &lt;!&ndash;class="iconfont icondangyuanguanli"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;style="color:#FA6400;"></span><span>党员情况</span></a></li>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a ng-click="toReport('home.dnshztqk_partyViewCS')"><span&ndash;&gt;-->
+<!--                                    &lt;!&ndash;class="iconfont iconzuzhishenghuo"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;style="color:#44D7B6;"></span><span>党内生活整体情况</span></a></li>&ndash;&gt;-->
+<!--                            &lt;!&ndash;&lt;!&ndash;<li><a ng-click="toReport('home.djkpqk_partyViewCS')"><span class="iconfont iconkaoping"&ndash;&gt;&ndash;&gt;-->
+<!--                                                                                        &lt;!&ndash;&lt;!&ndash;style="color:#32C5FF;"></span><span>党建考评情况</span></a>&ndash;&gt;&ndash;&gt;-->
+<!--                            &lt;!&ndash;&lt;!&ndash;</li>&ndash;&gt;&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a ng-click="toReport('home.zxzxxqk_partyViewCS')"><span class="iconfont iconxuexi"&ndash;&gt;-->
+<!--                                                                                         &lt;!&ndash;style="color:#6DD400;"></span><span>中心组学习情况</span></a>&ndash;&gt;-->
+<!--                            &lt;!&ndash;</li>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a ng-click="toReport('home.xczdztqk_partyViewCS')"><span class="iconfont iconxuanchuan"&ndash;&gt;-->
+<!--                                                                                          &lt;!&ndash;style="color:#FA6400;"></span><span>宣传阵地情况</span></a>&ndash;&gt;-->
+<!--                            &lt;!&ndash;</li>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a ng-click="toReport('home.zgsxdtqk_partyViewCS')"><span&ndash;&gt;-->
+<!--                                    &lt;!&ndash;class="iconfont iconxuanchuansixiang"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;style="color:#CA4F45;"></span><span>职工思想动态情况</span></a></li>&ndash;&gt;-->
+<!--                            &lt;!&ndash;<li><a ng-click="toReport('home.hlwgzqqk_partyViewCS')"><span&ndash;&gt;-->
+<!--                                    &lt;!&ndash;class="iconfont iconhulianwang"&ndash;&gt;-->
+<!--                                    &lt;!&ndash;style="color:#0091FF;"></span><span>互联网工作群情况</span></a></li>&ndash;&gt;-->
+<!--                        &lt;!&ndash;</ul>&ndash;&gt;-->
+<!--                    &lt;!&ndash;</div>&ndash;&gt;-->
+<!--                &lt;!&ndash;</div>&ndash;&gt;-->
+<!--            &lt;!&ndash;</div>&ndash;&gt;-->
+<!--        &lt;!&ndash;</div>&ndash;&gt;-->
+<!--       &lt;!&ndash;-权限配置 党总支（支部）工作情况&ndash;&gt;-->
+<!--        <div class="main-f-bottom" role-permission-code="mainindex.dzbgzqk">-->
+<!--            <div class="card">-->
+<!--                <div class="header">-->
+<!--                    <h2 class="demo-icon-container">-->
+<!--                        <div class="demo-google-material-icon">-->
+<!--                            <span class="main-card-title">党总支（支部）基本情况</span>-->
+<!--                        </div>-->
+<!--                    </h2>-->
+<!--                </div>-->
+<!--                <div class="body" style="padding-top: 0px;">-->
+<!--                    <div class="dj-formtable">-->
+<!--                        <table class="dj-table dj-table3">-->
+<!--                            <tr>-->
+<!--                                <th style="width: 20%;">党总支（支部）名称</th>-->
+<!--                                <td colspan="5">-->
+<!--                                    {{partyUserInfo.dzz_partyInfo.dzzmc}}-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th style="width: 18%;">组织类别</th>-->
+<!--                                <td>-->
+<!--                                    {{partyUserInfo.dzz_partyZZLBMC}}-->
+<!--                                </td>-->
+<!--                                <th style="width: 18%;">成立时间</th>-->
+<!--                                <td>-->
+<!--                                    {{partyUserInfo.dzz_partyInfo.jldzzrq}}-->
+<!--                                </td>-->
+<!--                                <th style="width: 18%;">委员数</th>-->
+<!--                                <td>-->
+<!--                                    {{partyInfo_Ext.wys}}-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th>所属党组织数</th>-->
+<!--                                <td>-->
+<!--                                    {{partyUserInfo.dzz_partyChildCount}}-->
+<!--                                </td>-->
+<!--                                <th>党总支数</th>-->
+<!--                                <td>-->
+<!--                                    {{dzb_partyTotalList[1].NUM}}-->
+<!--                                </td>-->
+<!--                                <th>党支部数</th>-->
+<!--                                <td>-->
+<!--                                    {{dzb_partyTotalList[2].NUM}}-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <th>党小组数</th>-->
+<!--                                <td>-->
+<!--                                    {{dzb_partyTotalList[3].NUM}}-->
+<!--                                </td>-->
+<!--                                <th>党员数</th>-->
+<!--                                <td>-->
+<!--                                    {{partyInfo_Ext.dys}}-->
+<!--                                </td>-->
+<!--                                <th>申请入党人数</th>-->
+<!--                                <td>-->
+<!--                                    {{partyInfo_Ext.sqrds}}-->
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+
+<!--                                <th>入党积极分子数</th>-->
+<!--                                <td>-->
+<!--                                    {{partyInfo_Ext.rdjjfzs}}-->
+<!--                                </td>-->
+<!--                                <th>预备党员数</th>-->
+<!--                                <td>-->
+<!--                                    {{partyInfo_Ext.ybdys}}-->
+<!--                                </td>-->
+<!--                                <th></th>-->
+<!--                                <td>-->
+
+<!--                                </td>-->
+<!--                            </tr>-->
+<!--                            &lt;!&ndash;<tr>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>申请入党人数</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyInfo_Ext.sqrds}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th>上次换届时间</th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;{{partyUserInfo.dzz_schjsj}}&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<th></th>&ndash;&gt;-->
+<!--                                &lt;!&ndash;<td>&ndash;&gt;-->
+<!--                                    &lt;!&ndash;&lt;!&ndash;{{partyInfo_Ext.kpjg}}&ndash;&gt;&ndash;&gt;-->
+<!--                                &lt;!&ndash;</td>&ndash;&gt;-->
+<!--                            &lt;!&ndash;</tr>&ndash;&gt;-->
+<!--                        </table>-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash;<div work-tabs data-worktype="1" data-dzzdm="dataDzzdm"></div>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->

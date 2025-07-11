@@ -1,0 +1,141 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
+            <div party-tree data-selectdzzdm="selectparams.dzzdm" data-selectdzzmc="selectparams.dzzmc"
+                 data-userid="selectparams.userid" data-isshowxz="0" data-onlyshowdw="selectparams.onlyshow_dw"
+                 data-showtogglebtn="true"
+                 data-zzfbtype="selectparams.zzfbType"
+                 data-isunfold="selectparams.isunfold"
+            ></div>
+        </div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg3 col-md-3 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg3 col-md-3">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="selectparams.dzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 dj-label">
+                                        <label>姓名</label>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="name" class="form-control" type="text"
+                                                       ng-model="selectparams.name"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div>
+                                <button role-permission-code="memberList.btnSearch" class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <!--<button role-permission-code="memberList.btnAdd" class="btn btn-default1"-->
+                                <!--ng-click="addData()">新增-->
+                                <!--</button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button role-permission-code="memberList.btnAdd" class="btn btn-default1"
+                                    ng-click="addData()">新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body" style="min-height:400px;">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>姓名</th>
+                                    <th>所在党支部</th>
+                                    <th>性别</th>
+                                    <th>出生年月</th>
+                                    <th>职务</th>
+                                    <th>任职时间</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">
+                                        {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                    </td>
+                                    <td>{{it.xm}}</td>
+                                    <td>{{it.dzzmc}}</td>
+                                    <td class="text-center">{{it.hzmc}}</td>
+                                    <td class="text-center">{{it.csrq | date:'yyyy-MM-dd'}}</td>
+                                    <td class="text-center">{{it.zwmc}}</td>
+                                    <td class="text-center">{{it.rzsj | date:'yyyy-MM-dd'}}</td>
+                                </tr>
+                                <tr ng-if="dataList.length<=0">
+                                    <td colspan="8" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="zero-target-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList" zero-table-height>
+                                    <td class="text-center">
+                                        <button role-permission-code="memberList.btnEdit"
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="editData(it.id)"
+                                                title="编辑">
+                                            <!--<i class="material-icons td-icon">border_color</i>-->
+                                            编辑
+                                        </button>
+                                        <button role-permission-code="memberList.btnDel"
+                                                class="btn td-btn bg-pink waves-effect"
+                                                ng-click="deleteData(it.id)" title="删除">
+                                            <!--<i class="material-icons td-icon">delete_forever</i>-->
+                                            删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="1" style="text-align:center">无</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

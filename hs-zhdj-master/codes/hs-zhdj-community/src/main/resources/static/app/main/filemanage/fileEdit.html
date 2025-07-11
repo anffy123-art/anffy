@@ -1,0 +1,109 @@
+﻿
+<div id="dicmodal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div activate-input class="body">
+                <form class="form-horizontal" role="form" id="dicform"
+                      name="dicform" ng-submit="submit(dicform.$valid)" novalidate>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>所在目录</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line">
+                                   {{content.filetypename}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>编号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line"
+                                     ng-class="{ 'focused error' : dicform.filecode.$invalid &&  dicform.$submitted}">
+                                    <input type="number" name="filecode" ng-model="content.filecode" maxlength="100"
+                                           class="form-control"
+                                           ng-required="true"/>
+                                </div>
+                                <label ng-show="dicform.filecode.$invalid &&  dicform.$submitted"
+                                       class="error">必填.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>文件名称</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line"
+                                     ng-class="{ 'focused error' : dicform.filename.$invalid &&  dicform.$submitted}">
+                                    <input name="filename" ng-model="content.filename" type="text" class="form-control"
+                                           ng-required="true" />
+                                </div>
+                                <label ng-show="dicform.filename.$invalid &&  dicform.$submitted"
+                                       class="error">必填.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>排序</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line"
+                                     ng-class="{ 'focused error' : dicform.filecode2.$invalid &&  dicform.$submitted}">
+                                    <input type="number" name="filecode2" ng-model="content.filecode2" maxlength="100"
+                                           class="form-control"
+                                           ng-required="true"/>
+                                </div>
+                                <label ng-show="dicform.filecode2.$invalid &&  dicform.$submitted"
+                                       class="error">必填.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>文件</label>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <!--singlefile glyphicon  glyphicon-upload data-id="content.fileid" data-fileid="fid" data-readonly="false" data-typeparams="{types:['pdf'],errormsg:'只允许上传pdf'}"></singlefile-->
+                            <input size="60" class="file" type="file" ngf-select ng-model="content.file" name="file"
+                                   ngf-max-size="20MB" ng-change="valiFileType()">
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <a class="btn glyphicon glyphicon-upload" ng-hide="updata.updated" ng-click="upfile()"></a>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+
+                            <div ng-show="updata.isuping" class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="{{updata.progressPer}}"
+                                     aria-valuemin="0" aria-valuemax="100" ng-style="{width:updata.progressPer+'%'}"
+                                     style="min-width: 2em;">
+                                    {{updata.progressPer}}%
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 foot-btn">
+                            <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                            <button type="submit" class="btn btn-primary" form="dicform">保存</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

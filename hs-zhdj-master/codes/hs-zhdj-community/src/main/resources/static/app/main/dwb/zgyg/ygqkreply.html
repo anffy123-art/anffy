@@ -1,0 +1,77 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" novalidate
+              name="editForm">
+            <div panel-title data-title="'政工约稿信息'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>标题</th>
+                        <td colspan="3">
+                            {{dataModel.title}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>截止日期</th>
+                        <td>
+                            {{dataModel.closedate|date:'yyyy-MM-dd'}}
+                        </td>
+                        <th>所属类型</th>
+                        <td >
+                            {{dataModel.typename}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>要求</th>
+                        <td colspan="3"   >
+                           {{dataModel.ask|trustAsHtml}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <form class="form-horizontal" id="dydtform" name="dydtform" novalidate
+                  role="form">
+                <div class="table-responsive list-table-panel dsj_dydt" style="font-size: 16px;">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            约稿情况
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>名称</th>
+                            <th>开始月份</th>
+                            <th>结束月份</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="it in yg_dataList">
+                            <td align="center">
+                                {{it.title}}
+                            </td>
+                            <td align="center">
+                                {{it.begindate|date:'yyyy-MM-dd'}}
+                            </td>
+                            <td align="center">
+                                {{it.enddate|date:'yyyy-MM-dd'}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+
+            <div class=" list-table-panel" style="font-size: 16px; margin-bottom: 20px;">
+                <bsfiles ng-model="reqFileModel"/>
+            </div>
+            <div class="form_foot">
+                <button class="btn btn-default" ng-click="pagechange();" type="button">返回</button>
+                <button class="btn btn-primary" ng-if="showreply" ng-click="reply()" type="submit">回复</button>
+            </div>
+        </form>
+    </div>
+</div>

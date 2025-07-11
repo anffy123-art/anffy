@@ -1,0 +1,166 @@
+<style>
+    /*dj-table3*/
+    .dj-formtable > .user-table > tbody > tr > th {
+        width: 20%;
+    }
+
+    .dj-formtable > .user-table > tbody > tr > td {
+        width: 30% !important;
+    }
+
+    /*dj-table3*/
+    .dj-formtable > .dj-table3 > tbody > tr > th {
+        width: 16%;
+    }
+
+    .dj-formtable > .dj-table3 > tbody > tr > td {
+        width: 18% !important;
+    }
+
+    /*dj-table3*/
+    .dj-formtable > .dj-table-list > tbody > tr > th {
+        width: auto;
+        text-align: center;
+    }
+
+    .dj-formtable > .dj-table-list > tbody > tr > td {
+        width: auto;
+        text-align: center;
+    }
+</style>
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="dyuserform" novalidate>
+            <div panel-title data-title="'党员基本信息'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table dj-table3">
+                    <tr>
+                        <th>姓名</th>
+                        <td>
+                            {{uservm.xm}}
+                        </td>
+                        <th>性别</th>
+                        <td>
+                            {{extdata.XBMC}}
+                        </td>
+                        <th>出生日期</th>
+                        <td>
+                            {{uservm.csrq | date:'yyyy-MM-dd'}}
+                        </td>
+                        <td rowspan="5">
+                            <img ng-src="{{pictureurl}}" onerror="this.src='images/man.jpg'" width="48" height="48"
+                                 alt="User" style="width: 100px;height: 100px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>民族</th>
+                        <td>
+                            {{extdata.MZMC}}
+                        </td>
+                        <th>籍贯</th>
+                        <td>
+                            {{uservm.jg}}
+                        </td>
+                        <th>学历</th>
+                        <td>
+                            {{extdata.XLMC}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>现任职务</th>
+                        <td>
+                            {{extdata.ZWMC}}
+                        </td>
+                        <!--<th>党内职务</th>
+                        <td>
+                            {{extdata.DNZW}}
+                        </td>-->
+                        <th>专业职务</th>
+                        <td>
+                            {{extdata.JSZWMC}}
+                        </td>
+                        <th>政治面貌</th>
+                        <td>
+                            {{dyvm.RYZTMC}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>入党时间</th>
+                        <td>
+                            {{djxxModel.jrzgzzrq}}
+                        </td>
+                        <th>转正时间</th>
+                        <td>
+                            {{djxxModel.zzrq}}
+                        </td>
+                        <th>是否学生身份</th>
+                        <td>
+                            {{djxxFBModel.sflddy==null?"":(djxxFBModel.sflddy==1?"是":"否")}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所属党委</th>
+                        <td colspan="3">
+                            {{extdata.dwName}}
+                        </td>
+                        <th>是否失联党员</th>
+                        <td>
+                            {{djxxFBModel.sfsldy==null?"":(djxxFBModel.sfsldy==1?"是":"否")}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所属党支部</th>
+                        <td colspan="3">
+                            {{szdzbmc}}
+                        </td>
+                        <th>登录账号</th>
+                        <td colspan="2">
+                            {{mobile}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width: 18%;font-size: 12px">领导班子成员联系点</th>
+                        <td colspan="3">
+                            {{ldbzcylxd}}
+                        </td>
+                        <td colspan="3">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            
+            <!--<div panel-title data-title="'纪律处分情况'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table dj-table-list">
+                    <tr>
+                        <th class="col-1">序号</th>
+                        <th class="col-3">处分时间</th>
+                        <th class="col-3">处分种类</th>
+                        <th class="col-3">违纪行为</th>
+                    </tr>
+                    <tr ng-repeat="it in jlcfparams.datalist">
+                        <td scope="row">{{$index+1}}</td>
+                        <td>{{it.approvaldate|date:'yyyy-MM-dd'}}</td>
+                        <td>{{it.punishtypename}}</td>
+                        <td>{{it.offence}}</td>
+                    </tr>
+                    <tr ng-if="jlcfparams.ptotal==0">
+                        <td colspan="4" style="text-align:center">暂无数据</td>
+                    </tr>
+                </table>
+                <pagination data-pageindex="jlcfparams.pageindex" ng-if="jlcfparams.ptotal>jlcfparams.pagesize"
+                            data-pagesize="jlcfparams.pagesize"
+                            data-ptotal="jlcfparams.ptotal"></pagination>
+            </div>-->
+
+            
+
+
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+            </div>
+        </form>
+    </div>
+</div>

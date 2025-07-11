@@ -1,0 +1,124 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="selectparams.selectdzzdm" data-selectdzzmc="selectparams.selectdzzmc"
+             data-isshowxz="0"
+             data-parentcode="selectparams.parentcode"
+             data-parentname="selectparams.parentname"
+             data-dzzdm="selectparams.szdzzdm" data-userid="selectparams.userid"
+             data-dzzmc="selectparams.szdzzmc"
+             data-showtogglebtn="true"
+             data-onlyshowdw="selectparams.onlyshow_dw"
+             data-zzfbtype="selectparams.zzfbType"
+             data-isunfold="selectparams.isunfold"
+             data-defaultselected="selectparams.defaultselected"
+        ></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="selectparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>年度</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-change="search()"
+                                                        ng-model="selectparams.year"
+                                                        ng-options="type.dickey as type.dicvalue for type in ndList"
+                                                        class="form-control"
+                                                        name="year">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+
+                                <button  class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button class="btn  btn-default1"
+                                    ng-click="export()">导出
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>所属党组织</th>
+                                    <th>年度</th>
+                                    <th>问题总数</th>
+                                    <th>政策制度</th>
+                                    <th>职工收入</th>
+                                    <th>生产生活</th>
+                                    <th>福利待遇</th>
+                                    <th>工作相关</th>
+                                    <th>其它诉求</th>
+                                    <th>销号数量</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">
+                                        {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                    </td>
+                                    <td>{{it.DZZMC}}</td>
+                                    <td class="text-center">{{it.YEAR}}</td>
+                                    <td class="text-center" url="userThoughtList" title='{{it["问题总数"]}}' link-tag params='{"dzzdm":"{{it["PARTYCODE"]}}","bt" :"{{selectparams.year}}-01-01","et" :"{{selectparams.year}}-12-31"}' ></td>
+                                    <td class="text-center" url="userThoughtList" title='{{it["政策制度"]}}' link-tag params='{"dzzdm":"{{it["PARTYCODE"]}}","bt" :"{{selectparams.year}}-01-01","et" :"{{selectparams.year}}-12-31","qtype":"1"}' ></td>
+                                    <td class="text-center" url="userThoughtList" title='{{it["职工收入"]}}' link-tag params='{"dzzdm":"{{it["PARTYCODE"]}}","bt" :"{{selectparams.year}}-01-01","et" :"{{selectparams.year}}-12-31","qtype":"2"}' ></td>
+                                    <td class="text-center" url="userThoughtList" title='{{it["生产生活"]}}' link-tag params='{"dzzdm":"{{it["PARTYCODE"]}}","bt" :"{{selectparams.year}}-01-01","et" :"{{selectparams.year}}-12-31","qtype":"3"}' ></td>
+                                    <td class="text-center" url="userThoughtList" title='{{it["福利待遇"]}}' link-tag params='{"dzzdm":"{{it["PARTYCODE"]}}","bt" :"{{selectparams.year}}-01-01","et" :"{{selectparams.year}}-12-31","qtype":"4"}' ></td>
+                                    <td class="text-center" url="userThoughtList" title='{{it["工作相关"]}}' link-tag params='{"dzzdm":"{{it["PARTYCODE"]}}","bt" :"{{selectparams.year}}-01-01","et" :"{{selectparams.year}}-12-31","qtype":"5"}' ></td>
+                                    <td class="text-center" url="userThoughtList" title='{{it["其它诉求"]}}' link-tag params='{"dzzdm":"{{it["PARTYCODE"]}}","bt" :"{{selectparams.year}}-01-01","et" :"{{selectparams.year}}-12-31","qtype":"6"}' ></td>
+                                    <td class="text-center" url="userThoughtList" title='{{it["销号数量"]}}' link-tag params='{"dzzdm":"{{it["PARTYCODE"]}}","bt" :"{{selectparams.year}}-01-01","et" :"{{selectparams.year}}-12-31","dtype":1}' ></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

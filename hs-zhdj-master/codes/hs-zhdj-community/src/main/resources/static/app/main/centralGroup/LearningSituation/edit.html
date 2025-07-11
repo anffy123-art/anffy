@@ -1,0 +1,159 @@
+<style>
+    .mt_topic {
+        display: flex;
+        flex-flow: wrap;
+    }
+
+    .col_margin_bottom_0 {
+        margin-bottom: 0px !important;
+    }
+
+    .panel-danger {
+        border: 1px solid #ddd !important;;
+    }
+
+    .panel-group .panel-danger .panel-title {
+        background-color: #ddd !important;
+        color: #F44336;
+    }
+
+</style>
+<div class="card">
+    <titlemenu data-parentno="parentUrl"></titlemenu>
+    <div activate-input activate-select class="body">
+        <form class="form-horizontal" role="form"
+              name="editForm" novalidate>
+              <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>计划名称</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" name="name" ng-model="changevm.name" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>发送单位</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="hidden" name="sendDepartmentId" ng-model="changevm.sendDepartmentId" class="form-control"/>
+                                <input type="text" name="sendDepartmentName" ng-model="changevm.sendDepartmentName" readonly class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>要求</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <textarea class="form-control" name="requirement" ng-model="changevm.requirement" rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>学习计划类型</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select class="form-control show-tick" ng-model="changevmTypeCode"
+                                        ng-options="type.label for type in roleConfigList"
+                                        name="typeCode"
+                                        ng-required="true">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>完成时间</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" name="endtime" ng-model="changevm.endTime"
+                                    class="form-control"
+                                    format="yyyy-mm-dd hh:mm:ss"
+                                    data-min-view="0" bs-datetimepicker
+                                    ng-required="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>计划内容</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <textarea class="form-control" name="content" ng-model="changevm.content" rows="5"></textarea>
+                                <input type="hidden" name="state" ng-model="changevm.state" value="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive list-table-panel" style="font-size: 16px">
+                        <div class="list-table-title">
+                            <div class="table-title" >
+                                接收党总支（共105个）
+                            </div>
+                            <div class="table-tool">
+                                <button type="button" class="btn btn-primary dropdown-toggle" title="全部" ng-click="selectPartyCommitteeFull()">
+                                    <span></span>全部
+                                </button>
+                                <button type="button" class="btn btn-primary dropdown-toggle" title="选择" ng-click="selectPartyCommittee()">
+                                    <span></span>选择
+                                </button>
+                            </div>
+                        </div>
+                        <div class="outoflow" style="max-height: 300px;">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>党总支名称</th>
+                                    <!--<th>接收人(秘书)</th>-->
+                                    <!--<th>接收时间</th>-->
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in receiveDWs">
+                                    <th scope="row">{{$index+1}}</th>
+                                    <th>{{it.dwName}}</th>
+                                    <!--<th>{{it.secretaryNames}}</th>-->
+                                    <!--<th>{{it.receiveTime}}</th>-->
+                                    <th>
+                                        <button class="btn td-btn bg-pink waves-effect"
+                                                ng-click="deleteReceiveDWs($index)" title="删除">
+                                            <!--<i class="material-icons td-icon">delete_forever</i>-->
+                                            删除
+                                        </button>
+                                    </th>
+                                </tr>
+                                <tr ng-if="receiveDWs.length<=0">
+                                    <td colspan="5" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit" class="btn btn-primary" ng-click="submitData(this.editForm)">保存
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

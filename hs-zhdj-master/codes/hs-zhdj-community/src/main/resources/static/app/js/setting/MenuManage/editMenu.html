@@ -1,0 +1,275 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px;">
+    <div class="modal-dialog" role="document" style="width:70%">
+        <!--<div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{title}}</h3>
+
+            </div>
+            <script type="text/ng-template" id="tree.html">
+                <li class="row" style="border-bottom:2px solid #f5f5f5; padding:8px 0px">
+
+                    <span style="display:inline-block;">
+                        <a href="" class="glyphicon {{menu.isExpand ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'}}" ng-click="loadChildMenu(menu)"></a>
+                        <span class="ModulesSpan" style="cursor: pointer;" ng-click="loadChildMenu(menu)">{{menu.MenuName}}</span>
+                    </span>
+
+                </li>
+                <div ng-hide="!menu.isExpand">
+                    <div class="treeitem" ng-repeat="menu in menu.childMenus" ng-include="'tree.html'" style="cursor: pointer;"></div>
+                </div>
+
+            </script>
+            <form class="form-horizontal formtable1 panel-body modal-body" ng-submit="saveMenu()" role="form" name="editMenuForm" style="padding: 10px; margin: 10px; " ng-controller="MenuManageCtrl" novalidate>
+                <table class="table table-bordered tform">
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>父级菜单：</th>
+                        <td>
+                            <label class="input-group">
+                                <input name="ParentMenu" type="text" ng-model="edit.menuParentName" class="form-control" ng-required="true" ng-disabled="true" />
+                                <span class="input-group-addon" ng-click="selectParent()"><i class="glyphicon glyphicon-zoom-in"></i></span>
+
+                            </label>
+
+                        </td>
+                        <th class="col-md-2"><span style="color:red">*</span>菜单排序：</th>
+                        <td>
+                            <input name="MenuOrder" type="number" ng-model="menu.menuorder" class="form-control" ng-required="true" value={{menu.menuorder}} />
+
+                        </td>
+
+
+
+
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>菜单名称：</th>
+                        <td>
+                            <input name="menuname" type="text" ng-model="menu.menuname" class="form-control" ng-required="true" value={{menu.menuname}} ng-disabled="menu.menuname=='菜单管理'" />
+
+                        </td>
+                        <th class="col-md-2"><span style="color:red">*</span>菜单编号：</th>
+                        <td>
+                            <input name="menuno" type="text" ng-model="menu.menuno" class="form-control" ng-required="true" />
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>叶节点：</th>
+
+                        <td>
+                            <label><input name="isleaf" type="radio" ng-model="menu.isleaf" value="1" ng-checked="menu.isleaf==1" />是 </label>
+                            <label><input name="isleaf" type="radio" ng-model="menu.isleaf" value="0" ng-checked="!menu.isleaf==1" />否 </label>
+
+                        </td>
+
+                        <th class="col-md-2"><span style="color:red">*</span>菜单显示：</th>
+                        <td>
+                            <label><input name="isvisible" type="radio" ng-model="menu.isvisible" value="1" ng-checked="menu.isvisible==1" ng-disabled="menu.menuname=='菜单管理'" />显示 </label>
+                            <label><input name="isvisible" type="radio" ng-model="menu.isvisible" value="0" ng-checked="!menu.isvisible==1" ng-disabled="menu.menuname=='菜单管理'" />不显示 </label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">菜单图标：</th>
+                        <td>
+                            <input name="menupic" type="text" ng-model="menu.menupic" class="form-control" value={{menu.menupic}} />
+                        </td>
+                        <th class="col-md-2">菜单描述：</th>
+                        <td>
+                            <input name="menudesc" type="text" ng-model="menu.menudesc" class="form-control" value={{menu.menudesc}} />
+                        </td>
+                    </tr>
+
+                </table>
+                <div class="form_foot" style="text-align:center">
+
+                    <button id="submit" class="btn btn-danger" style="padding:4px 20px 4px 20px" type="submit" ng-disabled="editMenuForm.$invalid">提交</button>
+                    <button id="cancel" type="button" class="btn btn-default" style="padding:4px 20px 4px 20px" ng-click="$hide()">取消</button>
+                </div>
+            </form>
+
+        </div>-->
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{title}}</h3>
+            </div>
+            <div activate-input class="body">
+                <script type="text/ng-template" id="tree.html">
+                    <li class="row" style="border-bottom:2px solid #f5f5f5; padding:8px 0px">
+
+                    <span style="display:inline-block;">
+                        <a href=""
+                           class="glyphicon {{menu.isExpand ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'}}"
+                           ng-click="loadChildMenu(menu)"></a>
+                        <span class="ModulesSpan" style="cursor: pointer;" ng-click="loadChildMenu(menu)">{{menu.MenuName}}</span>
+                    </span>
+
+                    </li>
+                    <div ng-hide="!menu.isExpand">
+                        <div class="treeitem" ng-repeat="menu in menu.childMenus" ng-include="'tree.html'"
+                             style="cursor: pointer;"></div>
+                    </div>
+
+                </script>
+                <form class="form-horizontal" ng-submit="saveMenu()" role="form"
+                      name="editMenuForm" ng-controller="MenuManageCtrl" novalidate>
+                    <div class="row clearfix">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-control-label">
+                            <label><span style="color:red">*</span>父级菜单</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <div class="input-group" style="margin-bottom: 0px;">
+                                    <div class="form-line"
+                                         ng-class="{ 'focused error' : editMenuForm.ParentMenu.$invalid &&  editMenuForm.$submitted}">
+                                        <input name="ParentMenu" type="text" ng-model="edit.menuParentName"
+                                               class="form-control" ng-required="true" ng-disabled="true"/>
+                                    </div>
+                                    <span class="input-group-addon" ng-click="selectParent()">
+                                            <i class="material-icons">search</i>
+                                    </span>
+                                </div>
+                                <label ng-show="editMenuForm.ParentMenu.$invalid &&  editMenuForm.$submitted"
+                                       class="error">必填.</label>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-control-label">
+                            <label>菜单排序</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <div class="form-line"
+                                     ng-class="{ 'focused error' : editMenuForm.MenuOrder.$invalid &&  editMenuForm.$submitted}">
+                                    <input name="MenuOrder" type="number" ng-model="menu.menuorder" class="form-control"
+                                           ng-required="true" value={{menu.menuorder}}/>
+                                </div>
+                                <label ng-show="editMenuForm.MenuOrder.$invalid &&  editMenuForm.$submitted"
+                                       class="error">必填.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-control-label">
+                            <label>菜单名称</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <div class="form-line"
+                                     ng-class="{ 'focused error' : editMenuForm.menuname.$invalid &&  editMenuForm.$submitted}">
+                                    <input name="menuname" type="text" ng-model="menu.menuname" class="form-control"
+                                           ng-required="true" value={{menu.menuname}}
+                                           ng-disabled="menu.menuname=='菜单管理'"/>
+                                </div>
+                                <label ng-show="editMenuForm.menuname.$invalid &&  editMenuForm.$submitted"
+                                       class="error">必填.</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-control-label">
+                            <label>菜单编号</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <div class="form-line"
+                                     ng-class="{ 'focused error' : editMenuForm.menuno.$invalid &&  editMenuForm.$submitted}">
+                                    <input name="menuno" type="text" ng-model="menu.menuno" class="form-control"
+                                           ng-required="true"/>
+                                </div>
+                                <label ng-show="editMenuForm.menuno.$invalid &&  editMenuForm.$submitted"
+                                       class="error">必填.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-control-label">
+                            <label>叶节点</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="form-control-radio"
+                                 ng-class="{ 'focused error' : editMenuForm.isleaf.$invalid &&  editMenuForm.$submitted}">
+                                <input name="isleaf" type="radio" ng-model="menu.isleaf" value="1"
+                                       ng-checked="menu.isleaf==1" class="with-gap" id="isleaf1"/>
+                                <label for="isleaf1">是</label>
+                                <input name="isleaf" type="radio" ng-model="menu.isleaf" value="0"
+                                       ng-checked="!menu.isleaf==1" class="with-gap" id="isleaf2"/>
+                                <label for="isleaf2">否 </label>
+                            </div>
+                            <label ng-show="editMenuForm.isleaf.$invalid &&  editMenuForm.$submitted"
+                                   class="error">必填.</label>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-control-label">
+                            <label>菜单显示</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="form-control-radio"
+                                 ng-class="{ 'focused error' : editMenuForm.isvisible.$invalid &&  editMenuForm.$submitted}">
+                                <input name="isvisible" type="radio" ng-model="menu.isvisible" value="1"
+                                       ng-checked="menu.isvisible==1" ng-disabled="menu.menuname=='菜单管理'"
+                                       class="with-gap" id="isvisible1"/>
+                                <label for="isvisible1">显示</label>
+                                <input name="isvisible" type="radio" ng-model="menu.isvisible" value="0"
+                                       ng-checked="!menu.isvisible==1" ng-disabled="menu.menuname=='菜单管理'"
+                                       class="with-gap" id="isvisible2"/>
+                                <label for="isvisible2">不显示</label>
+                            </div>
+                            <label ng-show="editMenuForm.isvisible.$invalid &&  editMenuForm.$submitted"
+                                   class="error">必填.</label>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-control-label">
+                            <label>菜单图标</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input name="menupic" type="text" ng-model="menu.menupic" class="form-control"
+                                           value={{menu.menupic}}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-control-label">
+                            <label>菜单描述</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input name="menudesc" type="text" ng-model="menu.menudesc" class="form-control"
+                                           value={{menu.menudesc}}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 form-control-label">
+                            <label>是否打开新页面</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <div class="form-control-radio"
+                                 ng-class="{ 'focused error' : editMenuForm.isblank.$invalid &&  editMenuForm.$submitted}">
+                                <input name="isblank" type="radio" ng-model="menu.isblank" value="1"
+                                       ng-checked="menu.isblank==1" class="with-gap" id="isblank1"/>
+                                <label for="isblank1">是</label>
+                                <input name="isblank" type="radio" ng-model="menu.isblank" value="0"
+                                       ng-checked="!menu.isblank==1" class="with-gap" id="isblank2"/>
+                                <label for="isblank2">否 </label>
+                            </div>
+                            <label ng-show="editMenuForm.isblank.$invalid &&  editMenuForm.$submitted"
+                                   class="error">必填.</label>
+                        </div>
+                    </div>
+                    <div class="form_foot" style="text-align:center">
+                        <button id="submit" class="btn btn-danger" style="padding:4px 20px 4px 20px" type="submit"
+                                ng-disabled="editMenuForm.$invalid">提交
+                        </button>
+                        <button id="cancel" type="button" class="btn btn-default" style="padding:4px 20px 4px 20px"
+                                ng-click="$hide()">取消
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

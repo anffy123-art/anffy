@@ -1,0 +1,88 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div activate-input activate-select class="header search-header">
+                <div class="search-param-panel">
+                    <div class="search-input">
+                        <form class="form-horizontal">
+                            <div class="row clearfix form-inline">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <label>党总支名称</label>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                                <input name="dwName" class="form-control" type="text"
+                                                ng-model="selectReadedList.dwName"
+                                                placeholder=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <label>状态</label>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                                <select class="form-control show-tick" ng-model="selectReadedList.state"
+                                                        class="form-control"
+                                                        name="state">
+                                                    <option value="" selected>--全部--</option>
+                                                    <option value="1">已接收</option>
+                                                    <option value="0">未接收</option>
+                                                </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div>
+                            <button role-permission-code="selectReadedListList.btnSearch" class="btn btn-default1"
+                                    ng-click="selectReadedListSelect()">查询
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div activate-input class="body">
+                    <div class="table-responsive list-table-panel" style="font-size: 16px">
+                            <div class="outoflow" style="height: 350px;">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap" style="position:relative">
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>党总支名称</th>
+                                        <th>状态</th>
+                                        <th>接收时间</th>
+                                        <th>接收人</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="it in receivePcommListReaded">
+                                        <th>{{$index+1}}</th>
+                                        <th>{{it.dwName}}</th>
+                                        <th>{{it.state==0?'未接收':'已接收'}}</th>
+                                        <th>{{it.receiveTime | date:'yyyy-MM-dd'}}</th>
+                                        <th>{{it.receiveUserName}}</th>
+                                    </tr>
+                                    <tr ng-if="receivePcommListReaded.length<=0">
+                                        <td colspan="5" style="text-align:center">暂无数据</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

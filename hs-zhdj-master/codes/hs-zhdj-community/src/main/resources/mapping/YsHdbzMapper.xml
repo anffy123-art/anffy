@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.YsHdbzMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.YsHdbz">
+    <id column="HDBZID" jdbcType="VARCHAR" property="hdbzid" />
+    <result column="ND" jdbcType="DECIMAL" property="nd" />
+    <result column="CJSJ" jdbcType="TIMESTAMP" property="cjsj" />
+    <result column="CJR" jdbcType="VARCHAR" property="cjr" />
+    <result column="HDBZ" jdbcType="DECIMAL" property="hdbz" />
+    <result column="V1" jdbcType="DECIMAL" property="v1" />
+    <result column="V2" jdbcType="DECIMAL" property="v2" />
+    <result column="V3" jdbcType="DECIMAL" property="v3" />
+    <result column="V4" jdbcType="DECIMAL" property="v4" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    HDBZID, ND, CJSJ, CJR, HDBZ, V1, V2, V3, V4
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.YsHdbzExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ys_hdbz
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ys_hdbz
+    where HDBZID = #{hdbzid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ys_hdbz
+    where HDBZID = #{hdbzid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.YsHdbzExample">
+    delete from ys_hdbz
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.YsHdbz">
+    insert into ys_hdbz (HDBZID, ND, CJSJ, 
+      CJR, HDBZ, V1, V2, 
+      V3, V4)
+    values (#{hdbzid,jdbcType=VARCHAR}, #{nd,jdbcType=DECIMAL}, #{cjsj,jdbcType=TIMESTAMP}, 
+      #{cjr,jdbcType=VARCHAR}, #{hdbz,jdbcType=DECIMAL}, #{v1,jdbcType=DECIMAL}, #{v2,jdbcType=DECIMAL}, 
+      #{v3,jdbcType=DECIMAL}, #{v4,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.YsHdbz">
+    insert into ys_hdbz
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="hdbzid != null">
+        HDBZID,
+      </if>
+      <if test="nd != null">
+        ND,
+      </if>
+      <if test="cjsj != null">
+        CJSJ,
+      </if>
+      <if test="cjr != null">
+        CJR,
+      </if>
+      <if test="hdbz != null">
+        HDBZ,
+      </if>
+      <if test="v1 != null">
+        V1,
+      </if>
+      <if test="v2 != null">
+        V2,
+      </if>
+      <if test="v3 != null">
+        V3,
+      </if>
+      <if test="v4 != null">
+        V4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="hdbzid != null">
+        #{hdbzid,jdbcType=VARCHAR},
+      </if>
+      <if test="nd != null">
+        #{nd,jdbcType=DECIMAL},
+      </if>
+      <if test="cjsj != null">
+        #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cjr != null">
+        #{cjr,jdbcType=VARCHAR},
+      </if>
+      <if test="hdbz != null">
+        #{hdbz,jdbcType=DECIMAL},
+      </if>
+      <if test="v1 != null">
+        #{v1,jdbcType=DECIMAL},
+      </if>
+      <if test="v2 != null">
+        #{v2,jdbcType=DECIMAL},
+      </if>
+      <if test="v3 != null">
+        #{v3,jdbcType=DECIMAL},
+      </if>
+      <if test="v4 != null">
+        #{v4,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.YsHdbzExample" resultType="java.lang.Long">
+    select count(*) from ys_hdbz
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ys_hdbz
+    <set>
+      <if test="record.hdbzid != null">
+        HDBZID = #{record.hdbzid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nd != null">
+        ND = #{record.nd,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cjsj != null">
+        CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cjr != null">
+        CJR = #{record.cjr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hdbz != null">
+        HDBZ = #{record.hdbz,jdbcType=DECIMAL},
+      </if>
+      <if test="record.v1 != null">
+        V1 = #{record.v1,jdbcType=DECIMAL},
+      </if>
+      <if test="record.v2 != null">
+        V2 = #{record.v2,jdbcType=DECIMAL},
+      </if>
+      <if test="record.v3 != null">
+        V3 = #{record.v3,jdbcType=DECIMAL},
+      </if>
+      <if test="record.v4 != null">
+        V4 = #{record.v4,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ys_hdbz
+    set HDBZID = #{record.hdbzid,jdbcType=VARCHAR},
+      ND = #{record.nd,jdbcType=DECIMAL},
+      CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      CJR = #{record.cjr,jdbcType=VARCHAR},
+      HDBZ = #{record.hdbz,jdbcType=DECIMAL},
+      V1 = #{record.v1,jdbcType=DECIMAL},
+      V2 = #{record.v2,jdbcType=DECIMAL},
+      V3 = #{record.v3,jdbcType=DECIMAL},
+      V4 = #{record.v4,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.YsHdbz">
+    update ys_hdbz
+    <set>
+      <if test="nd != null">
+        ND = #{nd,jdbcType=DECIMAL},
+      </if>
+      <if test="cjsj != null">
+        CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cjr != null">
+        CJR = #{cjr,jdbcType=VARCHAR},
+      </if>
+      <if test="hdbz != null">
+        HDBZ = #{hdbz,jdbcType=DECIMAL},
+      </if>
+      <if test="v1 != null">
+        V1 = #{v1,jdbcType=DECIMAL},
+      </if>
+      <if test="v2 != null">
+        V2 = #{v2,jdbcType=DECIMAL},
+      </if>
+      <if test="v3 != null">
+        V3 = #{v3,jdbcType=DECIMAL},
+      </if>
+      <if test="v4 != null">
+        V4 = #{v4,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where HDBZID = #{hdbzid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.YsHdbz">
+    update ys_hdbz
+    set ND = #{nd,jdbcType=DECIMAL},
+      CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      CJR = #{cjr,jdbcType=VARCHAR},
+      HDBZ = #{hdbz,jdbcType=DECIMAL},
+      V1 = #{v1,jdbcType=DECIMAL},
+      V2 = #{v2,jdbcType=DECIMAL},
+      V3 = #{v3,jdbcType=DECIMAL},
+      V4 = #{v4,jdbcType=DECIMAL}
+    where HDBZID = #{hdbzid,jdbcType=VARCHAR}
+  </update>
+</mapper>

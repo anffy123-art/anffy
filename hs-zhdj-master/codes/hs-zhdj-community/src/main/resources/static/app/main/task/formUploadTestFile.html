@@ -1,0 +1,44 @@
+﻿<div ng-controller="formUploadTestFileCtrl">
+    <bsfiles ng-model="fileOption"/>
+    <table class="table table-bordered tform">
+        <tr>
+            <th class="col-md-1">序号</th>
+            <th>功能名称</th>
+            <th>状态</th>
+            <th ng-if="params.isAllPlan">负责人</th>
+        </tr>
+        <tr ng-repeat="item in items" ng-if="items.length>0">
+            <td>{{$index+1}}</td>
+            <td>{{item.SysDutyName}}</td>
+            <td>{{item.PlanState |isPlanState}}</td>
+            <td ng-if="params.isAllPlan">
+                {{item.TestUserName}}
+            </td>
+        </tr>
+        <tr ng-if="items.length<=0" style="text-align:center">
+            <td colspan="3">暂无数据</td>
+            <td ng-if="params.isAllPlan" colspan="4">暂无数据</td>
+        </tr>
+    </table>
+    {{title}}
+</div>
+
+<script type="text/ng-template" id="testfilelist.html">
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" style="width:80%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$hide()">
+                        ×
+                    </button>
+                    <h3 class="modal-title">{{title}}</h3>
+                </div>
+                <div class="modal-body">
+                    <bsfiles ng-model="fileOption"/>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</script>
+
+

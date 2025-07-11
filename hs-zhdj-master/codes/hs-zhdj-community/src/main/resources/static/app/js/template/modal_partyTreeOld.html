@@ -1,0 +1,42 @@
+<div activate-select class="card pt-header">
+    <div class="header " style="cursor: pointer;min-height: 35px;">
+        <div ng-show="!isShowZZFBType" class="pt-body" ng-click="loadParentParty()"
+             ng-class="selectdzzdm == gddwdm ?'party_active':''">
+            学院党组织
+        </div>
+        <div ng-show="isShowZZFBType && isshowtogglebtn" style="display: flex;">
+            <label style="padding-top: 5px;">分类：</label>
+            <div class="form-line" style="width: 150px;">
+                <select class="form-control show-tick" ng-model="zzfbtype"
+                        ng-options="type.dickey as type.dicvalue for type in zzfbTypeList"
+                        name="zzfbtype">
+                    <option value="" selected>--全校党组织--</option>
+                </select>
+            </div>
+        </div>
+        <a ng-show="showtogglebtn" class="sidebar-icon1 pt-sidebar-icon" ng-click="isshowtogglebtn=!isshowtogglebtn">
+            <i class="material-icons">keyboard_arrow_left</i>
+        </a>
+    </div>
+    <div class="body treebody">
+        <div class="menu" ng-style="{'height':height!=null?height+'vh':'74vh'}">
+            <script type="text/ng-template" id="nodes.html">
+                <li class="row">
+                    <div ng-click="loadChildParty(party)" ng-class="party.CHILDSHOW>0?'party_active':'' ">
+                        <i ng-if="party.CHILDCOUNT>0 && onlyshowdw!=2" class="material-icons">{{party.CHILDSHOW>0 ?
+                            'expand_more' :
+                            'chevron_right'}}</i>
+                        <span class="icon-name" ng-class="party.CHILDCOUNT>0?'':'icon-name-spac'">{{party.DZZMC}}</span>
+                    </div>
+                    <div ng-hide="party.CHILDSHOW==0">
+                        <div class="treeitem"
+                             ng-repeat="party in party.CHILDPARTYS" ng-include="'nodes.html'"></div>
+                    </div>
+                </li>
+            </script>
+            <ul class="pt-body" ng-repeat="party in treeList"
+                ng-include="'nodes.html'">
+            </ul>
+        </div>
+    </div>
+</div>

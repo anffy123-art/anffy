@@ -1,0 +1,110 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" novalidate
+              name="editForm">
+            <div panel-title data-title="'投稿信息填写'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>单位</th>
+                        <td colspan="3">
+                            <input class="form-control" maxlength="2000" name="title"
+                                   ng-model="dataModel.dwName"
+                                   ng-required="dwName" readonly type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>对应约稿</th>
+                        <td colspan="3">
+                            <div class="form-line form-line-select">
+                                <div class="input-group input-group-search" title="选择约稿">
+                                    <input bsselectdata-pro class="form-control" data-dataoptions="ygqkOptions"
+                                           name="ygmc" ng-model="dataModel.ygmc" readonly type="text"/>
+                                    <span bsselectdata-pro class="input-group-addon" ng-if="isReply"
+                                          data-dataoptions="ygqkOptions"><i
+                                            class="material-icons">search</i></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>标题</th>
+                        <td colspan="3"  ng-class="{ 'focused error' : this.editForm.title.$invalid &&  this.editForm.$submitted}">
+                            <input class="form-control" maxlength="2000" name="title"
+                                   ng-model="dataModel.title"
+                                   ng-required="true" type="text"/>
+                            <label class="error"
+                                   ng-show="this.editForm.title.$invalid &&  this.editForm.$submitted">必填.</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>栏目</th>
+                        <td ng-class="{ 'focused error' : this.editForm.topicvalue.$invalid &&  this.editForm.$submitted}">
+                            <select name="topicvalue" ng-model="dataModel.topicvalue"
+                                    ng-options="op.val as op.label for op in ndList"
+                                    ng-required="true"
+                                    required>
+                            </select>
+                            <label class="error"
+                                   ng-show="this.editForm.topicvalue.$invalid &&  this.editForm.$submitted">必填.</label>
+                        </td>
+                        <th>作者</th>
+                        <td ng-class="{ 'focused error' : this.editForm.author.$invalid &&  this.editForm.$submitted}">
+                            <input class="form-control" name="author"
+                                   ng-model="dataModel.author"
+                                   ng-required="true" type="text"/>
+                            <label class="error"
+                                   ng-show="this.editForm.author.$invalid &&  this.editForm.$submitted">必填.</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>职务</th>
+                        <td ng-class="{ 'focused error' : this.editForm.post.$invalid &&  this.editForm.$submitted}">
+                            <input class="form-control" name="post"
+                                   ng-model="dataModel.post"
+                                   ng-required="true" type="text"/>
+                            <label class="error"
+                                   ng-show="this.editForm.post.$invalid &&  this.editForm.$submitted">必填.</label>
+                        </td>
+                        <th></th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>文章附件(word/pdf)</th>
+                        <td colspan="3" ng-class="{ 'focused error' : dataModel.newsname==null&&  this.editForm.$submitted}">
+                            <a ng-href="/api/home/downloadFile/{{dataModel.newsid}}"
+                               ng-if="dataModel.newsid!=null">
+                                {{dataModel.newsname}}
+                            </a>
+                            <button class="btn btn-primary" ng-if="isEdit" ng-click="uploadword()"
+                                    type="button">上传
+                            </button>
+                            <label class="error"
+                                   ng-show="dataModel.newsname==null &&  this.editForm.$submitted">必须上传.</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>其他附件(照片)</th>
+                        <td colspan="3">
+                            <a ng-href="/api/home/downloadFile/{{dataModel.photoid}}"
+                               ng-if="dataModel.photoid!=null">
+                                {{dataModel.photoname}}
+                            </a>
+                            <button class="btn btn-primary" ng-if="isEdit" ng-click="uploadpicture()"
+                                    type="button">上传
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button class="btn btn-default" ng-click="pagechange();" type="button">取消</button>
+                <button class="btn btn-primary" ng-click="submitData(this.editForm.$valid)"  ng-if="!isshow" type="submit">暂存</button>
+                <button class="btn btn-primary" ng-click="submitData(this.editForm.$valid,this.dydtform.$valid)" ng-show="!isshow"
+                        role-permission-code="zgyg.btn.send" type="submit">发送
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

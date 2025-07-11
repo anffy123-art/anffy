@@ -1,0 +1,252 @@
+<titlemenu></titlemenu>
+<div ng-if="isDetail" class="dj-card">
+    <div class="dj-body" activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所属年度</th>
+                        <td ng-class="{ 'has-error' : this.editForm.year.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.year"
+                                    ng-options="type.dickey as type.dicvalue for type in yearList"
+                                    class="form-control"
+                                    name="year" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <span ng-show="this.editForm.year.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>所属季度</th>
+                        <td ng-class="{ 'has-error' : this.editForm.quarter.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.quarter"
+                                    ng-options="type.dickey as type.dicvalue for type in quarterList"
+                                    class="form-control"
+                                    name="quarter" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <span ng-show="this.editForm.quarter.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span ng-if="dataModel.cgjqtype==1">选择责任岗</span>
+                            <span ng-if="dataModel.cgjqtype==2">选择责任区</span>
+                        </th>
+                        <td ng-class="{ 'has-error' : this.editForm.name.$invalid &&  this.editForm.$submitted}">
+                            <div ng-if="dataModel.year!=null && dataModel.year!='' && dataModel.quarter!=null && dataModel.quarter!=''"
+                                 class="input-group input-group-search"
+                                 title="选择成员"
+                                 data-dataoptions="selectPostArea" bsselectdata-pro>
+                                <input name="name" type="text" ng-model="dataModel.name"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <div ng-if="dataModel.year==null || dataModel.year=='' || dataModel.quarter==null || dataModel.quarter==''"
+                                 class="input-group input-group-search"
+                                 ng-click="clickSelectPostArea()"
+                                 title="选择成员"
+                                 data-dataoptions="selectPostArea" bsselectdata-pro>
+                                <input name="name" type="text" ng-model="dataModel.name"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.name.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>
+                            <span ng-if="dataModel.cgjqtype==1">岗位人员</span>
+                            <span ng-if="dataModel.cgjqtype==2">负责人</span>
+                        </th>
+                        <td>
+                            {{dataModel.headusername}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所属支部</th>
+                        <td>
+                            {{dataModel.partyname}}
+                        </td>
+                        <th>总分</th>
+                        <td ng-class="{ 'has-error' : this.editForm.score.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="score" ng-model="dataModel.score" maxlength="50"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.score.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span ng-if="dataModel.cgjqtype==1">是否党员先锋岗</span>
+                            <span ng-if="dataModel.cgjqtype==2">是否红旗责任区</span>
+                        </th>
+                        <td>
+                            <input name="gqtype" type="radio" ng-checked="dataModel.gqtype==1"
+                                   ng-model="dataModel.gqtype" value="1"
+                                   class="with-gap" id="gqtype1"/>
+                            <label for="gqtype1">是</label>
+                            <input name="gqtype" type="radio" ng-model="dataModel.gqtype" value="0"
+                                   class="with-gap" ng-checked="dataModel.gqtype==0" id="gqtype2"/>
+                            <label for="gqtype2">否 </label>
+                        </td>
+                        <th>评定等级</th>
+                        <td ng-class="{ 'has-error' : this.editForm.scorelevel.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.scorelevel"
+                                    ng-options="type.dickey as type.dicvalue for type in scoreLevelList"
+                                    class="form-control"
+                                    name="scorelevel">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <span ng-show="this.editForm.scorelevel.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--<p style="color: red;">备注：如果该支部有修改过模板，则以该支部模板为准，否则使用集团默认模板。</p>
+            <div class="dj-formtable">
+                <div class="table-responsive list-table-panel">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            考核评分
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                        <thead>
+                        <tr>
+                            <th style="width: 70px;">序号</th>
+                            <th style="width: 100px;">项目</th>
+                            <th style="width: 300px;">考核内容和标准</th>
+                            <th style="width: 80px;">分值</th>
+                            <th style="width: 300px;">事由</th>
+                            <th style="width: 100px;">党支部初步加减分</th>
+                            <th style="width: 100px;">党员确认情况</th>
+                            <th style="width: 100px;">最终加减分</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="it in scoreDataList">
+                            <td scope="row" class="text-center">{{$index+1}}</td>
+                            <td>{{it.PROJECTNAME}}</td>
+                            <td>
+                            <textarea type="text" autocomplete="off" class="form-control" name="CONTENT_{{$index}}"
+                                      ng-model="it.CONTENT" rows="6" disabled>
+                            </textarea>
+                            </td>
+                            <td>
+                                {{it.SCOREREFER}}
+                            </td>
+                            <td>
+                             <textarea type="text" autocomplete="off" class="form-control" name="REASON_{{$index}}"
+                                       ng-model="it.REASON" rows="6">
+                            </textarea>
+                            </td>
+                            <td ng-class="{ 'has-error' : invalidFee($index,editForm,'INITIALSCORE') &&  this.editForm.$submitted}">
+                                <input type="number" autocomplete="off" class="form-control"
+                                       name="INITIALSCORE_{{$index}}"
+                                       ng-model="it.INITIALSCORE" ng-required="true"/>
+                            </td>
+                            <td ng-class="{ 'has-error' : invalidFee($index,editForm,'CGJQSCORECHECKTYPE') &&  this.editForm.$submitted}">
+                                <select class="form-control show-tick"
+                                        ng-model="it.CGJQSCORECHECKTYPE"
+                                        ng-options="type.dickey as type.dicvalue for type in cgjqScoreChecktypeList"
+                                        class="form-control"
+                                        name="CGJQSCORECHECKTYPE_{{$index}}" ng-required="true">
+                                </select>
+                            </td>
+                            <td ng-class="{ 'has-error' : invalidFee($index,editForm,'SCORE') &&  this.editForm.$submitted}">
+                                <input type="number" autocomplete="off" class="form-control" name="SCORE_{{$index}}"
+                                       ng-model="it.SCORE" ng-required="true"/>
+                            </td>
+                        </tr>
+                        <tr ng-if="scoreDataList.length<=0">
+                            <td colspan="9" style="text-align:center">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>-->
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button role-permission-code="postareaScoreAdd.btnSave" type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)" ng-if="isDetail">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div ng-if="!isDetail" class="dj-card">
+    <div class="dj-body" activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所属年度</th>
+                        <td>
+                            {{dataModel.year}}
+                        </td>
+                        <th>所属季度</th>
+                        <td>
+                            {{dataModel.quarter}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span ng-if="dataModel.cgjqtype==1">责任岗</span>
+                            <span ng-if="dataModel.cgjqtype==2">责任区</span>
+                        </th>
+                        <td>
+                            {{dataModel.name}}
+                        </td>
+                        <th>
+                            <span ng-if="dataModel.cgjqtype==1">岗位人员</span>
+                            <span ng-if="dataModel.cgjqtype==2">负责人</span>
+                        </th>
+                        <td>
+                            {{dataModel.headusername}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所属支部</th>
+                        <td>
+                            {{dataModel.partyname}}
+                        </td>
+                        <th>总分</th>
+                        <td>
+                            {{dataModel.score}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span ng-if="dataModel.cgjqtype==1">是否党员先锋岗</span>
+                            <span ng-if="dataModel.cgjqtype==2">是否红旗责任区</span>
+                        </th>
+                        <td>
+                            {{dataModel.gqtype==1?"是":"否"}}
+                        </td>
+                        <th>评定等级</th>
+                        <td>
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.scorelevel"
+                                    ng-options="type.dickey as type.dicvalue for type in scoreLevelList"
+                                    class="form-control"
+                                    name="scorelevel" disabled>
+                            </select>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+

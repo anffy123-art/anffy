@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DsjNdkpjgMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.DsjNdkpjg">
+    <id column="NDKPJGBS" jdbcType="VARCHAR" property="ndkpjgbs" />
+    <result column="ND" jdbcType="DECIMAL" property="nd" />
+    <result column="YX" jdbcType="DECIMAL" property="yx" />
+    <result column="LH" jdbcType="DECIMAL" property="lh" />
+    <result column="HG" jdbcType="DECIMAL" property="hg" />
+    <result column="BHG" jdbcType="DECIMAL" property="bhg" />
+    <result column="WCL" jdbcType="DECIMAL" property="wcl" />
+    <result column="JZP" jdbcType="DECIMAL" property="jzp" />
+    <result column="DWCX" jdbcType="DECIMAL" property="dwcx" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    NDKPJGBS, ND, YX, LH, HG, BHG, WCL, JZP, DWCX
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.DsjNdkpjgExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dsj_ndkpjg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dsj_ndkpjg
+    where NDKPJGBS = #{ndkpjgbs,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dsj_ndkpjg
+    where NDKPJGBS = #{ndkpjgbs,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.DsjNdkpjgExample">
+    delete from dsj_ndkpjg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.DsjNdkpjg">
+    insert into dsj_ndkpjg (NDKPJGBS, ND, YX, 
+      LH, HG, BHG, WCL, 
+      JZP, DWCX)
+    values (#{ndkpjgbs,jdbcType=VARCHAR}, #{nd,jdbcType=DECIMAL}, #{yx,jdbcType=DECIMAL}, 
+      #{lh,jdbcType=DECIMAL}, #{hg,jdbcType=DECIMAL}, #{bhg,jdbcType=DECIMAL}, #{wcl,jdbcType=DECIMAL}, 
+      #{jzp,jdbcType=DECIMAL}, #{dwcx,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.DsjNdkpjg">
+    insert into dsj_ndkpjg
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ndkpjgbs != null">
+        NDKPJGBS,
+      </if>
+      <if test="nd != null">
+        ND,
+      </if>
+      <if test="yx != null">
+        YX,
+      </if>
+      <if test="lh != null">
+        LH,
+      </if>
+      <if test="hg != null">
+        HG,
+      </if>
+      <if test="bhg != null">
+        BHG,
+      </if>
+      <if test="wcl != null">
+        WCL,
+      </if>
+      <if test="jzp != null">
+        JZP,
+      </if>
+      <if test="dwcx != null">
+        DWCX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ndkpjgbs != null">
+        #{ndkpjgbs,jdbcType=VARCHAR},
+      </if>
+      <if test="nd != null">
+        #{nd,jdbcType=DECIMAL},
+      </if>
+      <if test="yx != null">
+        #{yx,jdbcType=DECIMAL},
+      </if>
+      <if test="lh != null">
+        #{lh,jdbcType=DECIMAL},
+      </if>
+      <if test="hg != null">
+        #{hg,jdbcType=DECIMAL},
+      </if>
+      <if test="bhg != null">
+        #{bhg,jdbcType=DECIMAL},
+      </if>
+      <if test="wcl != null">
+        #{wcl,jdbcType=DECIMAL},
+      </if>
+      <if test="jzp != null">
+        #{jzp,jdbcType=DECIMAL},
+      </if>
+      <if test="dwcx != null">
+        #{dwcx,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.DsjNdkpjgExample" resultType="java.lang.Long">
+    select count(*) from dsj_ndkpjg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dsj_ndkpjg
+    <set>
+      <if test="record.ndkpjgbs != null">
+        NDKPJGBS = #{record.ndkpjgbs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nd != null">
+        ND = #{record.nd,jdbcType=DECIMAL},
+      </if>
+      <if test="record.yx != null">
+        YX = #{record.yx,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lh != null">
+        LH = #{record.lh,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hg != null">
+        HG = #{record.hg,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bhg != null">
+        BHG = #{record.bhg,jdbcType=DECIMAL},
+      </if>
+      <if test="record.wcl != null">
+        WCL = #{record.wcl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.jzp != null">
+        JZP = #{record.jzp,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dwcx != null">
+        DWCX = #{record.dwcx,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dsj_ndkpjg
+    set NDKPJGBS = #{record.ndkpjgbs,jdbcType=VARCHAR},
+      ND = #{record.nd,jdbcType=DECIMAL},
+      YX = #{record.yx,jdbcType=DECIMAL},
+      LH = #{record.lh,jdbcType=DECIMAL},
+      HG = #{record.hg,jdbcType=DECIMAL},
+      BHG = #{record.bhg,jdbcType=DECIMAL},
+      WCL = #{record.wcl,jdbcType=DECIMAL},
+      JZP = #{record.jzp,jdbcType=DECIMAL},
+      DWCX = #{record.dwcx,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.DsjNdkpjg">
+    update dsj_ndkpjg
+    <set>
+      <if test="nd != null">
+        ND = #{nd,jdbcType=DECIMAL},
+      </if>
+      <if test="yx != null">
+        YX = #{yx,jdbcType=DECIMAL},
+      </if>
+      <if test="lh != null">
+        LH = #{lh,jdbcType=DECIMAL},
+      </if>
+      <if test="hg != null">
+        HG = #{hg,jdbcType=DECIMAL},
+      </if>
+      <if test="bhg != null">
+        BHG = #{bhg,jdbcType=DECIMAL},
+      </if>
+      <if test="wcl != null">
+        WCL = #{wcl,jdbcType=DECIMAL},
+      </if>
+      <if test="jzp != null">
+        JZP = #{jzp,jdbcType=DECIMAL},
+      </if>
+      <if test="dwcx != null">
+        DWCX = #{dwcx,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where NDKPJGBS = #{ndkpjgbs,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.DsjNdkpjg">
+    update dsj_ndkpjg
+    set ND = #{nd,jdbcType=DECIMAL},
+      YX = #{yx,jdbcType=DECIMAL},
+      LH = #{lh,jdbcType=DECIMAL},
+      HG = #{hg,jdbcType=DECIMAL},
+      BHG = #{bhg,jdbcType=DECIMAL},
+      WCL = #{wcl,jdbcType=DECIMAL},
+      JZP = #{jzp,jdbcType=DECIMAL},
+      DWCX = #{dwcx,jdbcType=DECIMAL}
+    where NDKPJGBS = #{ndkpjgbs,jdbcType=VARCHAR}
+  </update>
+</mapper>

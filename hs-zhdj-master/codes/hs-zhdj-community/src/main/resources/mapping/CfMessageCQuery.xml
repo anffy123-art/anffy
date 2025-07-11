@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.CfMessageCQuery">
+    <select id="selectMessageList" resultType="java.util.HashMap">
+        select m.MESSAGEID,m.MSGTITLE,m.URL,m.FROMUSER,m.TOUSER,m.SENDTIME,m.STATE,m.OPERATETIME,
+        m.OPERATESTATE,m.SYNCSTATE,m.BUSINESSID,m.MESSAGETYPE,m.SERVICEID,m.SERVICESTATE,m.SERVICEUPDATATIME,
+        u.username as FROMUSERNAME from CF_MESSAGE m
+        left join cf_users u on m.FROMUSER=u.userid
+        where OPERATESTATE <![CDATA[ <> ]]> 'D'
+        and m.TOUSER=#{userId}
+        <if test="state != null">
+            and m.state=#{state}
+        </if>
+        <if test="title !=null and title !=''">
+            and m.MSGTITLE like concat('%',#{title},'%')
+        </if>
+        order by m.sendtime desc
+    </select>
+
+    <!--删除通知-->
+    <update id="DeleteMessageByBusinessId" parameterType="java.lang.String">
+        update CF_MESSAGE set OPERATESTATE='D',OPERATETIME=sysdate,SYNCSTATE='N' where 1=1
+        and OPERATESTATE <![CDATA[ <> ]]> 'D'
+        and businessId=#{businessId}
+        <if test="messageType != null">
+            and messageType=#{messageType}
+        </if>
+    </update>
+</mapper>

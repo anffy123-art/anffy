@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.CfUserappinfoMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.CfUserappinfo">
+    <id column="USERAPPINFOID" jdbcType="VARCHAR" property="userappinfoid" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="REFUSERID" jdbcType="VARCHAR" property="refuserid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    USERAPPINFOID, USERNAME, REFUSERID
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.CfUserappinfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cf_userappinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cf_userappinfo
+    where USERAPPINFOID = #{userappinfoid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cf_userappinfo
+    where USERAPPINFOID = #{userappinfoid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.CfUserappinfoExample">
+    delete from cf_userappinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.CfUserappinfo">
+    insert into cf_userappinfo (USERAPPINFOID, USERNAME, REFUSERID
+      )
+    values (#{userappinfoid,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{refuserid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.CfUserappinfo">
+    insert into cf_userappinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userappinfoid != null">
+        USERAPPINFOID,
+      </if>
+      <if test="username != null">
+        USERNAME,
+      </if>
+      <if test="refuserid != null">
+        REFUSERID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userappinfoid != null">
+        #{userappinfoid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="refuserid != null">
+        #{refuserid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.CfUserappinfoExample" resultType="java.lang.Long">
+    select count(*) from cf_userappinfo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cf_userappinfo
+    <set>
+      <if test="record.userappinfoid != null">
+        USERAPPINFOID = #{record.userappinfoid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null">
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refuserid != null">
+        REFUSERID = #{record.refuserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cf_userappinfo
+    set USERAPPINFOID = #{record.userappinfoid,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      REFUSERID = #{record.refuserid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.CfUserappinfo">
+    update cf_userappinfo
+    <set>
+      <if test="username != null">
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="refuserid != null">
+        REFUSERID = #{refuserid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USERAPPINFOID = #{userappinfoid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.CfUserappinfo">
+    update cf_userappinfo
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      REFUSERID = #{refuserid,jdbcType=VARCHAR}
+    where USERAPPINFOID = #{userappinfoid,jdbcType=VARCHAR}
+  </update>
+</mapper>

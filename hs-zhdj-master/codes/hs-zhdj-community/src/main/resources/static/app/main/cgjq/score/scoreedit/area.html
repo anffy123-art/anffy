@@ -1,0 +1,183 @@
+<div activate-input activate-select class="header search-header">
+    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+    <div class="search-param-panel">
+        <div class="search-input">
+            <form class="form-horizontal">
+                <div class="row clearfix form-inline">
+                    <div class="col-lg-2 col-md-2 dj-label">
+                        <label>当前选中组织</label>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <div class="input-group input-group-search">
+                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                           ng-model="selectparams.selectdzzmc" class="form-control"
+                                           ng-disabled="true"/>
+                                    <span class="input-group-addon"
+                                          ng-click="setisunfold()">选择</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 dj-label">
+                        <label>责任区名称</label>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input class="form-control" type="text" ng-keypress="($event.which === 13)?search(2):0"
+                                       ng-model="area_selectparams.name"
+                                       placeholder=""/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 dj-label">
+                        <label>负责人</label>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input class="form-control" type="text" ng-keypress="($event.which === 13)?search(2):0"
+                                       ng-model="area_selectparams.headUserName"
+                                       placeholder=""/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix form-inline" ng-show="isShow">
+                    <div class="col-lg-2 col-md-2 dj-label">
+                        <label>年度</label>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select class="form-control show-tick" ng-model="area_selectparams.year" ng-change="search(2)"
+                                        ng-options="type.dickey as type.dicvalue for type in yearList"
+                                        class="form-control"
+                                        name="year">
+                                    <option value="" selected>--全部--</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 dj-label">
+                        <label>季度</label>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select class="form-control show-tick" ng-model="area_selectparams.quarter" ng-change="search(2)"
+                                        ng-options="type.dickey as type.dicvalue for type in quarterList"
+                                        class="form-control"
+                                        name="quarter">
+                                    <option value="" selected>--全部--</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 dj-label">
+                        <label>是否红旗责任区</label>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select class="form-control show-tick"
+                                        ng-model="area_selectparams.gqtype"
+                                        ng-options="type.dickey as type.dicvalue for type in boolList"
+                                        class="form-control"
+                                        name="gqtype">
+                                    <option value="" selected>--全部--</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="search-btn" style="margin-right: 20px;">
+            <div style="min-width: 13em">
+                <span class="moreSpan" ng-click="isShowClick()" style='padding-right:1em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>
+                <button  class="btn btn-default1"
+                        ng-click="search(2)">查询
+                </button>
+                <button  class="btn btn-default1 btn-reset"
+                        ng-click="reset()">重置
+                </button>
+                <!--<button role-permission-code="postareaScoreList.btnAdd" class="btn btn-default1"-->
+                <!--ng-click="addData(2)">新增-->
+                <!--</button>-->
+            </div>
+        </div>
+    </div>
+    <div class="search-btn" style="margin-right: 20px;">
+        <!--<div selected-partyname data-selectdzzmc="selectparams.selectdzzmc"></div>-->
+        <div style="float: right">
+            <button role-permission-code="postareaScoreList.btnAdd" class="btn btn-default1"
+                    ng-click="addData(2)">新增
+            </button>
+            <button role-permission-code="postareaScoreList.btnExport" class="btn btn-default1"
+                    ng-click="export(2)">导出
+            </button>
+        </div>
+    </div>
+</div>
+<div class="body">
+    <div class="table-responsive list-table-panel">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>责任区名称</th>
+                <th>负责人</th>
+                <th>所在党支部</th>
+                <th>年度</th>
+                <th>季度</th>
+                <th>总分数</th>
+                <th>是否红旗责任区</th>
+                <th>评定等级</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in area_dataList">
+                <td scope="row" class="text-center">
+                    {{area_selectparams.pagesize*(area_selectparams.pageindex-1)+$index+1}}
+                </td>
+                <td>{{it.NAME}}</td>
+                <td>{{it.HEADUSERNAME}}</td>
+                <td>{{it.PARTYNAME}}</td>
+                <td class="text-center">{{it.YEAR}}</td>
+                <td class="text-center">{{it.QUARTER}}</td>
+                <td class="text-center">{{it.SCORE}}</td>
+                <td class="text-center">{{it.GQTYPE==1?"是":"否"}}</td>
+                <td class="text-center">{{it.SCORELEVELNAME}}</td>
+                <td class="text-center">
+                    <button
+                            class="btn td-btn bg-light-green waves-effect"
+                            ng-click="detailData(it.POSTAREASCOREID,it.CGJQTYPE)"
+                            title="查看">
+                        查看
+                    </button>
+                    <button role-permission-code="postareaScoreList.btnUpdate"
+                            class="btn td-btn bg-light-green waves-effect"
+                            ng-click="editData(it.POSTAREASCOREID,it.CGJQTYPE)"
+                            title="修改">
+                        修改
+                    </button>
+                    <button role-permission-code="postareaScoreList.btnDelete"
+                            class="btn td-btn bg-pink waves-effect"
+                            ng-click="deleteData(it.POSTAREASCOREID,2)" title="删除">
+                        删除
+                    </button>
+                </td>
+            </tr>
+            <tr ng-if="area_dataList.length<=0">
+                <td colspan="9" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination data-pageindex="area_selectparams.pageindex" data-pagesize="area_selectparams.pagesize"
+                data-ptotal="area_pageInfo.ptotal"></pagination>
+</div>

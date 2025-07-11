@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.CfSnMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.CfSn">
+    <id column="SNID" jdbcType="VARCHAR" property="snid" />
+    <result column="SNNUM" jdbcType="INTEGER" property="snnum" />
+    <result column="SNKEY" jdbcType="VARCHAR" property="snkey" />
+    <result column="PREFIX" jdbcType="VARCHAR" property="prefix" />
+    <result column="RESETTIME" jdbcType="TIMESTAMP" property="resettime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    SNID, SNNUM, SNKEY, PREFIX, RESETTIME
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.CfSnExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cf_sn
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cf_sn
+    where SNID = #{snid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cf_sn
+    where SNID = #{snid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.CfSnExample">
+    delete from cf_sn
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.CfSn">
+    insert into cf_sn (SNID, SNNUM, SNKEY, 
+      PREFIX, RESETTIME)
+    values (#{snid,jdbcType=VARCHAR}, #{snnum,jdbcType=INTEGER}, #{snkey,jdbcType=VARCHAR}, 
+      #{prefix,jdbcType=VARCHAR}, #{resettime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.CfSn">
+    insert into cf_sn
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="snid != null">
+        SNID,
+      </if>
+      <if test="snnum != null">
+        SNNUM,
+      </if>
+      <if test="snkey != null">
+        SNKEY,
+      </if>
+      <if test="prefix != null">
+        PREFIX,
+      </if>
+      <if test="resettime != null">
+        RESETTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="snid != null">
+        #{snid,jdbcType=VARCHAR},
+      </if>
+      <if test="snnum != null">
+        #{snnum,jdbcType=INTEGER},
+      </if>
+      <if test="snkey != null">
+        #{snkey,jdbcType=VARCHAR},
+      </if>
+      <if test="prefix != null">
+        #{prefix,jdbcType=VARCHAR},
+      </if>
+      <if test="resettime != null">
+        #{resettime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.CfSnExample" resultType="java.lang.Long">
+    select count(*) from cf_sn
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cf_sn
+    <set>
+      <if test="record.snid != null">
+        SNID = #{record.snid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.snnum != null">
+        SNNUM = #{record.snnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.snkey != null">
+        SNKEY = #{record.snkey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prefix != null">
+        PREFIX = #{record.prefix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resettime != null">
+        RESETTIME = #{record.resettime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cf_sn
+    set SNID = #{record.snid,jdbcType=VARCHAR},
+      SNNUM = #{record.snnum,jdbcType=INTEGER},
+      SNKEY = #{record.snkey,jdbcType=VARCHAR},
+      PREFIX = #{record.prefix,jdbcType=VARCHAR},
+      RESETTIME = #{record.resettime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.CfSn">
+    update cf_sn
+    <set>
+      <if test="snnum != null">
+        SNNUM = #{snnum,jdbcType=INTEGER},
+      </if>
+      <if test="snkey != null">
+        SNKEY = #{snkey,jdbcType=VARCHAR},
+      </if>
+      <if test="prefix != null">
+        PREFIX = #{prefix,jdbcType=VARCHAR},
+      </if>
+      <if test="resettime != null">
+        RESETTIME = #{resettime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SNID = #{snid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.CfSn">
+    update cf_sn
+    set SNNUM = #{snnum,jdbcType=INTEGER},
+      SNKEY = #{snkey,jdbcType=VARCHAR},
+      PREFIX = #{prefix,jdbcType=VARCHAR},
+      RESETTIME = #{resettime,jdbcType=TIMESTAMP}
+    where SNID = #{snid,jdbcType=VARCHAR}
+  </update>
+</mapper>

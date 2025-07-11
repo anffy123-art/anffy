@@ -1,0 +1,110 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="card">
+            <div class="header" dragable-header>
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{detailParams.title}}</h4>
+            </div>
+            <div activate-input activate-select class="body">
+                <div class="dj-formtable">
+                    <table class="dj-table">
+                        <tr>
+                            <th>学号/工号</th>
+                            <td>
+                                {{dataModel.userCode}}
+                            </td>
+                            <th>姓名</th>
+                            <td>
+                                {{dataModel.userName}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>所属党组织</th>
+                            <td colspan="3">
+                                {{dataModel.partyName}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>性别</th>
+                            <td>
+                                {{dataModel.sex}}
+                            </td>
+                            <th>出生年月</th>
+                            <td>
+                                {{dataModel.birthDate|date:'yyyy-MM-dd'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>籍贯</th>
+                            <td>
+                                {{dataModel.nativePlace}}
+                            </td>
+                            <th>民族</th>
+                            <td>
+                                {{dataModel.national}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>身份证号</th>
+                            <td>
+                                {{dataModel.idCard}}
+                            </td>
+                            <th>联系电话</th>
+                            <td>{{dataModel.contactMobile}}</td>
+                        </tr>
+                        <tr>
+                            <th>是否学生身份</th>
+                            <td>{{dataModel.isStudentName}}</td>
+                            <th>学历</th>
+                            <td>
+                                {{dataModel.educational}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>年级</th>
+                            <td>
+                                {{dataModel.gradeName}}
+                            </td>
+                            <th>班级</th>
+                            <td>
+                                {{dataModel.className}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>最高学历入学日期</th>
+                            <td>
+                                {{dataModel.enrollmentDate|date:'yyyy-MM-dd'}}
+                            </td>
+                            <th>最高学历毕业日期</th>
+                            <td>
+                                {{dataModel.graduateDate|date:'yyyy-MM-dd'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>入党申请日期</th>
+                            <td>
+                                {{dataModel.applyDate|date:'yyyy-MM-dd'}}
+                            </td>
+                            <th></th>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>入党申请书照片</th>
+                            <td colspan="3">
+                                <img-component data-filerefid="imgConfig.filerefid" data-filetypeid="imgConfig.filetypeid"
+                                               data-ismulti="imgConfig.ismulti" data-height="imgConfig.height"
+                                               data-readonly="imgConfig.readonly" data-img-list="imgConfig.imgList"
+                                               data-width="imgConfig.width"></img-component>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

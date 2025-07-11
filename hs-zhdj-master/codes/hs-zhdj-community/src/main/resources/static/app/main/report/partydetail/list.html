@@ -1,0 +1,113 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="treeparams.selectdzzdm" data-selectdzzmc="treeparams.selectdzzmc"
+             data-defaultselected="treeparams.defaultselected" data-isunfold="treeparams.isunfold" data-showdxz="treeparams.showdxz"></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="treeparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="treeparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>年度</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-model="selectparams.year"
+                                                        ng-change="search()"
+                                                        ng-options="type.dickey as type.dicvalue for type in yearList"
+                                                        class="form-control"
+                                                        name="year">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <button class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th rowspan="2">序号</th>
+                                    <th rowspan="2">组织名称</th>
+                                    <th rowspan="2">党总支数</th>
+                                    <!--<th rowspan="2">离退休<br>党总支数</th>-->
+                                    <th rowspan="2">综合<br>党支部数</th>
+                                    <th rowspan="2">院系<br>党支部数</th>
+                                    <!--<th rowspan="2">班组<br>党支部数</th>-->
+                                    <th rowspan="2">离退休<br>党支部数</th>
+                                    <!--<th rowspan="2">年度应换届<br>党支部数</th>-->
+                                    <!--<th rowspan="2">党支部<br>年度换届率</th>-->
+<!--                                    <th colspan="3">党支部书记数</th>-->
+                                </tr>
+<!--                                <tr>-->
+<!--                                    <th>专职</th>-->
+<!--                                    <th>兼职</th>-->
+<!--                                    <th>挂职副书记</th>-->
+<!--                                </tr>-->
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">
+                                        {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                    </td>
+                                    <td>{{it.DZZMC}}</td>
+                                    <td class="text-center"><a ng-click="showParty(it.DZZDM,'300','71')">{{it.NUM_DZZ_CJ}}</a></td>
+                                    <!--<td class="text-center"><a ng-click="showParty(it.DZZDM,'300','51')">{{it.NUM_DZZ_LTX}}</a></td>-->
+                                    <td class="text-center"><a ng-click="showParty(it.DZZDM,'400','21')">{{it.NUM_DZB_CJ}}</a></td>
+                                    <td class="text-center"><a ng-click="showParty(it.DZZDM,'400','71')">{{it.NUM_DZB_KS}}</a></td>
+                                    <!--<td class="text-center"><a ng-click="showParty(it.DZZDM,'400','13')">{{it.NUM_DZB_BZ}}</a></td>-->
+                                    <td class="text-center"><a ng-click="showParty(it.DZZDM,'400','51')">{{it.NUM_DZB_LTX}}</a></td>
+                                    <!--<td class="text-center"><a ng-click="showParty(it.DZZDM,'400',null,1)">{{it.NUM_YHJDZB}}</a></td>-->
+                                    <!--<td class="text-center">{{it.NUM_REPLACERATE}}%</td>-->
+<!--                                    <td class="text-center"><a ng-click="showPartyGroupUser(it.DZZDM,'1')">{{it.NUM_ZZ}}</a></td>-->
+<!--                                    <td class="text-center"><a ng-click="showPartyGroupUser(it.DZZDM,'2')">{{it.NUM_JZ}}</a></td>-->
+<!--                                    <td class="text-center"><a ng-click="showPartyGroupUser(it.DZZDM,'3')">{{it.NUM_GZ}}</a></td>-->
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="13" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

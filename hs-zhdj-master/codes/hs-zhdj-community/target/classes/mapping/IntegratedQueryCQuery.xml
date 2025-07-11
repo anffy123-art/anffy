@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.IntegratedQueryCQuery">
+    <!--查询党组织分布情况-->
+    <select id="departmentAdvanceList" resultType="java.util.HashMap">
+        select row_number() over (order by dep.DZZDM) as ROWNUMBER,dep.DZZDM,
+               dep.DZZMC,depinfo.ZZLB,deptype.HZMC as ZZLBMC,depinfo.JCZZFL,
+               depcate.HZMC as JCZZFLMC,
+               depinfo.ZGRS,dep.JLDZZRQ,ses.GJJMRQ,dep.ZZQKXXBS,
+               depinfo.DYZS as MEMBERCOUNT
+        from ZZ_ZZQKXX dep
+        inner join ZZ_ZZQKXXFB depinfo on dep.DZZDM=depinfo.DZZDM
+        inner join ZZZD_ZZLBDMNEW deptype on depinfo.ZZLB=deptype.BM
+        inner join ZZZD_JCZZFLNEW depcate on depinfo.JCZZFL=depcate.BM
+        left join ZZ_BZJCXX ses on dep.DZZDM=ses.DZZDM and depinfo.LDJTJC=ses.LDJTJC
+        where 1=1
+        <if test="dzzmc != null and dzzmc != ''">
+            and dep.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="dzzdm != null and dzzdm != ''">
+            and dep.DZZDM like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="zzlb != null and zzlb.length > 0">
+            and depinfo.ZZLB in
+            <foreach close=")" collection="zzlb" item="listItem" open="(" separator=",">
+                #{listItem}
+            </foreach>
+        </if>
+        <if test="jczzfl != null and jczzfl.length > 0">
+            and depinfo.JCZZFL in
+            <foreach close=")" collection="jczzfl" item="listItem" open="(" separator=",">
+                #{listItem}
+            </foreach>
+        </if>
+        <if test="jldzzrqStart != null and jldzzrqStart != ''">
+            and dep.JLDZZRQ <![CDATA[>=]]> #{jldzzrqStart}
+        </if>
+        <if test="jldzzrqEnd != null and jldzzrqEnd != ''">
+            and dep.JLDZZRQ <![CDATA[<=]]> #{jldzzrqEnd}
+        </if>
+        <if test="gjjmrqStart != null and gjjmrqStart != ''">
+            and ses.GJJMRQ <![CDATA[>=]]> #{gjjmrqStart}
+        </if>
+        <if test="gjjmrqEnd != null and gjjmrqEnd != ''">
+            and ses.GJJMRQ <![CDATA[<=]]> #{gjjmrqEnd}
+        </if>
+        <if test="memberCountStart != null">
+            and depinfo.DYZS <![CDATA[>=]]> #{memberCountStart}
+        </if>
+        <if test="memberCountEnd != null">
+            and depinfo.DYZS <![CDATA[<=]]> #{memberCountEnd}
+        </if>
+        <if test="djkpxxYear != null and djkpxxYear_dzb == null">
+            and exists (select 1
+              from DJ_DJKPXX eva
+              where eva.YEAR=#{djkpxxYear} and eva.DZZDM=dep.DZZDM
+                <if test="judgeLevel != null">
+                    and eva.JUDGELEVEL in
+                    <foreach close=")" collection="judgeLevel" item="listItem" open="(" separator=",">
+                        #{listItem}
+                    </foreach>
+                </if>
+                )
+        </if>
+        <if test="djkpxxYear_dzb != null and djkpxxYear == null">
+            and exists (select 1
+            from DJ_DJKPXX eva
+            where eva.YEAR=#{djkpxxYear_dzb} and eva.DZZDM=dep.DZZDM
+            <if test="judgeLevel_dzb != null">
+                and eva.JUDGELEVEL in
+                <foreach close=")" collection="judgeLevel_dzb" item="listItem" open="(" separator=",">
+                    #{listItem}
+                </foreach>
+            </if>
+            )
+        </if>
+        <if test="djkpxxYear != null and djkpxxYear_dzb != null">
+            and (
+            exists (select 1
+            from DJ_DJKPXX eva
+            where eva.YEAR=#{djkpxxYear} and eva.DZZDM=dep.DZZDM
+            <if test="judgeLevel != null">
+                and eva.JUDGELEVEL in
+                <foreach close=")" collection="judgeLevel" item="listItem" open="(" separator=",">
+                    #{listItem}
+                </foreach>
+            </if>
+            )
+            or
+            exists (select 1
+            from DJ_DJKPXX eva
+            where eva.YEAR=#{djkpxxYear_dzb} and eva.DZZDM=dep.DZZDM
+            <if test="judgeLevel_dzb != null">
+                and eva.JUDGELEVEL in
+                <foreach close=")" collection="judgeLevel_dzb" item="listItem" open="(" separator=",">
+                    #{listItem}
+                </foreach>
+            </if>
+            )
+            )
+        </if>
+        <if test="honourYear != null and honourlevel != null">
+            and exists (select 1
+              from DJ_DNPXXX honour
+              where honour.PXLX=2
+                and honour.DZZDM=dep.DZZDM
+                and extract(year from honour.HONOURTIME)=#{honourYear}
+                and honour.HONOURLEVEL=#{honourlevel}
+                <if test="honourType != null">
+                    and honour.HONOURTYPE in
+                    <foreach close=")" collection="honourType" item="listItem" open="(" separator=",">
+                        #{listItem}
+                    </foreach>
+                </if>
+                )
+        </if>
+        order by dep.DZZDM
+    </select>
+</mapper>

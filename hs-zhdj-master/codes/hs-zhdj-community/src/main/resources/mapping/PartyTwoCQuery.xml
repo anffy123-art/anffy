@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.PartyTwoCQuery">
+    <resultMap id="DjZtdrxxResultMap" type="com.px.partybuild.vo.DjZtdrxxVo">
+        <id column="ID" jdbcType="VARCHAR" property="id"/>
+        <result column="DZZMC" jdbcType="VARCHAR" property="dzzmc"/>
+        <result column="DZZDM" jdbcType="VARCHAR" property="dzzdm"/>
+        <result column="TITLE" jdbcType="VARCHAR" property="title"/>
+        <result column="ACTIVITYTIME" jdbcType="TIMESTAMP" property="activitytime"/>
+        <result column="LOCATION" jdbcType="VARCHAR" property="location"/>
+        <result column="SUBJECTTYPE" jdbcType="NUMERIC" property="subjecttype"/>
+        <result column="CREATEUSERID" jdbcType="VARCHAR" property="createuserid"/>
+        <result column="CREATEUSERNAME" jdbcType="VARCHAR" property="createusername"/>
+        <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="UPDATEUSERID" jdbcType="VARCHAR" property="updateuserid"/>
+        <result column="UPDATEUSERNAME" jdbcType="VARCHAR" property="updateusername"/>
+        <result column="OPERATETIME" jdbcType="TIMESTAMP" property="operatetime"/>
+        <result column="OPERATESTATE" jdbcType="VARCHAR" property="operatestate"/>
+        <result column="SYNCSTATE" jdbcType="VARCHAR" property="syncstate"/>
+        <result column="SUBJECTCONTENT" jdbcType="CLOB" property="subjectcontent"/>
+        <result column="subjectTypeName" jdbcType="VARCHAR" property="subjecttypename"/>
+        <result column="FILEID" jdbcType="VARCHAR" property="fileid"/>
+        <result column="FILEURL" jdbcType="VARCHAR" property="fileurl"/>
+        <result column="DWMC" jdbcType="VARCHAR" property="dwmc"/>
+    </resultMap>
+    <resultMap id="DjZzsrResultMap" type="com.px.partybuild.vo.DjZzsrVo">
+        <id column="ID" jdbcType="VARCHAR" property="id"/>
+        <result column="DZZMC" jdbcType="VARCHAR" property="dzzmc"/>
+        <result column="DZZDM" jdbcType="VARCHAR" property="dzzdm"/>
+        <result column="TITLE" jdbcType="VARCHAR" property="title"/>
+        <result column="ACTIVITYTIME" jdbcType="TIMESTAMP" property="activitytime"/>
+        <result column="LOCATION" jdbcType="VARCHAR" property="location"/>
+        <result column="SUBJECTTYPE" jdbcType="NUMERIC" property="subjecttype"/>
+        <result column="CREATEUSERID" jdbcType="VARCHAR" property="createuserid"/>
+        <result column="CREATEUSERNAME" jdbcType="VARCHAR" property="createusername"/>
+        <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="UPDATEUSERID" jdbcType="VARCHAR" property="updateuserid"/>
+        <result column="UPDATEUSERNAME" jdbcType="VARCHAR" property="updateusername"/>
+        <result column="OPERATETIME" jdbcType="TIMESTAMP" property="operatetime"/>
+        <result column="OPERATESTATE" jdbcType="VARCHAR" property="operatestate"/>
+        <result column="SYNCSTATE" jdbcType="VARCHAR" property="syncstate"/>
+        <result column="SUBJECTCONTENT" jdbcType="CLOB" property="subjectcontent"/>
+        <result column="subjectTypeName" jdbcType="VARCHAR" property="subjecttypename"/>
+        <result column="FILEID" jdbcType="VARCHAR" property="fileid"/>
+        <result column="FILEURL" jdbcType="VARCHAR" property="fileurl"/>
+        <result column="DWMC" jdbcType="VARCHAR" property="dwmc"/>
+    </resultMap>
+    <resultMap id="DjJlcfxxResultMap" type="com.px.partybuild.vo.DjJlcfxxVo">
+        <id column="ID" jdbcType="VARCHAR" property="id"/>
+        <result column="DZZMC" jdbcType="VARCHAR" property="dzzmc"/>
+        <result column="DZZDM" jdbcType="VARCHAR" property="dzzdm"/>
+        <result column="USERID" jdbcType="VARCHAR" property="userid"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="APPROVALDATE" jdbcType="TIMESTAMP" property="approvaldate"/>
+        <result column="OFFENCE" jdbcType="VARCHAR" property="offence"/>
+        <result column="PUNISHTYPE" jdbcType="NUMERIC" property="punishtype"/>
+        <result column="SYMBOL" jdbcType="VARCHAR" property="symbol"/>
+        <result column="UNIT" jdbcType="VARCHAR" property="unit"/>
+        <result column="CREATEUSERID" jdbcType="VARCHAR" property="createuserid"/>
+        <result column="CREATEUSERNAME" jdbcType="VARCHAR" property="createusername"/>
+        <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime"/>
+        <result column="UPDATEUSERID" jdbcType="VARCHAR" property="updateuserid"/>
+        <result column="UPDATEUSERNAME" jdbcType="VARCHAR" property="updateusername"/>
+        <result column="OPERATETIME" jdbcType="TIMESTAMP" property="operatetime"/>
+        <result column="OPERATESTATE" jdbcType="VARCHAR" property="operatestate"/>
+        <result column="SYNCSTATE" jdbcType="VARCHAR" property="syncstate"/>
+        <result column="DESCRIBE" jdbcType="CLOB" property="describe"/>
+        <result column="punishTypeName" jdbcType="VARCHAR" property="punishtypename"/>
+        <result column="YXKSRQ" jdbcType="TIMESTAMP" property="yxksrq"/>
+        <result column="YXJSRQ" jdbcType="TIMESTAMP" property="yxjsrq"/>
+    </resultMap>
+    <select id="selectDnpxxxList" resultType="java.util.HashMap">
+        select p.*,dc.DICVALUE as LevelName ,hndic.DICVALUE as honourTypeName, ry.USERNAME,ry.USERID from DJ_DNPXXX p
+        left join CF_DICTIONARY dc on p.HONOURLEVEL=dc.DICKEY and dc.DICTYPEKEY='positionLevel'
+        left join CF_DICTIONARY hndic on p.honourType=hndic.DICKEY and hndic.DICTYPEKEY='honourType'
+        left join DJ_dnpxry ry on p.ID=ry.dnpxid
+        where 1=1
+        <if test="dzzdm!=null and dzzdm !=''">
+            and p.dzzdm like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and p.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="username!=null and username !=''">
+            and ry.USERNAME like concat('%',#{username},'%')
+        </if>
+        <if test="userid!=null and userid !=''">
+            and #{userid} in (select userid from DJ_dnpxry t where t.dnpxid=p.ID) and #{userid} = ry.userid
+        </if>
+        <if test="honourLevel != null">
+            and p.honourLevel = #{honourLevel}
+        </if>
+        <if test="honourType != null">
+            and p.honourType = #{honourType}
+        </if>
+        <if test="honourName!=null and honourName !=''">
+            and p.honourName like concat('%',#{honourName},'%')
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and p.honourTime <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and p.honourTime <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(p.dzzdm,1,12) in(select dzzdm from ZZ_DZZFBQK where zzfb= #{zzfbType})
+        </if>
+        <if test="pxlx != null">
+            and p.pxlx = #{pxlx}
+        </if>
+        <if test="ssdzzdm!=null and ssdzzdm !=''">
+            and p.dzzdm =#{ssdzzdm}
+        </if>
+        order by p.HONOURTIME desc,ry.USERID desc
+    </select>
+
+    <select id="selectDnghbfList" resultType="java.util.HashMap">
+        select p.*,dc.DICVALUE as careTypeName ,
+        ghmx.CAREDATE,ghmx.ID as ghmxid,ghmx.HELPFORM,ghmx.HELPFORMTYPE,ghmx.AMOUNT,ghmx.CARECONTENT,dc2.DICVALUE as
+        helpformTypeName,zz.DZZMC as SZDZZMC,
+        (select count(1) from DJ_DNGHBFMX mx where mx.DNGHBFID=p.ID) as CARECOUNT
+        from DJ_dnghbf p
+        left join CF_DICTIONARY dc on p.careType=dc.DICKEY and dc.DICTYPEKEY='povertyType'
+        left join DJ_DNGHBFMX ghmx on p.ID=ghmx.DNGHBFID
+        left join VM_RYJBXX ry on p.USERID = ry.RYBM
+        left join ZZ_ZZQKXX zz on ry.SZDZBDM=ZZ.DZZDM
+        left join CF_DICTIONARY dc2 on ghmx.helpformType=dc2.DICKEY and dc2.DICTYPEKEY='helpformType'
+        where 1=1
+        <if test="dzzdm!=null and dzzdm !=''">
+            and p.dzzdm like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and p.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="username!=null and username !=''">
+            and p.username like concat('%',#{username},'%')
+        </if>
+        <if test="userid!=null and userid !=''">
+            and p.userid =#{userid}
+        </if>
+        <if test="careType != null">
+            and p.careType = #{careType}
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(p.dzzdm,1,12) in(select dzzdm from ZZ_DZZFBQK where zzfb= #{zzfbType})
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and ghmx.CAREDATE <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and ghmx.CAREDATE <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        <if test="helpformType != null">
+            and ghmx.helpformType = #{helpformType}
+        </if>
+        order by p.OperateTime desc
+    </select>
+    <select id="selectDnghbfDetailsList" resultType="java.util.HashMap">
+        select mx.*, dc.DICVALUE as careTypeName,dc2.DICVALUE as helpformTypeName
+        from DJ_DNGHBFMX mx
+        inner join DJ_dnghbf p on mx.DNGHBFID=p.ID
+        left join CF_DICTIONARY dc on p.careType=dc.DICKEY and dc.DICTYPEKEY='povertyType'
+        left join CF_DICTIONARY dc2 on mx.helpformType=dc2.DICKEY and dc2.DICTYPEKEY='helpformType'
+        where 1=1
+        <if test="dnbfid!=null and dnbfid !=''">
+            and p.id =#{dnbfid}
+        </if>
+        <if test="dzzdm!=null and dzzdm !=''">
+            and p.dzzdm like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and p.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="username!=null and username !=''">
+            and p.username like concat('%',#{username},'%')
+        </if>
+        <if test="userid!=null and userid !=''">
+            and p.userid =#{userid}
+        </if>
+        <if test="careType != null">
+            and p.careType = #{careType}
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(p.dzzdm,1,12) in(select dzzdm from ZZ_DZZFBQK where zzfb= #{zzfbType})
+        </if>
+        order by mx.CAREDATE desc
+    </select>
+    <select id="getDnghbfDetails" resultType="java.util.HashMap">
+        select p.DZZMC,p.USERNAME,p.USERID,mx.*, dc.DICVALUE as careTypeName,dc2.DICVALUE as helpformTypeName
+        from DJ_DNGHBFMX mx
+        inner join DJ_dnghbf p on mx.DNGHBFID=p.ID
+        left join CF_DICTIONARY dc on p.careType=dc.DICKEY and dc.DICTYPEKEY='povertyType'
+        left join CF_DICTIONARY dc2 on mx.helpformType=dc2.DICKEY and dc2.DICTYPEKEY='helpformType'
+        where 1=1
+        <if test="dnbfmxid!=null and dnbfmxid !=''">
+            and mx.id =#{dnbfmxid}
+        </if>
+
+        order by mx.CAREDATE desc
+    </select>
+    <select id="selectZtdrxxList" resultMap="DjZtdrxxResultMap">
+        select p.*,dc.DICVALUE as subjectTypeName,f.FILEID,f.FILEURL,
+        (case when dw2.ZZLB =100 then dw2.DZZMC else dw.DZZMC end) DWMC
+        from DJ_ztdrxx p
+        left join CF_DICTIONARY dc on p.subjectType=dc.DICKEY and dc.DICTYPEKEY='subjectType'
+        left join ( SELECT * FROM CF_FILE WHERE FILEID in (select min(FILEID) from CF_FILE GROUP BY FILEREFID)) f on
+        f.FILEREFID = p.ID
+        inner join ZZ_ZZQKXX dw on SUBSTR(p.DZZDM,1,12)=dw.DZZDM
+        inner join (
+        select zz2.DZZDM,zz2.DZZMC,fb2.ZZLB from ZZ_ZZQKXX zz2 inner join ZZ_ZZQKXXFB fb2 on zz2.DZZDM=fb2.DZZDM
+        ) dw2 on SUBSTR(p.DZZDM,1,15)=dw2.DZZDM
+        where 1=1
+        <if test="dzzdm!=null and dzzdm !=''">
+            and p.dzzdm like concat('',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and p.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="title!=null and title !=''">
+            and p.title like concat('%',#{title},'%')
+        </if>
+        <if test="subjectType != null">
+            and p.subjectType = #{subjectType}
+        </if>
+        <if test="location!=null and location !=''">
+            and p.location like concat('%',#{location},'%')
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and p.activityTime <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and p.activityTime <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(p.dzzdm,1,12) in(select dzzdm from ZZ_DZZFBQK where zzfb= #{zzfbType})
+        </if>
+        order by p.activityTime desc
+    </select>
+    <select id="selectZzsrList" resultMap="DjZzsrResultMap">
+        select p.*,dc.DICVALUE as subjectTypeName,f.FILEID,f.FILEURL,
+        (case when dw2.ZZLB =100 then dw2.DZZMC else dw.DZZMC end) DWMC
+        from DJ_zzsr p
+        left join CF_DICTIONARY dc on p.subjectType=dc.DICKEY and dc.DICTYPEKEY='ZzsrType'
+        left join ( SELECT * FROM CF_FILE WHERE FILEID in (select min(FILEID) from CF_FILE GROUP BY FILEREFID)) f on
+        f.FILEREFID = p.ID
+        inner join ZZ_ZZQKXX dw on SUBSTR(p.DZZDM,1,12)=dw.DZZDM
+        inner join (
+        select zz2.DZZDM,zz2.DZZMC,fb2.ZZLB from ZZ_ZZQKXX zz2 inner join ZZ_ZZQKXXFB fb2 on zz2.DZZDM=fb2.DZZDM
+        ) dw2 on SUBSTR(p.DZZDM,1,15)=dw2.DZZDM
+        where 1=1
+        <if test="dzzdm!=null and dzzdm !=''">
+            and p.dzzdm like concat('',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and p.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="title!=null and title !=''">
+            and p.title like concat('%',#{title},'%')
+        </if>
+        <if test="subjectType != null">
+            and p.subjectType = #{subjectType}
+        </if>
+        <if test="location!=null and location !=''">
+            and p.location like concat('%',#{location},'%')
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and p.activityTime <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and p.activityTime <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(p.dzzdm,1,12) in(select dzzdm from ZZ_DZZFBQK where zzfb= #{zzfbType})
+        </if>
+        order by p.activityTime desc
+    </select>
+    <select id="selectDjkpxxList" resultType="java.util.HashMap">
+        select p.*,dc.DICVALUE as judgeLevelName,dy.DICVALUE as yearName from DJ_djkpxx p
+        inner join ZZ_ZZQKXX zz on p.DZZDM=zz.DZZDM
+        left join ZZ_ZZQKXXFB cfb on zz.DZZDM=cfb.DZZDM
+        left join CF_DICTIONARY dc on p.judgeLevel=dc.DICKEY and dc.DICTYPEKEY='judgeLevel'
+        left join CF_DICTIONARY dy on p.YEAR=dc.DICKEY and dc.DICTYPEKEY='years'
+        where 1=1
+        <if test="dzzdm!=null and dzzdm !=''">
+            and p.dzzdm like concat('',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and p.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="judgeLevel != null">
+            and p.judgeLevel = #{judgeLevel}
+        </if>
+        <if test="year != null">
+            and p.year = #{year}
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(p.dzzdm,1,12) in(select dzzdm from ZZ_DZZFBQK where zzfb= #{zzfbType})
+        </if>
+        <if test="ssdzzdm!=null and ssdzzdm !=''">
+            and p.dzzdm =#{ssdzzdm}
+        </if>
+        <if test="showdw ==1">
+            and cfb.zzlb in('100','200')
+        </if>
+        <if test="showdw ==2">
+            and cfb.zzlb not in('100','200')
+        </if>
+        order by p.updateTime desc
+    </select>
+    <select id="selectParyDjkpList" resultType="java.util.HashMap">
+        select
+        p.DZZDM,p.DZZMC,kp.QUARTER1,kp.QUARTER2,kp.QUARTER3,kp.QUARTER4,kp.JUDGELEVEL,kp.id
+        from ZZ_ZZQKXX p
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join DJ_DJKPXX kp on p.DZZDM=kp.DZZDM and kp.YEAR=#{year}
+        where 1=1
+        and p.DZZDM like concat('%',#{dzzdm},'%')
+        <if test="showdxz!=null and showdxz == 0">
+            and fb.ZZLB not in('500')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and p.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="showdw!=null and showdw == 1">
+            and fb.ZZLB in('100','200') -- 党委
+        </if>
+        <if test="showdzb!=null and showdzb == 1">
+            and fb.ZZLB not in('100','200','500') -- 党支部
+        </if>
+        <if test="selectdzzdmList != null and selectdzzdmList.size()>0">
+            and p.DZZDM in
+            <foreach collection="selectdzzdmList" item="dm" index="index" open="(" close=")" separator=",">
+                #{dm}
+            </foreach>
+        </if>
+        order by p.DZZDM
+    </select>
+    <select id="selectJlcfxxList" resultMap="DjJlcfxxResultMap">
+        select p.*,dc.DICVALUE as punishTypeName,oc.DICVALUE as OFFENCE from DJ_jlcfxx p
+        left join CF_DICTIONARY dc on p.punishType=dc.DICKEY and dc.DICTYPEKEY='punishType'
+        left join CF_DICTIONARY oc on p.offenceType=oc.DICKEY and oc.DICTYPEKEY='offenceType'
+        where 1=1
+        <if test="dzzdm!=null and dzzdm !=''">
+            and p.dzzdm like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and p.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="offenceType!=null and offenceType !=''">
+            and p.offenceType = #{offenceType}
+        </if>
+        <if test="punishType != null">
+            and p.punishType = #{punishType}
+        </if>
+        <if test="username!=null and username !=''">
+            and p.username like concat('%',#{username},'%')
+        </if>
+        <if test="userid!=null and userid !=''">
+            and p.userid =#{userid}
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and p.approvalDate <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and p.approvalDate <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(p.dzzdm,1,12) in(select dzzdm from ZZ_DZZFBQK where zzfb= #{zzfbType})
+        </if>
+        order by p.OPERATETIME desc
+    </select>
+
+    <select id="selectTask" resultType="java.util.HashMap">
+        select tk.*,(select count(1) from DJ_taskUsers dtu where dtu.taskid=tk.id) USERNAME,
+        (select count(1) from DJ_taskUsers us where us.taskid=tk.id and us.Isreceive=1
+        <if test="taskuserid!=null and taskuserid !=''">
+            and us.userid=#{taskuserid}
+        </if>
+        )  "isreceive"
+        from DJ_task tk
+        left join
+        (select taskid, group_concat(USERNAME ORDER BY USERNAME,',') as USERNAME from DJ_taskUsers group by taskid) ry
+        on tk.id=ry.taskid
+        where 1=1
+        <if test="username!=null and username !=''">
+            and ry.username like concat('%',#{username},'%')
+        </if>
+        <if test="taskuserid!=null and taskuserid !=''">
+            and #{taskuserid} in (select userid from DJ_taskUsers t where t.taskid=tk.ID)
+        </if>
+        <if test="userid!=null and userid !=''">
+            and tk.CREATEUSERID= #{userid}
+        </if>
+
+        <if test="taskName!=null and taskName !=''">
+            and tk.taskName like concat('%',#{taskName},'%')
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and tk.endTime <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and tk.endTime <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        <if test="day != null and day != '' ">
+            and date_format(tk.endTime,'%Y-%m-%d') = #{day}
+        </if>
+        <if test="isreceive !=null ">
+            and (select count(1) from DJ_taskUsers us where us.taskid=tk.id and ifnull( us.Isreceive,0)=#{isreceive}) and us.userid=#{taskuserid})=1
+        </if>
+        order by tk.endTime desc
+    </select>
+    <select id="selectPartyTotalInfo" resultType="java.util.HashMap">
+        select  zz.dzzdm,ifnull(dr.drNumber,0) drNumber,date_format(date_format(bz.GJJMRQ,'%Y%m%d'),'%Y"年"%m"月"%d"日"') GJJMRQ,ifnull(jc.jcNumber,0) jcNumber
+               from ZZ_ZZQKXX zz
+        left join (select dzzdm,count(1) drNumber from DJ_ztdrxx where  date_format(ACTIVITYTIME,'%Y%m')=#{yearMonth} group by dzzdm) dr on zz.dzzdm = dr.dzzdm
+        left join (select dzzdm,max(GJJMRQ) GJJMRQ from Zz_Bzjcxx group by DZZDM) bz  on zz.dzzdm = bz.dzzdm
+        left join (select #{dzzdm} DZZDM,count(1) jcNumber from Zz_Bzjcxx  where DZZDM like concat('',#{dzzdm},'%') and  GJJMRQ like concat('%',#{year},'%') and DZZDM !=#{dzzdm}) jc on zz.dzzdm = jc.dzzdm          where zz.DZZDM=#{dzzdm}
+    </select>
+
+    <select id="selectfundsBudgetList" resultType="java.util.HashMap">
+        select p.*,zz.DZZMC,(p.activityFunds+p.rewardFunds) BUDGETFUNDS ,preyear.BUDGETFUNDS ACTUALEXPEND,(p.year-1)
+        pre,((p.activityFunds+p.rewardFunds)-preyear.BUDGETFUNDS)GRDATION from DJ_FundsBudget p
+        inner join ZZ_ZZQKXX zz on p.partyCode=zz.DZZDM
+        left join (select partycode,year, sum(activityFunds+rewardFunds) BUDGETFUNDS from DJ_FundsBudget group by
+        partyCode,year) preyear on p.partyCode=preyear.partycode and p.year-1=preyear.year -- 上一年记录
+        where 1=1
+        <if test="dzzdm!=null and dzzdm !=''">
+            and p.partyCode like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and zz.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="year != null">
+            and p.year = #{year}
+        </if>
+        order by p.updateTime desc
+    </select>
+
+    <select id="selectZtdrSummary" resultType="java.util.HashMap">
+
+        select r.* ,dr.主题党日,#{year} YEAR from ZZ_ZZQKXX z
+        inner join ZZ_ZZQKXXFB fb on z.DZZDM=fb.DZZDM
+        left join (
+        select zz.DZZDM PARTYCODE,
+        zz.DZZMC,
+        ifnull(sum(conut1),0) 党员大会,
+        ifnull(sum(conut2),0) 支委会,
+        ifnull(sum(conut3),0) 党小组会,
+        ifnull(sum(conut4),0) 党课
+        from ZZ_ZZQKXX zz
+        left join (
+        select dzzdm,
+        sum(case when SHYKTYPE = 1 then 1 else 0 end) as conut1,
+        sum(case when SHYKTYPE = 2 then 1 else 0 end) as conut2,
+        sum(case when SHYKTYPE = 3 then 1 else 0 end) as conut3,
+        sum(case when SHYKTYPE = 4 then 1 else 0 end) as conut4
+        from (
+        select m.PARTYCODE as dzzdm,
+        m.SHYKTYPE
+        from SHYK_MEETING m
+        where extract(year from m.BEGINTIME)=#{year}
+        and m.OPERATESTATE != 'D'
+        ) t1
+        group by dzzdm
+        ) u on zz.DZZDM = substr(u.dzzdm, 1, length(zz.DZZDM))
+        group by zz.DZZDM,zz.DZZMC
+        ) r on r.PARTYCODE=z.DZZDM -- 三会一课统计信息
+        left join (
+        select zz.DZZDM PARTYCODE,
+        zz.DZZMC,
+        ifnull(sum(ztcount),0) as 主题党日
+        from ZZ_ZZQKXX zz
+        left join (
+        select zx.DZZDM,sum(1) as ztcount from DJ_ZTDRXX zx
+        where extract(year from zx.ACTIVITYTIME)=#{year}
+        and OPERATESTATE!='D'
+        group by zx.DZZDM
+        )d on zz.DZZDM=substr(d.dzzdm, 1, length(zz.DZZDM))
+        group by zz.DZZDM,zz.DZZMC
+        )dr on dr.PARTYCODE=z.DZZDM -- 主题党日统计信息
+        where 1=1 and fb.ZZLB not in(500) and z.DZZDM like '001091209%'
+        <if test="partyCode!=null and partyCode !=''">
+            and z.DZZDM like concat('%',#{partyCode},'%')
+        </if>
+        order by SUBSTR(z.DZZDM,1,LENGTH(z.DZZDM)-3),z.DZZDM
+    </select>
+    <select id="selectMzpyjgList" resultType="java.util.HashMap">
+        select *
+        from ZZZD_PYJG
+    </select>
+    <select id="selectMzpyxxList" resultType="java.util.HashMap">
+        select zz.DZZMC,ry.XM, p.*,pyjg.HZMC as PYJGMC from ZZ_MZPYXX p
+        inner join ZZ_ZZQKXX zz on p.SZDZBDM=ZZ.DZZDM
+        inner join VM_RYJBXX ry on p.RYBM = ry.RYBM
+        inner join ZZZD_PYJG pyjg on p.PYJG=pyjg.BM
+        where 1=1
+        <if test="rybm != null and rybm != ''">
+            and p.rybm = #{rybm}
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and p.kzpyrq <![CDATA[ >= ]]> #{beginTime}
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and p.jspyrq <![CDATA[ <= ]]> #{endTime}
+        </if>
+        <if test="username!=null and username !=''">
+            and ry.xm like concat('%',#{username},'%')
+        </if>
+        <if test="dzzdm!=null and dzzdm !=''">
+            and p.SZDZBDM like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="pyjg != null and pyjg != ''">
+            and p.pyjg = #{pyjg}
+        </if>
+        order by p.KZPYRQ desc
+    </select>
+    <select id="selectleaderUserList" resultType="java.util.HashMap">
+        select rs.RYBM,rs.DZZMC,rs.XM
+        from (
+            select *
+            from (
+            select y.RYBM,u.XM,uz.DZZMC,y.ZLYTYPE
+            from ZZ_DZZZLY y
+            inner join VM_RYJBXX u on y.RYBM = u.RYBM
+            inner join ZZ_ZZQKXX uz on u.SZDZBDM = uz.dzzdm
+            union all
+            select c.RYBM,
+            u.XM,
+            uz.DZZMC,
+            6 ZLYTYPE
+            from ZZ_BZCYXX c
+            inner join ZZ_ZZQKXX z on c.dzzdm = z.dzzdm
+            inner join ZZ_ZZQKXXFB dzzfb on c.DZZDM = dzzfb.DZZDM and c.JC = dzzfb.LDJTJC
+            left join Zzzd_zwmc zwmc on c.zwmc = zwmc.bm
+            inner join VM_RYJBXX u on c.RYBM = u.RYBM
+            inner join ZZ_ZZQKXX uz on u.SZDZBDM = uz.dzzdm
+            where c.zwmc in ('H001', 'H040')
+            ) p
+            where 1=1
+            <if test="usertype!=null and usertype !=''">
+                and p.ZLYTYPE =#{usertype}
+            </if>
+            <if test="username != null and username != ''">
+                and p.xm like concat('%',#{username},'%')
+            </if>
+        ) rs group by rs.RYBM,rs.DZZMC,rs.XM
+    </select>
+    <insert id="batchInsertDnghbf">
+        insert into DJ_DNGHBF(ID, DZZMC, DZZDM,USERID,USERNAME, CREATEUSERID, CREATEUSERNAME, OPERATETIME, OPERATESTATE,
+        SYNCSTATE)
+        <foreach collection="dnghbfList" item="c" separator=" union all ">
+            select
+            #{c.id},#{c.dzzmc},#{c.dzzdm},#{c.userid},#{c.username},#{c.createuserid},#{c.createusername},#{c.operatetime},#{c.operatestate},#{c.syncstate}
+            FROM DUAL
+        </foreach>
+    </insert>
+    <insert id="batchInsertDnghbfmx">
+        insert into DJ_DNGHBFMX(id, dnghbfid, caredate, carecontent, helpformtype, amount)
+        <foreach collection="dnghbfmxList" item="c" separator=" union all ">
+            select #{c.id},#{c.dnghbfid},#{c.caredate},#{c.carecontent},#{c.helpformtype},#{c.amount} FROM DUAL
+        </foreach>
+    </insert>
+</mapper>

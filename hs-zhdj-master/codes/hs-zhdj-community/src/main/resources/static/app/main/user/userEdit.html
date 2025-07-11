@@ -1,0 +1,100 @@
+<div id="usermodal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="userfrom" name="userfrom" autocomplete="off"
+                      ng-submit="submitUser(userfrom.$valid)" novalidate>
+                    <table class="table-form table-bordered">
+                        <tr>
+                            <th><span style="color:red;">*</span>用户名称：</th>
+                            <td ng-class="{ 'has-error' : userfrom.name.$invalid &&  userfrom.$submitted}">
+                                <input type="text" name="name" ng-model="userinfovm.name" maxlength="100"
+                                       class="form-control" ng-required="true" autocomplete="off"/>
+                            </td>
+                            <th><span style="color:red;">*</span>登录帐号：</th>
+                            <td ng-class="{ 'has-error' : userfrom.userName.$invalid &&  userfrom.$submitted}">
+                                <input type="text" name="userName" ng-model="uservm.username" maxlength="100"
+                                       class="form-control" ng-required="true"
+                                />
+                            </td>
+                        </tr>
+                        <tr ng-if="params.type==0">
+                            <th><span style="color:red;">*</span>密码：</th>
+                            <td ng-class="{ 'has-error' : userfrom.pwd_default.$invalid &&  userfrom.$submitted}">
+                                <input type="text" name="pwd_default" ng-model="pwd.pwd_default" maxlength="100"
+                                       class="form-control" ng-required="true"/>
+                            </td>
+                            <th><span style="color:red;">*</span>确认密码：</th>
+                            <td ng-class="{ 'has-error' : userfrom.pwd_confirm.$invalid &&  userfrom.$submitted}">
+                                <input type="text" name="pwd_confirm" ng-model="pwd.pwd_confirm" maxlength="100"
+                                       class="form-control" ng-required="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>类型：</th>
+                            <td colspan="3"
+                                ng-class="{ 'has-error' : userfrom.usertype.$invalid &&  userfrom.$submitted}">
+                                <select ng-model="userinfovm.usertype"
+                                        ng-options="type.dickey as type.dicvalue for type in userTypeListForEdit"
+                                        class="form-control" ng-disabled="isCompanyUser"
+                                        ng-required="true"
+                                        name="usertype"
+                                >
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>所属园区：</th>
+                            <td colspan="3">
+                                <div class="input-group" ng-if="!isCompanyUser">
+                                    <input type="text"
+                                           name="parkIds" ng-model="selectpark.selectedLabeData"
+                                           class="form-control"
+                                           disabled/>
+                                    <span class="input-group-addon" data-dataoptions="selectpark" title="园区选择"
+                                          bsselectdata-pro><i class="glyphicon glyphicon-zoom-in"></i></span>
+                                </div>
+                                <span ng-if="isCompanyUser">{{selectpark.selectedLabeData}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>登录账号：</th>
+                            <td>
+                                <input type="text" name="mobile" ng-model="userinfovm.mobile" maxlength="100"
+                                       class="form-control"/>
+                            </td>
+                            <th>微信：</th>
+                            <td>
+                                <input type="text" name="wechat" ng-model="userinfovm.wechat" maxlength="100"
+                                       class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>邮箱：</th>
+                            <td colspan="3">
+                                <input type="text" name="email" ng-model="userinfovm.email"
+                                       maxlength="255" class="form-control"
+                                       ng-pattern="/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>职位：</th>
+                            <td colspan="3">
+                                <input type="text" name="position" ng-model="userinfovm.position" maxlength="100"
+                                       class="form-control"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                <button type="submit" class="btn btn-primary" form="userfrom">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

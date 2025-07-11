@@ -1,0 +1,23 @@
+﻿<div class="panel-group" ng-model="panels.activePanel" role="tablist" aria-multiselectable="true" bs-collapse>
+    <div class="panel" ng-repeat="panel in panels" ng-if="panel.ParentMenuId==null" style="margin-bottom:5px">
+        <div class="panel-heading indexhome_maintext" bs-collapse-toggle role="tab">
+            <a>
+                <img ng-src="{{panels.activePanel==$index?'/content/imagesNew/icon11.png':'/content/imagesNew/icon12.png'}}"
+                     style="padding:0px;"/>
+                {{ panel.title }}
+            </a>
+        </div>
+        <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+            <div class="panel-body" style="padding:0px">
+                <ul class="leftnav indexhome_setext">
+                    <li ng-repeat="cli in panel.cNodes">
+                        <!--当路由不存在时，跳到默认界面 #!-->
+                        <a style="padding-left:17%" ng-if="cli.name!=''" ui-sref="{{cli.name}}"
+                           ui-sref-active="a_main_menu_active">{{cli.title}}</a>
+                        <a style="padding-left:17%" ng-if="cli.name==''" href="#!/" ui-sref-active="a_main_menu_active">{{cli.title}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

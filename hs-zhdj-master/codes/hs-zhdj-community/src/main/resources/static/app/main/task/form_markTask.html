@@ -1,0 +1,50 @@
+﻿<table class="table table-bordered tform" ng-controller="formMarkTaskCtrl">
+    <thead>
+    <tr>
+        <td colspan="3" style="text-align:center; background-color:#f5f5f5">
+            <span style="color:black;"><strong>评分</strong></span>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="col-md-2"><strong>评分描述</strong></td>
+        <td colspan="2">
+            90-100分-------非常满意<br/>
+            80-89分--------满意<br/>
+            75-79分--------基本达标<br/>
+            70-74分--------有待提升
+        </td>
+    </tr>
+    <tr>
+        <td class="col-md-2"><strong>被打分的角色</strong></td>
+        <td class="col-md-2"><strong>被打分的人名</strong></td>
+        <td class="col-md-8"><strong>分数</strong></td>
+    </tr>
+    <tr ng-repeat="mark in markList">
+        <td>{{mark.scoredRoleName}}</td>
+        <td>{{mark.scroedName}}</td>
+        <td>
+                <span>
+                    <input ng-model="mark.score" type="text" id="mark" slider ng-disabled="params.readonly" options="{
+				                from: 70,
+				                to: 100,
+				                step: 1,
+				                dimension: ' 分',
+				                vertical: false,
+				                limits: true,
+				                css: {
+				                    range: {'background': 'transparent'},
+				                    background: {'background-color': '#53687f87'},
+				                    before: {'background-color': 'rgb(80, 153, 206)'},
+				                    default: {'background-color': 'rgb(80, 153, 206)'},
+				                    after: {'background-color': 'rgb(80, 153, 206)'},
+				                    pointer: {'background-color': 'rgb(93, 117, 126)'}
+				                },
+				                className: 'customClass'
+				            }" ng-change="changeNote(mark.score)"/>
+                </span>
+        </td>
+    </tr>
+    </tbody>
+</table>

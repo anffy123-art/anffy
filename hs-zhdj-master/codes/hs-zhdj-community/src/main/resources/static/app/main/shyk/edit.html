@@ -1,0 +1,311 @@
+<style>
+    .select-group .btn:not(.btn-link):not(.btn-circle) {
+        border: 1px solid #ddd;
+    }
+</style>
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>会议类别（多选）<span style="color: red;">*</span></th>
+                        <td colspan="3" ng-class="{ 'has-error' : getShykType().length==0 && this.editForm.$submitted}">
+                            <ul class="dj-nav" style="margin: 8px 0px;height: auto;">
+                                <li ng-repeat="it in shyklxList" class="dj-nav-item"
+                                    ng-class="it.selected?'dj-nav-selected':''"
+                                    ng-click="it.selected = !it.selected">{{it.dicvalue}}
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所属党支部<span style="color: red;">*</span></th>
+                        <td colspan="3"
+                            ng-class="{ 'has-error' : this.editForm.partyname.$invalid && this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 title="选择党组织" ng-click="selectParty()">
+                                <input name="partyname" type="text" ng-model="dataModel.partyname"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.partyname.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>议题</th>
+                        <td colspan="3">
+                             <textarea type="text" rows="5" name="topiccontent" ng-model="dataModel.topiccontent"
+                                       class="form-control"
+                                       placeholder="输入会议议题"></textarea>
+                            <label ng-show="this.editForm.topiccontent.$invalid &&  this.editForm.$submitted"
+                                   class="error">必填.</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>会议名称<span style="color: red;">*</span></th>
+                        <td colspan="3"
+                            ng-class="{ 'has-error' : this.editForm.meetingname.$invalid && this.editForm.$submitted}">
+                            <input type="text" name="meetingname" ng-model="dataModel.meetingname"
+                                   maxlength="2000"
+                                   class="form-control" ng-required="true"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>会议地址<span style="color: red;">*</span></th>
+                        <td colspan="3">
+                            <div class="form-group" style="margin-bottom: 4px;">
+                                <div class="form-line select-group" style="padding-bottom: 1px;">
+                                    <select ng-model="dataModel.meetingaddress"
+                                            ng-options="type.MEETINGADDRESS as type.MEETINGADDRESS for type in historyAddressList"
+                                            class="form-control"
+                                            name="addressSelect">
+                                    </select>
+                                </div>
+                                <div class="form-line" style="width: 97%;margin-top: -29px;z-index: 9;"
+                                     ng-class="{ 'has-error' : this.editForm.meetingaddress.$invalid &&  this.editForm.$submitted}">
+                                    <input type="text" name="meetingaddress"
+                                           ng-model="dataModel.meetingaddress"
+                                           maxlength="2000"
+                                           class="form-control" ng-required="true"/>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>主持人</th>
+                        <td>
+                            <input type="text" name="chairuser" ng-model="dataModel.chairuser"
+                                   maxlength="200"
+                                   class="form-control"/>
+                        </td>
+                        <th>记录人</th>
+                        <td>
+                            <input type="text" name="recorduser" ng-model="dataModel.recorduser"
+                                   maxlength="200"
+                                   class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>会议开始时间<span style="color: red;">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.begintime.$invalid && this.editForm.$submitted}">
+                            <input type="text" name="begintime" ng-model="dataModel.begintime"
+                                   class="form-control"
+                                   format="yyyy-mm-dd hh:ii"
+                                   data-min-view="0" bs-datetimepicker ng-required="true"/>
+                        </td>
+                        <th>是否第一议题</th>
+                        <td ng-class="{ 'has-error' : this.editForm.isfirsttopic.$invalid && this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.isfirsttopic"
+                                    ng-options="type.dickey as type.dicvalue for type in boolList"
+                                    class="form-control"
+                                    name="isfirsttopic" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>列席人员</th>
+                        <td colspan="3">
+                            <input type="text" name="attendUser" ng-model="dataModel.attenduser"
+                                   class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>会场照片</th>
+                        <td colspan="3">
+                            <img-component data-filerefid="imgConfig1.filerefid" data-filetypeid="imgConfig1.filetypeid"
+                                           data-ismulti="imgConfig1.ismulti" data-height="imgConfig1.height"
+                                           data-readonly="imgConfig1.readonly" data-img-list="imgConfig1.imgList"
+                                           data-width="imgConfig1.width"></img-component>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>台账记录</th>
+                        <td colspan="3">
+                            <img-component data-filerefid="imgConfig2.filerefid" data-filetypeid="imgConfig2.filetypeid"
+                                           data-ismulti="imgConfig1.ismulti" data-height="imgConfig2.height"
+                                           data-readonly="imgConfig2.readonly" data-img-list="imgConfig2.imgList"
+                                           data-width="imgConfig2.width"></img-component>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="dj-formtable">
+                <div class="table-responsive list-table-panel">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            参加会议人员({{userList.length}}人)
+                        </div>
+                        <div class="table-tool">
+
+                            <button type="button" class="btn btn-primary dropdown-toggle"
+                                    data-dataoptions="selectUserlist" title="选择成员"
+                                    bsselectdata-pro>
+                                选择成员
+                            </button>
+                        </div>
+                    </div>
+                    <div class="outoflow" style="max-height: 300px;">
+                        <table class="gt-table gt-table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="th-rownum">序号</th>
+                                <th>党员姓名</th>
+                                <th>所在组织机构</th>
+                                <th>性别</th>
+                                <th>是否参加</th>
+                                <th>不参加原因</th>
+                                <th style="width: 150px;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in userList">
+                                <th class="text-center" scope="row">{{$index + 1}}</th>
+                                <th class="text-center">{{it.XM}}</th>
+                                <th>{{it.DZZMC}}</th>
+                                <th class="text-center">{{it.XBMC}}</th>
+                                <th class="text-center">{{it.SIGNINSTATUS == 2 ? "参加" : "未参加"}}</th>
+                                <th>{{it.USERREMARK}}</th>
+                                <th class="text-center">
+                                    <button ng-if="it.SIGNINSTATUS==3"
+                                            class="btn td-btn bg-pink waves-effect"
+                                            ng-click="signin(it,2,'')" title="参加">
+                                        参加
+                                    </button>
+                                    <button ng-if="it.SIGNINSTATUS==2"
+                                            class="btn td-btn bg-pink waves-effect"
+                                            title="未参加"
+                                            ng-click="resetRemark(it)"
+                                            data-toggle="modal" data-target="#editNoSignin">
+                                        未参加
+                                    </button>
+                                    <button class="btn td-btn bg-pink waves-effect"
+                                            ng-click="deleteUser($index)" title="删除">
+                                        删除
+                                    </button>
+                                </th>
+                            </tr>
+                            <tr ng-if="userList.length<=0">
+                                <td colspan="7" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="dj-formtable" ng-if="isEditDemocracyReview()">
+                <div class="table-responsive list-table-panel">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            民主评议党员名单({{democracyReviewList.length}}人)
+                        </div>
+                        <div class="table-tool">
+                            <button type="button" class="btn btn-primary dropdown-toggle"
+                                    data-dataoptions="selectDemocracyReviewUserlist" title="选择成员"
+                                    bsselectdata-pro>
+                                选择成员
+                            </button>
+                        </div>
+                    </div>
+                    <div class="outoflow" style="max-height: 300px;">
+                        <table class="gt-table gt-table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="th-rownum">序号</th>
+                                <th>所属党组织</th>
+                                <th style="width:150px;">姓名</th>
+                                <th style="width:150px;">开展评议日期</th>
+                                <th style="width:150px;">结束评议日期</th>
+                                <th style="width:150px;">评议结果</th>
+                                <th style="width:150px;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in democracyReviewList">
+                                <th class="text-center" scope="row">{{$index + 1}}</th>
+                                <th>{{it.partyName}}</th>
+                                <th class="text-center">{{it.userName}}</th>
+                                <th ng-class="{ 'has-error' : invalidFee($index,editForm,'startdate') &&  this.editForm.$submitted}">
+                                    <input name="startdate_{{$index}}" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="date"
+                                           ng-model="it.startdate"
+                                           ng-required="true"
+                                           placeholder="" bs-datepicker>
+                                </th>
+                                <th ng-class="{ 'has-error' : invalidFee($index,editForm,'enddate') &&  this.editForm.$submitted}">
+                                    <input name="enddate_{{$index}}" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="date"
+                                           ng-model="it.enddate"
+                                           ng-required="true"
+                                           placeholder="" bs-datepicker>
+                                </th>
+                                <th ng-class="{ 'has-error' : invalidFee($index,editForm,'democracyreviewresulttype') &&  this.editForm.$submitted}">
+                                    <select class="form-control show-tick"
+                                            ng-model="it.democracyreviewresulttype"
+                                            ng-options="type.dickey as type.dicvalue for type in democracyReviewResultTypeList"
+                                            class="form-control"
+                                            name="democracyreviewresulttype_{{$index}}" ng-required="true">
+                                        <option value="" selected>--请选择--</option>
+                                    </select>
+                                </th>
+                                <th class="text-center">
+                                    <button class="btn td-btn bg-pink waves-effect"
+                                            ng-click="deleteDemocracyReview($index)" title="删除">
+                                        删除
+                                    </button>
+                                </th>
+                            </tr>
+                            <tr ng-if="userList.length<=0">
+                                <td colspan="7" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="form_foot" style="margin-bottom: 100px;">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid,1,true)">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- 模态框（Modal） 填写未参加原因-->
+<div class="modal fade" id="editNoSignin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    填写未参加原因
+                </h4>
+            </div>
+            <div class="modal-body">
+           <textarea name="remark" ng-model="editNoSigninModal.remark"
+                     class="form-control" rows="3"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary"
+                        ng-click="signin(editNoSigninModal.item,3,editNoSigninModal.remark)">
+                    保存
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>

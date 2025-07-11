@@ -1,0 +1,65 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body"  activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div panel-title data-title="'预算及收入情况'"></div>
+            <div  class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所属党组织</th>
+                        <td>
+                           {{dzzmc}}
+                        </td>
+                        <th>年度</th>
+                        <td>
+                           {{dataModel.year}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>预算收入</th>
+                        <td ng-class="{ 'has-error' : this.editForm.budgetrevenue.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="budgetrevenue" ng-model="dataModel.budgetrevenue"
+                                   step="0.01" min="0"
+                                   class="form-control"  ng-required="true"/>
+                            <span ng-show="this.editForm.budgetrevenue.$invalid &&  this.editForm.$submitted"
+                                  class="error">只允许最长两位小数并且为整数.</span>
+                        </td>
+                        <th>预算支出</th>
+                        <td ng-class="{ 'has-error' : this.editForm.budgetexpend.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="budgetexpend" ng-model="dataModel.budgetexpend"
+                                   step="0.01" min="0"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.budgetexpend.$invalid &&  this.editForm.$submitted"
+                                  class="error">只允许最长两位小数并且为整数.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>上级党组织拨付</th>
+                        <td ng-class="{ 'has-error' : this.editForm.appropriation.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="appropriation" ng-model="dataModel.appropriation"
+                                   step="0.01" min="0"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.appropriation.$invalid &&  this.editForm.$submitted"
+                                  class="error">只允许最长两位小数并且为整数.</span>
+                        </td>
+                        <th>党费利息</th>
+                        <td ng-class="{ 'has-error' : this.editForm.interest.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="interest" ng-model="dataModel.interest"
+                                   step="0.01" min="0"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.interest.$invalid &&  this.editForm.$submitted"
+                                  class="error">只允许最长两位小数并且为整数.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">返回</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

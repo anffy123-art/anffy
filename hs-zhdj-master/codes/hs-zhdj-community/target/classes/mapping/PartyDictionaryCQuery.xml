@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.PartyDictionaryCQuery">
+    <!--出国出境原因-->
+    <select id="selectCglbList" resultType="java.util.HashMap">
+        select * from zd_cglbdm
+    </select>
+    <!--出国出境类别-->
+    <select id="selectCgcjlbList" resultType="java.util.HashMap">
+        select * from Zzzd_cgcjlb
+    </select>
+    <!--培训情况-->
+    <select id="selectPxqkList" resultType="java.util.HashMap">
+        select * from Zzzd_ pxqk
+    </select>
+    <!--一线情况-->
+    <select id="selectYxqkList" resultType="java.util.HashMap">
+        select * from Zzzd_ yxqk
+    </select>
+    <!--最近培训结果-->
+    <select id="selectZjpxjgList" resultType="java.util.HashMap">
+        select * from Zzzd_zjpxjg
+    </select>
+    <!--专职或兼职情况-->
+    <select id="selectZzjzqkList" resultType="java.util.HashMap">
+        select * from Zzzd_zzjzqk
+    </select>
+    <!--职务级别2-->
+    <select id="selectDzzwjbm2List" resultType="java.util.HashMap">
+        select * from zd_dzzwjbm2
+    </select>
+
+    <!--学历-->
+    <select id="selectEducationList" resultType="java.util.HashMap">
+        select * from zd_whcddm1
+    </select>
+
+    <!--民族-->
+    <select id="selectNationList" resultType="java.util.HashMap">
+        select * from zd_mzdm
+    </select>
+
+
+    <!--行政职务-->
+    <select id="selectXzzwList" resultType="java.util.HashMap">
+        select * from zd_dzzwmcm
+    </select>
+
+
+    <select id="selectUserDicList" resultType="java.util.HashMap">
+          select 1 as TYPE,BM,HZMC,XH from Zzzd_Zwmc -- 党内职务
+          union
+          select 2 as TYPE,BM,HZMC,XH from zzzd_xzzw -- 行政职务
+          union
+          select 3 as TYPE,BM,HZMC,XH from zzzd_jszw -- 专业职务
+          union
+          select 4 as TYPE,BM,HZMC,XH from zd_whcddm1 -- 学历
+          union
+          select 5 as TYPE,BM,HZMC,XH from zd_xbm -- 性别
+          union
+          select 6 as TYPE,BM,HZMC,XH from zzzd_ryzt where BM in('2','3')  -- 政治面貌
+          union
+          select 7 as TYPE,BM,HZMC,XH from zd_mzdm where HZMC in('汉族','土家族','苗族','侗族','回族','瑶族')  -- 民族
+          union
+          select 7 as TYPE,group_concat(BM) as BM,'其他' as HZMC,999 as XH from zd_mzdm where HZMC not in('汉族','土家族','苗族','侗族','回族','瑶族')
+          order by TYPE,XH
+    </select>
+
+</mapper>

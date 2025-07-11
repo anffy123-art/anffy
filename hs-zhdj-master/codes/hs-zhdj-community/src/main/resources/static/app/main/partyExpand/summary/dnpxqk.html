@@ -1,0 +1,38 @@
+
+<div class="header">
+    <h2 class="demo-icon-container">
+        <div class="demo-google-material-icon">
+            <span class="icon-name">党内评先情况</span>
+        </div>
+    </h2>
+    <ul class="header-dropdown m-r--5">
+        <li class="dropdown demo-icon-container more">
+            <a bs-ui-sref="home.dnpxxx" class="dropdown-toggle demo-google-material-icon">
+                <span class="icon-name">更多</span>
+                <i class="material-icons">keyboard_arrow_right</i>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="zero-list-table-panel">
+    <div class="zero-source-table-div">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>姓名</th>
+                <th>荣誉名称</th>
+                <th>等级</th>
+                <th>获得荣誉时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in dataList">
+                <td>{{it.USERNAME}}</td>
+                <td>{{it.HONOURNAME}}</td>
+                <td>{{it.LEVELNAME}}</td>
+                <td>{{it.HONOURTIME|date:'yyyy-MM-dd'}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

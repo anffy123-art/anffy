@@ -1,0 +1,153 @@
+﻿<style>
+    .page_content {
+        display: flex;
+        justify-content: space-between
+    }
+
+    .content {
+        margin: 80px 0px 10px 0px !important;
+        /*float: right;*/
+        overflow-x: hidden;
+    }
+
+    .sidebar {
+        width: 18%;
+    }
+
+    .leftsidebar {
+
+    }
+
+    .sidebar-collapsed-back .content {
+        width: 82% !important;
+    }
+
+    .sidebar-collapsed-back .leftsidebar {
+        width: 18%;
+    }
+
+    .sidebar-collapsed .content {
+        width: 98%;
+    }
+
+    .sidebar-collapsed .sidebar {
+        width: 2%
+    }
+
+    .sidebar-collapsed > .leftsidebar > .sidebar > .user-info > .sidebar-icon {
+        transform: rotate(90deg);
+        transition: all 300ms ease-in-out;
+        margin-right: -6px;
+        margin-top: -6px;
+        color: #fff;
+        background: #F44336;
+        border-radius: 0;
+
+    }
+
+    .sidebar-collapsed-back > .leftsidebar > .sidebar > .user-info > .sidebar-icon {
+        transform: rotate(0deg);
+        transition: all 300ms ease-in-out;
+    }
+
+    .role-name{
+        padding: 22px 2px;
+        color:white;
+    }
+</style>
+<script>
+    $(function () {
+        var menuHeight = $(window).height() - $(".container-fluid").height() - 105;
+        $(".mainmenu").height(menuHeight);
+    });
+</script>
+<!-- Top Bar -->
+<nav class="navbar">
+    <div class="container-fluid">
+        <div class="navbar-header">
+<!--
+            <img style="width:30px;height:30px;float: left;margin: 10px 5px 0px 0px;" src="images/sys-logo2.png"/>
+-->
+            <a class="navbar-brand" style="font-size:30px">{{sysName}}</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a>{{roleName}}</a></li>
+                <!--<li><a href="../public/index.html" target="_blank">党建门户</a></li>-->
+                <li class="dropdown">
+                    <a ng-click="logout()" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                        <i class="material-icons" style="float: left;margin-right: 7px;font-size: 20px;">power_settings_new</i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- #Top Bar -->
+<div class="page_content" ng-class="{'sidebar-collapsed':!menudatas.toggle,'sidebar-collapsed-back':menudatas.toggle}">
+    <section class="leftsidebar">
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+            <div class="user-info">
+                <a class="sidebar-icon" ng-click="menudatas.toggle=!menudatas.toggle">
+                    <i ng-if="menudatas.toggle" class="material-icons">keyboard_arrow_left</i>
+                    <i ng-if="!menudatas.toggle" class="material-icons">keyboard_arrow_up</i>
+                </a>
+                <div ng-if="menudatas.toggle">
+                    <div class="image">
+                        <img ng-src="{{pictureurl}}" onerror="this.src='images/man.jpg'" width="48" height="48"
+                             alt="User"/>
+                    </div>
+                    <div class="info-container">
+                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
+                    </div>
+                    <div class="user-name" ng-bind="User.Name">
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu mainmenu" ng-if="menudatas.toggle">
+                <ul class="list">
+                    <li class="header">工作导航</li>
+                </ul>
+                <ul class="list">
+                    <li ng-repeat="panel in panels" ng-include="'menuNodes.html'"
+                        class="{{panel.childShow==1?'active':''}}">
+                    </li>
+                </ul>
+                <script type="text/ng-template" id="menuNodes.html">
+                    <a ng-if="panel.isblank!='1' && panel.name"
+                       class="waves-effect waves-block {{(panel.cNodes&&panel.cNodes.length>0)?(panel.childShow==0?'menu-toggle':'menu-toggle toggled'):''}}"
+                       ng-click="menutoggle(panel)"
+                       ui-sref="{{panel.name}}">
+                        <i class="material-icons">{{panel.icon}}</i>
+                        <span>{{panel.title}}</span>
+                    </a>
+                    <a ng-if="panel.isblank!='1' && !panel.name"
+                       class="waves-effect waves-block {{(panel.cNodes&&panel.cNodes.length>0)?(panel.childShow==0?'menu-toggle':'menu-toggle toggled'):''}}"
+                       ng-click="menutoggle(panel)">
+                        <i class="material-icons">{{panel.icon}}</i>
+                        <span>{{panel.title}}</span>
+                    </a>
+                    <a ng-if="panel.isblank=='1'"
+                       class="waves-effect waves-block {{(panel.cNodes&&panel.cNodes.length>0)?(panel.childShow==0?'menu-toggle':'menu-toggle toggled'):''}}"
+                       href="{{panel.url}}" target="_blank">
+                        <span>{{panel.title}}</span>
+                    </a>
+                    <div ng-hide="panel.childShow==0">
+                        <ul class="ml-menu">
+                            <li ng-repeat="panel in panel.cNodes" ng-include="'menuNodes.html'"
+                                class="{{panel.childShow==1?'active':''}}"></li>
+                        </ul>
+                    </div>
+                </script>
+            </div>
+        </aside>
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            <div ui-view></div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.PeWordtemplateCQuery">
+    <select id="getList" resultType="java.util.Map">
+        select t.wordtemplateid,t.title,t.sort,t.flowid,f.flowname,pf.flowname as pflowname from pe_wordTemplate t
+        left join PE_FLOW f on t.flowid=f.flowid
+        left join PE_FLOW pf on f.parentId = pf.flowid
+        where t.OperateState in ('A','M')
+        <if test="title != null and title != ''">
+            and t.title like concat('%',#{title},'%')
+        </if>
+        <if test="flowid != null">
+            and t.flowid = #{flowid}
+        </if>
+        <if test="pflowid != null">
+            and f.parentId = #{pflowid}
+        </if>
+        order by t.sort
+    </select>
+</mapper>

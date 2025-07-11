@@ -1,0 +1,88 @@
+<div class="panel-default theme-panel">
+    <titlemenu></titlemenu>
+    <!--<div class="search-param-panel">
+        <form class="form-inline formquery">
+            <div class="form-group">
+                <label for="username">客服名称：</label>
+                <input type="text" class="form-control" name="username" ng-model="selectdata.username" />
+            </div>
+            <div class="form-group">
+                <label for="guestServerType">客服类型：</label>
+                <select name="guestServerType" ng-model="selectdata.guestServerType"
+                        ng-options="type.dickey as type.dicvalue for type in guestServerTypeList" class="form-control">
+                    <option value="" selected>--全部--</option>
+                </select>
+            </div>
+            <div class="form-group formquery-btns-panel">
+                <button type="button" class="btn btn-primary" ng-click="search()">查询</button>
+                <button type="button" class="btn btn-primary" data-placement="center" data-animation="am-fade-and-scale" ng-click="editPage('')">新增</button>
+            </div>-->
+
+    <div class="graph-form">
+        <form class="search-param-panel_1">
+            <div class="search-input">
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label for="companyName">客服名称：</label>
+                        <input type="text" class="form-control" name="username" ng-model="selectdata.username"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="counselbeginDate">客服类型：</label>
+                        <select name="guestServerType" ng-model="selectdata.guestServerType"
+                                ng-options="type.dickey as type.dicvalue for type in guestServerTypeList"
+                                class="form-control">
+                            <option value="" selected>--全部--</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group formquery-btns-panel">
+
+                    </div>
+                </div>
+            </div>
+            <div class="search-btn" style="margin-right: 20px;">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" ng-click="search()">查询</button>
+                    <button type="button" class="btn btn-primary" data-placement="center"
+                            data-animation="am-fade-and-scale" ng-click="editPage('')">新增
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="list-table-panel">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>客服名</th>
+                <th>客服类型</th>
+                <th>最后在线时间</th>
+                <th class="col-md-1">详情</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in items">
+                <td>{{it.userName}}</td>
+                <td>{{it.guestServerTypeName}}</td>
+                <td>{{it.heartbeatTime|date:'yyyy-MM-dd HH:mm'}}</td>
+                <td>
+                    <button class="btn btn-success btn-sm" ng-click="editPage(it.guestServerManID)" title="修改">
+                        <span class="glyphicon glyphicon-pencil "></span>
+                    </button>
+                    <button class="btn btn-danger btn-sm" ng-click="deleteit(it.guestServerManID)" title="删除">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
+            </tr>
+            <tr ng-if="items.length<=0">
+                <td colspan="4" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+        <!--参数含义：page-Index：当前页面，page-Size：每页显示多少数据，total-Length:数据总长度-->
+        <pagination data-pageindex="selectdata.pageindex" data-pagesize="selectdata.pagesize"
+                    data-ptotal="selectdata.ptotal"></pagination>
+    </div>
+
+
+</div>

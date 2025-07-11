@@ -1,0 +1,112 @@
+<titlemenu ng-if="op==0"></titlemenu>
+<div ng-class="op==0?'dj-card':''">
+    <div ng-class="op==0?'dj-body':''">
+        <div panel-title data-title="'资产基本信息'"></div>
+        <div class="dj-formtable">
+            <table class="dj-table dj-table3">
+                <tr>
+                    <th>资产编号</th>
+                    <td>
+                        {{dataModel.no}}
+                    </td>
+                    <th>资产名称</th>
+                    <td>
+                        {{dataModel.name}}
+                    </td>
+                    <th>型号</th>
+                    <td>
+                        {{dataModel.model}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>数量</th>
+                    <td>
+                        {{dataModel.count}}
+                    </td>
+                    <th>计量单位</th>
+                    <td>
+                        {{dataModel.unittype}}
+                    </td>
+                    <th>使用部门</th>
+                    <td>
+                        {{dataModel.usepartyname}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>资产原值</th>
+                    <td>
+                        {{dataModel.originalvalue}}
+                    </td>
+                    <th>税额</th>
+                    <td>
+                        {{dataModel.tax}}
+                    </td>
+                    <th>价税合计</th>
+                    <td>
+                        {{dataModel.pricetaxtotal}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>购置人</th>
+                    <td>
+                        {{dataModel.purchaseuserid}}
+                    </td>
+                    <th>建卡时间</th>
+                    <td>
+                        {{dataModel.buildtime | date:'yyyy-MM-dd'}}
+                    </td>
+                    <th>预计使用年限</th>
+                    <td>
+                        {{dataModel.expectedusefullife}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>保管单位</th>
+                    <td>
+                        {{dataModel.takecarepartyname}}
+                    </td>
+                    <th>保管人</th>
+                    <td>
+                        {{dataModel.takecareusername}}
+                    </td>
+                    <th>保管时间段</th>
+                    <td>
+                        {{dataModel.startdate | date:'yyyy-MM-dd'}} - {{dataModel.enddate | date:'yyyy-MM-dd'}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>资产状况</th>
+                    <td colspan="5">
+                        {{dataModel.assetcondition}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div ng-if="op==0" panel-title data-title="'处理记录'"></div>
+        <div ng-if="op==0" class="dj-formtable">
+            <table class="dj-table dj-table-list">
+                <tr>
+                    <th style="width: 100px !important;">序号</th>
+                    <th>处理类型</th>
+                    <th>处理时间</th>
+                    <th>处理单位</th>
+                    <th>处理人</th>
+                    <th>处理内容</th>
+                </tr>
+                <tr ng-repeat="it in assetLogList">
+                    <td scope="row" class="text-center">
+                        {{$index+1}}
+                    </td>
+                    <td>{{it.TYPENAME}}</td>
+                    <td>{{it.LOGTIME | date:'yyyy-MM-dd'}}</td>
+                    <td>{{it.DZZMC}}</td>
+                    <td>{{it.USERNAME}}</td>
+                    <td>{{it.CONTENT}}</td>
+                </tr>
+                <tr ng-if="assetLogList.length==0">
+                    <td colspan="6" style="text-align:center">暂无数据</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

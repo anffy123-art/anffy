@@ -1,0 +1,141 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <form role="form" name="editForm" novalidate>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>所属党组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div ng-if="type==1">{{selectparams.dzzmc}}</div>
+                                                <div class="input-group input-group-search" ng-if="type==2"
+                                                     title="选择党组织" ng-click="selectParty()">
+                                                    <input name="dzzmc" type="text" ng-model="selectparams.dzzmc"
+                                                           class="form-control" readonly />
+                                                    <span class="input-group-addon"><i class="material-icons">search</i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>年度</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-change="search()"
+                                                        ng-model="selectparams.year"
+                                                        ng-options="type.dickey as type.dicvalue for type in yearList"
+                                                        class="form-control"
+                                                        name="year">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                                <button  type="submit"  role-permission-code="djkpxx.btn.btnBatchSubmit"
+                                         class="btn btn-primary"
+                                         ng-click="submitData(this.editForm.$valid)"
+                                         ng-if="isDetail">提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button class="btn btn-default1"
+                                    ng-click="all()">全选
+                            </button>
+                            <button class="btn btn-default1" bsselectdata-pro data-dataoptions="dzzdmOptions">批量选择
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="table-responsive list-table-panel" style="height: 600px;">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>组织名称</th>
+                                <th>第一季度评分</th>
+                                <th>第二季度评分</th>
+                                <th>第三季度评分</th>
+                                <th>第四季度评分</th>
+                                <th>评定等级</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in dataList">
+                                <td scope="row" class="text-center">
+                                    {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                </td>
+                                <td>{{it.DZZMC}}</td>
+                                <td class="text-center"
+                                    ng-class="{ 'has-error' : invalidFee($index,editForm,'QUARTER1') &&  this.editForm.$submitted}">
+                                    <input type="number" autocomplete="off" class="form-control" name="QUARTER1_{{$index}}"
+                                           ng-model="it.QUARTER1"  min="0"
+                                           style="width: 150px;display: inline;"/>
+                                </td>
+                                <td class="text-center"
+                                    ng-class="{ 'has-error' : invalidFee($index,editForm,'QUARTER2') &&  this.editForm.$submitted}">
+                                    <input type="number" autocomplete="off" class="form-control" name="QUARTER2_{{$index}}"
+                                           ng-model="it.QUARTER2"  min="0"
+                                           style="width: 150px;display: inline;"/>
+                                </td>
+                                <td class="text-center"
+                                    ng-class="{ 'has-error' : invalidFee($index,editForm,'QUARTER3') &&  this.editForm.$submitted}">
+                                    <input type="number" autocomplete="off" class="form-control" name="QUARTER3_{{$index}}"
+                                           ng-model="it.QUARTER3"  min="0"
+                                           style="width: 150px;display: inline;"/>
+                                </td>
+                                <td class="text-center"
+                                    ng-class="{ 'has-error' : invalidFee($index,editForm,'QUARTER4') &&  this.editForm.$submitted}">
+                                    <input type="number" autocomplete="off" class="form-control" name="QUARTER4_{{$index}}"
+                                           ng-model="it.QUARTER4"  min="0"
+                                           style="width: 150px;display: inline;"/>
+                                </td>
+                                <td class="text-center"
+                                    ng-class="{ 'has-error' : invalidFee($index,editForm,'JUDGELEVEL') &&  this.editForm.$submitted}">
+                                    <select class="form-control show-tick"
+                                            ng-model="it.JUDGELEVEL"
+                                            ng-options="type.dickey as type.dicvalue for type in judgeLevelList"
+                                            class="form-control" ng-required="true"
+                                            name="JUDGELEVEL_{{$index}}">
+                                        <option value="" selected>--请选择--</option>
+                                    </select>
+                                </td>
+                                <td class="text-center">
+                                    <button
+                                            class="btn td-btn bg-pink waves-effect"
+                                            ng-click="delete($index)" title="删除">
+                                        删除
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr ng-if="dataList.length==0">
+                                <td class="text-center" colspan="8">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

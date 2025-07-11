@@ -1,0 +1,49 @@
+<div class="modal" role="dialog" tabindex="-1">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="card">
+            <div class="header">
+                <button class="close" ng-click="quxiaoguanbi()" type="button">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div activate-input class="body">
+                <div class="table-responsive list-table-panel" style="font-size: 16px">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            接收单位
+                        </div>
+                    </div>
+                    <div class="outoflow" style="height: 350px;">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap"
+                               style="position:relative">
+                            <thead>
+                            <tr>
+                                <th>党委名称</th>
+                                <th>接收人</th>
+                                <th>所在党支部</th>
+                                <th>状态</th>
+                                <th>接收时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in receivePcommList">
+                                <th>{{it.dwName}}</th>
+                                <th>{{it.leaderName}}</th>
+                                <th>{{it.leaderDzbName}}</th>
+                                <th>{{it.statusName}}</th>
+                                <th>{{it.receiveTime|date:'yyyy-MM-dd'}}</th>
+                            </tr>
+                            <tr ng-if="userList.length<=0">
+                                <td colspan="3" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form_foot">
+                    <button class="btn btn-default" ng-click="close()" type="button">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

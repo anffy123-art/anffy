@@ -1,0 +1,86 @@
+﻿.theme-red .navbar {
+    background-color: #B33A30;
+}
+
+.theme-red .navbar-brand {
+    color: #fff;
+}
+
+.theme-red .navbar-brand:hover {
+    color: #fff;
+}
+
+.theme-red .navbar-brand:active {
+    color: #fff;
+}
+
+.theme-red .navbar-brand:focus {
+    color: #fff;
+}
+
+.theme-red .nav > li > a {
+    color: #fff;
+}
+
+.theme-red .nav > li > a:hover {
+    background-color: transparent;
+}
+
+.theme-red .nav > li > a:focus {
+    background-color: transparent;
+}
+
+.theme-red .nav .open > a {
+    background-color: transparent;
+}
+
+.theme-red .nav .open > a:hover {
+    background-color: transparent;
+}
+
+.theme-red .nav .open > a:focus {
+    background-color: transparent;
+}
+
+.theme-red .bars {
+    color: #fff;
+}
+
+.theme-red .sidebar .menu .list li.active {
+    background-color: transparent;
+    width: 180px;
+    /*height: 40px;*/
+    /*background: linear-gradient(90deg, #f49f20, #f8533d 100%);*/
+    border-radius: 10px;
+    color: #0b0b0b !important;
+    margin: 10px;
+}
+
+.theme-red .sidebar .menu .list li.active > :first-child i, .theme-red .sidebar .menu .list li.active > :first-child span {
+    color: #fff;
+    /*background: linear-gradient(90deg, #f49f20, #f8533d 100%);*/
+    /*width: 180px;*/
+}
+.theme-red .sidebar .menu .list li.active > :first-child  {
+    color: #fff;
+    background: linear-gradient(90deg, #f49f20, #f8533d 100%);
+    /*width: 180px;*/
+    border-radius: 5px;
+}
+
+.theme-red .sidebar .menu .list .toggled {
+    background-color: transparent;
+}
+
+.theme-red .sidebar .menu .list .ml-menu {
+    background-color: transparent;
+}
+
+.theme-red .sidebar .legal {
+    background-color: #fff;
+}
+
+.theme-red .sidebar .legal .copyright a {
+    color: #F44336 !important;
+}
+

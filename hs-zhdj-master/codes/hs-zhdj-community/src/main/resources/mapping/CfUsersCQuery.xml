@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.CfUsersCQuery">
+    <select id="selectUserAll" resultType="java.util.HashMap">
+        select * from cf_users where UserName like Concat('%',#{username},'%')
+    </select>
+    <select id="GetRoleByUserId" resultType="java.util.HashMap">
+         SELECT ROLENAME,CF_ROLES.ROLEID FROM CF_USERROLES,CF_ROLES WHERE CF_USERROLES.USERID = #{userId} and CF_USERROLES.ROLEID = CF_ROLES.ROLEID
+    </select>
+    <select id="getMenuByUid" resultType="java.util.HashMap">
+        select DISTINCT M.APPLICATIONID,
+        M.MENUID,
+        M.MENUNAME,
+        M.MENUNO,
+        M.PARENTMENUID,
+        M.MNUSYSTEM,
+        M.MENUPROGRAM,
+        M.MENUPIC,
+        M.MENUORDER,M.ISBLANK from cf_userroles ur
+        inner join CF_USERS u on u.USERID = ur.UserId
+        inner join cf_roles r on ur.RoleId=r.RoleId
+        inner join cf_menu_role mr on ur.RoleId=mr.RoleID
+        inner join cf_menu m on mr.MenuId=m.MenuId and m.ApplicationId=r.ApplicationId
+        where r.ApplicationId=#{appid} and u.USERID=#{userid} and m.IsVisible=1
+        order by m.MenuOrder
+    </select>
+    <select id="getMenuByRoles" resultType="java.util.HashMap">
+        select DISTINCT M.APPLICATIONID,
+        M.MENUID,
+        M.MENUNAME,
+        M.MENUNO,
+        M.PARENTMENUID,
+        M.MNUSYSTEM,
+        M.MENUPROGRAM,
+        M.MENUPIC,
+        M.MENUORDER,M.ISBLANK from  cf_menu_role mr
+        inner join cf_menu m on mr.MenuId=m.MenuId
+        where  m.IsVisible=1
+        <if test="roleId != null and roleId!=''">
+            and mr.RoleID=#{roleId}
+        </if>
+        <if test="menuDwids != null and menuDwids.size()>0">
+            and (
+                 m.MENUDESC is null or m.MENUDESC not in
+                <foreach collection="menuDwids" item="id" index="index" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            )
+        </if>
+
+        order by m.MenuOrder
+    </select>
+    <!--<select id="GetUserByRoleName" resultType="com.px.partybuild.model.CfUsersinfo">
+        select u.id,u.dguserid,u.name,u.mobile,u.telephonenumber,u.birthday,u.dpid,u.dpname,u.dpcode,
+        u.parentdpid,u.dpfullname,u.jobtypeid,u.desjobtype,u.employeeclassid,u.desemployeeclass,u.sexid,
+        u.orderno,u.userrole,u.userligion,u.istmpuser
+        from cf_usersinfo u
+        inner join cf_userroles ur on u.Id=ur.UserId
+        inner join cf_roles cr ON ur.RoleId = cr.RoleId
+        where cr.RoleName= #{roleName}
+    </select>-->
+
+    <!--<select id="selectUserList" resultType="java.util.HashMap">
+        select u.userId,u.userName,ui.dguserid as RYBM,ui.isEnable
+        from cf_users u
+        inner join cf_usersinfo ui on u.UserId = ui.Id
+        where 1=1
+        <if test="username !=null and username !=''">
+            and u.username like '%'||#{username}||'%'
+        </if>
+        group by
+        u.UserId,u.UserPwd,u.userName,ui.dguserid,ui.isEnable
+
+    </select>-->
+
+    <select id="selectEnableUserList" resultType="com.px.partybuild.model.CfUsers">
+        select u.userid,u.applicationid,u.username,u.isanonymous,u.lastactivitydate,u.userpwd
+        from cf_users u
+        where u.UserName = #{UserLoginId}
+    </select>
+
+    <select id="getUserList" resultType="com.px.partybuild.model.CfUsersinfo">
+        select us.RYBM as "id",us.XM as "name" from VM_RYJBXX us
+        inner join CF_USERS cfus on us.RYBM = cfus.USERID
+        where 1=1
+        <if test="dpid != null and dpid != ''">
+            and us.SZDZBDM like concat('%',#{dpid},'%')
+        </if>
+        <if test="username !=null and username !=''">
+            and us.XM like concat('%',#{username},'%')
+        </if>
+    </select>
+
+    <select id="getUserByParams" resultType="com.px.partybuild.model.CfUsersinfo">
+        select distinct info.USERID DGUSERID,info.USERID ID,r.XM NAME,zz.DZZDM dpid,zz.DZZMC dpname
+        from CF_USERS info
+        inner join VM_RYJBXX r on info.USERID=r.rybm
+        inner join ZZ_ZZQKXX zz on r.SZDZBDM=zz.DZZDM
+        where 1=1
+        <if test="dpid != null and dpid != ''">
+            and r.szdzbdm like concat('%',#{dpid},'%')
+        </if>
+        <if test="dzzmc !=null and dzzmc !=''">
+            and zz.DZZMC =#{dzzmc}
+        </if>
+        <if test="username !=null and username !=''">
+            and r.XM=#{username}
+        </if>
+    </select>
+    <select id="getPowerByMenu" resultType="java.lang.Integer">
+        select count(1) from CF_MENU_ROLE mr
+        inner join CF_USERROLES ru on mr.ROLEID = ru.ROLEID
+        inner join CF_USERS u on ru.USERID = u.USERID
+        inner join CF_MENU m on mr.MENUID=m.MENUID
+        where 1=1
+        <if test="menuIds != null">
+            <foreach collection="menuIds" index="index" item="item" open="and mr.MENUID in (" separator="," close=")">
+                #{ item }
+            </foreach>
+        </if>
+
+        <if test="userName !=null and userName !=''">
+            and u.USERNAME = #{ userName }
+        </if>
+
+        <if test="roleId !=null and roleId !=''">
+            and ru.ROLEID = #{ roleId }
+        </if>
+        <if test="menuDwids != null and menuDwids.size()>0">
+            and (
+            m.MENUDESC is null or m.MENUDESC not in
+            <foreach collection="menuDwids" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+            )
+        </if>
+
+    </select>
+    <select id="GetPartyUserInfo" resultType="java.util.HashMap">
+      select ry.XM as "name",ry.RYBM,xx.DZZDM,xx.DZZMC,SUBSTR(xx.DZZDM,1,LENGTH(xx.DZZDM)-3) PARENTCODE,zfb.ZZLB,
+      (case zfb.ZZLB when '500' then 1 else 0 end ) as ISDXZ,
+      ufb.SFSLDRY as ISLEADER
+      from vm_ryjbxx_all ry
+      inner join ZZ_ZZQKXX xx on ry.SZDZBDM=xx.DZZDM
+      left join ZZ_ZZQKXXFB zfb on xx.DZZDM = zfb.DZZDM
+      left join RS_RYJBXXFB ufb on ry.RYBM = ufb.RYBM
+      where ry.RYBM= #{ id }
+    </select>
+
+    <select id="GetPartyUserInfoMore" resultType="java.util.HashMap">
+        select t.RYZT,z.HZMC,t1.JRZGZZRQ from VM_RYJBXX t
+inner join ZZZD_RYZT z on t.RYZT=z.BM
+left join ZZ_DJXX t1 on t1.RYBM=t.RYBM
+where t.RYBM= #{ userId }
+    </select>
+    <select id="GetPartyGroup" resultType="java.util.HashMap">
+      select xx.DZZDM,xx.DZZMC,SUBSTR(xx.DZZDM,1,LENGTH(xx.DZZDM)-3) PARENTCODE from ZZ_ZZQKXX xx
+where xx.DZZDM= #{ groupId }
+    </select>
+
+    <!--用户党小组信息-->
+    <select id="GetUserDxzInfo" resultType="java.util.HashMap">
+      select us.RYBM,p.DZZDM as SZDXZDM,p.DZZMC as SZDXZMC from ZZ_RYJBXX us
+      inner join ZZ_DXZCY dxz on us.rybm = dxz.rybm
+      inner join ZZ_ZZQKXX p on dxz.dzzdm=p.dzzdm
+where us.RYBM= #{ userId }
+    </select>
+
+    <select id="getCfUserByMobile" resultType="com.px.partybuild.model.CfUsers">
+        select u.* from CF_USERS u
+where u.USERNAME= #{ mobile }
+    </select>
+
+    <select id="getCfUserByUsername" resultType="com.px.partybuild.model.CfUsers">
+        select u.* from CF_USERS u
+inner join VM_RYJBXX i on u.USERID = i.RYBM
+where i.XM= #{ name }
+    </select>
+
+    <select id="selectUserMobileList" resultType="com.px.partybuild.vo.UserVo">
+        select distinct ry.rybm as "userCode",u.USERNAME as "mobile",ry.SZDZBDM as "dzzdm"
+        from VM_RYJBXX ry
+        left join CF_USERS u on u.USERID=ry.RYBM
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and ry.SZDZBDM like concat('%',#{dzzdm},'%')
+        </if>
+    </select>
+
+
+    <select id="selectUserByMobileList" resultType="com.px.partybuild.vo.UserVo">
+        select distinct ry.rybm as "userCode",u.USERNAME as "mobile",ry.SZDZBDM as "dzzdm"
+        from VM_RYJBXX ry
+        inner join CF_USERS u on u.USERID=ry.RYBM
+        where 1=1
+        <if test="mobileList != null and mobileList.size()>0">
+            and u.USERNAME in
+            <foreach collection="mobileList" item="mobile" index="index" open="(" close=")" separator=",">
+                #{mobile}
+            </foreach>
+        </if>
+
+    </select>
+
+    <update id="batchUpdateUserMobile" parameterType="java.util.ArrayList">
+        <foreach collection="userList" item="user" index="index" open="" close="" separator=";">
+            insert into cf_users (USERID, APPLICATIONID, USERNAME, ISANONYMOUS, LASTACTIVITYDATE, USERPWD, FORCELOGINOUT)
+            select ry.rybm,'f0c4fa7f9f3c4fb6bd56aac608b7ad3f',#{user.mobile,jdbcType=VARCHAR},1,null,'D6FB6D8741F9AF9E7BC1C39E79D73944',null
+            from VM_RYJBXX ry
+            left join cf_users u on ry.rybm=u.userid
+            where ry.rybm=#{user.userCode,jdbcType=VARCHAR} and u.userid is null;
+
+            UPDATE cf_users T
+            <set>
+                T.USERNAME = #{user.mobile,jdbcType=VARCHAR}
+            </set>
+            WHERE
+            T.USERID = #{user.userCode,jdbcType=VARCHAR}
+
+        </foreach>
+    </update>
+
+    <select id="getUserOnline" resultType="java.util.Map">
+          select u.USERID,u.LASTACTIVITYDATE,u.ISANONYMOUS,v.XM,u.USERNAME,z.DZZMC from CF_USERS u
+    inner join VM_RYJBXX v on u.USERID = v.RYBM
+    inner join ZZ_ZZQKXX z on v.SZDZBDM = z.DZZDM
+    where u.USERNAME is not null
+        and u.LASTACTIVITYDATE > #{ beforeTime }
+        <if test="userName != null and userName != ''">
+            and v.XM like concat('%',#{userName},'%')
+        </if>
+    order by u.LASTACTIVITYDATE desc
+    </select>
+
+    <update id="UpdatePartyusercount" statementType="CALLABLE">
+      {
+        call UpdatePartyusercount()
+      }
+    </update>
+
+
+    <update id="updateUserage" statementType="CALLABLE">
+      {
+        call UpdateUserage()
+      }
+    </update>
+
+    <update id="UpdatePartyusercountOfMonth" statementType="CALLABLE">
+      {
+        call UpdatePartyusercountOfMonth()
+      }
+    </update>
+
+</mapper>

@@ -1,0 +1,60 @@
+﻿<div ng-controller="formStartTaskCtrl">
+    <table class="table table-bordered tlist">
+        <thead>
+        <tr>
+            <td colspan="8" style="text-align:center; background-color:#f5f5f5">
+                <span style="color:black;"><strong>发起任务</strong></span>
+                <span><button type="button" class="btn btn-link"
+                              style="float:right;margin-right:5%; color:#007bff;padding:1px;" data-placement="center"
+                              data-animation="am-fade-and-scale" ng-if="!params.readonly_Task"
+                              ng-click="ToMission()"><strong>发起</strong></button></span>
+            </td>
+        </tr>
+        <tr>
+            <th>阶段任务</th>
+            <th>任务类型</th>
+            <th>任务描述</th>
+            <th>完成时间</th>
+            <th>负责人</th>
+            <th>环节进度</th>
+            <th>任务状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in items">
+            <td>{{item.FlowStageName}}</td>
+            <td>{{item.TaskType}}</td>
+            <td style="width:25%">
+                <div style='display:-webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;overflow:hidden;'
+                     ng-click="showDetail(item)">{{item.TaskNote}}
+                </div>
+            </td>
+            <td>{{item.TaskLimitTime}}</td>
+            <td>{{item.TaskerName}}</td>
+            <td>{{item.Progress}}%</td>
+            <td>{{item.FlowStepName}}</td>
+            <td>
+                <button ng-if="item.TaskType=='普通'&&item.FlowID==null" type="button" class="btn btn-success btn-sm"
+                        value="修改" ng-click="editTask(item)">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                <button ng-if="item.TaskType=='普通'&&item.FlowID==null" type="button" value="删除"
+                        class="btn btn-danger btn-sm" ng-click="deleteTask(item.TaskbaseID)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                <button ng-if="item.FlowID!=null" type="button" class="btn btn-success btn-sm" value="查看"
+                        ng-click="check(item)">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </button>
+            </td>
+        </tr>
+        <tr ng-if="items.length<1">
+            <td colspan="8" style="text-align:center">暂无数据</td>
+        </tr>
+        </tbody>
+    </table>
+    <pagination ng-if="totalCount>pageSize" data-pageindex="page.pageIndex" data-pagesize="page.pageSize"
+                data-ptotal="page.totalCount"></pagination>
+</div>
+

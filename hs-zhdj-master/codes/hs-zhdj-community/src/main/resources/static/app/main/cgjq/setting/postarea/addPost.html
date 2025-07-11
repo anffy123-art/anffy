@@ -1,0 +1,59 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div activate-input class="body">
+                <form class="form-horizontal" role="form"
+                      name="editForm" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table">
+                            <tr>
+                                <th>
+                                    岗位名称
+                                </th>
+                                <td ng-class="{ 'has-error' : this.editForm.name.$invalid &&  this.editForm.$submitted}">
+                                    <input type="text" name="name" ng-model="dataModel.name" maxlength="1000"
+                                           class="form-control" ng-required="true"/>
+                                    <span ng-show="this.editForm.name.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>所属党支部</th>
+                                <td>
+                                    {{dataModel.partyname}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    岗位人员
+                                </th>
+                                <td ng-class="{ 'has-error' : this.editForm.headusername.$invalid &&  this.editForm.$submitted}">
+                                    <div class="input-group input-group-search"
+                                         data-dataoptions="selectUserlist"
+                                         title="选择成员" bsselectdata-pro>
+                                        <input name="headusername" type="text" ng-model="selectUserlist.selectedLabeData"
+                                               class="form-control" ng-required="true"
+                                               ng-disabled="true"/>
+                                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                                    </div>
+                                    <span ng-show="this.editForm.headusername.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>创建时间</th>
+                                <td>
+                                    {{dataModel.createtime|date:'yyyy-MM-dd'}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" ng-click="submitData(this.editForm.$valid)" >提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

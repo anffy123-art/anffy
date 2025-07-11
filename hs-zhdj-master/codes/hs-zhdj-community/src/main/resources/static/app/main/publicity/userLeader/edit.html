@@ -1,0 +1,236 @@
+<titlemenu></titlemenu>
+<div ng-if="op!=0" class="dj-card">
+    <div class="dj-body" activate-select>
+        <!--<div class="dj-pagetitle">编辑领导人员5+3信息</div>-->
+        <form role="form" name="editForm" novalidate>
+            <!--<div class="dj-paneltitle">
+                <div class="title-line"></div>
+                领导人员5+3信息
+            </div>-->
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所属党组织</th>
+                        <td>
+                            <!--<div class="input-group input-group-search"
+                                 title="选择党组织" ng-click="selectParty()">
+                                <input name="partyname" type="text" ng-model="dataModel.partyname"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.partyname.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>-->
+                            {{dataModel.partyname}}
+                        </td>
+                        <th>落实人</th>
+                        <td ng-class="{ 'has-error' : this.editForm.username.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 data-dataoptions="selectLeaderlist"
+                                 title="选择姓名" bsselectdata-pro>
+                                <input name="username" type="text" ng-model="dataModel.username"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.username.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>类别</th>
+                        <td>
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.leadertype"
+                                    ng-options="type.dickey as type.dicvalue for type in leaderTypeList"
+                                    class="form-control"
+                                    name="leadertype">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                        </td>
+                        <th>时间</th>
+                        <td ng-class="{ 'has-error' : this.editForm.leadertime.$invalid &&  this.editForm.$submitted}">
+                            <input name="leadertime" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.leadertime"
+                                   ng-required="true"
+                                   data-max-date="{{maxDate}}"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="this.editForm.leadertime.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>地点</th>
+                        <td ng-class="{ 'has-error' : this.editForm.address.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="address" ng-model="dataModel.address"
+                                   maxlength="200"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.address.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th></th>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>内容</th>
+                        <td colspan="3"
+                            ng-class="{ 'has-error' : this.editForm.content.$invalid &&  this.editForm.$submitted}">
+                            <textarea ng-model="dataModel.content" name="content" rows="5"
+                                      class="form-control" type="text"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="dj-formtable" ng-if="dataModel.leadertype==3">
+                <div class="table-responsive list-table-panel">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            {{dataModel.leadertype==3?'谈心谈话人员(必填)':'参加人员(选填)'}}
+                        </div>
+                        <div class="table-tool">
+                            <button type="button" class="btn btn-primary dropdown-toggle"
+                                    data-dataoptions="selectUserlist" title="选择成员"
+                                    bsselectdata-pro>
+                                选择党员
+                            </button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" title="添加"
+                                    ng-click="addUser()">
+                                其他人员
+                            </button>
+                        </div>
+                    </div>
+                    <div class="outoflow" style="max-height: 300px;">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>姓名</th>
+                                <th>所在组织机构</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in userList">
+                                <th scope="row">{{$index+1}}</th>
+                                <th ng-if="it.usercode!='' && it.usercode != null">{{it.username}}</th>
+                                <td ng-if="it.usercode == '' || it.usercode == null" ng-class="{ 'has-error' : invalidFee($index,editForm,'username') &&  this.editForm.$submitted}">
+                                    <input type="text" autocomplete="off" class="form-control" name="username_{{$index}}"
+                                           ng-model="it.username" ng-required="true"/>
+                                </td>
+                                <th>{{it.DZZMC}}</th>
+                                <th class="text-center">
+                                    <button class="btn td-btn bg-pink waves-effect"
+                                            ng-click="deleteUser($index)" title="删除">
+                                        删除
+                                    </button>
+                                </th>
+                            </tr>
+                            <tr ng-if="userList.length<=0">
+                                <td colspan="7" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive list-table-panel" style="margin-bottom: 20px;">
+                <bsfiles ng-model="reqFileModel"/>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)"
+                        ng-if="op!=0">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div ng-if="op==0" class="dj-card">
+    <div class="dj-body" activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所属党组织</th>
+                        <td>
+                            {{dataModel.partyname}}
+                        </td>
+                        <th>落实人</th>
+                        <td>
+                            {{dataModel.username}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>类别</th>
+                        <td>
+                            {{(leaderTypeList|filter:{dickey:dataModel.leadertype})[0].dicvalue }}
+                        </td>
+                        <th>时间</th>
+                        <td>
+                            {{dataModel.leadertime|date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>地点</th>
+                        <td>
+                            {{dataModel.address}}
+                        </td>
+                        <th></th>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>内容</th>
+                        <td colspan="3">
+                            <pre>{{dataModel.content}}</pre>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="dj-formtable" ng-if="dataModel.leadertype==3">
+                <div class="table-responsive list-table-panel">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            {{dataModel.leadertype==3?'谈心谈话人员':'参加人员'}}
+                        </div>
+                    </div>
+                    <div class="outoflow" style="max-height: 300px;">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>姓名</th>
+                                <th>所在组织机构</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in userList">
+                                <th scope="row">{{$index+1}}</th>
+                                <th>{{it.username}}</th>
+                                <th>{{it.DZZMC}}</th>
+                            </tr>
+                            <tr ng-if="userList.length<=0">
+                                <td colspan="3" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive list-table-panel" style="margin-bottom: 20px;">
+                <bsfiles ng-model="reqFileModel"/>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+            </div>
+        </form>
+    </div>
+</div>

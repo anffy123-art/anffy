@@ -1,0 +1,41 @@
+﻿<div class="modal" tabindex="-1" role="dialog" id="fileaddmodal">
+    <div class="modal-dialog">
+        <form class="form-horizontal" name="fileform">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$hide()">&times;</button>
+                    <h4 class="modal-title">文件上传</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <!--ngf-resize="{width: 1440, height: 1080}"-->
+                        <input size="60" class="file" type="file" ngf-select ng-model="file" name="file"
+                               ngf-max-size="20MB" ng-change="valiFileType()" accept="{{acceptType}}"/>
+                    </div>
+                    <div ng-if="fileTypeList.length>0" style="display:flex;margin-bottom: 10px;">
+                        <div style="margin: 5px 0;padding-right: 10px;">文档类型</div>
+                        <select class="form-control show-tick" style="width: 200px;box-shadow: none;"
+                                ng-model="filetype"
+                                ng-options="type.dickey as type.dicvalue for type in fileTypeList"
+                                class="form-control"
+                                name="filetype">
+                            <option value="" selected>--请选择--</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div ng-show="updata.isuping" class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{updata.progressPer}}"
+                             aria-valuemin="0" aria-valuemax="100" ng-style="{width:updata.progressPer+'%'}"
+                             style="min-width: 2em;">
+                            {{updata.progressPer}}%
+                        </div>
+                    </div>
+                    <a href="{{templateUrl}}" target="_blank" ng-if="templateUrl">下载模板</a>
+                    <button ng-show="!updata.isuping" type="submit" class="btn btn-primary" ng-click="submit()">上传
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

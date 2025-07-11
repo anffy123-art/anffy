@@ -1,0 +1,32 @@
+﻿.treebody {
+    margin: 5px 0px 5px 20px;
+}
+
+.maddleButton {
+    margin-top: 50%;
+    display: inline-block;
+    width: auto;
+}
+
+.depSelected {
+    background-color: #0099ff;
+    color: #fff;
+}
+
+.midbtn {
+    margin-top: 10px;
+}
+
+.maddleButton {
+    margin-top: 50%;
+    display: inline-block;
+    width: auto;
+}
+
+.treeitem {
+    padding-left: 15px;
+}
+
+.treeitem .treeitem {
+    padding-left: 28px;
+}

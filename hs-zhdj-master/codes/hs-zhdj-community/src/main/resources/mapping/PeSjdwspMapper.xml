@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.PeSjdwspMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.PeSjdwsp">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="JOINUSERID" jdbcType="VARCHAR" property="joinuserid" />
+    <result column="PROGRESSTIME" jdbcType="TIMESTAMP" property="progresstime" />
+    <result column="APPROVETIME" jdbcType="TIMESTAMP" property="approvetime" />
+    <result column="ISDECLARE" jdbcType="INTEGER" property="isdeclare" />
+    <result column="ISTALK" jdbcType="INTEGER" property="istalk" />
+    <result column="APPRESULT" jdbcType="INTEGER" property="appresult" />
+    <result column="MEETINGID" jdbcType="VARCHAR" property="meetingid" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="CREATEUSERID" jdbcType="VARCHAR" property="createuserid" />
+    <result column="CREATEUSERNAME" jdbcType="VARCHAR" property="createusername" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="UPDATEUSERID" jdbcType="VARCHAR" property="updateuserid" />
+    <result column="UPDATEUSERNAME" jdbcType="VARCHAR" property="updateusername" />
+    <result column="OPERATETIME" jdbcType="TIMESTAMP" property="operatetime" />
+    <result column="OPERATESTATE" jdbcType="VARCHAR" property="operatestate" />
+    <result column="SYNCSTATE" jdbcType="VARCHAR" property="syncstate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, JOINUSERID, PROGRESSTIME, APPROVETIME, ISDECLARE, ISTALK, APPRESULT, MEETINGID, 
+    CREATETIME, CREATEUSERID, CREATEUSERNAME, UPDATETIME, UPDATEUSERID, UPDATEUSERNAME, 
+    OPERATETIME, OPERATESTATE, SYNCSTATE
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.PeSjdwspExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pe_sjdwsp
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pe_sjdwsp
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pe_sjdwsp
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.PeSjdwspExample">
+    delete from pe_sjdwsp
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.PeSjdwsp">
+    insert into pe_sjdwsp (ID, JOINUSERID, PROGRESSTIME, 
+      APPROVETIME, ISDECLARE, ISTALK, 
+      APPRESULT, MEETINGID, CREATETIME, 
+      CREATEUSERID, CREATEUSERNAME, UPDATETIME, 
+      UPDATEUSERID, UPDATEUSERNAME, OPERATETIME, 
+      OPERATESTATE, SYNCSTATE)
+    values (#{id,jdbcType=VARCHAR}, #{joinuserid,jdbcType=VARCHAR}, #{progresstime,jdbcType=TIMESTAMP}, 
+      #{approvetime,jdbcType=TIMESTAMP}, #{isdeclare,jdbcType=INTEGER}, #{istalk,jdbcType=INTEGER}, 
+      #{appresult,jdbcType=INTEGER}, #{meetingid,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{createuserid,jdbcType=VARCHAR}, #{createusername,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{updateuserid,jdbcType=VARCHAR}, #{updateusername,jdbcType=VARCHAR}, #{operatetime,jdbcType=TIMESTAMP}, 
+      #{operatestate,jdbcType=VARCHAR}, #{syncstate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.PeSjdwsp">
+    insert into pe_sjdwsp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="joinuserid != null">
+        JOINUSERID,
+      </if>
+      <if test="progresstime != null">
+        PROGRESSTIME,
+      </if>
+      <if test="approvetime != null">
+        APPROVETIME,
+      </if>
+      <if test="isdeclare != null">
+        ISDECLARE,
+      </if>
+      <if test="istalk != null">
+        ISTALK,
+      </if>
+      <if test="appresult != null">
+        APPRESULT,
+      </if>
+      <if test="meetingid != null">
+        MEETINGID,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="createuserid != null">
+        CREATEUSERID,
+      </if>
+      <if test="createusername != null">
+        CREATEUSERNAME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+      <if test="updateuserid != null">
+        UPDATEUSERID,
+      </if>
+      <if test="updateusername != null">
+        UPDATEUSERNAME,
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME,
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE,
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="joinuserid != null">
+        #{joinuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="progresstime != null">
+        #{progresstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvetime != null">
+        #{approvetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdeclare != null">
+        #{isdeclare,jdbcType=INTEGER},
+      </if>
+      <if test="istalk != null">
+        #{istalk,jdbcType=INTEGER},
+      </if>
+      <if test="appresult != null">
+        #{appresult,jdbcType=INTEGER},
+      </if>
+      <if test="meetingid != null">
+        #{meetingid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuserid != null">
+        #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetime != null">
+        #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        #{syncstate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.PeSjdwspExample" resultType="java.lang.Long">
+    select count(*) from pe_sjdwsp
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pe_sjdwsp
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.joinuserid != null">
+        JOINUSERID = #{record.joinuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.progresstime != null">
+        PROGRESSTIME = #{record.progresstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.approvetime != null">
+        APPROVETIME = #{record.approvetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isdeclare != null">
+        ISDECLARE = #{record.isdeclare,jdbcType=INTEGER},
+      </if>
+      <if test="record.istalk != null">
+        ISTALK = #{record.istalk,jdbcType=INTEGER},
+      </if>
+      <if test="record.appresult != null">
+        APPRESULT = #{record.appresult,jdbcType=INTEGER},
+      </if>
+      <if test="record.meetingid != null">
+        MEETINGID = #{record.meetingid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createuserid != null">
+        CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createusername != null">
+        CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null">
+        UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateuserid != null">
+        UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateusername != null">
+        UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatetime != null">
+        OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatestate != null">
+        OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.syncstate != null">
+        SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pe_sjdwsp
+    set ID = #{record.id,jdbcType=VARCHAR},
+      JOINUSERID = #{record.joinuserid,jdbcType=VARCHAR},
+      PROGRESSTIME = #{record.progresstime,jdbcType=TIMESTAMP},
+      APPROVETIME = #{record.approvetime,jdbcType=TIMESTAMP},
+      ISDECLARE = #{record.isdeclare,jdbcType=INTEGER},
+      ISTALK = #{record.istalk,jdbcType=INTEGER},
+      APPRESULT = #{record.appresult,jdbcType=INTEGER},
+      MEETINGID = #{record.meetingid,jdbcType=VARCHAR},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.PeSjdwsp">
+    update pe_sjdwsp
+    <set>
+      <if test="joinuserid != null">
+        JOINUSERID = #{joinuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="progresstime != null">
+        PROGRESSTIME = #{progresstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvetime != null">
+        APPROVETIME = #{approvetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isdeclare != null">
+        ISDECLARE = #{isdeclare,jdbcType=INTEGER},
+      </if>
+      <if test="istalk != null">
+        ISTALK = #{istalk,jdbcType=INTEGER},
+      </if>
+      <if test="appresult != null">
+        APPRESULT = #{appresult,jdbcType=INTEGER},
+      </if>
+      <if test="meetingid != null">
+        MEETINGID = #{meetingid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuserid != null">
+        CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.PeSjdwsp">
+    update pe_sjdwsp
+    set JOINUSERID = #{joinuserid,jdbcType=VARCHAR},
+      PROGRESSTIME = #{progresstime,jdbcType=TIMESTAMP},
+      APPROVETIME = #{approvetime,jdbcType=TIMESTAMP},
+      ISDECLARE = #{isdeclare,jdbcType=INTEGER},
+      ISTALK = #{istalk,jdbcType=INTEGER},
+      APPRESULT = #{appresult,jdbcType=INTEGER},
+      MEETINGID = #{meetingid,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{syncstate,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

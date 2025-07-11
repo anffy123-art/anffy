@@ -1,0 +1,127 @@
+﻿<style>
+    .partytree .card {
+        box-shadow: none;
+        margin-bottom: 0px;
+    }
+
+    .partytree .card .header {
+        padding: 15px 20px;
+    }
+
+    .panel-default {
+        border-color: #f5f5f5;
+    }
+
+    .panel-default > .panel-heading {
+        color: #333;
+        background-color: #f5f5f5;
+        border: 2px solid #f5f5f5;
+    }
+
+    select{
+        box-shadow: none !important;
+        border: none !important;
+    }
+</style>
+<div id="userselectpro" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:65%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div class="modal-body">
+                <div activate-input activate-select class="header search-header" style="padding: 0px !important;">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal" ng-submit="searchUser()">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>姓名</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="xm" class="form-control" type="text"
+                                                       ng-model="searchParam"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn">
+                            <div>
+                                <button  class="btn btn-default1"
+                                         ng-click="searchUser()">查询
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="panel panel-custom">-->
+                <div class="row row_border" style="padding-bottom: 0px;">
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">组织机构列表</div>
+                            <div class="panel-body" style="padding: 0px;">
+                                <div class="partytree" party-tree data-selectdzzdm="selectdzzdm"
+                                     data-selectdzzmc="selectdzzmc"
+                                     data-height="40" data-isshowxz="0" data-showtogglebtn="false"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="padding-left: 5px; padding-right: 0px;">
+                        <div class="panel panel-default" id="UserListContent">
+                            <div class="panel-heading">组织人员列表<img style="height:18px" ng-show="isloading"
+                                                                  src="../../scripts/loading-2.gif"/></div>
+                            <div class="panel-body" style="padding: 0px;overflow-y: auto;height:48vh">
+                                <select class="form-control"
+                                        style="padding: 5px 0px 5px 10px; font-size: 14px;height:inherit"
+                                        multiple="multiple" ng-model="tempAdd"
+                                        ng-options="user.XM+'('+user.DZZMC+')' for user in userSelectList"
+                                        ng-dblclick="addUser(user)"></select>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-1" style="text-align: center;">
+                        <div class="maddleButton">
+                            <div class="midbtn">
+                                <button type="button" class="btn btn-success midbtn" ng-click="addUser()">添加</button>
+                            </div>
+                            <div class="midbtn">
+                                <button type="button" class="btn btn-success midbtn" ng-click="addAllUser()">全部添加</button>
+                            </div>
+                            <div class="midbtn">
+                                <button type="button" class="btn btn-danger midbtn" ng-click="deleteUser()">删除</button>
+                            </div>
+                            <div class="midbtn">
+                                <button type="button" class="btn btn-danger midbtn" ng-click="deleteAllUser()">全部删除</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 clear_end">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">已选择人员</div>
+                            <div class="panel-body" style="overflow: auto; padding: 0px;">
+                                <select class="form-control pageContent_end"
+                                        style="padding: 5px 0px 5px 10px; font-size: 14px;overflow-y: auto;height:48vh !important"
+                                        size="200" multiple="multiple" ng-model="tempSelected"
+                                        ng-options="user.XM+'('+user.DZZMC+')' for user in rightusers"
+                                        ng-dblclick="deleteUser(user)"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--</div>-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="selectedData()">选择</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+
+<div class="body">
+    <div class="table-responsive list-table-panel dsj_cgjq">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>消息标题</th>
+                <th>推送人</th>
+                <th>推送时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in alreadymessageList">
+                <td  align="center">
+                    <a ng-if="it.URL!=null" href="#!/{{it.URL}}">
+                        {{it.SENDTIME|date:'yyyy-MM-dd'}}{{it.MSGTITLE}}[{{it.MESSAGETYPENAME}}]</a>
+                    <a ng-if="it.URL==null" ng-click="messageDetail(it,1)">
+                        {{it.SENDTIME|date:'yyyy-MM-dd'}}{{it.MSGTITLE}}[{{it.MESSAGETYPENAME}}]</a>
+                </td>
+                <td align="center">
+                    {{it.FROMUSERNAME}}
+                </td>
+                <td align="center">
+                    {{it.SENDTIME|date:'yyyy-MM-dd hh:mm'}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination data-pageindex="alreadydata.pageindex" data-pagesize="alreadydata.pagesize"
+                data-ptotal="alreadydata.ptotal"></pagination>
+</div>

@@ -1,0 +1,26 @@
+<div class="menubody" style="position: relative;z-index: 1;margin-top: 10px;">
+    <nav class="redmenu">
+        <div class="redmenu-items">
+            <a href="javascript:void(0);" ng-repeat="item in pageList"
+               ng-click="selectTab(item.id)"
+               ng-class="activeTab==item.id?' nav-item is-active':'nav-item'">{{item.title}}
+            </a>
+            <span class="nav-indicator"></span>
+        </div>
+    </nav>
+    <div class="redmenu-btn">
+        <!--<span onclick="toLeft() " class="icon iconfont iconanniu-zhedie1 btnLeft"></span>
+        <span onclick="toRight() " class="icon iconfont iconanniu-zhankai1 btnRight"></span>-->
+        <i ng-click="toLeft($event) " class="material-icons"
+           style="color: white; border-radius: 100px 0 0 100px;border: 1px solid;padding: 0 5px;opacity: 0.29;border-right: none;">chevron_left</i>
+        <i ng-click="toRight($event) " class="material-icons"
+           style="color: white;border-radius: 0 100px 100px 0;border: 1px solid;padding: 0 5px;opacity: 0.29;">chevron_right</i>
+    </div>
+
+</div>
+<div class="panel menupanel">
+    <div class="panel" style="box-shadow:none;margin: 10px;min-height: 200px;"
+         ng-repeat="item in pageList"
+         ng-show="isSelected(item.id)" ng-include="item.url">
+    </div>
+</div>

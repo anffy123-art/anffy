@@ -1,0 +1,10 @@
+﻿<div class="dutypanel panel panel-success">
+    <div class="x_axis_div panel-heading">
+        <div data-id="{{xval.id}}" ng-repeat="xval in ngModel.xAxis">{{xval.name}}</div>
+    </div>
+    <div class="tree_div panel-body">
+        <div class="tree_node" ng-repeat="titem in ngModel.treeNodes"
+             ng-include="'../js/setting/sysduty/lv_titem.html'"></div>
+    </div>
+    <canvas></canvas>
+</div>

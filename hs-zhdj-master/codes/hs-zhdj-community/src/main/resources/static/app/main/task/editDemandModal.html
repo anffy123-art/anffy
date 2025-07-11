@@ -1,0 +1,31 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{paramsDemand.title}}</h3>
+            </div>
+            <form class="form-horizontal formtable1 panel-body modal-body">
+                <table class="table table-bordered tlist">
+                    <thead>
+                    <tr>
+                        <td colspan="2" style="text-align:center; background-color:#f5f5f5">
+                            <span style="color:black;"><strong>评分明细</strong></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-4">打分人</th>
+                        <th class="col-md-8">分数</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="memScore in content">
+                        <td class="col-md-4">{{memScore.scroingName}}</td>
+                        <td class="col-md-8">{{memScore.Score}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>

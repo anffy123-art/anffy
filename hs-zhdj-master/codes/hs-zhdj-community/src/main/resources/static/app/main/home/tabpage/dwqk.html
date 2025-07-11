@@ -1,0 +1,59 @@
+<!--<div class="header">-->
+<!--<div panel-title data-title="'党委情况信息'"></div>-->
+<!--<ul class="header-dropdown m-r&#45;&#45;5">-->
+<!--<li class="dropdown demo-icon-container more">-->
+<!--<a bs-ui-sref="home.gradeUserList" class="dropdown-toggle demo-google-material-icon">-->
+<!--<span class="icon-name">更多</span>-->
+<!--<i class="material-icons" style="color: red">keyboard_arrow_right</i>-->
+<!--</a>-->
+<!--</li>-->
+<!--</ul>-->
+<!--</div>-->
+<div class="dj-formtable">
+    <div class="table-responsive list-table-panel">
+        <!--<div class="list-table-title">
+            <div class="table-title">
+
+            </div>
+            <div class="table-tool">
+                &lt;!&ndash; <a bs-ui-sref="home.gradeUserList" class="dropdown-toggle demo-google-material-icon">
+                     <span class="icon-name">更多</span>
+                     <i class="material-icons" style="color: red">keyboard_arrow_right</i>
+                 </a>&ndash;&gt;
+                <ul class="header-dropdown">
+                    <li class="dropdown demo-icon-container main-card-more table-more">
+                        <a ng-click="showMore_dwqk()"
+                           class="dropdown-toggle demo-google-material-icon">
+                            <span class="icon-name">更多</span>
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>-->
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <!--<th>党内职务</th>-->
+                <th>现任职务</th>
+                <th>所在支部</th>
+                <th>领导班子成员基层联系点</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in gradeUserList">
+                <td scope="row" class="text-center">
+                    {{$index+1}}
+                </td>
+                <td>{{it.XM}}</td>
+                <!--<td>{{it.ZWMCMC}}</td>-->
+                <td>{{it.XZZWMC}}</td>
+                <td>{{it.DZZMC}}</td>
+                <td>{{it.LDRYLXDMC}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

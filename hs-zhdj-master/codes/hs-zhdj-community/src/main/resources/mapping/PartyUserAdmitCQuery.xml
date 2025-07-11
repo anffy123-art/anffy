@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.PartyUserAdmitCQuery">
+    <select id="selectPartyUserAdmitList" resultType="com.px.partybuild.vo.PartyUserAdmitVo">
+        select us.RYJBXXBS as "userId",us.RYBM as "userCode",us.XM as "userName",us.SZDZBDM as "partyCode",p.DZZMC as "partyName",us.XB as "sexId",xb.HZMC as "sex",us.RYZT as "userStatus",ryzt.HZMC as "userStatusName",
+        str_to_date(us.CSRQ,'%Y%m%d') as "birthDate",us.JG as "nativePlace",us.MZ as "nationalId",mz.HZMC as "national",usfb.APPLYDATE as "applyDate",usfb.ACTIVEDATE as "activeDate",usfb.PASSDATE as "passDate",
+        str_to_date(dj.jrzgzzrq,'%Y%m%d') as "inPartyDate",
+        str_to_date(dj.ZZRQ,'%Y%m%d') as "becomeFullDate",
+        usfb.isArchive as "isArchive",
+        case when usfb.isArchive=1 then '是' else '否' end as  "isArchiveName",
+        us.xl as educationalId,us.SFZH as idCard,usfb.gradeName,usfb.className,usfb.enrollmentDate,usfb.graduateDate,xl.HZMC as educational,
+        usfb.trainUser1,usfb.trainUser2,usfb.mobile as contactMobile,
+        usfb.isStudent,case when usfb.isStudent=1 then '是' else '否' end as  isStudentName,usfb.password,usfb.applyApproveStatus,dic.DICVALUE as applyApproveStatusName,
+        usfb.applyFileReId,usfb.exportDate,usfb.exportPartyName,userinfo.USERNAME as userNo
+        , usfb.archiveDate
+        from VM_RYJBXX_ALL us -- 视图
+        inner join RS_RYJBXXFB usfb on us.RYBM=usfb.RYBM
+        inner join ZZ_ZZQKXX p on us.szdzbdm=p.dzzdm -- 党组织信息
+        left join Zzzd_ryzt ryzt on us.ryzt=ryzt.bm -- 人员状态
+        left join zd_xbm xb on us.xb=xb.bm -- 性别
+        left join zd_mzdm mz on us.mz=mz.bm -- 民族
+        left join ZZ_DJXX dj on us.RYBM=dj.RYBM
+        left join zd_whcddm1 xl on us.XL=xl.BM -- 学历
+        left join cf_dictionary dic on usfb.applyApproveStatus = dic.DICKEY and dic.DICTYPEKEY='ApplyApproveStatus'
+        left join CF_USERS userinfo on us.RYBM=userinfo.USERID
+        where 1=1
+        <if test="partyCode != null and partyCode != ''">
+            and p.dzzdm like concat(#{partyCode},'%')
+        </if>
+        <if test="userCode != null and userCode != ''">
+            and us.rybm = #{userCode}
+        </if>
+        <if test="userName != null and userName != ''">
+            and us.xm like concat('%',#{userName},'%')
+        </if>
+        <if test="userStatus != null">
+            and us.ryzt = #{userStatus}
+        </if>
+        <if test="applyStartDate != null">
+            and usfb.APPLYDATE <![CDATA[ >= ]]> #{applyStartDate}
+        </if>
+        <if test="applyEndDate != null ">
+            and usfb.APPLYDATE <![CDATA[ < ]]> date_add(#{applyEndDate}, interval 1 day)
+        </if>
+        <if test="activeStartDate != null">
+            and usfb.ACTIVEDATE <![CDATA[ >= ]]> #{activeStartDate}
+        </if>
+        <if test="activeEndDate != null">
+            and usfb.ACTIVEDATE <![CDATA[ < ]]> date_add(#{activeEndDate}, interval 1 day)
+        </if>
+        <if test="passStartDate != null">
+            and usfb.PASSDATE <![CDATA[ >= ]]> #{passStartDate}
+        </if>
+        <if test="passEndDate != null">
+            and usfb.PASSDATE <![CDATA[ < ]]> date_add(#{passEndDate}, interval 1 day)
+        </if>
+        <if test="inPatyStartDate != null">
+            and dj.jrzgzzrq >= date_format(#{inPatyStartDate},'%Y%m%d')
+        </if>
+        <if test="inPatyEndDate != null">
+            and dj.jrzgzzrq <![CDATA[ <= ]]> date_format(#{inPatyEndDate},'%Y%m%d')
+        </if>
+        <if test="isArchive != null and isArchive==1">
+            and usfb.IsArchive = #{isArchive}
+        </if>
+        <if test="isArchive != null and isArchive==0">
+            and (usfb.IsArchive = #{isArchive} or usfb.IsArchive is null)
+        </if>
+        <if test="applyApproveStatus != null">
+            and usfb.applyApproveStatus = #{applyApproveStatus}
+        </if>
+        <if test="gradeName != null and gradeName != ''">
+            and usfb.gradeName like concat('%',#{gradeName},'%')
+        </if>
+        <if test="className != null and className != ''">
+            and usfb.className like concat('%',#{className},'%')
+        </if>
+        <if test="sexId != null">
+            and us.XB = #{sexId}
+        </if>
+        <if test="isStudent != null and isStudent==1">
+            and usfb.isStudent = #{isStudent}
+        </if>
+        <if test="isStudent != null and isStudent==0">
+            and (usfb.isStudent = #{isStudent} or usfb.isStudent is null)
+        </if>
+        <if test="educationalId != null">
+            and us.XL = #{educationalId}
+        </if>
+        <if test="userNo != null and userNo != ''">
+            and userinfo.USERNAME like concat('%',#{userNo},'%')
+        </if>
+        order by us.XM,us.RYBM
+    </select>
+</mapper>

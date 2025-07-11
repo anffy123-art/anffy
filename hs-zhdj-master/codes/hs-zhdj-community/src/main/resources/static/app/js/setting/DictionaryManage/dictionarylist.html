@@ -1,0 +1,115 @@
+﻿<span class="title-menu">
+    <ol class="breadcrumb gt_breadcrumb">
+        <li>
+            <a href="javascript:void(0);">
+                系统配置
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0);">
+                参数字典配置
+            </a>
+        </li>
+    </ol>
+</span>
+<div class="dj-list" style="padding-top: 5px;">
+    <div class="dj-list-body">
+        <div class="dj-list-content content1">
+            <div class="card">
+                <div activate-input class="header search-header">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg3 col-md-3 dj-label">
+                                        <label>字典类别名称</label>
+                                    </div>
+                                    <div class="col-lg3 col-md-3">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="dicTypeName" class="form-control" type="text" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="searchTypeKey"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg3 col-md-3 dj-label">
+                                        <label>字典显示名称</label>
+                                    </div>
+                                    <div class="col-lg3 col-md-3">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="dicvalueName" class="form-control" type="text" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="dicvalue"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <button class="btn btn-default1" ng-click="search()">查询</button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                                <!--<button role-permission-code="dictionarylist.btnadd" class="btn btn-default1"-->
+                                <!--ng-click="savemodal()">新增-->
+                                <!--</button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button role-permission-code="dictionarylist.btnadd" class="btn btn-default1"
+                                    ng-click="savemodal()">新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="list-table-panel">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                            <thead>
+                            <tr>
+                                <th>字典显示名称</th>
+                                <th>字典类别名称</th>
+                                <th>字典键</th>
+                                <th>字典类型</th>
+                                <th class="col-md-2">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="dic in diclist" data-placement="top" bs-popover data-content="{{dic.dicnote}}"
+                                data-title="字典描述" data-trigger="hover">
+                                <td>{{dic.dicvalue}}</td>
+                                <td>{{dic.dictypekey}}</td>
+                                <td>{{dic.dickey}}</td>
+                                <td>{{dic.dictype==1?'系统':'普通'}}</td>
+                                <td class="text-center">
+                                    <button class="btn td-btn bg-light-green waves-effect"
+                                            role-permission-code="dictionarylist.listedit"
+                                            ng-click="editmodal(dic.dictionaryid)"
+                                            title="修改">
+                                        修改
+                                    </button>
+                                    <button class="btn td-btn bg-pink waves-effect"
+                                            ng-click="deletedic(dic.dictionaryid)" title="删除">
+                                        删除
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr ng-if="diclist.length<=0">
+                                <td colspan="5" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <pagination data-pageindex="finddata.pageindex" data-pagesize="finddata.pagesize"
+                                    data-ptotal="finddata.ptotal"></pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

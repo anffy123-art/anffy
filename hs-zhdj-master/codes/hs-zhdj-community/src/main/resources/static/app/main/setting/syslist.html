@@ -1,0 +1,66 @@
+﻿<div class="panel panel-default formquery-panel-height">
+    <div class="panel-heading"><h4>{{title}}</h4></div>
+    <div class="search-param-panel">
+        <form class="form-inline formquery">
+            <div class="form-group">
+                <label for="sysName">系统名称：</label>
+                <input type="text" class="form-control" name="sysName" ng-model="sysName"/>
+            </div>
+            <div class="form-group">
+                <label for="ProMan">项目经理：</label>
+                <input type="text" class="form-control" ng-model="ProMan" name="ProMan"/>
+            </div>
+            <div class="form-group formquery-btns-panel">
+                <button class="btn btn-primary" ng-click="selectPage(1)">查询</button>
+                <button type="button" class="btn btn-primary" data-placement="center" data-animation="am-fade-and-scale"
+                        ng-click="addModal()">新增
+                </button>
+            </div>
+        </form>
+
+
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered table-hover tlist">
+            <thead>
+            <tr>
+                <th>系统名称</th>
+                <th>建设年份</th>
+                <th>主管需求部门</th>
+                <th>主管需求负责人</th>
+                <th>建设负责人（产品经理）</th>
+                <th>项目经理</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="sys in syslists">
+                <td>{{sys.SystemName}}</td>
+                <td>{{sys.BuildYear}}</td>
+                <td>{{sys.DemandPDName}}</td>
+                <td>{{sys.DemandManName}}</td>
+                <td>{{sys.BuilderName}}</td>
+                <td>{{sys.PMName}}</td>
+                <td>
+                    <button class="btn btn-success btn-sm" title="修改" data-placement="center"
+                            ng-click="editModal(sys.SystemID)">
+                        <span class="glyphicon glyphicon-pencil "></span>
+                    </button>
+                    <button class="btn btn-danger btn-sm" title="删除" ng-click="deleteSys(sys.SystemID)">
+                        <span class="glyphicon glyphicon-remove "></span>
+                    </button>
+                </td>
+            </tr>
+            <tr ng-if="syslists.length<=0">
+                <td colspan="7" style="text-align:center">暂无数据</td>
+            </tr>
+
+            </tbody>
+        </table>
+        <pagination data-pageindex="pageIndex" data-pagesize="pageSize" data-ptotal="totalCount"
+                    ng-click="selectPage(pageIndex)"></pagination>
+
+    </div>
+
+
+</div>

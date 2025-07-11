@@ -1,0 +1,34 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# 智慧党建开源版项目概述
+
+智慧党建是一个基于Spring Boot的Java Web应用，用于党组织管理、党员管理和党建活动等功能。
+
+## 主要技术栈
+- Java 1.8
+- Spring Boot 2.3.4.RELEASE
+- MyBatis
+- MySQL
+- Redis
+- Apache Shiro (安全框架)
+- JWT (认证)
+- FreeMarker (模板引擎)
+- 微信支付和企业微信API集成
+
+## 项目结构
+- [ZhdjApplication.java](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/ZhdjApplication.java) - 应用程序入口点
+- [AppConfig.java](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/AppConfig.java) - 应用程序配置类
+- [pom.xml](mdc:codes/hs-zhdj-community/pom.xml) - Maven项目配置和依赖管理
+- [application.yml](mdc:codes/hs-zhdj-community/src/main/resources/application.yml) - 应用配置文件
+
+## 关键功能模块
+- 党组织管理
+- 党员管理
+- 党费管理
+- 活动管理
+- 经费管理
+- 微信集成
+- 工作资源库

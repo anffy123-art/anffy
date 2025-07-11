@@ -1,0 +1,29 @@
+<div class="panel-default theme-panel">
+    <titlemenu></titlemenu>
+    <div class="graph-form">
+        <div class="search-input">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label>公司ID：</label>
+                    <input type="text" class="form-control" id="companyID" ng-model="payData.companyID"
+                           placeholder="请输入公司ID"/>
+                </div>
+                <div class="form-group">
+                    <label>关联ID：</label>
+                    <input type="text" class="form-control" ng-model="payData.payRelID"
+                           placeholder="请输入退款关联ID"/>
+                </div>
+                <div class="form-group">
+                    <label>备注：</label>
+                    <input type="text" class="form-control" id="commodityName" ng-model="payData.commodityName"/>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default1" ng-click="testpay()">支付</button>
+                    <button type="submit" class="btn btn-default1" ng-click="backpay()">退款</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

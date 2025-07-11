@@ -1,0 +1,34 @@
+﻿<div ng-controller="formMarkCtrl">
+    <table class="table table-bordered tlist">
+        <thead>
+        <tr>
+            <td colspan="4" style="text-align:center; background-color:#f5f5f5">
+                <span style="color:black;"><strong>评分结果</strong></span>
+                <span><button ng-show="isshow" type="button" class="btn btn-link"
+                              style="float:right;margin-right:5%; color:#007bff;padding:1px;" data-placement="center"
+                              data-animation="am-fade-and-scale"
+                              ng-click="saveScoreTask()"><strong>发起评分</strong></button></span>
+            </td>
+        </tr>
+        <tr>
+            <th>被打分的角色</th>
+            <th>被打分的对象</th>
+            <th>打分人</th>
+            <th>分数</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="memScore in MemScoreList">
+            <td>{{memScore.scoredRoleName}}</td>
+            <td>{{memScore.scroedName}}</td>
+            <td>{{memScore.scroingName}}</td>
+            <td>{{memScore.Score}}</td>
+        </tr>
+        <tr ng-if="finddata.ptotal<=0">
+            <td colspan="4" style="text-align:center">暂无数据</td>
+        </tr>
+        </tbody>
+    </table>
+    <pagination data-pageindex="finddata.pageindex" data-pagesize="finddata.pagesize"
+                data-ptotal="finddata.ptotal"></pagination>
+</div>

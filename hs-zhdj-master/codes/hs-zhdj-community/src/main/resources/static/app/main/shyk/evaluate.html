@@ -1,0 +1,256 @@
+<titlemenu></titlemenu>
+<div ng-if="op!=0" class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>授课支部</th>
+                        <td>
+                            {{meetingModel.partyname}}
+                        </td>
+                        <th>授课主题</th>
+                        <td>
+                            {{extdata.topicName}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>授课时间</th>
+                        <td>
+                            {{meetingModel.begintime|date:'yyyy-MM-dd HH:mm'}} - {{meetingModel.endtime|date:'HH:mm'}}
+                        </td>
+                        <th>授课地点</th>
+                        <td>
+                            {{meetingModel.meetingaddress}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>授课人<span class="error">*</span></th>
+                        <td ng-class="{ 'has-error' : this.editForm.teachname.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="teachname" ng-model="dataModel.teachname"
+                                   maxlength="200"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.teachname.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>听课人</th>
+                        <td>
+                            {{dataModel.createusername}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div class="dj-formtable">
+                                <table class="dj-table dj-table-list">
+                                    <tr>
+                                        <th style="width: 20% !important;">评价项目</th>
+                                        <th style="width: 20% !important;">评价</th>
+                                        <th>有无说明及建议</th>
+                                    </tr>
+                                    <tr ng-repeat="item in projectList;">
+                                        <td style="text-align: left !important;">
+                                            {{item.PROJECTNAME}}
+                                        </td>
+                                        <td style="text-align: left !important;"
+                                            ng-class="{ 'has-error' : invalidFee($index,editForm,'shykevaluateresultType') &&  this.editForm.$submitted}">
+                                            <span ng-repeat="type in resultTypeList" style="display: flex;">
+                                                <input name="shykevaluateresultType_{{$parent.$index}}" type="radio"
+                                                       ng-checked="item.SHYKEVALUATERESULTTYPE==type.dickey"
+                                                       ng-model="item.SHYKEVALUATERESULTTYPE" value="{{type.dickey}}"
+                                                       class="with-gap"
+                                                       id="shykevaluateresultType_{{$parent.$index}}_{{$index}}"
+                                                       ng-required="true"/>
+                                                <label for="shykevaluateresultType_{{$parent.$index}}_{{$index}}">{{type.dicvalue}}</label>
+                                            </span>
+                                            <span ng-show="invalidFee($index,editForm,'shykevaluateresultType') &&  this.editForm.$submitted"
+                                                  class="error">必填.</span>
+                                        </td>
+                                        <td>
+                                             <textarea ng-model="item.RECOMMEND" name="RECOMMEND_{{$index}}" rows="5"
+                                                       class="form-control" type="text"></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>收获<span class="error">*</span></th>
+                        <td colspan="3"
+                            ng-class="{ 'has-error' : this.editForm.harvest.$invalid &&  this.editForm.$submitted}">
+                            <textarea ng-model="dataModel.harvest" name="harvest" rows="5"
+                                      class="form-control" type="text" ng-required="true"
+                                      placeholder="您对此处授课有哪些收获"></textarea>
+                            <span ng-show="this.editForm.harvest.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>建议</th>
+                        <td colspan="3">
+                            <textarea ng-model="dataModel.recommend" name="recommend" rows="5"
+                                      class="form-control" type="text" placeholder="您对此处授课有哪些建议"></textarea>
+                            <span ng-show="this.editForm.recommend.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)"
+                        ng-if="op!=0">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div ng-if="op==0" class="dj-card">
+    <div class="dj-body" activate-input activate-select style="display: flex;">
+        <div class="userpanel">
+            <ul class="userlist">
+                <li ng-repeat="item in userList | orderBy:'SIGNINSTATUS'"
+                    ng-class="(($first?'first':'')+($last?' last':'')+(item.MEETINGUSERID==dataModel.meetinguserid?' selected':''))"
+                    ng-click="userClick(item.MEETINGUSERID);">
+                    {{item.XM + (item.SIGNINSTATUS==3?"(未参加)":"") }}
+                </li>
+            </ul>
+        </div>
+        <div style="width: 100%;padding-left: 10px;">
+            <form role="form" name="editForm" novalidate>
+                <div class="dj-formtable">
+                    <table class="dj-table">
+                        <tr>
+                            <th>授课支部</th>
+                            <td>
+                                {{meetingModel.partyname}}
+                            </td>
+                            <th>授课主题</th>
+                            <td>
+                                {{extdata.topicName}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>授课时间</th>
+                            <td>
+                                {{meetingModel.begintime|date:'yyyy-MM-dd HH:mm'}} -
+                                {{meetingModel.endtime|date:'HH:mm'}}
+                            </td>
+                            <th>授课地点</th>
+                            <td>
+                                {{meetingModel.meetingaddress}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>授课人</th>
+                            <td>
+                                {{dataModel.teachname}}
+                            </td>
+                            <th>听课人</th>
+                            <td>
+                                {{dataModel.createusername}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="dj-formtable">
+                                    <table class="dj-table dj-table-list">
+                                        <tr>
+                                            <th style="width: 20% !important;">评价项目</th>
+                                            <th style="width: 120px !important;">评价</th>
+                                            <th>有无说明及建议</th>
+                                        </tr>
+                                        <tr ng-repeat="item in projectList;">
+                                            <td style="text-align: left !important;">
+                                                {{item.PROJECTNAME}}
+                                            </td>
+                                            <td>
+                                                {{item.SHYKEVALUATERESULTTYPENAME}}
+                                            </td>
+                                            <td style="text-align: left !important;">
+                                                <pre>{{item.RECOMMEND}}</pre>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>收获</th>
+                            <td colspan="3">
+                                <pre>{{dataModel.harvest}}</pre>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>建议</th>
+                            <td colspan="3">
+                                <pre>{{dataModel.recommend}}</pre>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .userlist {
+        padding: 0;
+    }
+
+    .userlist > li {
+        padding: 7px 0px;
+        margin-bottom: 0px;
+        border: 1px solid #EDEDED;
+        border-bottom: none;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .userlist > .first {
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+    }
+
+    .userlist > .last {
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border: 1px solid #EDEDED;
+    }
+
+    .userlist > .selected {
+        background-color: #F44336;
+        border: 1px solid #F44336;
+        color: white;
+    }
+
+    .userpanel {
+        width: 135px;
+        height: 700px;
+        overflow-y: auto;
+        margin-top: 5px;
+    }
+
+    .userpanel::-webkit-scrollbar { /*滚动条整体样式*/
+        width: 4px; /*高宽分别对应横竖滚动条的尺寸*/
+        height: 4px;
+    }
+
+    .userpanel::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        background: #F44336;
+    }
+
+    .userpanel::-webkit-scrollbar-track { /*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+        border-radius: 0;
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+</style>

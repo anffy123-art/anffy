@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.CfLogCQuery">
+
+    <resultMap id="BaseResultMap" type="com.px.partybuild.vo.LogVo">
+        <id column="LOGID" jdbcType="VARCHAR" property="logid" />
+        <result column="REQUESTIP" jdbcType="VARCHAR" property="requestip" />
+        <result column="LOGTIME" jdbcType="TIMESTAMP" property="logtime" />
+        <result column="OPMODULE" jdbcType="VARCHAR" property="opmodule" />
+        <result column="USERID" jdbcType="VARCHAR" property="userid" />
+        <result column="LOGTITLE" jdbcType="VARCHAR" property="logtitle" />
+        <result column="CLIENTINFO" jdbcType="VARCHAR" property="clientinfo" />
+        <result column="RESPONSETIME" jdbcType="NUMERIC" property="responsetime" />
+        <result column="ISERROR" jdbcType="NUMERIC" property="iserror" />
+        <result column="MENUNAME" jdbcType="VARCHAR" property="menuname" />
+        <result column="PMENUNAME" jdbcType="VARCHAR" property="pmenuname" />
+        <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.px.partybuild.vo.LogVo">
+        <result column="LOGTEXT" jdbcType="CLOB" property="logtext" />
+    </resultMap>
+
+    <select id="selectLogList" resultType="com.px.partybuild.vo.LogVo" resultMap="ResultMapWithBLOBs">
+        select l.*,m.MENUNAME,m1.MENUNAME as PMENUNAME,ui.XM as USERNAME from cf_log l
+        left join CF_MENU m on l.LOGTITLE = m.MENUNO
+        left join CF_MENU m1 on m.PARENTMENUID = m1.MENUID
+        left join VM_RYJBXX ui on l.USERID= ui.RYBM
+        where 1=1
+        <if test="beginTime != null and beginTime != '' ">
+            and l.LOGTIME <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and l.LOGTIME <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        <if test="userName != null and userName != ''">
+            and ui.XM like concat('%',#{userName},'%')
+        </if>
+
+    </select>
+
+
+    <select id="selectLoginLogList" resultType="java.util.HashMap">
+        select
+        lg.LOGID,lg.REQUESTIP,lg.LOGTIME,us.RYBM,us.XM,z.DZZDM,z.DZZMC,lg.USERID,lg.CLIENTINFO
+        from CF_LOG lg
+        inner join VM_RYJBXX us on lg.USERID=us.RYBM
+        inner join ZZ_ZZQKXX z on us.SZDZBDM=z.DZZDM
+        where 1=1 and lg.OPMODULE='用户登录'
+        <if test="dzzdm != null and dzzdm != ''">
+            and z.DZZDM like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="userName != null and userName != ''">
+            and us.XM like concat('%',#{userName},'%')
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and lg.LOGTIME <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and lg.LOGTIME <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        <if test="logClient !=null and logClient!= ''">
+            <if test="logClient=='App'">
+                and lg.CLIENTINFO = 'App'
+            </if>
+            <if test="logClient=='Web'">
+                and lg.CLIENTINFO != 'App'
+            </if>
+        </if>
+        order by lg.LOGTIME desc
+    </select>
+
+</mapper>

@@ -1,0 +1,272 @@
+<div class="register-page">
+    <!--/login-top-->
+    <div class="inner-tittle page">
+        <h2>
+            <!--<img src="images/sys-logo.png"/>-->
+            注册入党申请
+        </h2>
+    </div>
+    <div class="register-top">
+        <div class="body">
+            <form class="form-horizontal" role="form" name="editForm" ng-submit="register(editForm.$valid)" novalidate>
+                <div class="register-formtable">
+                    <table class="register-table">
+                        <tr>
+                            <th>学号/工号</th>
+                            <td ng-class="{ 'has-error' : this.editForm.userCode.$invalid &&  this.editForm.$submitted}">
+                                <input type="text" class="form-control" name="userCode"
+                                       ng-model="dataModel.userCode" ng-required="true"/>
+                            </td>
+                            <th>姓名</th>
+                            <td ng-class="{ 'has-error' : this.editForm.userName.$invalid &&  this.editForm.$submitted}">
+                                <input type="text" class="form-control" name="userName"
+                                       ng-model="dataModel.userName" ng-required="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>密码</th>
+                            <td ng-class="{ 'has-error' : this.editForm.password.$invalid &&  this.editForm.$submitted}">
+                                <input type="password" class="form-control" name="password"
+                                       ng-model="pswModel.password" ng-required="true"/>
+                            </td>
+                            <th>确认密码</th>
+                            <td ng-class="{ 'has-error' : this.editForm.confirmPassword.$invalid &&  this.editForm.$submitted}">
+                                <input type="password" class="form-control" name="confirmPassword"
+                                       ng-model="pswModel.confirmPassword" ng-required="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>所属党组织</th>
+                            <td colspan="3" ng-class="{ 'has-error' : this.editForm.partyCode.$invalid &&  this.editForm.$submitted}">
+                                <tree-select data-url="treeConfig.url" data-ismulti="treeConfig.ismulti" data-readonly="treeConfig.readonly" data-value="dataModel.partyCode" data-placeholder="'请选择申请加入的具体党组织名称'"></tree-select>
+                                <input type="partyCode" class="form-control" name="partyCode"
+                                       ng-model="dataModel.partyCode" ng-required="true" ng-show="1==0"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>性别</th>
+                            <td ng-class="{ 'has-error' : this.editForm.sexId.$invalid &&  this.editForm.$submitted}">
+                                <select class="form-control show-tick" ng-model="dataModel.sexId"
+                                        ng-options="type.BM as type.HZMC for type in xbList"
+                                        class="form-control"
+                                        name="sexId" ng-required="true">
+                                    <option value="" selected>--请选择--</option>
+                                </select>
+                            </td>
+                            <th>出生年月</th>
+                            <td ng-class="{ 'has-error' : this.editForm.birthDate.$invalid &&  this.editForm.$submitted}">
+                                <input name="birthDate" class="form-control"
+                                       autocomplete="off"
+                                       autoclose="true"
+                                       data-date-format="yyyy-MM-dd" data-date-type="date"
+                                       ng-model="dataModel.birthDate"
+                                       placeholder="" bs-datepicker ng-required="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>籍贯</th>
+                            <td ng-class="{ 'has-error' : this.editForm.nativePlace.$invalid &&  this.editForm.$submitted}">
+                                <input type="text" class="form-control" name="nativePlace"
+                                       ng-model="dataModel.nativePlace" ng-required="true"/>
+                            </td>
+                            <th>民族</th>
+                            <td ng-class="{ 'has-error' : this.editForm.nationalId.$invalid &&  this.editForm.$submitted}">
+                                <select class="form-control show-tick" ng-model="dataModel.nationalId"
+                                        ng-options="type.BM as type.HZMC for type in mzList"
+                                        class="form-control"
+                                        name="nationalId" ng-required="true">
+                                    <option value="" selected>--请选择--</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>身份证号</th>
+                            <td ng-class="{ 'has-error' : this.editForm.idCard.$invalid &&  this.editForm.$submitted}">
+                                <input type="text" class="form-control" name="idCard" ng-model="dataModel.idCard" ng-required="true"/>
+                            </td>
+                            <th>联系电话</th>
+                            <td ng-class="{ 'has-error' : this.editForm.contactMobile.$invalid &&  this.editForm.$submitted}">
+                                <input type="text" class="form-control" name="contactMobile"
+                                       ng-model="dataModel.contactMobile" ng-required="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>是否学生身份</th>
+                            <td ng-class="{ 'has-error' : this.editForm.isStudent.$invalid &&  this.editForm.$submitted}">
+                                <select class="form-control show-tick"
+                                        ng-model="dataModel.isStudent"
+                                        ng-options="type.dickey as type.dicvalue for type in boolList"
+                                        class="form-control"
+                                        name="isStudent" ng-required="true">
+                                    <option value="" selected>--请选择--</option>
+                                </select>
+                            </td>
+                            <th>学历</th>
+                            <td ng-class="{ 'has-error' : this.editForm.educationalId.$invalid &&  this.editForm.$submitted}">
+                                <select class="form-control show-tick" ng-model="dataModel.educationalId"
+                                        ng-options="type.BM as type.HZMC for type in xlList"
+                                        class="form-control"
+                                        name="educationalId" ng-required="true">
+                                    <option value="" selected>--请选择--</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>年级</th>
+                            <td ng-class="{ 'has-error' : this.editForm.gradeName.$invalid &&  this.editForm.$submitted}">
+                                <input type="text" class="form-control" name="gradeName" ng-model="dataModel.gradeName" placeholder="学生身份填写" ng-required="dataModel.isStudent==true"/>
+                            </td>
+                            <th>班级</th>
+                            <td ng-class="{ 'has-error' : this.editForm.className.$invalid &&  this.editForm.$submitted}">
+                                <input type="text" class="form-control" name="className" ng-model="dataModel.className" placeholder="学生身份填写" ng-required="dataModel.isStudent==true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>最高学历入学日期</th>
+                            <td ng-class="{ 'has-error' : this.editForm.enrollmentDate.$invalid &&  this.editForm.$submitted}">
+                                <input name="enrollmentDate" class="form-control"
+                                       autocomplete="off"
+                                       autoclose="true"
+                                       data-date-format="yyyy-MM-dd" data-date-type="date"
+                                       ng-model="dataModel.enrollmentDate"
+                                       class="form-control" bs-datepicker ng-required="true"/>
+                            </td>
+                            <th>最高学历毕业日期</th>
+                            <td ng-class="{ 'has-error' : this.editForm.graduateDate.$invalid &&  this.editForm.$submitted}">
+                                <input name="graduateDate" class="form-control"
+                                       autocomplete="off"
+                                       autoclose="true"
+                                       data-date-format="yyyy-MM-dd" data-date-type="date"
+                                       ng-model="dataModel.graduateDate"
+                                       class="form-control" bs-datepicker ng-required="true"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>入党申请日期</th>
+                            <td ng-class="{ 'has-error' : this.editForm.applyDate.$invalid &&  this.editForm.$submitted}">
+                                <input name="applyDate" class="form-control"
+                                       autocomplete="off"
+                                       autoclose="true"
+                                       data-date-format="yyyy-MM-dd" data-date-type="date"
+                                       ng-model="dataModel.applyDate"
+                                       ng-required="true"
+                                       placeholder="" bs-datepicker/>
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th>入党申请书照片</th>
+                            <td colspan="3">
+                                <img-component data-filerefid="imgConfig.filerefid" data-filetypeid="imgConfig.filetypeid"
+                                               data-ismulti="imgConfig.ismulti" data-height="imgConfig.height"
+                                               data-readonly="imgConfig.readonly" data-img-list="imgConfig.imgList"
+                                               data-width="imgConfig.width"></img-component>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" style="width: 100px;font-size: 18px;margin-right: 20px;font-weight: bold;" ng-click="back()">取&nbsp;&nbsp;&nbsp;消</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100px;font-size: 18px;font-weight: bold;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.42);">申&nbsp;&nbsp;&nbsp;请</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    table {
+        border-spacing: 0;
+        border-collapse: unset;
+    }
+    .register-page {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        background-image: url("../main/images/newbg1.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .register-top {
+        text-align: center;
+        margin: 7em auto;
+        background: #fff;
+        padding: 2em 2em;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        -o-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        border: 1px solid rgba(213, 213, 214, 0.85);
+        width: 60%;
+        padding: 2em 2em;
+        position: absolute;
+        left: 20%;
+        top: 5%;
+        border-radius: 8px;
+    }
+
+    .inner-tittle.page {
+        position: absolute;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+        top: 5%;
+        color: #fff;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        left: 0px;
+    }
+
+    .inner-tittle.page > h2 {
+        font-size: 2.0em;
+    }
+
+    .inner-tittle.page > h2 > img {
+        width: 30px;
+        height: 30px;
+        padding-left: 2px;
+        margin-bottom: 5px;
+    }
+
+    .register-formtable {
+        font-size: 18px;
+    }
+
+    .register-table {
+        width: 100%;
+    }
+
+    .register-table tr th {
+        text-align: right;
+        padding-right: 20px;
+    }
+
+    .register-table tr td .form-control {
+        margin: 5px 0px;
+        box-shadow: none;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+    }
+
+    /*register-table*/
+    .register-formtable > .register-table > tbody > tr > th {
+        width: 20%;
+    }
+
+    .register-formtable > .register-table > tbody > tr > td {
+        width: 30%;
+    }
+
+    .form_foot{
+        margin-top: 30px;
+    }
+
+    .has-error .vue-treeselect__control{
+        border: 1px solid red !important;
+    }
+
+
+    .register-table tr td input:focus,.register-table tr td select:focus {
+        border: 1px solid #039be5 !important;
+        box-shadow: 0 0 0 3px rgba(3,155,229,.1) !important;
+    }
+</style>

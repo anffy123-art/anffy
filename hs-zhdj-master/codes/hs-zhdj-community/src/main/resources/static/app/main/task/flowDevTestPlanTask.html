@@ -1,0 +1,31 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4>测试计划任务</h4>
+    </div>
+    <div class="panel-body">
+        <div class="panel-group" ng-model="flowdata.activePanelids" data-allow-multiple="true" role="tablist"
+             aria-multiselectable="true" bs-collapse>
+            <div class="panel panel-info" ng-repeat="panel in flowdata.flowStagePanels">
+                <div class="panel-heading" role="tab">
+                    <h4 class="panel-title">
+                        <a ng-click="applyclick($index)" bs-collapse-toggle>
+                            {{ panel.title }}
+                        </a>
+                        <a ng-if="$index==0" ng-click="toMainFlow()"
+                           style="float:right;margin-right:24px;cursor:pointer; color:#007bff;"><strong>返回主流程</strong></a>
+                    </h4>
+                </div>
+                <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                    <div class="panel-body">
+                        <div ng-include="panel.src" onload="loadPanel(panel.onloadfunc)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer panel_foot">
+        <input type="submit" name="btn_up" ng-if="flowdata.params.st==1" ng-click="upflow()" class="btn btn-danger"
+               value="提交"/>
+        <input type="button" name="btn_change" class="btn btn-default" ng-click="pagechange()" value="取消"/>
+    </div>
+</div>

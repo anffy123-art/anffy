@@ -1,0 +1,50 @@
+﻿<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal formtable1" role="form" name="Dateform" novalidate>
+                    <table class="table table-bordered tform">
+                        <tr>
+                            <th class="col-md-3"><span style="color:red">*</span>预计完成时间：</th>
+                            <td class="col-md-9"
+                                ng-class="{ 'has-error' : Dateform.ExpectFinishDate.$invalid&&Dateform.$submitted}">
+                                <input type="text" autocomplete="off" class="form-control" autoclose="true"
+                                       ng-required="true" bs-datepicker data-date-format="yyyy-MM-dd"
+                                       data-has-clear="true" name="ExpectFinishDate" ng-model="ExpectFinishDate"
+                                       data-date-type="date" data-min-date="today"/>
+                                <span style="color:brown"
+                                      ng-show="Dateform.ExpectFinishDate.$invalid&&Dateform.$submitted"
+                                      class="help-block">
+                                    请填写预计完成时间
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-2"><span style="color:red">*</span>预计工作量:</th>
+                            <td class="col-md-9"
+                                ng-class="{ 'has-error' : Dateform.ExpectQuantity.$invalid&&Dateform.$submitted}">
+                                <input type="number" min="0" step="0.01" name="ExpectQuantity" class="form-control"
+                                       ng-model="ExpectQuantity" required/>
+                                <span style="color:brown"
+                                      ng-show="Dateform.ExpectQuantity.$invalid&&Dateform.$submitted"
+                                      class="help-block">
+                                    请填写预计工作量
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="form_foot">
+                        <button type="submit" class="btn btn-primary"
+                                ng-click="sendTask(ExpectFinishDate,ExpectQuantity)">执行
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="$hide()">返回</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

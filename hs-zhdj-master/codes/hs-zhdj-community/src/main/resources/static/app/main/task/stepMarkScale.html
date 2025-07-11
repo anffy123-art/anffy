@@ -1,0 +1,52 @@
+﻿<table class="table table-bordered tlist" ng-controller="formMarkScaleCtrl">
+    <thead>
+    <tr>
+        <td colspan="2" style="text-align:center; background-color:#f5f5f5">
+            <span style="color:black;"><strong>需求评分</strong></span>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>评分描述</td>
+        <td>
+            100分 – 功能完全符合需求描述，上线后没有任何故障；<br/>
+            90-99分 – 功能符合需求描述，上线后没有明显故障；<br/>
+            80-89分 – 功能基本符合需求描述，上线后有小故障但能及时解决；<br/>
+            70-79分 – 部分功能不符合需求，或上线后问题较多。
+        </td>
+    </tr>
+    <tr>
+        <td>评分标准</td>
+        <td>
+                <span>
+                    <input ng-model="scoreList.valueMark" type="text" style="border-radius:25px;" id="mark" slider
+                           ng-disabled="params.readonly" options="{
+				                from: 70,
+				                to: 100,
+				                step: 1,
+				                dimension: ' 分',
+				                vertical: false,
+				                limits: false,
+				                css: {
+				                    range: {'background': 'transparent'},
+				                    background: {'background-color': '#53687f87'},
+				                    before: {'background-color': 'rgb(80, 153, 206)'},
+				                    default: {'background-color': 'rgb(80, 153, 206)'},
+				                    after: {'background-color': 'rgb(80, 153, 206)'},
+				                    pointer: {'background-color': 'rgb(93, 117, 126)'}
+				                },
+				                className: 'customClass'
+				            }" ng-change="changeNote(scoreList.valueMark)"/>
+                    <!--<button ng-hide="params.readonly" class="btn btn-success btn-sm" style="margin-left:2%;" title="提交" data-animation="am-fade-and-scale" ng-click="savedemandappilerMark()"><span class="glyphicon glyphicon-ok"></span></button>-->
+                </span>
+        </td>
+    </tr>
+    <tr>
+        <td>评分描述</td>
+        <td style="color:orangered">
+            {{scoreList.Note}}
+        </td>
+    </tr>
+    </tbody>
+</table>

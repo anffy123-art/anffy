@@ -1,0 +1,47 @@
+<div id="editmodal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 700px;">
+        <div class="card">
+            <div class="header" dragable-header>
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{params.title}}</h3>
+            </div>
+            <div activate-input activate-select class="body">
+                <form class="form-horizontal" role="form" id="editForm" name="editForm" ng-submit="save(editForm.$valid)" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table">
+                            <tr>
+                                <th>上级分组</th>
+                                <td colspan="3" ng-if="dataModel.parentid != null || params.op==0">
+                                    <tree-select data-url="parentConfig.url" data-ismulti="parentConfig.ismulti" data-value="dataModel.parentid" data-readonly="parentConfig.readonly"></tree-select>
+                                </td>
+                                <td colspan="3" ng-if="dataModel.parentid == null && params.op==1">
+                                    无
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>名称</th>
+                                <td ng-class="{ 'has-error' : this.editForm.name.$invalid &&  this.editForm.$submitted}">
+                                    <input type="text" class="form-control" name="name" ng-model="dataModel.name" ng-required="true" />
+                                    <span ng-show="this.editForm.name.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>排序</th>
+                                <td ng-class="{ 'has-error' : this.editForm.sort.$invalid &&  this.editForm.$submitted}">
+                                    <input type="text" class="form-control" name="sort" ng-model="dataModel.sort" ng-required="true" />
+                                    <span ng-show="this.editForm.sort.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" form="editForm">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

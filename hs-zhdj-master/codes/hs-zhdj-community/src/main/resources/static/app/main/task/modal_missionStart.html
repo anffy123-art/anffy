@@ -1,0 +1,185 @@
+﻿<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:50%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" ng-controller="missionStartCtrl">
+                <form class="form-horizontal formtable1" role="form" name="missionForm" novalidate>
+                    <div class="panel-group" ng-model="activePanelids" data-allow-multiple="true" role="tablist"
+                         aria-multiselectable="true" bs-collapse>
+                        <div class="panel panel-info">
+                            <div class="panel-heading" role="tab">
+                                <h4 class="panel-title">
+                                    <a bs-collapse-toggle>
+                                        任务发起
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                                <div class="panel-body">
+                                    <table class="table table-bordered tform">
+                                        <tr>
+                                            <th style="text-align:right" class="col-md-2"><span
+                                                    style="color:red">*</span>任务类型:
+                                            </th>
+                                            <td class="col-md-4"><input class="form-control" readonly
+                                                                        value="{{model.TypeValue}}"/></td>
+
+                                            <th class="col-md-2" style="text-align:right"><span
+                                                    style="color:red">*</span>完成时限：
+                                            </th>
+                                            <td class="col-md-4" ng-if="flag!=2"
+                                                ng-class="{ 'has-error' : missionForm.TaskLimitTime.$invalid&&missionForm.$submitted}">
+                                                <input type="text" autocomplete="off" class="form-control"
+                                                       ng-readonly="flag==2" autoclose="true" data-timezone="null"
+                                                       ng-required="true" bs-datepicker data-date-format="yyyy-MM-dd"
+                                                       data-has-clear="true" name="TaskLimitTime"
+                                                       ng-model="model.TaskLimitTime" data-date-type="date"
+                                                       data-min-date="today"/>
+                                                <span style="color:brown"
+                                                      ng-show="missionForm.TaskLimitTime.$invalid&&missionForm.$submitted"
+                                                      class="help-block">
+                                                    请填写完成时限
+                                                </span>
+                                            </td>
+                                            <td class="col-md-4" ng-if="flag==2">
+                                                {{model.TaskLimitTime}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-md-2" style="text-align:right"><span
+                                                    style="color:red">*</span>任务负责人:
+                                            </th>
+                                            <td class="col-md-4" ng-if="flag!=2"
+                                                ng-class="{ 'has-error' : missionForm.UserName.$invalid&&missionForm.$submitted}">
+                                                <label class="input-group">
+                                                    <input ng-readonly="flag==1" ng-disabled="flag==1" type="text"
+                                                           name="UserName" class="form-control"
+                                                           ng-model="model.TaskerName" required/>
+                                                    <span class="input-group-addon"
+                                                          data-url="../../api/MemManage/FindMemebersdata"
+                                                          data-datatext="model.TaskerName" data-aid="{{fid}}"
+                                                          data-dataval="model.TaskerID" title="团队人员选择" bsselectdata><i
+                                                            class="glyphicon glyphicon-zoom-in"></i></span>
+                                                </label>
+                                                <span colspan="3" style="color:brown"
+                                                      ng-show="missionForm.UserName.$invalid&&missionForm.$submitted"
+                                                      class="help-block">
+                                                        请填写任务负责人
+                                                    </span>
+                                            </td>
+                                            <td class="col-md-4" ng-if="flag==2">
+                                                {{model.TaskerName}}
+                                            </td>
+                                            <!--<th ng-if="flag==1" style="text-align:right"><span style="color:red">*</span>进度:</th>
+                                            <td ng-if="flag==1">
+                                                <input class="form-control"  value="1"/>
+                                            </td>-->
+                                            <th class="col-md-2" style="text-align:right"><span
+                                                    style="color:red">*</span>预计工作量:
+                                            </th>
+                                            <td class="col-md-4"
+                                                ng-class="{ 'has-error' : missionForm.ExpectQuantity.$invalid&&missionForm.$submitted}">
+                                                <input type="number" min="0" step="0.01" name="ExpectQuantity"
+                                                       class="form-control" ng-model="model.ExpectQuantity" required/>
+                                                <span colspan="4" style="color:brown"
+                                                      ng-show="missionForm.ExpectQuantity.$invalid&&missionForm.$submitted"
+                                                      class="help-block">
+                                                    请填写预计工作量
+                                                </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th style="text-align:right"><span style="color:red">*</span>任务描述:</th>
+                                            <td ng-if="flag!=2" colspan="3"
+                                                ng-class="{ 'has-error' : missionForm.TaskNote.$invalid&&missionForm.$submitted}">
+                                                <textarea rows="5" id="Note"
+                                                          ng-keyup="changeText(model.TaskNote.length)" typeof="text"
+                                                          class="form-control" name="TaskNote" required
+                                                          ng-required="true" ng-model="model.TaskNote"
+                                                          placeholder="请输入500字以内"></textarea>
+                                                <span class="fontColor">你还可以输入<span
+                                                        style="color: red;">{{textLength}}</span>字</span>
+                                                <span style="color:brown"
+                                                      ng-show="missionForm.TaskNote.$error.required&&missionForm.$submitted"
+                                                      class="help-block">
+                                                    请填写任务描述
+                                                </span>
+                                                <span style="color:brown"
+                                                      ng-show="missionForm.TaskNote.$error.maxlength&&missionForm.$submitted"
+                                                      class="help-block">
+                                                    最多输入500字
+                                                </span>
+                                            </td>
+                                            <td colspan="3" ng-if="flag==2">{{model.TaskNote}}</td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                            </div>
+                            <div class="panel-heading" role="tab">
+                                <h4 class="panel-title">
+                                    <a bs-collapse-toggle>
+                                        选择处理事务
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                                <div class="panel-body">
+                                    <table class="table table-bordered tform">
+                                        <tbody ng-if="model.TaskType==1||model.TaskType==null">
+                                        <tr>
+                                            <th class="col-md-2" style="text-align:right"><input type="checkbox"
+                                                                                                 ng-disabled="flag==2"
+                                                                                                 name="DelegateQuantityOfWork"
+                                                                                                 ng-true-value="true"
+                                                                                                 ng-model="model.DelegateQuantityOfWork"/>
+                                            </th>
+                                            <td>
+                                                <span>工作量</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:right"><input type="checkbox" ng-disabled="flag==2"
+                                                                                name="DelegateDuty" ng-value="true"
+                                                                                ng-model="model.DelegateDuty"/></th>
+                                            <td>
+                                                <span>功能点</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th style="text-align:right"><input type="checkbox" ng-disabled="flag==2"
+                                                                                name="DelegateAddFilel"
+                                                                                ng-true-value="true"
+                                                                                ng-model="model.DelegateAddFile"/></th>
+                                            <td>
+                                                <span>附件</span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <center>
+                            <button type="submit" ng-if="flag!=2" class="btn btn-danger"
+                                    ng-click="save(true,missionForm)">发起
+                            </button>
+                            <button type="button" ng-if="flag!=2" class="btn btn-primary"
+                                    ng-click="save(false,missionForm)">保存
+                            </button>
+                            <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+                        </center>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>

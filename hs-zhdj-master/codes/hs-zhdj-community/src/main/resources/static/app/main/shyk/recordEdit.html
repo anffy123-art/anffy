@@ -1,0 +1,152 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form class="form-horizontal" role="form" name="editForm" novalidate>
+            <div ng-include="'../main/shyk/meetingmodel.html'"></div>
+            <div class="dj-formtable">
+                <div class="table-responsive list-table-panel">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            参加会议人员({{userList.length}}人)
+                        </div>
+                    </div>
+                    <div class="outoflow" style="max-height: 500px;">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>党员姓名</th>
+                                <th>所在组织机构</th>
+                                <th>是否签收</th>
+                                <th>是否签到</th>
+                                <th>未参加原因</th>
+                                <!--<th>支部书记是否同意</th>-->
+                                <th ng-if="difftime <= 0 && dataModel.createuserid==loginUserId && dataModel.meetingrecordstate != 1">
+                                    操作
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in userList">
+                                <th scope="row">{{$index+1}}</th>
+                                <th>{{it.XM}}</th>
+                                <th>{{it.DZZMC}}</th>
+                                <th>{{it.SIGNINSTATUSNAME}}</th>
+                                <th>{{it.CHECKINSTATUSNAME}}</th>
+                                <th>{{it.USERREMARK}}</th>
+                                <!--<th>{{it.APPROVESTATUSNAME}}</th>-->
+                                <th ng-if="difftime <= 0 && dataModel.createuserid==loginUserId && dataModel.shykstatus !=2">
+                                    <button role-permission-code="shykMeetingShow.btnSignin"
+                                            ng-if="it.CHECKINSTATUS==0 && (it.SIGNINSTATUS==1 || it.SIGNINSTATUS==3)"
+                                            class="btn td-btn bg-pink waves-effect"
+                                            ng-click="signin(it.MEETINGID,it.USERCODE,true)" title="参加">
+                                        参加
+                                    </button>
+                                    <button role-permission-code="shykMeetingShow.btnNoSignin"
+                                            ng-if="it.CHECKINSTATUS==0 && (it.SIGNINSTATUS==1 || it.SIGNINSTATUS==2)"
+                                            class="btn td-btn bg-pink waves-effect"
+                                            title="未参加"
+                                            ng-click="resetRemark(it.MEETINGID,it.USERCODE)"
+                                            data-toggle="modal" data-target="#editNoSignin">
+                                        未参加
+                                    </button>
+                                    <button role-permission-code="shykMeetingShow.btnCheckin"
+                                            ng-if="it.CHECKINSTATUS==0 && difftime<=30"
+                                            class="btn td-btn bg-pink waves-effect"
+                                            ng-click="checkin(it.MEETINGID,it.USERCODE)" title="签到">
+                                        签到
+                                    </button>
+                                </th>
+                            </tr>
+                            <tr ng-if="userList.length<=0">
+                                <td colspan="7" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="user_total">
+                    <span>参加会议人员：{{userList.length}}人</span>
+                    <span>已确认参加：{{(userList | filter:{'SIGNINSTATUS':'2'}).length }}人</span>
+                    <span>不能参加：{{(userList | filter:{'SIGNINSTATUS':'3'}).length }}人</span>
+                    <span>占比：{{((userList | filter:{'SIGNINSTATUS':'2'}).length/userList.length)*100|number:2 }}%</span>
+                </div>
+            </div>
+            <div panel-title data-title="'录入会议记录'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table dj-table2">
+                    <tr>
+                        <th>会场照片</th>
+                        <td colspan="3">
+                            <img-component data-filerefid="imgConfig1.filerefid" data-filetypeid="imgConfig1.filetypeid"
+                                           data-ismulti="imgConfig1.ismulti" data-height="imgConfig1.height" data-readonly="imgConfig1.readonly" data-img-list="imgConfig1.imgList"></img-component>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>台账记录</th>
+                        <td colspan="3">
+                            <img-component data-filerefid="imgConfig2.filerefid" data-filetypeid="imgConfig2.filetypeid"
+                                           data-ismulti="imgConfig1.ismulti" data-height="imgConfig2.height" data-readonly="imgConfig2.readonly" data-img-list="imgConfig2.imgList"></img-component>
+                        </td>
+                    </tr>
+                    <!--<tr>
+                        <th>会议内容模板</th>
+                        <td colspan="3">
+                            <select class="form-control show-tick" ng-model="jlModel.mbid"
+                                    ng-options="type.ID as type.MBMC for type in jlmbList"
+                                    class="form-control"
+                                    name="jlmbmc" id="jlmbmc">
+                                <option value="" selected>&#45;&#45;请选择&#45;&#45;</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>会议记录</th>
+                        <td colspan="3">
+                            <textarea ng-model="dataModel.meetingbriefcontent" ui-ueditor></textarea>
+                        </td>
+                    </tr>-->
+                </table>
+            </div>
+            <bsfiles ng-model="reqFileModel"/>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">返回</button>
+                <!--<button role-permission-code="shykMeetingRecord.btnSave"
+                        class="btn btn-primary"
+                        ng-click="saveMeetingRecord(0)">保存会议记录
+                </button>-->
+                <button role-permission-code="shykMeetingRecord.btnSave"
+                        class="btn btn-primary"
+                        ng-click="saveMeetingRecord(1)">提交会议记录
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- 模态框（Modal） 填写未参加原因-->
+<div class="modal fade" id="editNoSignin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    填写未参加原因
+                </h4>
+            </div>
+            <div class="modal-body">
+ <textarea name="userRemark" ng-model="editNoSigninModal.userRemark"
+           class="form-control" rows="3"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary"
+                        ng-click="signin(editNoSigninModal.MEETINGID,editNoSigninModal.USERCODE,false)">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>

@@ -1,0 +1,137 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div tree-component data-url="treeConfig.url" data-isunfold="treeConfig.isunfold" data-name="treeConfig.name" data-value="treeConfig.value"></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="treeConfig.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>当前选中单位</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="treeConfig.name" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>年月</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="date" class="form-control" ng-change="search()"
+                                                       autocomplete="off"
+                                                       autoclose="true" data-min-view="1"
+                                                       data-date-format="yyyyMM" data-date-type="date"
+                                                       ng-model="selectparams.date"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                               <button class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button class="btn  btn-default1" role-permission-code="gdwydqk.btn.btnExport"  ng-click="export()">导出</button>
+                            <button  class="btn  btn-default1" role-permission-code="gdwydqk.btn.btnDelete" ng-click="delete()">删除</button>
+                            <button  class="btn  btn-default1"  role-permission-code="gdwydqk.btn.btnImport" ng-click="import()">导入</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="{{pageId}}_md_checkbox_all"
+                                               class="filled-in chk-col-red" ng-checked="isAll==true"
+                                               ng-click="selectAll()"/>
+                                        <label class="checkbox_lable" style="height: 10px;"
+                                               for="{{pageId}}_md_checkbox_all"></label></th>
+                                    <th>序号</th>
+                                    <th>单位名称</th>
+                                    <th>年月</th>
+                                    <th>单位总人数</th>
+                                    <th>单位关注总人数</th>
+                                    <th>阅读量</th>
+                                    <th>点赞量</th>
+                                    <th>篇均阅读量</th>
+                                    <th>篇均点赞量</th>
+                                    <th>到达率</th>
+                                    <th>阅读率</th>
+                                    <th>点赞率</th>
+                                    <th>到达率得分</th>
+                                    <th>领导班子阅读量</th>
+                                    <th>党支部书记阅读量</th>
+                                    <th>党员阅读量</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td class="text-center">
+                                        <input type="checkbox" id="{{pageId}}_md_checkbox_{{$index+1}}"
+                                               class="filled-in chk-col-red" ng-checked="it.checked==1"
+                                               ng-click="it.checked==1?it.checked=0:it.checked=1"/>
+                                        <label class="checkbox_lable" style="top:6px;"
+                                               for="{{pageId}}_md_checkbox_{{$index+1}}"></label>
+                                    </td>
+                                    <td scope="row" class="text-center">
+                                        {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                    </td>
+                                    <td>{{it.DZZMC}}</td>
+                                    <td>{{it.NY|date:'yyyy-MM'}}</td>
+                                    <td class="text-center">{{it.DWZRS}}</td>
+                                    <td class="text-center">{{it.DWGZZRS}}</td>
+                                    <td class="text-center">{{it.YDL}}</td>
+                                    <td class="text-center">{{it.DZL}}</td>
+                                    <td class="text-center">{{it.PJYDL}}</td>
+                                    <td class="text-center">{{it.PJDZL}}</td>
+                                    <td class="text-center">{{it.DDL}}%</td>
+                                    <td class="text-center">{{it.YDLV}}%</td>
+                                    <td class="text-center">{{it.DZLV}}%</td>
+                                    <td class="text-center">{{it.DDLDF}}</td>
+                                    <td class="text-center">{{it.LDBZYDL}}</td>
+                                    <td class="text-center">{{it.DZBSJYDL}}</td>
+                                    <td class="text-center">{{it.DYYDL}}</td>
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="16" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,213 @@
+<titlemenu></titlemenu>
+<div ng-if="op!=0" class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所属党组织</th>
+                        <td>
+                            <div class="input-group input-group-search"
+                                 title="选择党组织" ng-click="selectParty()">
+                                <input name="partyname" type="text" ng-model="dataModel.partyname"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.partyname.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>职工姓名</th>
+                        <td ng-class="{ 'has-error' : this.editForm.username.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="username" ng-model="dataModel.username"
+                                   maxlength="200"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.username.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>处理层级</th>
+                        <td ng-class="{ 'has-error' : this.editForm.handlestate.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.handlestate"
+                                    ng-options="type.dickey as type.dicvalue for type in handleLevelList"
+                                    class="form-control"
+                                    name="handlestate" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <span ng-show="this.editForm.handlestate.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>问题类型</th>
+                        <td ng-class="{ 'has-error' : this.editForm.questiontype.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.questiontype"
+                                    ng-options="type.dickey as type.dicvalue for type in questionTypeList"
+                                    class="form-control"
+                                    name="questiontype" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <span ng-show="this.editForm.questiontype.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>发现时间</th>
+                        <td ng-class="{ 'has-error' : this.editForm.findtime.$invalid &&  this.editForm.$submitted}">
+                            <input name="findtime" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.findtime"
+                                   ng-required="true"
+                                   data-max-date="{{maxDate}}"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="this.editForm.findtime.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>受理人</th>
+                        <td ng-class="{ 'has-error' : this.editForm.acceptuser.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="acceptuser" ng-model="dataModel.acceptuser"
+                                   maxlength="200"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.acceptuser.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>反馈问题</th>
+                        <td colspan="3" style="width: 85%;"
+                            ng-class="{ 'has-error' : this.editForm.question.$invalid &&  this.editForm.$submitted}">
+                             <textarea ng-model="dataModel.question" name="question" rows="5"
+                                       ng-required="true" class="form-control" type="text"></textarea>
+                            <span ng-show="this.editForm.question.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <!--<tr>
+                        <th>处理情况</th>
+                        <td ng-class="{ 'has-error' : this.editForm.handletype.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.handletype"
+                                    ng-options="type.dickey as type.dicvalue for type in handleTypeList"
+                                    class="form-control"
+                                    name="handletype" ng-required="true">
+                                <option value="" selected>&#45;&#45;请选择&#45;&#45;</option>
+                            </select>
+                            <span ng-show="this.editForm.handletype.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>-->
+                    <tr>
+                        <th>处理情况</th>
+                        <td colspan="3" style="width: 85%;">
+                            <textarea ng-model="dataModel.handlecontent" name="handlecontent" rows="5"
+                                      class="form-control" type="text"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>销号情况</th>
+                        <td ng-class="{ 'has-error' : this.editForm.destroytype.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.destroytype"
+                                    ng-options="type.dickey as type.dicvalue for type in destroyTypeList"
+                                    class="form-control"
+                                    name="destroytype" ng-required="true">
+                                <option value="" selected>--请选择--</option>
+                            </select>
+                            <span ng-show="this.editForm.destroytype.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>销号时间</th>
+                        <td ng-class="{ 'has-error' : this.editForm.destroytime.$invalid &&  this.editForm.$submitted}">
+                            <input name="destroytime" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.destroytime"
+                                   ng-required="dataModel.destroytype==1"
+                                   data-max-date="{{maxDate}}"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="this.editForm.destroytime.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)"
+                        ng-if="op!=0">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div ng-if="op==0" class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所属党组织</th>
+                        <td>
+                            {{dataModel.partyname}}
+                        </td>
+                        <th>职工姓名</th>
+                        <td>
+                            {{dataModel.username}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>处理层级</th>
+                        <td>
+                            {{(handleLevelList|filter:{dickey:dataModel.handlestate})[0].dicvalue }}
+                        </td>
+                        <th>问题类型</th>
+                        <td>
+                            {{(questionTypeList|filter:{dickey:dataModel.questiontype})[0].dicvalue }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>发现时间</th>
+                        <td>
+                            {{dataModel.findtime|date:'yyyy-MM-dd'}}
+                        </td>
+                        <th>受理人</th>
+                        <td>
+                            {{dataModel.acceptuser}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>反馈问题</th>
+                        <td colspan="3">
+                            <pre>{{dataModel.question}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>处理情况</th>
+                        <td colspan="3">
+                            <pre>{{dataModel.handlecontent}}</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>销号情况</th>
+                        <td>
+                            {{(destroyTypeList|filter:{dickey:dataModel.destroytype})[0].dicvalue }}
+                        </td>
+                        <th>销号时间</th>
+                        <td>
+                            {{dataModel.destroytime|date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+            </div>
+        </form>
+    </div>
+</div>

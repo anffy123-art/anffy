@@ -1,0 +1,47 @@
+<div class="dj-formtable">
+    <div class="table-responsive list-table-panel">
+        <!--<div class="list-table-title">
+            <div class="table-title">
+
+            </div>
+            <div class="table-tool">
+                <ul class="header-dropdown">
+                    <li class="dropdown demo-icon-container main-card-more table-more">
+                        <a ng-click="showMore_zxzxx()"
+                           class="dropdown-toggle demo-google-material-icon">
+                            <span class="icon-name">更多</span>
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>-->
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>党内职务</th>
+                <th>本年度参学次数</th>
+                <th>重点发言次数</th>
+                <th>出勤率</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in zxzxxTotalList">
+                <td scope="row" class="text-center">
+                    {{$index+1}}
+                </td>
+                <td>{{it.XM}}</td>
+                <td class="text-center">{{it.DNZW}}</td>
+                <td class="text-center"><a ng-click="showMore_zxzxx(it.XM)">{{it.COUNT}}</a></td>
+                <td class="text-center">{{it.SPEAKNUMBER}}</td>
+                <td class="text-center">{{it.RATE*100}}%</td>
+            </tr>
+            <tr ng-if="zxzxxTotalList.length==0">
+                <td colspan="6" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

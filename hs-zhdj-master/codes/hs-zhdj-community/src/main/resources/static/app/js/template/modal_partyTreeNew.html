@@ -1,0 +1,52 @@
+<div activate-select class="card pt-header">
+    <div class="header" style="cursor: pointer;min-height: 35px;padding-top: 7px;">
+        <div class="pt-body" ng-click="reset()"
+             ng-class="selectdzzdm == gddwdm ?'party_active':''">
+            全校党组织
+        </div>
+    </div>
+    <!--<div class="body treebody">
+        <div class="menu" ng-style="{'height':height!=null?height+'vh':'calc(100vh - 155px)'}">
+            <script type="text/ng-template" id="nodes.html">
+                <li class="row">
+                    <div ng-click="groupClick(node)" ng-class="node.isexpand>0?'party_active':'' ">
+                        <i ng-if="(node.childs.length>0 || node.partyCount>0)" class="material-icons">{{node.isexpand>0
+                            ?
+                            'expand_more' :
+                            'chevron_right'}}</i>
+                        <span class="icon-name"
+                              ng-class="(node.childs.length>0 || node.partyCount>0)?'':'icon-name-spac'">{{node.name}}</span>
+                    </div>
+                    <div ng-show="node.isexpand>0">
+                        <div class="treeitem"
+                             ng-repeat="node in node.childs" ng-include="'nodes.html'"></div>
+                    </div>
+                </li>
+            </script>
+            <ul class="pt-body" ng-repeat="node in treeList"
+                ng-include="'nodes.html'">
+            </ul>
+        </div>
+    </div>-->
+    <div class="body treebody">
+        <div class="menu" ng-style="{'height':height!=null?height+'vh':'calc(100vh - 185px)'}">
+            <script type="text/ng-template" id="nodes.html">
+                <li class="row">
+                    <div ng-click="loadChildParty(party)" ng-class="party.CHILDSHOW>0?'party_active':'' ">
+                        <i ng-if="party.CHILDCOUNT>0 && onlyshowdw!=2" class="material-icons">{{party.CHILDSHOW>0 ?
+                            'expand_more' :
+                            'chevron_right'}}</i>
+                        <span class="icon-name" ng-class="party.CHILDCOUNT>0?'':'icon-name-spac'">{{party.DZZMC}}</span>
+                    </div>
+                    <div ng-hide="party.CHILDSHOW==0">
+                        <div class="treeitem"
+                             ng-repeat="party in party.CHILDPARTYS" ng-include="'nodes.html'"></div>
+                    </div>
+                </li>
+            </script>
+            <ul class="pt-body" ng-repeat="party in treeList"
+                ng-include="'nodes.html'">
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+﻿<style type="text/css">
+    .popover {
+        outline: none;
+    }
+</style>
+<div ng-controller="formMembershipManageCtrl">
+    <table class="table table-bordered tlist">
+        <thead>
+        <tr>
+            <td colspan="{{showCheckBox?7:6}}" style="text-align:center; background-color:#f5f5f5">
+                <span style="color:black;"><strong>项目团队</strong></span>
+                <span>
+                        <!--<button type="button"style="float:right" ng-click="CalculateQuantity()">测试</button>-->
+                        <button ng-hide="params.readonly_Mem" type="button" class="btn btn-link"
+                                style="float:right;margin-right:3%; color:#007bff; padding:1px;" data-placement="center"
+                                data-animation="am-fade-and-scale"
+                                ng-click="deleteMember()"><strong>删除成员</strong></button>
+                        <button ng-hide="params.readonly_Mem" type="button" class="btn btn-link"
+                                style="float:right;margin-right:2%; color:#007bff; padding:1px;" data-placement="center"
+                                data-animation="am-fade-and-scale" ng-click="addMember()"><strong>添加成员</strong></button>
+                    </span>
+                <span>
+                        <button type="button" class="btn btn-link" style="float:left;color:red;" ng-show="showCheckBox"
+                                ng-click="confirmDelete()"><strong>删除</strong></button>
+                        <button type="button" class="btn btn-link" style="float:left;color:red;" ng-show="showCheckBox"
+                                ng-click="cancelDelete()"><strong>取消</strong></button>
+                    </span>
+            </td>
+        </tr>
+        <tr>
+            <th ng-show="showCheckBox"></th>
+            <th>序号</th>
+            <th>开发角色</th>
+            <th>姓名</th>
+            <th>加入时间</th>
+            <th>工作量</th>
+            <th>备注</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="it in items">
+            <td ng-show="showCheckBox">
+                <input type="checkbox" ng-model="it.check"/>
+            </td>
+            <td>{{it.index}}</td>
+            <td>{{it.RoleName}}</td>
+            <td>{{it.UserName}}</td>
+            <td>{{it.JoinTime}}</td>
+            <td><a ng-click="showDetail(it)">{{it.WorkValue}}</a></td>
+            <td>{{it.Note}}</td>
+        </tr>
+        <tr ng-if="items.length<=0">
+            <td colspan="7" style="text-align:center">暂无数据</td>
+        </tr>
+        </tbody>
+    </table>
+    <pagination ng-if="totalCount>pageSize" data-pageindex="pageIndex" data-pagesize="pageSize" data-ptotal="totalCount"
+                ng-click="pagechange(pageIndex)"></pagination>
+</div>

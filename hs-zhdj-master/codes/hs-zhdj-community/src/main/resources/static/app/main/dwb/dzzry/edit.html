@@ -1,0 +1,33 @@
+<titlemenu></titlemenu>
+<div  class="dj-card">
+    <div class="dj-body" activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>党委名称</th>
+                        <td colspan="3">
+                            <input type="hidden" name="dzzdm" ng-model="changevm.dzzdm" class="form-control"/>
+                            <input type="text" name="dwName" ng-model="dwName" readonly class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>选择人员</th>
+                        <td colspan="3"  ng-class="{ 'focused error' : this.editForm.$invalid &&  this.editForm.$submitted}">
+                            <input type="hidden" name="leader" ng-model="changevm.leader" class="form-control"/>
+                            <input type="text" name="leaderName"   ng-required="true" ng-model="leaderName" ng-click="xuanzeUser()" readonly class="form-control" style="width: 88%;float:left"/>
+                            <button type="button" class="btn btn-default" ng-click="qingkongrenyuan();" style="float:left; padding:5px 0; width: 10%; margin-left:1%;">清空</button>
+                            <label class="error"
+                                   ng-show="this.editForm.leaderName.$invalid &&  this.editForm.$submitted">必填.</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit" class="btn btn-primary" ng-click="submitData(this.editForm.$valid)">保存
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

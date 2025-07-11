@@ -1,0 +1,51 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{title}}</h3>
+            </div>
+
+            <form class="form-horizontal formtable1 panel-body modal-body"
+                  ng-submit="saveUserRole(editUserRoleForm.$valid)" role="form" id="editUserRoleForm"
+                  name="editUserRoleForm" style="padding: 10px; margin: 10px;" novalidate>
+                <table class="table table-bordered tform">
+                    <tr>
+                        <th class="col-md-2"><span style="color:red;">*</span>角色名称:</th>
+                        <td>
+                            <input name="RoleName" type="text" ng-model="userRole.RoleName" class="form-control"
+                                   disabled value={{userRole.RoleName}}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red;">*</span>人员名称:</th>
+                        <td ng-class="{ 'has-error' : editUserRoleForm.selectedName.$invalid &&  (editUserRoleForm.$submitted) }">
+                            <label class="input-group">
+                                <input name="selectedName" type="text" ng-model="selectedName" class="form-control"
+                                       required value={{selectedName}}/>
+                                <!--<input name="userRole.selectedGuids" ng-model="userRole.selectedGuids" style="display:none" />-->
+                                <span class="input-group-addon" userselect data-textids="userRole.selectedID"
+                                      data-textnames="selectedName" data-datausers="selectedDataUsers"
+                                      data-textguids="userRole.selectedGuids"><i
+                                        class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+                            <span ng-show="editUserRoleForm.selectedName.$invalid &&  (editUserRoleForm.$submitted)"
+                                  class="help-block">请选择人员</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="form_foot" id="buttons" style="text-align:center">
+                    <button id="submit" class="btn btn-danger" style="padding:4px 20px 4px 20px" type="submit"
+                            form="editUserRoleForm">提交
+                    </button>
+                    <button id="cancel" type="button" class="btn btn-default" style="padding:4px 20px 4px 20px"
+                            ng-click="$hide()">取消
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

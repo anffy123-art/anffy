@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.PartyCQuery">
+    <select id="selectPartyTreeList" resultType="java.util.HashMap">
+        select
+        p.DZZDM,p.DZZMC,p.ZZLB,
+        count(c.DZZDM) as CHILDCOUNT,-- 下级组织个数
+        0 as CHILDSHOW,-- 是否显示下级组织
+        p.DZZDM NODECODE,-- 组织代码
+        SUBSTR(p.DZZDM,1,LENGTH(p.DZZDM)-3) PARENTCODE -- 父级组织代码
+        from ZZ_ZZQKXX p
+        left join ZZ_ZZQKXXFB fb on p.DZZDM= fb.DZZDM
+        left join (
+        select c.* from ZZ_ZZQKXX c
+        left join ZZ_ZZQKXXFB cfb on c.DZZDM= cfb.DZZDM
+        where 1=1
+        <if test="showlevel!=null">
+            and cfb.ZZLB in(#{showlevel}) -- 党总支
+        </if>
+        ) c on p.dzzdm=SUBSTR(c.DZZDM,1,LENGTH(c.DZZDM)-3)
+        left join ZZ_DZZFBQK fbType on p.DZZDM = fbType.DZZDM
+        where 1=1
+        and p.DZZDM like concat('',#{parentCode},'%')
+        and length(p.DZZDM)=(length(#{parentCode})+3)
+        <if test="dzzdm != null and dzzdm != ''">
+            and p.DZZDM = #{dzzdm}
+        </if>
+        <if test="showlevel!=null">
+            <if test="levelParent != null and levelParent.size()>0">
+                and fb.ZZLB in
+                <foreach collection="levelParent" item="level" index="index" open="(" close=")" separator=",">
+                    #{level}
+                </foreach>
+            </if>
+        </if>
+        group by p.DZZDM,p.DZZMC,p.ZZLB,fbType.SORT
+        -- order by PARENTCODE,NODECODE
+        order by p.DZZDM
+
+    </select>
+
+    <select id="selectPartyList" resultType="java.util.HashMap">
+        select p.ZZQKXXBS, p.DZZDM, p.DZZMC,fb.ZZLB, fb.JCZZFL, p.JLDZZRQ, p.SCYTDZB, p.KZPYRQ, p.JSPYRQ, p.YL01, p.YL02,
+        p.YL03, p.YL04, p.YL05,z.HZMC as ZZLBMC,j.HZMC as JCZZFLMC,
+        p.DZZDM NODECODE,SUBSTR(p.DZZDM,1,LENGTH(p.DZZDM)-3) PARENTCODE,
+        ifnull(fb.ZGRS,0) as ZGRS,fb.LDJTJC,bz.LDJTDXRQ as SCHJSJ,bz.GJJMRQ,
+        ifnull(fb.DYZS,0) as USERCOUNT
+        from ZZ_ZZQKXX p
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join zzzd_zzlbdmnew z on fb.ZZLB = z.BM
+        left join zzzd_jczzflnew j on fb.JCZZFL = j.BM
+        left join ZZ_BZJCXX bz on p.DZZDM = bz.DZZDM and bz.LDJTJC = fb.LDJTJC
+        left join ZZ_ZZQKXX dw on SUBSTR(p.DZZDM,1,12)=dw.DZZDM
+        left join VM_PARTYGROUP partyGroup on dw.DZZDM = partyGroup.DZZDM
+        <if test="hjYear == null and((jmrq_begintime != null and jmrq_begintime != '') or (jmrq_endtime != null and jmrq_endtime != ''))">
+            inner join (
+               select * from (select zz.DZZDM,zz.DZZMC,
+                  (case when t.GJJMRQ is null then zz.JLDZZRQ else t.GJJMRQ end) as hjsj
+                  from ZZ_ZZQKXX zz
+                  left join (
+                      select distinct bz.DZZDM,bz.GJJMRQ from ZZ_ZZQKXXFB fb
+                      inner join ZZ_BZJCXX bz on fb.DZZDM = bz.DZZDM and fb.LDJTJC = bz.LDJTJC
+                      where bz.GJJMRQ is not null
+                  ) t on zz.DZZDM = t.DZZDM
+                  where zz.dzzdm like concat('',#{gddwdm},'%')
+              ) t where 1=1
+              <if test="jmrq_begintime != null and jmrq_begintime != ''">
+                  and t.hjsj >= #{jmrq_begintime}
+              </if>
+              <if test="jmrq_endtime != null and jmrq_endtime != ''">
+                  and t.hjsj <![CDATA[ <= ]]> #{jmrq_endtime}
+              </if>
+            ) t on p.DZZDM=t.DZZDM
+        </if>
+        where 1=1 and p.DZZDM like concat('',#{gddwdm},'%')
+        <if test="parentCode != null and parentCode != ''">
+            and p.DZZDM like concat('',#{parentCode},'%')
+            <if test="isContainParent ==1">
+                and (p.DZZDM = #{parentCode} or length(p.DZZDM)=(length(#{parentCode})+3))
+            </if>
+            <if test="isContainParent ==0">
+                and length(p.DZZDM)=(length(#{parentCode})+3)
+            </if>
+        </if>
+        <if test="dzzmc != null and dzzmc != ''">
+            and p.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="dzzdm != null and dzzdm != ''">
+            and p.DZZDM like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="zzlb != null and zzlb != ''">
+            and fb.ZZLB = #{zzlb}
+        </if>
+        <if test="jczzfl != null and jczzfl != ''">
+            and fb.JCZZFL = #{jczzfl}
+        </if>
+        <if test="jldzzrq_begin != null and jldzzrq_begin != ''">
+            and p.JLDZZRQ >= #{jldzzrq_begin}
+        </if>
+        <if test="jldzzrq_end != null and jldzzrq_end != ''">
+            and p.JLDZZRQ <![CDATA[ <= ]]> #{jldzzrq_end}
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(p.DZZDM,1,12) in(select DZZDM from ZZ_DZZFBQK where ZZFB= #{zzfbType})
+        </if>
+        <if test="zzlbStrList != null and zzlbStrList.size()>0">
+            and fb.ZZLB in
+            <foreach collection="zzlbStrList" item="zzlb" index="index" open="(" close=")" separator=",">
+                #{zzlb}
+            </foreach>
+        </if>
+        <if test="jczzflList != null and jczzflList.size()>0">
+            and fb.JCZZFL in
+            <foreach collection="jczzflList" item="jczzfl" index="index" open="(" close=")" separator=",">
+                #{jczzfl}
+            </foreach>
+        </if>
+        <if test="ssdzzdm != null and ssdzzdm != ''">
+            and p.DZZDM = #{ssdzzdm}
+        </if>
+        <if test="dwjb != null">
+            <if test="dwjb==1">
+                and fb.ZZLB='100' and length(p.DZZDM)=12
+            </if>
+            <if test="dwjb==2">
+                and fb.ZZLB='100' and length(p.DZZDM)=15
+            </if>
+        </if>
+        <if test="hjYear != null">
+            and (
+            substr(p.JLDZZRQ,1,4) = #{hjYear}
+            <if test="((jmrq_begintime != null and jmrq_begintime != '') or (jmrq_endtime != null and jmrq_endtime != ''))">
+                or p.DZZDM in (
+                select DZZDM from ZZ_BZJCXX
+                where 1=1
+                <if test="jmrq_begintime != null and jmrq_begintime != ''">
+                    and GJJMRQ >= #{jmrq_begintime}
+                </if>
+                <if test="jmrq_endtime != null and jmrq_endtime != ''">
+                    and GJJMRQ <![CDATA[ <= ]]> #{jmrq_endtime}
+                </if>
+                <if test="dzzdm != null and dzzdm != ''">
+                    and DZZDM like concat('%',#{dzzdm},'%')
+                </if>
+                )
+            </if>
+            )
+        </if>
+        <if test="partyGroupId != null and partyGroupId != ''">
+            and partyGroup.GROUPID like concat('%',#{partyGroupId},'%')
+        </if>
+        <if test="notIncludeDzzdmList != null and notIncludeDzzdmList.size()>0">
+            and p.DZZDM not  in
+            <foreach collection="notIncludeDzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+                #{dzzdm}
+            </foreach>
+        </if>
+        order by PARENTCODE,NODECODE
+    </select>
+
+    <select id="selectPartyInfoList" resultType="java.util.HashMap">
+        select p.ZZQKXXBS, p.DZZDM, p.DZZMC,fb.ZZLB, fb.JCZZFL, p.JLDZZRQ, p.SCYTDZB, p.KZPYRQ, p.JSPYRQ, p.YL01, p.YL02,
+        p.YL03, p.YL04, p.YL05,z.HZMC as ZZLBMC,j.HZMC as JCZZFLMC,
+        p.DZZDM NODECODE,SUBSTR(p.DZZDM,1,LENGTH(p.DZZDM)-3) PARENTCODE
+        from ZZ_ZZQKXX p
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join zzzd_zzlbdmnew z on fb.ZZLB = z.BM
+        left join zzzd_jczzflnew j on fb.JCZZFL = j.BM
+        where 1=1
+        and p.DZZDM = #{dzzdm}
+        order by PARENTCODE,NODECODE
+    </select>
+
+
+    <select id="selectPartyGroupTreeList" resultType="java.util.HashMap">
+        select * from (
+        select 1 as "nodetype",
+        z.JGFZID as "id",
+        z.FJGFZID as "parentId",
+        z.FZMC as "name",
+        count(1) as "partyCount",
+        z.orderby as "sort",
+        0 as "isexpand"
+        from DJZZRS_JGFZ z
+        left join DJZZRS_FZJGGL g on z.JGFZID = g.JGFZID
+        left join DJZZRS_JGFZ c on z.JGFZID = c.FJGFZID
+        where 1=1
+        <!--<if test="dzzdm != null and dzzdm != ''">
+            and g.dzzdm #{dzzdm}
+        </if>-->
+        <if test="parentId != null and parentId != ''">
+            <if test="parentId =='0'.toString()">
+                and z.FJGFZID is null
+            </if>
+            <if test="parentId !='0'.toString()">
+                and z.FJGFZID =#{parentId}
+            </if>
+        </if>
+        group by z.JGFZID,z.FJGFZID,z.FZMC,z.ORDERBY
+        union
+        select 2 as "nodetype",
+        p.DZZDM as "id",
+        z.JGFZID as "parentId",
+        p.DZZMC as "name",
+        count(c.DZZDM) as "partyCount",-- 下级组织个数
+        fbType.SORT as "sort",
+        0 as "isexpand"
+        from DJZZRS_JGFZ z
+        inner join DJZZRS_FZJGGL g on z.JGFZID = g.JGFZID
+        inner join ZZ_ZZQKXX p on g.DZZBM = p.DZZDM and length(p.DZZDM) = 12
+        left join ZZ_DZZFBQK fbType on p.DZZDM = fbType.DZZDM
+        left join (
+        select c.* from ZZ_ZZQKXX c
+        left join ZZ_ZZQKXXFB cfb on c.DZZDM= cfb.DZZDM
+        where 1=1
+        <if test="onlyshow_dw!=null and onlyshow_dw == 1">
+            and cfb.ZZLB in('100','200') -- 党委
+        </if>
+        <if test="onlyshow_dw!=null and onlyshow_dw == 2">
+            and cfb.ZZLB in('100','200') and LENGTH(c.DZZDM)=12 -- 一级党委
+        </if>
+        ) c on p.DZZDM=SUBSTR(c.DZZDM,1,LENGTH(c.DZZDM)-3)
+
+        where 1=1
+        <!-- <if test="dzzdm != null and dzzdm != ''">
+             and g.dzzdm #{dzzdm}
+         </if>-->
+        <if test="parentId != null and parentId != ''">
+            and z.JGFZID = #{parentId}
+        </if>
+        group by p.DZZDM,p.DZZMC,z.JGFZID,fbType.SORT
+        ) t
+        order by t.sort
+    </select>
+
+    <select id="selectNewPartyTreeList" resultType="java.util.HashMap">
+        select
+        2 as "nodetype",
+        p.DZZDM as "id",
+        SUBSTR(p.DZZDM,1,LENGTH(p.DZZDM)-3) as "parentId",
+        p.DZZMC as "name",
+        count(c.DZZDM) as "partyCount",-- 下级组织个数
+        fbType.SORT,
+        0 as "isexpand"
+        from ZZ_ZZQKXX p
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join (
+        select c.* from ZZ_ZZQKXX c
+        left join ZZ_ZZQKXXFB cfb on c.DZZDM= cfb.DZZDM
+        where 1=1
+        <if test="onlyshow_dw!=null and onlyshow_dw == 1">
+            and cfb.ZZLB in('100','200') -- 党委
+        </if>
+        <if test="onlyshow_dw!=null and onlyshow_dw == 2">
+            and cfb.ZZLB in('100','200') and LENGTH(c.DZZDM)=12 -- 一级党委
+        </if>
+        <if test="showdxz!=null and showdxz == 0">
+            and cfb.ZZLB not in('500')
+        </if>
+        ) c on p.dzzdm=SUBSTR(c.DZZDM,1,LENGTH(c.DZZDM)-3)
+        left join ZZ_DZZFBQK fbType on p.DZZDM = fbType.DZZDM
+        where 1=1
+        and p.DZZDM like concat('',#{parentCode},'%')
+        and length(p.DZZDM)=(length(#{parentCode})+3)
+        <if test="dzzdm != null and dzzdm != ''">
+            and p.DZZDM = #{dzzdm}
+        </if>
+        <if test="showdxz!=null and showdxz == 0">
+            and fb.ZZLB not in('500')
+        </if>
+        <if test="onlyshow_dw!=null and onlyshow_dw == 1">
+            and fb.ZZLB in('100','200') -- 党委
+        </if>
+        group by p.DZZDM,p.DZZMC,p.ZZLB,fbType.SORT
+        order by p.ZZLB, SUBSTR(p.DZZDM,1,LENGTH(p.DZZDM)-3),p.DZZDM
+    </select>
+
+
+    <select id="selectPartyZLYList" resultType="java.util.HashMap">
+          select distinct y.DZZDM,y.DZZMC,uz.DZZMC SZDZBMC,y.RYBM,u.XM,y.ZLYTYPE,jszw.HZMC as JSZWMC,
+          dnzw.DNZW, dnzw.PZRZRQ as PZRZRQ,u.ZWMC
+          from ZZ_DZZZLY y
+          inner join VM_RYJBXX u on y.RYBM=u.RYBM
+          left join zd_zyjszwdm jszw on u.xjszwmc=jszw.bm -- 技术专业职务
+          left join vw_partyduty dnzw on u.rybm=dnzw.rybm -- 党内职务名称
+          inner join ZZ_ZZQKXX uz on u.SZDZBDM= uz.dzzdm
+          where y.DZZDM=#{dzzdm}
+    </select>
+
+
+    <select id="selectChildPartyCount" resultType="java.util.HashMap">
+        select p.DZZDM,p.DZZMC,
+        (select count(*) from ZZ_ZZQKXX c
+        inner join ZZ_ZZQKXXFB fb on c.DZZDM=fb.DZZDM
+        where p.DZZDM=SUBSTR(c.DZZDM,1,length(p.DZZDM)) and p.DZZDM!=c.DZZDM and fb.ZZLB !='500') as
+        CHILDCOUNT
+        from ZZ_ZZQKXX p
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and p.DZZDM like concat('',#{dzzdm},'%')
+        </if>
+        <if test="ssdzzdm != null and ssdzzdm != ''">
+            and p.DZZDM = #{ssdzzdm}
+        </if>
+    </select>
+
+    <select id="selectPartyUserCount" resultType="java.lang.String">
+        select ifnull(fb.DYZS,0) as USERCOUNT from ZZ_ZZQKXX p
+        inner join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        where 1=1 and p.DZZDM = #{dzzdm}
+    </select>
+
+
+    <select id="selectPartyByDzzdm" resultType="java.util.HashMap">
+
+        select z.DZZDM,z.DZZMC from ZZ_ZZQKXX z
+        where 1=1
+        <if test="dzzdmList != null and dzzdmList.size()>0">
+            and z.DZZDM in
+            <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+                #{dzzdm}
+            </foreach>
+        </if>
+
+    </select>
+
+
+    <update id="handlePartyData" statementType="CALLABLE">
+      {
+        call HandlePartyData()
+      }
+    </update>
+
+    <select id="selectPartyInfo" resultType="com.px.partybuild.vo.PartyInfoVo">
+        select p.ZZQKXXBS, p.DZZDM, p.DZZMC,fb.ZZLB, fb.JCZZFL, p.JLDZZRQ, p.SCYTDZB, p.KZPYRQ, p.JSPYRQ,
+        ifnull(fb.DYZS,0) as DYZS,ifnull(fb.ZGRS,0) as ZGRS,
+        z.HZMC as ZZLBMC,j.HZMC as JCZZFLMC,fb.LDJTJC,bz.LDJTDXRQ as SCHJSJ,bz.GJJMRQ as DQHJSJ,
+        (select count(*) from ZZ_ZZQKXX c
+        inner join ZZ_ZZQKXXFB fb on c.DZZDM=fb.DZZDM
+        where p.DZZDM=SUBSTR(c.DZZDM,1,length(p.DZZDM)) and p.DZZDM!=c.DZZDM and fb.ZZLB !='500') as
+        childCount
+        from ZZ_ZZQKXX p
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join zzzd_zzlbdmnew z on fb.ZZLB = z.BM
+        left join zzzd_jczzflnew j on fb.JCZZFL = j.BM
+        left join ZZ_BZJCXX bz on p.DZZDM = bz.DZZDM and bz.LDJTJC = fb.LDJTJC
+        where 1=1 and p.DZZDM =#{dzzdm}
+    </select>
+
+    <select id="selectPartyForTreeList" resultType="com.px.partybuild.vo.TreeVo">
+        select party.DZZDM as id,SUBSTR(party.DZZDM,1,LENGTH(party.DZZDM)-3) as parentid,party.DZZMC as name
+        from ZZ_ZZQKXX party
+        where 1=1 and party.DZZDM like concat('',#{gddwdm},'%')
+        <if test="parentId != null and parentId != ''">
+            and SUBSTR(party.DZZDM,1,LENGTH(party.DZZDM)-3)=#{parentId}
+        </if>
+        order by parentid,id
+    </select>
+
+</mapper>

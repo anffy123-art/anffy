@@ -1,0 +1,97 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div activate-input class="body">
+                <form class="form-horizontal" role="form" id="dicform"
+                      name="dicform" ng-submit="submit(dicform.$valid)" novalidate>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>日志标题</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <span ng-if="dataModel.menuname==null">未知模块</span><span ng-if="dataModel.menuname!=null">{{dataModel.pmenuname}}>{{dataModel.menuname}}</span>
+
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>请求IP</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <span>{{dataModel.requestip}}</span>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>操作模块</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <span>{{dataModel.opmodule}}</span>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>日志时间</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <span>{{dataModel.logtime|date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>响应时间</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <span>{{dataModel.responsetime}}</span>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>客户端信息</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <textarea class="form-control" ng-model="dataModel.clientinfo" name="clientinfo"
+                                              rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>用户ID</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <span>{{dataModel.userid}}</span>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>用户名称</label>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <span>{{dataModel.username}}</span>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>日志内容</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <textarea class="form-control" ng-model="dataModel.logtext" name="logtext"
+                                              rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

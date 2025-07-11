@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--mysql 连接数据库jar 这里选择自己本地位置-->
+    <classPathEntry location=".\lib\mysql-connector-java-5.1.46.jar"/>
+    <context id="testTables" targetRuntime="MyBatis3">
+        <!-- 运行环境配置 -->
+        <!--<plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>-->
+        <commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 数据库注释支持 -->
+            <property name="addRemarkComments" value="true"/>
+            <!-- 时间格式设置 -->
+            <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+        </commentGenerator>
+        <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+        <!-- mysql
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.0.29:3306/zci_db" userId="root"
+                        password="ZHDJ123">
+        </jdbcConnection>
+        -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.1.99:3306/zhdj" userId="root"
+                        password="px@123">
+
+        </jdbcConnection>
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
+           NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- targetProject:生成PO类的位置 -->
+        <javaModelGenerator targetPackage="com.px.partybuild.model"
+                            targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- targetProject:mapper映射文件生成的位置
+           如果maven工程只是单独的一个工程，targetProject="src/main/java"
+           若果maven工程是分模块的工程，targetProject="所属模块的名称"，例如：
+           targetProject="ecps-manager-mapper"，下同-->
+        <sqlMapGenerator targetPackage="mapping"
+                         targetProject="src/main/resources">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- targetPackage：mapper接口生成的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.px.partybuild.mapper"
+                             targetProject="src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!-- 指定数据库表 -->
+        <!--
+        <table schema="" tableName="ad_partygroup"></table>
+        <table schema="" tableName="ap_modular"></table>
+        <table schema="" tableName="ap_rolemodular"></table>
+        <table schema="" tableName="ap_userusemodular"></table>
+        <table schema="" tableName="ast_allocate"></table>
+        <table schema="" tableName="ast_assetinfo"></table>
+        <table schema="" tableName="ast_disposal"></table>
+        <table schema="" tableName="ast_maintain"></table>
+        <table schema="" tableName="ast_takecarelog"></table>
+
+        <table schema="" tableName="cf_applications"></table>
+        <table schema="" tableName="cf_dictionary"></table>
+        <table schema="" tableName="cf_file"></table>
+        <table schema="" tableName="cf_leader"></table>
+        <table schema="" tableName="cf_leaderadmin"></table>
+        <table schema="" tableName="cf_log"></table>
+        <table schema="" tableName="cf_menu"></table>
+        <table schema="" tableName="cf_menu_role"></table>
+        <table schema="" tableName="cf_message"></table>
+        <table schema="" tableName="cf_oudetail"></table>
+        <table schema="" tableName="cf_roles"></table>
+        <table schema="" tableName="cf_sn"></table>
+        <table schema="" tableName="cf_userappinfo"></table>
+        <table schema="" tableName="cf_userroles"></table>
+        <table schema="" tableName="cf_users"></table>
+        <table schema="" tableName="cf_usersinfo"></table>
+        <table schema="" tableName="cgjq_postarea_score"></table>
+        <table schema="" tableName="cgjq_postarea_score_project"></table>
+        <table schema="" tableName="cgjq_postarea_score_user"></table>
+        <table schema="" tableName="cgjq_seeting_scoreproject"></table>
+        <table schema="" tableName="cgjq_setting_postarea"></table>
+        <table schema="" tableName="cgjq_setting_postarea_user"></table>
+
+        <table schema="" tableName="dj_brand"></table>
+        <table schema="" tableName="dj_djkpxx"></table>
+        <table schema="" tableName="dj_dnghbf"></table>
+        <table schema="" tableName="dj_dnghbfmx"></table>
+        <table schema="" tableName="dj_dnpxry"></table>
+        <table schema="" tableName="dj_dnpxxx"></table>
+        <table schema="" tableName="dj_fundsbudget"></table>
+        <table schema="" tableName="dj_fundsincome"></table>
+        <table schema="" tableName="dj_fundsuse"></table>
+        <table schema="" tableName="dj_gdwydqk"></table>
+        <table schema="" tableName="dj_jlcfxx"></table>
+        <table schema="" tableName="dj_partyactivityroom"></table>
+        <table schema="" tableName="dj_partyactivityroomgroup"></table>
+        <table schema="" tableName="dj_resultmg"></table>
+        <table schema="" tableName="dj_task"></table>
+        <table schema="" tableName="dj_taskusers"></table>
+        <table schema="" tableName="dj_wxgroup"></table>
+        <table schema="" tableName="dj_wxgroupuser"></table>
+        <table schema="" tableName="dj_ztdrxx"></table>
+        <table schema="" tableName="dj_zzsr"></table>
+        <table schema="" tableName="djzzrs_fzjggl"></table>
+        <table schema="" tableName="djzzrs_jgfz"></table>
+        <table schema="" tableName="dsj_cgjq"></table>
+        <table schema="" tableName="dsj_czqk"></table>
+        <table schema="" tableName="dsj_dnpp"></table>
+        <table schema="" tableName="dsj_dydt"></table>
+        <table schema="" tableName="dsj_dyfzqk"></table>
+        <table schema="" tableName="dsj_filemrg"></table>
+        <table schema="" tableName="dsj_filetype"></table>
+        <table schema="" tableName="dsj_fzdyqk"></table>
+        <table schema="" tableName="dsj_ndkpjg"></table>
+        <table schema="" tableName="dsj_pxpy"></table>
+
+        <table schema="" tableName="gg_zgzp"></table>
+        <table schema="" tableName="gg_zgjbxx"></table>
+
+        <table schema="" tableName="mh_link"></table>
+        <table schema="" tableName="mh_mhfl"></table>
+        <table schema="" tableName="mh_sylm"></table>
+
+        <table schema="" tableName="pe_againputrecord"></table>
+        <table schema="" tableName="pe_branchreview"></table>
+        <table schema="" tableName="pe_branchtalk"></table>
+        <table schema="" tableName="pe_brdzb"></table>
+        <table schema="" tableName="pe_confirmsponsor"></table>
+        <table schema="" tableName="pe_confirmsponsor_user"></table>
+        <table schema="" tableName="pe_confirmuser"></table>
+        <table schema="" tableName="pe_flow"></table>
+        <table schema="" tableName="pe_joinapply"></table>
+        <table schema="" tableName="pe_joinapply_relation"></table>
+        <table schema="" tableName="pe_joinapply_resume"></table>
+        <table schema="" tableName="pe_joinbook"></table>
+        <table schema="" tableName="pe_joinuser"></table>
+        <table schema="" tableName="pe_joinuser_flow"></table>
+        <table schema="" tableName="pe_jxjykc"></table>
+        <table schema="" tableName="pe_jxjykcqk"></table>
+        <table schema="" tableName="pe_partyreview"></table>
+        <table schema="" tableName="pe_politicalreview"></table>
+        <table schema="" tableName="pe_putrecord"></table>
+        <table schema="" tableName="pe_rdxs"></table>
+        <table schema="" tableName="pe_recommend"></table>
+        <table schema="" tableName="pe_sjdwsp"></table>
+        <table schema="" tableName="pe_sjprth"></table>
+        <table schema="" tableName="pe_sjprthmx"></table>
+        <table schema="" tableName="pe_superiorapp"></table>
+        <table schema="" tableName="pe_superiortalk"></table>
+        <table schema="" tableName="pe_superiortalk_user"></table>
+        <table schema="" tableName="pe_talk"></table>
+        <table schema="" tableName="pe_talk_user"></table>
+        <table schema="" tableName="pe_tczzsq"></table>
+        <table schema="" tableName="pe_training"></table>
+        <table schema="" tableName="pe_traininspect_record"></table>
+        <table schema="" tableName="pe_trainuser"></table>
+        <table schema="" tableName="pe_trainuser_detail"></table>
+        <table schema="" tableName="pe_wordtemplate"></table>
+        <table schema="" tableName="pe_zbdhtl"></table>
+        <table schema="" tableName="pe_zlgd"></table>
+        <table schema="" tableName="pe_zzbmba"></table>
+        <table schema="" tableName="pub_publicityposition"></table>
+        <table schema="" tableName="pub_publicityposition_panel"></table>
+
+        <table schema="" tableName="qt_taskpubcolumn"></table>
+        <table schema="" tableName="qt_taskreply"></table>
+        <table schema="" tableName="qt_tasktempcolumn"></table>
+        <table schema="" tableName="qt_tasktemplate"></table>
+
+        <table schema="" tableName="rs_ryjbxxfb"></table>
+
+        <table schema="" tableName="shyk_mb_hyjlmb"></table>
+        <table schema="" tableName="shyk_mb_hyjymb"></table>
+        <table schema="" tableName="shyk_mb_ytmb"></table>
+        <table schema="" tableName="shyk_meeting"></table>
+        <table schema="" tableName="shyk_meetingdecision"></table>
+        <table schema="" tableName="shyk_meetingtopic"></table>
+        <table schema="" tableName="shyk_meetinguser"></table>
+        <table schema="" tableName="shyk_partyplan"></table>
+        <table schema="" tableName="shyk_tempuser"></table>
+        <table schema="" tableName="shyk_userevaluate"></table>
+        <table schema="" tableName="shyk_userevaluateproject"></table>
+
+        <table schema="" tableName="tg_fqtg"></table>
+        <table schema="" tableName="tg_jsdw"></table>
+        <table schema="" tableName="tg_ygqk"></table>
+        <table schema="" tableName="tg_zgtg"></table>
+
+        <table schema="" tableName="us_partydues"></table>
+        <table schema="" tableName="us_partydues_detail"></table>
+        <table schema="" tableName="us_partyoutlay"></table>
+        <table schema="" tableName="us_usercontactpoint"></table>
+        <table schema="" tableName="us_userleader"></table>
+        <table schema="" tableName="us_userleader_detail"></table>
+        <table schema="" tableName="us_userthought"></table>
+        <table schema="" tableName="us_userthoughttotal"></table>
+
+        <table schema="" tableName="xw_module"></table>
+        <table schema="" tableName="xw_news"></table>
+        <table schema="" tableName="xw_newswithpic"></table>
+
+        <table schema="" tableName="ys_hdbz"></table>
+        <table schema="" tableName="ys_jfys"></table>
+        <table schema="" tableName="ys_jfysmx"></table>
+
+        <table schema="" tableName="zd_dzzwjbm"></table>
+        <table schema="" tableName="zz_bzcyxx"></table>
+        <table schema="" tableName="zz_bzjcxx"></table>
+        <table schema="" tableName="zz_bzjcxxfb"></table>
+        <table schema="" tableName="zz_djxx"></table>
+        <table schema="" tableName="zz_djxxfb"></table>
+        <table schema="" tableName="zz_dxzcy"></table>
+        <table schema="" tableName="zz_dzzgly"></table>
+        <table schema="" tableName="zz_dzzzly"></table>
+        <table schema="" tableName="zz_ryjbxx"></table>
+        <table schema="" tableName="zz_ryjbxx_lw"></table>
+        <table schema="" tableName="zzzd_gzgw"></table>
+        <table schema="" tableName="zzzd_jczzfl"></table>
+        <table schema="" tableName="zzzd_jczzflnew"></table>
+        <table schema="" tableName="zzzd_ryzt"></table>
+        <table schema="" tableName="zzzd_rzfs"></table>
+        <table schema="" tableName="zzzd_xjfsdm"></table>
+        <table schema="" tableName="zzzd_zwmc"></table>
+        <table schema="" tableName="zzzd_zzlbdm"></table>
+        <table schema="" tableName="zzzd_zzlbdmnew"></table>
+        <table schema="" tableName="zz_zxzxx_cjldbz"></table>
+        <table schema="" tableName="zz_zxzxx_fa"></table>
+        <table schema="" tableName="zz_zxzxx_fafyr"></table>
+        <table schema="" tableName="zz_zxzxx_jh"></table>
+        <table schema="" tableName="zz_zxzxx_jsdw"></table>
+        <table schema="" tableName="zz_zxzxx_jsrb"></table>
+        <table schema="" tableName="zz_zxzxx_xxzl"></table>
+        <table schema="" tableName="zz_zxzxx_zcygl"></table>
+        <table schema="" tableName="zz_zxzxx_zl"></table>
+        <table schema="" tableName="zz_zzgxxx"></table>
+        <table schema="" tableName="zz_zzqkxx"></table>
+        <table schema="" tableName="zz_zzqkxxfb"></table>
+        <table schema="" tableName="rs_ryjbxxfb"></table>
+        <table schema="" tableName="zz_Zxzxx_Fa"></table>
+        <table schema="" tableName="lw_leaderteam"><property name="useActualColumnNames" value="true"/></table>
+        <table schema="" tableName="pf_partyLifeMeeting"><property name="useActualColumnNames" value="true"/></table>
+        <table schema="" tableName="em_democracyReviewPlan"><property name="useActualColumnNames" value="true"/></table>
+        <table schema="" tableName="em_democracyReviewPlan_partyDetail"><property name="useActualColumnNames" value="true"/></table>
+         <table schema="" tableName="em_democracyReviewPlan_scoreDetail"><property name="useActualColumnNames" value="true"/></table>
+         <table schema="" tableName="cf_payorder"><property name="useActualColumnNames" value="true"/></table>
+        <table schema="" tableName="cf_payorder_refund"><property name="useActualColumnNames" value="true"/></table>
+          <table schema="" tableName="us_partyHelp"><property name="useActualColumnNames" value="true"/></table>
+         <table schema="" tableName="zz_LearningPlan"><property name="useActualColumnNames" value="true"/></table>
+          <table schema="" tableName="lw_leaderAssessment"><property name="useActualColumnNames" value="true"/></table>
+          <table schema="" tableName="us_party_month"></table>
+        <table schema="" tableName="pf_partylifemeeting"></table>
+        <table schema="" tableName="pf_partylifemeeting_personnel"></table>
+        <table schema="" tableName="pf_partylifemeeting_scyd"></table>
+        <table schema="" tableName="pf_reportsystem"></table>
+        <table schema="" tableName="lw_leaderteam"></table>
+        <table schema="" tableName="lw_leaderteam_experience"></table>
+        <table schema="" tableName="TEST_ONLINETEST"></table>
+        <table schema="" tableName="dj_workresourcelibrary"></table>
+        <table schema="" tableName="dj_workresourcelibrarytype"></table>
+        <table schema="" tableName="pt_checkData"></table>
+        <table schema="" tableName="pt_checkNameList"></table>
+        <table schema="" tableName="pt_checkParty"></table>
+        <table schema="" tableName="pt_checkScore"></table>
+        <table schema="" tableName="pt_checkQuestion"></table>
+        <table schema="" tableName="pt_reportData"></table>
+        <table schema="" tableName="pt_reportScore"></table>
+        <table schema="" tableName="pf_dnjzjy"></table>
+        <table schema="" tableName="pf_djscgz"></table>
+        <table schema="" tableName="pf_jljyxxyhd"></table>
+        <table schema="" tableName="pf_jljyxxyhd_fb"></table>
+        <table schema="" tableName="pub_dzzfc"></table>
+        <table schema="" tableName="px_training_record"></table>
+        <table schema="" tableName="px_training_class"></table>
+        <table schema="" tableName="px_training_class_user"></table>
+        <table schema="" tableName="px_training_class_course"></table>
+        <table schema="" tableName="zz_asses_template"></table>
+        <table schema="" tableName="zz_asses_template_item"></table>
+        <table schema="" tableName="zz_asses_materials"></table>
+        <table schema="" tableName="zz_asses_confirm"></table>
+        <table schema="" tableName="zz_asses_item_score"></table>
+        <table schema="" tableName="pf_practical_activity"></table>
+        <table schema="" tableName="pf_practical_activity_user"></table>
+        <table schema="" tableName="lw_leader_assess"></table>
+        <table schema="" tableName="lw_leader_reshuffle"></table>
+        -->
+    </context>
+</generatorConfiguration>

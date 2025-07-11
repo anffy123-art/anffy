@@ -1,0 +1,313 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="selectparams.selectdzzdm"
+             data-selectdzzmc="selectparams.selectdzzmc" data-showtogglebtn="true" data-zzfbtype="selectparams.zzfbType"
+             data-defaultselected="selectparams.defaultselected" data-isunfold="selectparams.isunfold"></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="selectparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>姓名</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="xm" class="form-control" type="text" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.xm"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>民族</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-model="selectparams.mz"
+                                                        ng-change="search()"
+                                                        ng-options="type.BM as type.HZMC for type in mzList"
+                                                        class="form-control"
+                                                        name="mz">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix form-inline" ng-show="isShow">
+<!--                                    <div class="col-lg2 col-md-2 dj-label">-->
+<!--                                        <label>党内职务</label>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-lg2 col-md-2">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <div class="form-line">-->
+<!--                                                <select class="form-control show-tick" ng-model="selectparams.dnzw" ng-change="search()"-->
+<!--                                                        ng-options="type.hzmc as type.hzmc for type in dnzwList"-->
+<!--                                                        class="form-control"-->
+<!--                                                        name="dzzmc">-->
+<!--                                                    <option value="" selected>&#45;&#45;全部&#45;&#45;</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>学历</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-model="selectparams.xl" ng-change="search()"
+                                                        ng-options="type.BM as type.HZMC for type in xlList"
+                                                        class="form-control"
+                                                        name="zwjb">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>政治面貌</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-model="selectparams.ryzt" ng-change="search()"
+                                                        ng-options="type.bm as type.hzmc for type in ryztList"
+                                                        class="form-control"
+                                                        name="zwjb">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>年龄</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group" style="display:flex;">
+                                            <div class="form-line">
+                                                <input name="age_begin" class="form-control" type="text"
+                                                       ng-model="selectparams.age_begin" ng-keypress="($event.which === 13)?search():0"
+                                                       placeholder=""/>
+                                            </div>
+                                            <span style="margin: 6px 10px 0px 10px;text-align: center;">至</span>
+                                            <div class="form-line">
+                                                <input name="age_end" class="form-control" type="text"
+                                                       ng-model="selectparams.age_end" ng-keypress="($event.which === 13)?search():0"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="row clearfix form-inline" ng-show="isShow">
+<!--                                    <div class="col-lg2 col-md-2 dj-label">-->
+<!--                                        <label>行政职务</label>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-lg2 col-md-2">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <div class="form-line">-->
+<!--                                                <input name="zwmc" class="form-control" type="text"-->
+<!--                                                       ng-model="selectparams.zwmc" ng-keypress="($event.which === 13)?search():0"-->
+<!--                                                       placeholder=""/>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>是否在岗</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-change="search()"
+                                                        ng-model="selectparams.sfzg"
+                                                        ng-options="type.dickey as type.dicvalue for type in boolList"
+                                                        class="form-control"
+                                                        name="sfzg">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>性别</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-model="selectparams.xb" ng-change="search()"
+                                                        ng-options="type.BM as type.HZMC for type in xbList"
+                                                        class="form-control"
+                                                        name="sexId">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>是否学生身份</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-model="selectparams.isStudent" ng-change="search()"
+                                                        ng-options="type.dickey as type.dicvalue for type in boolList"
+                                                        class="form-control"
+                                                        name="isStudent">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <span class="moreSpan" ng-click="isShowClick()" style='padding-right:1em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>
+                                <button  class="btn btn-default1"
+                                         ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                         ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button class="btn btn-default1"
+                                    ng-click="addDyUser()">新增
+                            </button>
+                            <button class="btn  btn-default1"
+                                    ng-click="import()">导入
+                            </button>
+<!--                            <button class="btn  btn-default1" ng-click="importMobile()">导入登录账号</button>-->
+                            <button class="btn  btn-default1"
+                                    ng-click="export()">导出
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>姓名</th>
+                                    <th>学号/工号</th>
+                                    <th>政治面貌</th>
+                                    <th>所在党组织</th>
+                                    <th>入党时间</th>
+                                    <th>性别</th>
+                                    <th>民族</th>
+                                    <th>出生日期</th>
+                                    <th>籍贯</th>
+                                    <th>身份证号</th>
+                                    <th>年级</th>
+                                    <th>班级</th>
+                                    <th>学历</th>
+                                    <th>最高学历入学日期</th>
+                                    <th>最高学历毕业日期</th>
+                                    <th>工作时间</th>
+                                    <th>联系电话</th>
+                                    <th>技术职务</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">{{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}</td>
+                                    <td>{{it.XM}}</td>
+                                    <td class="text-center">{{it.USERNO}}</td>
+                                    <td class="text-center">{{it.RYZTMC}}</td>
+                                    <td>{{it.DZZMC}}</td>
+                                    <td class="text-center">{{it.RDSJ}}</td>
+                                    <td class="text-center">{{it.XBMC}}</td>
+                                    <td class="text-center">{{it.MZMC}}</td>
+                                    <td class="text-center">{{it.CSRQ}}</td>
+                                    <td>{{it.JG}}</td>
+                                    <td>{{it.SFZH}}</td>
+                                    <td>{{it.GRADENAME}}</td>
+                                    <td>{{it.CLASSNAME}}</td>
+                                    <td>{{it.XLMC}}</td>
+                                    <td>{{it.ENROLLMENTDATE | date:'yyyy-MM-dd'}}</td>
+                                    <td>{{it.GRADUATEDATE | date:'yyyy-MM-dd'}}</td>
+                                    <td>{{it.WORKDATE | date:'yyyy-MM-dd'}}</td>
+                                    <td>{{it.CONTACTMOBILE}}</td>
+                                    <td>{{it.TECHNOLOGYPOSITION}}</td>
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="20" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="zero-target-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList" zero-table-height>
+                                    <td class="text-center">
+                                        <button
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="detailDyUser(it.RYBM,it.USERTYPE)"
+                                                title="查看">
+                                            查看
+                                        </button>
+                                        <button
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="editDyUser(it.RYBM,it.USERTYPE)"
+                                                title="修改">
+                                            修改
+                                        </button>
+                                        <button
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="delete(it.RYBM)"
+                                                title="删除">
+                                            删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="1" style="text-align:center">无</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

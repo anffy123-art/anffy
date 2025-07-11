@@ -1,0 +1,60 @@
+﻿.flowform {
+}
+
+.flowform #flowstep1 {
+    height: 36px;
+    width: 100%;
+    background-image: url('../../../content/images/workflow/step1.png');
+}
+
+.flowform #flowstep2 {
+    height: 36px;
+    width: 100%;
+    background-image: url('../../../content/images/workflow/step2.png')
+}
+
+.flowform #flowstep3 {
+    height: 36px;
+    width: 100%;
+    background-image: url('../../../content/images/workflow/step3.png')
+}
+
+.flowform #flowstep4 {
+    height: 36px;
+    width: 100%;
+    background-image: url('../../../content/images/workflow/step4.png')
+}
+
+.flowform .div_selectinguser {
+    max-height: 150px;
+    margin-top: 5px;
+    overflow-y: scroll
+}
+
+.flowform .div_selecteduser {
+    width: 100%;
+    height: 90px;
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    overflow: auto;
+}
+
+.flowform .selecteduser {
+    box-sizing: border-box;
+    flex: 0 0 30%;
+    height: 30px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.flowform .th-dp {
+    max-width: 40%;
+}
+
+.flowform .td-dp {
+    max-width: 40%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

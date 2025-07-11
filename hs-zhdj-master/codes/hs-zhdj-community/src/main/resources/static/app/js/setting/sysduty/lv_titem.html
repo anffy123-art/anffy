@@ -1,0 +1,24 @@
+﻿<div ng-init="loadIncrease()" class="tree_head">
+    <div data-id="{{titem.id}}" ng-mouseover="titem.showbtn=true;" ng-mouseleave="titem.showbtn=false;"
+         class="item_panel">
+        <div class="item_col1">
+            <a ng-if="ngModel.canEdit" ng-click="btnclick(titem,1)" ng-show="titem.showbtn" title="新增同级"><span
+                    class="glyphicon glyphicon-plus-sign"></span></a>
+        </div>
+        <div class="item_col2">
+            <div class="item_chk"><input ng-if="titem.islast && ngModel.canChecked" type="checkbox" ng-model="titem.chk"
+                                         name="chk"/></div>
+            <a ng-if="!titem.islast && ngModel.canEdit" ng-show="titem.showbtn" title="新增子级"
+               ng-click="btnclick(titem,2)" class="item_col2_addchild"><span
+                    class="glyphicon glyphicon-chevron-right"></span></a>
+            <a ng-click="btnclick(titem,4)" title="{{titem.name}}" class="item_div btn btn-success">{{titem.name}}</a>
+        </div>
+        <div class="item_col3">
+            <a ng-if="ngModel.canEdit" ng-click="btnclick(titem,3)" ng-show="titem.showbtn" title="删除节点"><span
+                    class="glyphicon glyphicon-minus-sign"></span></a>
+        </div>
+    </div>
+</div>
+<div ng-if="titem.children&&titem.children.length>0" class="tree_body">
+    <div class="tree_node" ng-repeat="titem in titem.children" ng-include="'../js/setting/sysduty/lv_titem.html'"></div>
+</div>

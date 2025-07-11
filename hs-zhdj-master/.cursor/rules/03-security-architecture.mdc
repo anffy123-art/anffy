@@ -1,0 +1,48 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# 安全架构
+
+智慧党建项目使用Apache Shiro和JWT实现认证和授权机制。
+
+## Shiro安全框架
+Shiro负责认证和授权，主要配置和实现在以下位置：
+- [shiro目录](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/shiro) - 包含Shiro相关配置和实现
+
+主要组件：
+- Shiro过滤器配置
+- 自定义Realm实现
+- 权限检查逻辑
+- 会话管理
+
+## JWT认证
+项目使用JWT（JSON Web Token）实现无状态的认证机制，配置在：
+- [application.yml](mdc:codes/hs-zhdj-community/src/main/resources/application.yml) - JWT相关配置
+
+```yaml
+jwt-config:
+  secret: ${JWT_SECRET:'changeit'}
+  expire: ${JWT_EXPIRE:1}
+  token-name: ${JWT_TOKEN_NAME:logintoken}
+```
+
+## 访问控制
+- 基于角色的访问控制（RBAC）
+- 用户与角色的多对多关系：`CfUserrolesKey`
+- 角色与菜单/功能的多对多关系：`CfMenuRoleKey`
+- 权限验证通过Shiro注解或编程方式实现
+
+## 安全过滤器
+- [filter目录](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/filter) - 包含自定义过滤器
+
+## 密码处理
+- 密码加密存储
+- DES加密算法用于敏感数据
+
+## 跨域安全
+在application.yml中配置了跨域安全选项：
+```yaml
+corsUrl: ${CORS_URL:'http://localhost:8007/,http://localhost:8035/'}
+```

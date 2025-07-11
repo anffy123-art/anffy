@@ -1,0 +1,118 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="dj-list-content content1">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>标题</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input class="form-control" name="title" ng-model="selectdata.title" ng-keypress="($event.which === 13)?search():0"
+                                                       placeholder=""
+                                                       type="text"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>作者</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input class="form-control" name="author" ng-model="selectdata.author" ng-keypress="($event.which === 13)?search():0"
+                                                       placeholder=""
+                                                       type="text"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>栏目</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-change="search()"
+                                                        name="topicValue" ng-model="selectdata.topicValue"
+                                                        ng-options="op.val as op.label for op in ndList"
+                                                        required>
+                                                    <option value="">-- 请选择 --</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <!--<span class="moreSpan" ng-click="isShowClick()" style='padding-right:2em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>-->
+                                <button class="btn btn-default1" ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button class="btn btn-default1" ng-click="viewItem()" role-permission-code="fqtg.btn.start">发起投稿
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body" style="min-height: 500px;">
+
+                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                        <thead>
+                        <tr>
+                            <th class="col-md-3">标题</th>
+                            <th class="col-md-2">单位</th>
+                            <th>作者</th>
+                            <th class="col-md-1">职务</th>
+                            <th class="col-md-1">栏目</th>
+                            <th>状态</th>
+                            <th class="col-md-1">创建时间</th>
+                            <th>创建人</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="lm in items">
+                            <td>{{lm.title}}</td>
+                            <td>{{lm.dwName}}</td>
+                            <td>{{lm.author}}</td>
+                            <td>{{lm.post}}</td>
+                            <td>{{lm.topicname}}</td>
+                            <td class="text-center">{{lm.statusName}}</td>
+                            <td class="text-center">{{lm.createtime|date:'yyyy-MM-dd'}}</td>
+                            <td class="text-center">{{lm.createusername}}</td>
+                            <td align="center">
+                                <button class="btn td-btn bg-light-green waves-effect"
+                                        ng-click="viewItem(lm.fqtgid)"
+                                        title="查看">
+                                    查看
+                                </button>
+                            </td>
+                        </tr>
+                        <tr ng-if="items.length<=0">
+                            <td colspan="10" style="text-align:center">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--参数含义：page-Index：当前页面，page-Size：每页显示多少数据，total-Length:数据总长度-->
+                    <pagination ng-if="items.length>0" data-pageindex="selectdata.pageindex"
+                                data-pagesize="selectdata.pagesize" data-ptotal="pageInfo.ptotal"></pagination>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="dj-formtable">
+    <div class="header" style="padding-top: 0px;">
+        <h2 class="demo-icon-container">
+            <div class="demo-google-material-icon">
+                <span class="main-card-title">党费收缴情况（{{partyDuesTotal.YEAR}}年{{partyDuesTotal.MONTH}}月）</span>
+            </div>
+        </h2>
+    </div>
+    <table class="dj-table">
+        <tr>
+            <th>党员总数</th>
+            <td>
+                <a ng-click="showDues()">{{partyDuesTotal.DYZS}}</a>
+            </td>
+            <th>本月已缴人数</th>
+            <td>
+                <a ng-click="showDues()">{{partyDuesTotal.PAYINCOUNT}}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>本月应缴金额</th>
+            <td>
+                <a ng-click="showDues()">{{partyDuesTotal.PAYABLEMONEY}}</a>
+            </td>
+            <th>本月已缴金额</th>
+            <td>
+                <a ng-click="showDues()">{{partyDuesTotal.PAYINMONEY}}</a>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,86 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 数据库和配置
+
+智慧党建项目的数据库和配置详情。
+
+## 数据库配置
+项目使用MySQL数据库，配置在application.yml中：
+
+```yaml
+spring:
+  datasource:
+    name: party_build_db
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      filters: stat
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:party_build_db}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
+      username: ${MYSQL_USERNAME:root}
+      password: ${MYSQL_PASSWORD:password}
+```
+
+## 数据库表映射
+- [mapping目录](mdc:codes/hs-zhdj-community/src/main/resources/mapping) - 包含MyBatis映射XML文件
+- [generatorConfig.xml](mdc:codes/hs-zhdj-community/src/main/resources/generatorConfig.xml) - MyBatis Generator配置
+
+## Redis缓存配置
+项目使用Redis作为缓存，配置在application.yml中：
+
+```yaml
+spring:
+  cache:
+    redis:
+      time-to-live: 60s
+    type: redis
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    database: ${REDIS_DATABASE:0}
+    password: ${REDIS_PASSWORD:}
+    timeout: 10000
+```
+
+## 应用程序配置
+主要配置文件为[application.yml](mdc:codes/hs-zhdj-community/src/main/resources/application.yml)，包含以下关键配置：
+
+1. 服务器配置：
+```yaml
+server:
+  port: ${SERVER_PORT:8062}
+  tomcat:
+    max-connections: 100000
+```
+
+2. 系统参数配置：
+```yaml
+appconfig:
+  appid: ${APP_ID:changeit}
+  secret: ${APP_SECRET:changeit}
+  isDev: ${IS_DEV:false}
+  canLog: ${CAN_LOG:false}
+  uploadfile-url: ${UPLOAD_FILE_URL:/app/data/zhdj/sitefile}
+```
+
+3. 微信支付配置：
+```yaml
+wechat-pay-config:
+  appId: ${WECHAT_PAY_APP_ID:'changeit'}
+  mchId: ${WECHAT_PAY_MCH_ID:'changeit'}
+  mchKey: ${WECHAT_PAY_MCH_KEY:'changeit'}
+  keyPath: ${WECHAT_PAY_KEY_PATH:'/app/data/zhdj/certs/apiclient_cert.p12'}
+```
+
+4. 定时任务配置：
+```yaml
+appconfig:
+  isBackService: ${IS_BACK_SERVICE:true}
+  sync-cron-usercount: ${SYNC_CRON_USERCOUNT:'0/5 * * * 1 ?'}
+  sync-cron-userage: ${SYNC_CRON_USERAGE:'0 0 23 1 1 ?'}
+```
+
+## 日志配置
+日志配置位于[logback-spring.xml](mdc:codes/hs-zhdj-community/src/main/resources/logback-spring.xml)文件中。

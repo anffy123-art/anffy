@@ -1,0 +1,110 @@
+<div class="card">
+    <titlemenu></titlemenu>
+    <div class="body">
+        <div class="menubody" style="position: relative;z-index: 1;margin-top: 10px;">
+            <nav class="redmenu">
+                <div class="redmenu-items">
+                <a href="javascript:void(0);" ng-click="loadPage('shykqk')"  ng-class="selectmenu=='shykqk'?' nav-item is-active':'nav-item' " >三会一课情况</a>
+                <!--<a href="javascript:void(0);" ng-click="loadPage('ckjq')" ng-class="selectmenu=='ckjq'?' nav-item is-active':'nav-item' " >创岗建区情况</a>-->
+                <a href="javascript:void(0);" ng-click="loadPage('dfsj')" ng-class="selectmenu=='dfsj'?' nav-item is-active':'nav-item' " >党费收缴情况</a>
+                <a href="javascript:void(0);" ng-click="loadPage('dyfz')" ng-class="selectmenu=='dyfz'?' nav-item is-active':'nav-item' " >发展党员情况</a>
+                <a href="javascript:void(0);" ng-click="loadPage('ztdrqk')" ng-class="selectmenu=='ztdrqk'?' nav-item is-active':'nav-item'" >主题党日情况</a>
+                <!--<a href="javascript:void(0);" ng-click="loadPage('djcgqk')" ng-class="selectmenu=='djcgqk'?' nav-item is-active':'nav-item'" >党建工作成果情况</a>-->
+                <a href="javascript:void(0);" ng-click="loadPage('djkpqk')" ng-class="selectmenu=='djkpqk'?' nav-item is-active':'nav-item'" >党建考评情况</a>
+                <!--<a href="javascript:void(0);" ng-click="loadPage('zgsxdt')" ng-class="selectmenu=='zgsxdt'?' nav-item is-active':'nav-item'" >职工思想动态情况</a>-->
+                <a href="javascript:void(0);" ng-click="loadPage('dnpxqk')" ng-class="selectmenu=='dnpxqk'?' nav-item is-active':'nav-item'" >党内评先情况</a>
+                <a href="javascript:void(0);" ng-click="loadPage('jlcfqk')" ng-class="selectmenu=='jlcfqk'?' nav-item is-active':'nav-item'" >党纪处分情况</a>
+                <span class="nav-indicator"></span>
+                </div>
+            </nav>
+            <div class="redmenu-btn">
+                <i ng-click="toLeft() " class="material-icons"
+                   style="color: white; border-radius: 100px 0 0 100px;border: 1px solid;padding: 0 5px;opacity: 0.29;border-right: none;">chevron_left</i>
+                <i ng-click="toRight()" class="material-icons"
+                   style="color: white;border-radius: 0 100px 100px 0;border: 1px solid;padding: 0 5px;opacity: 0.29;">chevron_right</i>
+            </div>
+
+        </div>
+        <div ng-include="pageSrc" style="margin-top: 10px;"></div>
+    </div>
+</div>
+<style>
+    .menubody{
+        background-size: 100% auto;
+        background-color:rgba(202,79,69,1);
+        border-radius: 5px;
+        box-shadow: 0 10px 40px rgba(159, 162, 177, 0.8);
+    }
+    .redmenu {
+        height: 45px;
+        overflow: hidden;overflow-x: scroll;
+        max-width: 93%;
+        padding: 10px 20px 0px 20px;
+
+    }
+    .redmenu::-webkit-scrollbar {display: none;}
+    .redmenu-items{
+        width:100%; white-space:nowrap;
+    }
+    .redmenu-btn {
+        position: absolute;
+        z-index: 999;
+        right: 0px;
+        top: 10px;
+        width: 80px;
+    }
+    .redmenu-btn i{
+        float: left;
+        cursor: pointer;
+    }
+    .nav-item {
+        color: #ffffff;
+        padding: 5px 15px 10px 15px;
+        text-decoration: none;
+        transition: .3s;
+        margin: 0px 6px;
+        z-index: 1;
+        font-family: 'DM Sans', sans-serif;
+        font-weight: 500;
+        position: relative;
+        display:inline-block;
+        border-radius: 10px 10px 0px 0px;
+    }
+    .nav-item:before {
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background-color: #dfe2ea;
+        border-radius: 8px 8px 0 0;
+        opacity: 0;
+        transition: .3s;
+    }
+    .nav-item:not(.is-active):hover:before {
+        opacity: 1;
+        bottom: 0;
+    }
+    .nav-item:visited, .nav-item:active, .nav-item:link,.nav-item:hover {
+        text-decoration: none;
+    }
+    .btnLeft{
+        width:36px;
+        height:26px;
+        background:rgba(255,255,255,1);
+        border-radius:100px 0px 0px 100px;
+        opacity:0.29;
+    }
+    .btnRight{
+        width:36px;
+        height:26px;
+        background:rgba(255,255,255,1);
+        border-radius:0px 100px 100px 0px;
+        opacity:0.29;
+    }
+    .is-active{
+        background-color: #ffffff;
+        color: rgba(202,79,69,1);
+    }
+</style>

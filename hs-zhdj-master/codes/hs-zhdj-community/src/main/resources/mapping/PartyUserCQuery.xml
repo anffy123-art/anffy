@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.PartyUserCQuery">
+    <!--党员基本信息-->
+    <select id="selectPartyUserList" resultType="java.util.HashMap">
+        select us.USERTYPE,us.RYJBXXBS,us.RYBM,us.XM,us.SZDZBDM,us.RYZT,us.SQRDRQ,
+        -- us.ZWMC,
+        uszw.dnzw as ZWMC,
+        us.DNZWMC,us.XJSZWMC,us.XB,us.JG,us.MZ,us.CSRQ,us.XL,us.SFZH,
+        p.DZZMC,
+        ryzt.HZMC as RYZTMC,
+        xb.HZMC as XBMC,mz.HZMC as MZMC,xl.HZMC as XLMC,jszw.HZMC as JSZWMC,
+        userinfo.USERNAME as MOBILE,us.DNZWMC as POST,
+        dj.JRZGZZRQ as RDSJ,
+        usfb.NL AS AGE,
+        uszw.DNZW as DNZW,
+        usfb.SFSLDRY,
+        ifnull(usfb.LEADTYPE,0) as LEADTYPE,
+        userinfo.USERNAME as
+        userNo,usfb.gradeName,usfb.className,usfb.enrollmentDate,usfb.graduateDate,usfb.workDate,usfb.mobile as
+        contactMobile,
+        usfb.technologyPosition, usfb.isStudent,case when usfb.isStudent=1 then '是' else '否' end as  isStudentName
+        from VM_RYJBXX us -- 视图
+        left join RS_RYJBXXFB usfb on us.RYBM=usfb.RYBM
+        inner join ZZ_ZZQKXX p on us.SZDZBDM=p.DZZDM -- 党组织信息
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join Zzzd_ryzt ryzt on us.RYZT=ryzt.BM -- 人员状态
+        left join zd_xbm xb on us.XB=xb.BM -- 性别
+        left join zd_mzdm mz on us.MZ=mz.BM -- 民族
+        left join zd_whcddm1 xl on us.XL=xl.BM -- 学历
+        left join zd_zyjszwdm jszw on us.XJSZWMC=jszw.BM -- 技术专业职务
+        left join CF_USERS userinfo on us.RYBM=userinfo.USERID
+        left join ZZ_DJXX dj on us.RYBM=dj.RYBM
+        left join vw_partyduty uszw on us.RYBM=uszw.RYBM -- 党内职务名称
+        left join ZZ_ZZQKXX dw on SUBSTR(p.DZZDM,1,12)=dw.DZZDM
+        left join VM_PARTYGROUP partyGroup on dw.DZZDM = partyGroup.DZZDM
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and p.DZZDM like concat(#{dzzdm},'%')
+        </if>
+        <if test="rybm != null and rybm != ''">
+            and us.RYBM = #{rybm}
+        </if>
+        <if test="xm != null and xm != ''">
+            and us.XM like concat('%',#{xm},'%')
+        </if>
+        <if test="zzlb != null and zzlb != ''">
+            and fb.ZZLB = #{zzlb}
+        </if>
+        <if test="xb != null and xb != ''">
+            and us.XB = #{xb}
+        </if>
+        <if test="zwjb != null and zwjb != ''">
+            and us.ZWJB = #{zwjb}
+        </if>
+        <if test="sqrdrq_begin != null and sqrdrq_begin != ''">
+            and dj.JRZGZZRQ <![CDATA[ >= ]]> #{sqrdrq_begin}
+        </if>
+        <if test="sqrdrq_end != null and sqrdrq_end != ''">
+            and dj.JRZGZZRQ <![CDATA[ <= ]]> #{sqrdrq_end}
+        </if>
+        <if test="szdzb != null and szdzb != ''">
+            and p.DZZMC like concat('%',#{szdzb},'%')
+        </if>
+        <if test="szdxz != null and szdxz != ''">
+
+        </if>
+        <if test="userIdList != null and userIdList.size()>0">
+            and us.RYJBXXBS in
+            <foreach collection="userIdList" item="userId" index="index" open="(" close=")" separator=",">
+                #{userId}
+            </foreach>
+        </if>
+        <if test="ryztList != null and ryztList.size()>0">
+            and us.RYZT in
+            <foreach collection="ryztList" item="ryzt" index="index" open="(" close=")" separator=",">
+                #{ryzt}
+            </foreach>
+        </if>
+        <if test="removeUserList != null and removeUserList.size()>0">
+            and us.RYJBXXBS not in
+            <foreach collection="removeUserList" item="userId" index="index" open="(" close=")" separator=",">
+                #{userId}
+            </foreach>
+        </if>
+        <if test="szdzbdm != null and szdzbdm != ''">
+            and us.SZDZBDM = #{szdzbdm}
+        </if>
+        <if test="removeUsersOfRybmList != null and removeUsersOfRybmList.size()>0">
+            and us.RYBM not in
+            <foreach collection="removeUsersOfRybmList" item="rybm" index="index" open="(" close=")" separator=",">
+                #{rybm}
+            </foreach>
+        </if>
+        <if test="rybmList != null and rybmList.size()>0">
+            and us.RYBM in
+            <foreach collection="rybmList" item="rybm" index="index" open="(" close=")" separator=",">
+                #{rybm}
+            </foreach>
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(p.DZZDM,1,12) in(select DZZDM from ZZ_DZZFBQK where ZZFB= #{zzfbType})
+        </if>
+        <if test="mz != null and mz != ''">
+            and us.MZ = #{mz}
+        </if>
+        <if test="dnzw != null and dnzw != ''">
+            and uszw.DNZW like concat('%',#{dnzw},'%')
+        </if>
+        <if test="xl != null and xl != ''">
+            and us.XL = #{xl}
+        </if>
+        <if test="age_begin != null and age_begin != ''">
+            and usfb.NL <![CDATA[ >= ]]> #{age_begin}
+        </if>
+        <if test="age_end != null and age_end != ''">
+            and usfb.NL <![CDATA[ <= ]]> #{age_end}
+        </if>
+        <if test="sfsldry != null">
+            /*是否属领导人员*/
+            and usfb.SFSLDRY = #{sfsldry}
+        </if>
+        <if test="zwmc != null and zwmc != ''">
+            and us.ZWMC like concat('%',#{zwmc},'%')
+        </if>
+        <if test="sfzg != null">
+            /*是否在岗*/
+            <if test="sfzg == 1">
+                and (us.GZGW not in('0500','0501','0502','0504') or us.GZGW is null)
+            </if>
+            <if test="sfzg == 0">
+                and us.GZGW in('0500','0501','0502','0504')
+            </if>
+        </if>
+        <if test="jczzfl != null and jczzfl != ''">
+            and fb.JCZZFL = #{jczzfl}
+        </if>
+        <!--<if test="!islead">
+            and nvl(usfb.leadtype,0)=0
+        </if>-->
+        <if test="partyGroupId != null and partyGroupId != ''">
+            and partyGroup.GROUPID like concat('%',#{partyGroupId},'%')
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and userinfo.USERNAME like concat('%',#{mobile},'%')
+        </if>
+        <if test="sfzh != null and sfzh != ''">
+            and us.sfzh like concat('%',#{sfzh},'%')
+        </if>
+        <if test="isStudent != null and isStudent==1">
+            and usfb.isStudent = #{isStudent}
+        </if>
+        <if test="isStudent != null and isStudent==0">
+            and (usfb.isStudent = #{isStudent} or usfb.isStudent is null)
+        </if>
+        <if test="leaderTeamUserType != null">
+            and userinfo.USERNAME in (select no from lw_leaderteam where leaderTeamType=#{leaderTeamUserType})
+        </if>
+        order by CONVERT(us.XM USING gbk),us.RYJBXXBS
+    </select>
+
+    <!--所有用户基本信息-->
+    <select id="selectAllUserList" resultType="java.util.HashMap">
+        select us.USERTYPE,us.RYJBXXBS,us.RYBM,us.XM,us.SZDZBDM,us.RYZT,us.SQRDRQ,
+        uszw.dnzw as ZWMC,
+        us.DNZWMC,us.XJSZWMC,us.XB,us.JG,us.MZ,us.CSRQ,us.XL,us.SFZH,
+        p.DZZMC,
+        ryzt.HZMC as RYZTMC,
+        xb.HZMC as XBMC,mz.HZMC as MZMC,xl.HZMC as XLMC,jszw.HZMC as JSZWMC,
+        userinfo.USERNAME as MOBILE,us.DNZWMC as POST,
+        dj.JRZGZZRQ as RDSJ,
+        usfb.NL AS AGE,
+        uszw.DNZW as DNZW,
+        usfb.SFSLDRY,
+        ifnull(usfb.LEADTYPE,0) as LEADTYPE,
+        userinfo.USERNAME as
+        userNo,usfb.gradeName,usfb.className,usfb.enrollmentDate,usfb.graduateDate,usfb.workDate,usfb.mobile as
+        contactMobile,
+        usfb.technologyPosition,userinfo.roleName
+        from vm_ryjbxx_all us -- 视图
+        left join RS_RYJBXXFB usfb on us.RYBM=usfb.RYBM
+        inner join ZZ_ZZQKXX p on us.SZDZBDM=p.DZZDM -- 党组织信息
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join Zzzd_ryzt ryzt on us.RYZT=ryzt.BM -- 人员状态
+        left join zd_xbm xb on us.XB=xb.BM -- 性别
+        left join zd_mzdm mz on us.MZ=mz.BM -- 民族
+        left join zd_whcddm1 xl on us.XL=xl.BM -- 学历
+        left join zd_zyjszwdm jszw on us.XJSZWMC=jszw.BM -- 技术专业职务
+        left join ZZ_DJXX dj on us.RYBM=dj.RYBM
+        left join vw_partyduty uszw on us.RYBM=uszw.RYBM -- 党内职务名称
+        left join (select us.USERID,us.USERNAME,GROUP_CONCAT(cr.ROLENAME SEPARATOR '、') as roleName from cf_users us
+        left join cf_userroles cu on us.USERID = cu.USERID
+        left join cf_roles cr on cu.ROLEID = cr.ROLEID
+        group by us.USERID,us.USERNAME) userinfo on us.RYBM = userinfo.USERID
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and p.DZZDM like concat(#{dzzdm},'%')
+        </if>
+        <if test="szdzbdm != null and szdzbdm != ''">
+            and us.SZDZBDM = #{szdzbdm}
+        </if>
+        <if test="zzlb != null and zzlb != ''">
+            and fb.ZZLB = #{zzlb}
+        </if>
+        <if test="rybm != null and rybm != ''">
+            and us.RYBM = #{rybm}
+        </if>
+        <if test="xm != null and xm != ''">
+            and us.XM like concat('%',#{xm},'%')
+        </if>
+        <if test="xb != null and xb != ''">
+            and us.XB = #{xb}
+        </if>
+        <if test="mz != null and mz != ''">
+            and us.MZ = #{mz}
+        </if>
+        <if test="xl != null and xl != ''">
+            and us.XL = #{xl}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            and userinfo.USERNAME like concat('%',#{mobile},'%')
+        </if>
+        <if test="ryztList != null and ryztList.size()>0">
+            and us.RYZT in
+            <foreach collection="ryztList" item="ryzt" index="index" open="(" close=")" separator=",">
+                #{ryzt}
+            </foreach>
+        </if>
+        <if test="userNo != null and userNo != ''">
+            and userinfo.USERNAME like concat('%',#{userNo},'%')
+        </if>
+        order by CONVERT(us.XM USING gbk),us.RYJBXXBS
+    </select>
+    <!--所有党员基本信息-->
+    <select id="selectAllUserByNameAndMobileList" resultType="java.util.HashMap">
+        select us.USERTYPE,us.RYJBXXBS,us.RYBM,us.XM,us.SZDZBDM,us.RYZT,us.SQRDRQ,
+        us.ZWMC,us.DNZWMC,us.XJSZWMC,us.XB,us.JG,us.MZ,us.CSRQ,us.XL,us.SFZH,
+        p.DZZMC,
+        xb.hzmc as XBMC,
+        userinfo.USERNAME as MOBILE,
+        usfb.NL AS age,
+        uszw.dnzw as dnzw
+        , case when fb.ZZLB='400' then p.dzzmc else branch.dzzmc end as partyBranchName
+        , case when fb.ZZLB='400' then p.dzzdm else branch.dzzdm end as partyBranchCode
+        ,dw.dzzmc as DWMC,dw.dzzdm as DWBM
+        from VM_RYJBXX_ALL us -- 视图
+        inner join CF_USERS userinfo on us.rybm=userinfo.USERID
+        left join RS_RYJBXXFB usfb on us.RYBM=usfb.RYBM
+        inner join ZZ_ZZQKXX p on us.szdzbdm=p.dzzdm -- 党组织信息
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join zd_xbm xb on us.xb=xb.bm -- 性别
+        left join vw_partyduty uszw on us.rybm=uszw.rybm -- 党内职务名称
+        left join ZZ_ZZQKXX branch on substr(p.DZZDM,0,length(p.DZZDM)-3) = branch.DZZDM
+        left join ZZ_ZZQKXX dw on SUBSTR(p.DZZDM,0,12)=dw.DZZDM
+        where 1=1
+        <if test="userNameAndMobileList != null and userNameAndMobileList.size()>0">
+            and CONCAT(us.XM ,userinfo.USERNAME)  in
+            <foreach collection="userNameAndMobileList" item="name" index="index" open="(" close=")" separator=",">
+                #{name}
+            </foreach>
+        </if>
+        order by us.XM
+    </select>
+
+    <!--党员基本信息-->
+    <select id="selectPartyUserSingleExt" resultType="java.util.HashMap">
+        select us.USERTYPE,us.RYJBXXBS,us.RYBM,us.XM,us.SZDZBDM,us.RYZT,us.SQRDRQ,
+        uszw.dnzw as ZWMC,
+        us.DNZWMC,us.XJSZWMC,us.XB,us.JG,us.MZ,us.CSRQ,us.XL,us.SFZH,
+        p.DZZMC,
+        ryzt.HZMC as RYZTMC,
+        xb.HZMC as XBMC,mz.HZMC as MZMC,xl.HZMC as XLMC,jszw.HZMC as JSZWMC,
+        userinfo.USERNAME as MOBILE,us.DNZWMC as POST,
+        dj.JRZGZZRQ as RDSJ,
+        usfb.NL AS AGE,
+        uszw.DNZW as DNZW,
+        usfb.SFSLDRY,
+        ifnull(usfb.LEADTYPE,0) as LEADTYPE,
+        userinfo.USERNAME as userNo,usfb.gradeName,usfb.className,usfb.enrollmentDate,usfb.graduateDate,usfb.workDate,usfb.mobile as contactMobile,
+        usfb.technologyPosition
+        from vm_ryjbxx_all us -- 视图
+        left join RS_RYJBXXFB usfb on us.RYBM=usfb.RYBM
+        inner join ZZ_ZZQKXX p on us.SZDZBDM=p.DZZDM -- 党组织信息
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join Zzzd_ryzt ryzt on us.RYZT=ryzt.BM -- 人员状态
+        left join zd_xbm xb on us.XB=xb.BM -- 性别
+        left join zd_mzdm mz on us.MZ=mz.BM -- 民族
+        left join zd_whcddm1 xl on us.XL=xl.BM -- 学历
+        left join zd_zyjszwdm jszw on us.XJSZWMC=jszw.BM -- 技术专业职务
+        left join CF_USERS userinfo on us.RYBM=userinfo.USERID
+        left join ZZ_DJXX dj on us.RYBM=dj.RYBM
+        left join vw_partyduty uszw on us.RYBM=uszw.RYBM -- 党内职务名称
+        left join ZZ_ZZQKXX dw on SUBSTR(p.DZZDM,1,12)=dw.DZZDM
+        left join VM_PARTYGROUP partyGroup on dw.DZZDM = partyGroup.DZZDM
+        where 1=1 and us.RYBM = #{rybm}
+    </select>
+
+    <!--党小组成员信息(已取消)-->
+    <select id="selectDxzUserList" resultType="java.util.HashMap">
+        /*不需要单独维护党小组*/
+        <!--select us.*,p.DZZMC,z.hzmc as ZZLBMC,j.hzmc as JCZZFLMC,
+        p_dxz.DZZMC as SZDXZMC,ryzt.hzmc as RYZTMC,xb.hzmc as XBMC,p_dxz.dzzdm as SZDXZBM
+        from
+        (
+        select us.ryjbxxbs,us.rybm,us.szdzbdm,info.xm,
+        info.zwjb,us.sqrdrq,info.xb,info.jg,
+        info.mz,to_char(info.csrq,'yyyymmdd') as csrq,info.qrzxl as xl ,us.gzgw,us.ryzt,
+        info.dwbm,info.bmbm,info.sfzh
+        from ZZ_RYJBXX us
+        left join gg_zgjbxx info on us.rybm = info.rybm
+        /*union
+        (select lwryjbxxbs as ryjbxxbs,rybm,szdzbdm,xm,
+        zwjb,sqrdrq,xb,jg,
+        mz,csrq,xwhcd as xl,gzgw,ryzt,
+        dwbm,bmbm
+        from ZZ_RYJBXX_LW)*/
+        )
+        us
+        inner join ZZ_DXZCY dxz on us.rybm = dxz.rybm
+        inner join ZZ_ZZQKXX p_dxz on dxz.dzzdm=p_dxz.dzzdm &#45;&#45;所在党小组
+        inner join ZZ_ZZQKXX p on dxz.dzzdm=p.dzzdm &#45;&#45;所在党支部
+        left join zzzd_zzlbdm z on p.zzlb = z.bm
+        left join zzzd_jczzfl j on p.jczzfl = j.bm
+        left join Zzzd_ryzt ryzt on us.ryzt=ryzt.bm
+        left join zd_xbm xb on us.xb=xb.bm &#45;&#45; 性别
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and p_dxz.dzzdm = #{dzzdm}
+        </if>
+        <if test="rybm != null and rybm != ''">
+            and us.rybm like '%'||#{rybm}||'%'
+        </if>
+        <if test="xm != null and xm != ''">
+            and us.xm like '%'||#{xm}||'%'
+        </if>
+        <if test="zzlb != null and zzlb != ''">
+
+        </if>
+        <if test="zwjb != null and zwjb != ''">
+            and us.zwjb = #{zwjb}
+        </if>
+        <if test="sqrdrq_begin != null and sqrdrq_begin != ''">
+            and us.sqrdrq <![CDATA[ >= ]]> #{sqrdrq_begin}
+        </if>
+        <if test="sqrdrq_end != null and sqrdrq_end != ''">
+            and us.sqrdrq <![CDATA[ <= ]]> #{sqrdrq_end}
+        </if>
+        <if test="szdzb != null and szdzb != ''">
+            and p_dxz.DZZMC like '%'||#{szdzb}||'%'
+        </if>
+        <if test="szdxz != null and szdxz != ''">
+
+        </if>
+        <if test="removeUserList != null and removeUserList.size()>0">
+            and us.ryjbxxbs not in
+            <foreach collection="removeUserList" item="userId" index="index" open="(" close=")" separator=",">
+                #{userId}
+            </foreach>
+        </if>
+        <if test="removeUsersOfRybmList != null and removeUsersOfRybmList.size()>0">
+            and us.rybm not in
+            <foreach collection="removeUsersOfRybmList" item="rybm" index="index" open="(" close=")" separator=",">
+                #{rybm}
+            </foreach>
+        </if>
+        order by us.rybm-->
+    </select>
+    <!--党成员组织关系转移信息-->
+    <select id="selectUserChangeDzzList" resultType="java.util.HashMap">
+        select r.*,old_dzz.DZZMC as oldDzzmc,new_dzz.DZZMC as newDzzmc,us.XM,
+        old_dzz.DZZDM,dic.DICVALUE as userPartyChangeStatusDesc,cfus.USERNAME as userNo
+        from ZZ_ZZGXXX r
+        inner join vm_ryjbxx us on r.rybm = us.rybm -- 党员信息视图
+        inner join cf_users cfus on us.RYBM = cfus.USERID
+        inner join ZZ_ZZQKXX old_dzz on r.szdzb=old_dzz.dzzdm -- 原党组织
+        inner join ZZ_ZZQKXX new_dzz on r.newDzzdm=new_dzz.dzzdm -- 调离后党组织
+        left join cf_dictionary dic on r.userPartyChangeStatus = dic.DICKEY and dic.DICTYPEKEY='UserPartyChangeStatus'
+        where 1=1
+        <if test="rybm != null and rybm != ''">
+            and us.rybm like concat('%',#{rybm},'%')
+        </if>
+        <if test="xm != null and xm != ''">
+            and us.xm like concat('%',#{xm},'%')
+        </if>
+        <if test="zlzbrq_begin != null and zlzbrq_begin != ''">
+            and r.zlzbrq <![CDATA[ >= ]]> #{zlzbrq_begin}
+        </if>
+        <if test="zlzbrq_end != null and zlzbrq_end != ''">
+            and r.zlzbrq <![CDATA[ <= ]]> #{zlzbrq_end}
+        </if>
+        <if test="dzzdm != null and dzzdm !=''">
+            and (old_dzz.dzzdm like concat('',#{dzzdm},'%') or new_dzz.dzzdm like concat('',#{dzzdm},'%'))
+        </if>
+        order by r.zlzbrq desc
+    </select>
+    <!--未入党成员信息-->
+    <select id="selectWsdzgjbxxList" resultType="java.util.HashMap">
+        select distinct us.* from gg_zgjbxx us
+        left join ZZ_RYJBXX r on us.rybm = r.rybm
+        where 1=1 and r.rybm is null
+        <if test="rybm != null and rybm != ''">
+            and us.rybm like concat('%',#{rybm},'%')
+        </if>
+        <if test="xm != null and xm != ''">
+            and us.xm like concat('%',#{xm},'%')
+        </if>
+    </select>
+    <select id="selectPatyUserNumber" resultType="java.util.HashMap">
+        select dzzmc,DZZDM,(select count(1) from  VM_RYJBXX us inner join ZZ_ZZQKXX px on us.szdzbdm=px.dzzdm where  us.szdzbdm like concat(p.DZZDM ,'%'))as usercount
+          from ZZ_ZZQKXX  p where 1=1
+          and p.DZZDM like concat('',#{parentCode},'%')
+          and length(p.DZZDM)=(length(#{parentCode})+3)
+    </select>
+    <!--路内党员基本信息-->
+    <select id="selectUserInfoList" resultType="java.util.HashMap">
+        select us.*,ry.SZDZBDM, z.HZMC as ZZLBMC,zwjb.HZMC as ZWJBMC,xb.HZMC as XBMC,mz.HZMC as MZMC,
+        xl.HZMC as XLMC,zwmc.HZMC as ZWMCMC, jszw.HZMC as JSZWMC
+        from gg_zgjbxx us
+        left join ZZ_RYJBXX ry on us.rybm=ry.rybm
+        left join ZZ_ZZQKXX p on ry.szdzbdm=p.dzzdm
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join zzzd_zzlbdmnew z on fb.zzlb = z.bm -- 组织类别
+        left join zd_dzzwjbm2 zwjb on us.zwjb=zwjb.bm -- 职务级别
+        left join zd_xbm xb on us.xb=xb.bm -- 性别
+        left join zd_mzdm mz on us.mz=mz.bm -- 民族
+        left join zd_whcddm1 xl on us.qrzxl=xl.bm -- 学历
+        left join zd_dzzwmcm zwmc on us.zwmc=zwmc.bm -- 职位名称
+        left join zd_zyjszwdm jszw on us.xjszwmc=jszw.bm -- 技术专业职务
+        where 1=1
+        <if test="rybm != null and rybm != ''">
+            and us.rybm like concat('%',#{rybm},'%')
+        </if>
+        <if test="xm != null and xm != ''">
+            and us.xm like concat('%',#{xm},'%')
+        </if>
+        order by us.rybm
+    </select>
+    <!--支委会开会成员-->
+    <select id="selectLeaderUserList" resultType="java.util.HashMap">
+        select distinct us.RYJBXXBS,us.RYBM,us.SZDZBDM,p.DZZMC, b.XM,zwmc.hzmc as ZWMC,t1.JC,
+        us.SFZH ,xb.HZMC as XBMC,us.JG
+        from ZZ_BZCYXX b
+        inner join (
+        select c.dzzdm,max(cast(c.jc as SIGNED INTEGER)) jc
+        from ZZ_BZCYXX c
+        group by c.dzzdm) t1 on b.dzzdm=t1.dzzdm and b.jc=t1.jc
+        inner join vm_ryjbxx us on b.rybm=us.rybm
+        inner join ZZ_ZZQKXX p on us.szdzbdm=p.dzzdm
+        left join Zzzd_zwmc zwmc on b.zwmc = zwmc.bm
+        left join zd_xbm xb on us.xb=xb.bm -- 性别
+        where zwmc.hzmc in('总支书记','总支副书记','总支委员','支部书记','支部副书记','支部委员')
+        and us.ryzt in('2','3') -- 预备党员,正式党员
+        <if test="dzzdm != null and dzzdm != ''">
+            and b.dzzdm like concat('',#{dzzdm},'%')
+        </if>
+        <if test="szdzbdm != null and szdzbdm != ''">
+            and b.dzzdm = #{szdzbdm}
+        </if>
+        <if test="rybm != null and rybm != ''">
+            and us.rybm like concat('%',#{rybm},'%')
+        </if>
+        <if test="xm != null and xm != ''">
+            and b.xm like concat('%',#{xm},'%')
+        </if>
+        <if test="userIdList != null and userIdList.size()>0">
+            and us.ryjbxxbs in
+            <foreach collection="userIdList" item="userId" index="index" open="(" close=")" separator=",">
+                #{userId}
+            </foreach>
+        </if>
+        <if test="removeUserList != null and removeUserList.size()>0">
+            and us.ryjbxxbs not in
+            <foreach collection="removeUserList" item="userId" index="index" open="(" close=")" separator=",">
+                #{userId}
+            </foreach>
+        </if>
+        <if test="removeUsersOfRybmList != null and removeUsersOfRybmList.size()>0">
+            and us.rybm not in
+            <foreach collection="removeUsersOfRybmList" item="rybm" index="index" open="(" close=")" separator=",">
+                #{rybm}
+            </foreach>
+        </if>
+        order by us.szdzbdm
+    </select>
+
+    <select id="selectMZPYList" resultType="java.util.HashMap">
+        select p.*,pyjg.HZMC as pyjgmc from ZZ_MZPYXX p
+        left join ZZZD_PYJG pyjg on p.PYJG=pyjg.BM
+        where 1=1
+        <if test="rybm != null and rybm != ''">
+            and p.rybm = #{rybm}
+        </if>
+        order by p.KZPYRQ desc
+    </select>
+
+    <select id="selectPXQKList" resultType="java.util.HashMap">
+        select pxqk.*,pxdd.HZMC as PXDDMC,xs.HZMC as PXXSMC,mc.hzmc as PXMCMZ,jg.HZMC as PXJGMZ from ZZ_PXQK pxqk
+        left join ZZZD_PXDDDM pxdd on pxqk.PXDD = pxdd.bm
+        left join ZZZD_PXXSDM xs on pxqk.PXXS=xs.bm
+        left join ZZZD_PXMC mc on pxqk.PXMC=mc.bm
+        left join ZZZD_PXJG jg on pxqk.PXJG=jg.bm
+        where 1=1
+        <if test="rybm != null and rybm != ''">
+            and pxqk.rybm = #{rybm}
+        </if>
+        order by pxqk.PXKSSJ desc
+    </select>
+
+
+    <!--党员基本信息-->
+    <select id="selectPartyUserListForSearch" resultType="java.util.HashMap">
+        select us.USERTYPE,us.RYJBXXBS,us.RYBM,us.XM,us.SZDZBDM,us.RYZT,us.SQRDRQ,
+        us.ZWMC,us.DNZWMC,us.XJSZWMC,us.XB,us.JG,us.MZ,us.CSRQ,us.XL,us.SFZH,
+        p.DZZMC,
+        ryzt.HZMC as RYZTMC,
+        xb.HZMC as XBMC,mz.HZMC as MZMC,xl.HZMC as XLMC,jszw.HZMC as JSZWMC,
+        dj.JRZGZZRQ as RDSJ,
+        usfb.NL AS AGE,
+        uszw.DNZW as DNZW,
+        usfb.SFZG,
+        dj.ZZRQ,
+        if(jlcf.USERID,1,0) as SFZYXQ,
+        dw.DZZDM as DWDM,dw.DZZMC as DWMC
+        from VM_RYJBXX us -- 视图
+        left join RS_RYJBXXFB usfb on us.RYBM=usfb.RYBM
+        inner join ZZ_ZZQKXX p on us.szdzbdm=p.dzzdm -- 党组织信息
+        inner join ZZ_ZZQKXX dw on SUBSTR(us.szdzbdm,1,12) = dw.DZZDM -- 党委信息
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join Zzzd_ryzt ryzt on us.ryzt=ryzt.bm -- 人员状态
+        left join zd_xbm xb on us.xb=xb.bm -- 性别
+        left join zd_mzdm mz on us.mz=mz.bm -- 民族
+        left join zd_whcddm1 xl on us.xl=xl.bm -- 学历
+        left join zd_zyjszwdm jszw on us.xjszwmc=jszw.bm -- 技术专业职务
+        left join ZZ_DJXX dj on us.RYBM=dj.RYBM
+        left join vw_partyduty uszw on us.rybm=uszw.rybm -- 党内职务名称
+        left join (
+        select USERID from DJ_JLCFXX j where j.YXKSRQ <![CDATA[ <= ]]> CURDATE() and j.YXJSRQ <![CDATA[ >= ]]> CURDATE() group
+        by USERID
+        ) jlcf on us.RYBM=jlcf.USERID
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and p.dzzdm like concat('',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc != null and dzzmc != ''">
+            and p.dzzmc like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="xm != null and xm != ''">
+            and us.xm like concat('%',#{xm},'%')
+        </if>
+        <if test="csrq_begin != null and csrq_begin != ''">
+            and us.csrq <![CDATA[ >= ]]> #{csrq_begin}
+        </if>
+        <if test="csrq_end != null and csrq_end != ''">
+            and us.csrq <![CDATA[ <= ]]> #{csrq_end}
+        </if>
+        <if test="age_begin != null and age_begin != ''">
+            and usfb.NL <![CDATA[ >= ]]> #{age_begin}
+        </if>
+        <if test="age_end != null and age_end != ''">
+            and usfb.NL <![CDATA[ <= ]]> #{age_end}
+        </if>
+        <if test="rdsj_begin != null and rdsj_begin != ''">
+            and dj.jrzgzzrq <![CDATA[ >= ]]> #{rdsj_begin}
+        </if>
+        <if test="rdsj_end != null and rdsj_end != ''">
+            and dj.jrzgzzrq <![CDATA[ <= ]]> #{rdsj_end}
+        </if>
+        <if test="zzsj_begin != null and zzsj_begin != ''">
+            and dj.zzrq <![CDATA[ >= ]]> #{zzsj_begin}
+        </if>
+        <if test="zzsj_end != null and zzsj_end != ''">
+            and dj.zzrq <![CDATA[ <= ]]> #{zzsj_end}
+        </if>
+        <if test="jg != null and jg != ''">
+            and us.jg like concat('%',#{jg},'%')
+        </if>
+
+        <if test="dnzw != null and dnzw.size()>0">
+            and uszw.dnzw in
+            <foreach collection="dnzw" item="dnzw" index="index" open="(" close=")" separator=",">
+                #{dnzw}
+            </foreach>
+        </if>
+
+        <if test="xzzw != null and xzzw.size()>0">
+            and
+            <foreach collection="xzzw" item="xzzw" index="index" open="(" close=")" separator="OR">
+                us.zwmc like concat('%',#{xzzw},'%')
+            </foreach>
+        </if>
+
+        <if test="jszw != null and jszw.size()>0">
+            and us.xjszwmc in
+            <foreach collection="jszw" item="jszw" index="index" open="(" close=")" separator=",">
+                #{jszw}
+            </foreach>
+        </if>
+
+        <if test="xl != null and xl.size()>0">
+            and us.xl in
+            <foreach collection="xl" item="xl" index="index" open="(" close=")" separator=",">
+                #{xl}
+            </foreach>
+        </if>
+
+        <if test="xb != null and xb.size()>0">
+            and us.xb in
+            <foreach collection="xb" item="xb" index="index" open="(" close=")" separator=",">
+                #{xb}
+            </foreach>
+        </if>
+
+        <if test="gwzt != null and gwzt.size()>0">
+            and usfb.SFZG in
+            <foreach collection="gwzt" item="gwzt" index="index" open="(" close=")" separator=",">
+                #{gwzt}
+            </foreach>
+        </if>
+
+        <if test="zzmm != null and zzmm.size()>0">
+            and us.ryzt in
+            <foreach collection="zzmm" item="zzmm" index="index" open="(" close=")" separator=",">
+                #{zzmm}
+            </foreach>
+        </if>
+
+        <if test="mz != null and mz.size()>0">
+            and us.mz in
+            <foreach collection="mz" item="mz" index="index" open="(" close=")" separator=",">
+                #{mz}
+            </foreach>
+        </if>
+
+        <if test="pxpy_year !=null or pxpy_level !=null  or (pxpy_type != null and pxpy_type.size()>0)">
+            and us.RYBM in
+            (
+            select pxry.USERID from DJ_DNPXXX dnpx
+            inner join DJ_DNPXRY pxry on dnpx.ID=pxry.DNPXID
+            where 1=1
+            <if test="pxpy_year != null">
+                and date_format(dnpx.honourtime,'%Y') = #{pxpy_year}
+            </if>
+            <if test="pxpy_level != null">
+                and dnpx.honourlevel = #{pxpy_level}
+            </if>
+            <if test="pxpy_type != null and pxpy_type.size()>0">
+                and dnpx.honourtype in
+                <foreach collection="pxpy_type" item="pxpy_type" index="index" open="(" close=")" separator=",">
+                    #{pxpy_type}
+                </foreach>
+            </if>
+            )
+        </if>
+<!--        <if test="!islead">-->
+<!--            and usfb.leadtype != 1-->
+<!--        </if>-->
+        <if test="sfzyxq != null">
+            <if test="sfzyxq == 1">
+                and jlcf.USERID is not null
+            </if>
+            <if test="sfzyxq == 0">
+                and jlcf.USERID is null
+            </if>
+        </if>
+        order by CONVERT(us.XM USING gbk),us.RYJBXXBS
+    </select>
+
+    <select id="selectUserContactpoint" resultType="java.util.HashMap">
+         select ucp.RYBM,us.XM,z.DZZDM,z.DZZMC
+         from US_USERCONTACTPOINT ucp
+         inner join VM_RYJBXX us on ucp.RYBM=us.RYBM
+         inner join ZZ_ZZQKXX z on ucp.DZZDM=z.DZZDM
+         where 1=1 and ucp.RYBM=#{rybm}
+         order by z.DZZDM
+    </select>
+
+    <select id="getZZZD_ZZQK_Name" resultType="java.util.HashMap">
+      select BM,HZMC from ZZZD_ZZQK
+      where BM= #{bm,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectUserListByName" resultType="java.util.HashMap">
+        select us.USERTYPE,us.RYJBXXBS,us.RYBM,us.XM,us.SZDZBDM,us.RYZT,us.SQRDRQ,
+        us.ZWMC,us.DNZWMC,us.XJSZWMC,us.XB,us.JG,us.MZ,us.CSRQ,us.XL,us.SFZH,
+        p.DZZMC,usfb.ISSTUDENT
+        from VM_RYJBXX us -- 视图
+        inner join ZZ_ZZQKXX p on us.szdzbdm=p.dzzdm -- 党组织信息
+        left join RS_RYJBXXFB usfb on us.RYBM=usfb.RYBM
+        where 1=1
+        <if test="userNameList != null and userNameList.size()>0">
+            and concat(us.XM,p.DZZMC) in
+            <foreach collection="userNameList" item="name" index="index" open="(" close=")" separator=",">
+                #{name}
+            </foreach>
+        </if>
+        order by CONVERT(us.XM USING gbk),us.RYJBXXBS
+    </select>
+
+    <select id="selectUserInfo" resultType="com.px.partybuild.vo.PartyUserInfoVo">
+        select us.USERTYPE,us.RYJBXXBS,us.RYBM,us.XM,us.SZDZBDM,us.RYZT,
+        us.ZWMC,us.XJSZWMC,us.XB,us.JG,us.MZ,us.CSRQ,us.XL,us.SFZH,
+        p.DZZMC,
+        ryzt.HZMC as ryztmc,
+        xb.HZMC as xbmc,mz.HZMC as mzmc,xl.HZMC as xlmc,jszw.HZMC as jszwmc,
+        userinfo.USERNAME as mobile,
+        dj.JRZGZZRQ as rdsj,
+        dj.ZZRQ as zzsj,
+        usfb.NL as age,
+        uszw.DNZW as dnzw,
+        djfb.SFLDDY,
+        djfb.SFSLDY,
+        usfb.isStudent,
+        usfb.partyDuesStartMonth
+        from vm_ryjbxx_all us -- 视图
+        left join RS_RYJBXXFB usfb on us.RYBM=usfb.RYBM
+        inner join ZZ_ZZQKXX p on us.szdzbdm=p.dzzdm -- 党组织信息
+        left join ZZ_ZZQKXXFB fb on p.DZZDM=fb.DZZDM
+        left join Zzzd_ryzt ryzt on us.ryzt=ryzt.bm -- 人员状态
+        left join zd_xbm xb on us.xb=xb.bm -- 性别
+        left join zd_mzdm mz on us.mz=mz.bm -- 民族
+        left join zd_whcddm1 xl on us.xl=xl.bm -- 学历
+        left join zd_zyjszwdm jszw on us.xjszwmc=jszw.bm -- 技术专业职务
+        left join CF_USERS userinfo on us.rybm=userinfo.USERID
+        left join ZZ_DJXX dj on us.RYBM=dj.RYBM
+        left join ZZ_DJXXFB djfb on us.RYBM = djfb.RYBM
+        left join vw_partyduty uszw on us.rybm=uszw.rybm -- 党内职务名称
+        where 1=1 and us.RYBM=#{rybm}
+    </select>
+
+    <select id="selectUserLeaderTotalList" resultType="com.px.partybuild.vo.UserLeaderTotalVo">
+        select DICKEY as leaderType,
+        d.DICVALUE as leaderTypeName,
+        d.RYBM as rybm,
+        d.XM as xm,
+        ifnull(t.count, 0) as count,
+        '1次/季' as totalTypeName,
+        1 as totalType,
+        1 as baseCount
+        from (
+        select DICTYPEKEY,DICKEY,DICVALUE,RYBM,XM,XMPY,SZDZBDM
+        from CF_DICTIONARY,
+        VM_RYJBXX
+        where DICTYPEKEY = 'leaderType'
+        and DICKEY in (1, 3)
+        <if test="rybm != null and rybm != ''">
+            and RYBM = #{rybm}
+        </if>
+        ) d
+        left join (select u.USERCODE,u.LEADERTYPE,count(*) as count
+        from US_USERLEADER U
+        where 1 = 1
+        <if test="rybm != null and rybm != ''">
+            and u.USERCODE = #{rybm}
+        </if>
+        and date_format(LEADERTIME,'%Y') = #{year}
+        and QUARTER(LEADERTIME) = #{quarter}
+        group by u.USERCODE,u.LEADERTYPE
+        ) t on d.dickey = t.LEADERTYPE and d.RYBM = t.USERCODE
+        union
+        select dickey as LEADERTYPE,
+        d.DICVALUE as LEADERTYPENAME,
+        d.RYBM,
+        d.XM,
+        ifnull(t.count, 0) as COUNT,
+        '1次/年' as totalTypeName,
+        2 as totalType,
+        1 as baseCount
+        from (select DICTYPEKEY,DICKEY,DICVALUE,RYBM,XM,XMPY,SZDZBDM
+        from CF_DICTIONARY,
+        VM_RYJBXX
+        where DICTYPEKEY = 'leaderType'
+        and DICKEY in (2, 4, 5, 7, 8)
+        <if test="rybm != null and rybm != ''">
+            and RYBM = #{rybm}
+        </if>
+        ) d
+        left join (select u.USERCODE,u.LEADERTYPE,count(*) as count
+        from US_USERLEADER U
+        where 1 = 1
+        <if test="rybm != null and rybm != ''">
+            and u.USERCODE = #{rybm}
+        </if>
+        and date_format(LEADERTIME,'%Y') = #{year}
+        group by u.USERCODE,u.LEADERTYPE
+        ) t on d.dickey = t.LEADERTYPE and d.RYBM = t.USERCODE
+        union -- 落实联系点制度（直属机关党委2次/年，其他党委4次/年）
+        select dickey as LEADERTYPE,
+        d.DICVALUE as LEADERTYPENAME,
+        d.RYBM,
+        d.XM,
+        ifnull(t.count, 0) as COUNT,
+        (case when dw.DZZDM='001091209013' and dw2.zzlb not in('100') then '2次/年' else '4次/年' end)as totalTypeName,
+        (case when dw.DZZDM='001091209013' and dw2.zzlb not in('100') then 3 else 4 end) as totalType,
+        (case when dw.DZZDM='001091209013' and dw2.zzlb not in('100') then 2 else 4 end) as baseCount
+        from (select DICTYPEKEY,DICKEY,DICVALUE,RYBM,XM,XMPY,SZDZBDM
+        from CF_DICTIONARY,
+        VM_RYJBXX
+        where DICTYPEKEY = 'leaderType'
+        and DICKEY in (6)
+        <if test="rybm != null and rybm != ''">
+            and RYBM = #{rybm}
+        </if>
+        ) d
+        inner join ZZ_ZZQKXX dw on SUBSTR(d.SZDZBDM,1,12)=dw.DZZDM
+        left join (
+        select zz2.DZZDM,zz2.DZZMC,fb2.ZZLB from ZZ_ZZQKXX zz2 inner join ZZ_ZZQKXXFB fb2 on zz2.DZZDM=fb2.DZZDM
+        ) dw2 on SUBSTR(d.SZDZBDM,1,15)=dw2.DZZDM
+        left join (select u.USERCODE,u.LEADERTYPE,count(*) as count
+        from US_USERLEADER U
+        where 1 = 1
+        <if test="rybm != null and rybm != ''">
+            and u.USERCODE = #{rybm}
+        </if>
+        and date_format(LEADERTIME,'%Y') = #{year}
+        group by u.USERCODE,u.LEADERTYPE
+        ) t on d.dickey = t.LEADERTYPE and d.RYBM = t.USERCODE
+    </select>
+
+    <update id="deleteZzRyjbxx" parameterType="java.lang.String">
+         delete  from zz_ryjbxx  where RYBM = #{userCode}
+    </update>
+    <update id="deleteDjxx" parameterType="java.lang.String">
+         delete  from zz_djxx  where RYBM = #{userCode}
+    </update>
+    <update id="deleteGgZgjbxx" parameterType="java.lang.String">
+         delete  from gg_zgjbxx  where RYBM = #{userCode}
+    </update>
+    <update id="deleteRyjbxxfb" parameterType="java.lang.String">
+         delete  from rs_ryjbxxfb  where RYBM = #{userCode}
+    </update>
+    <update id="deleteUserRole" parameterType="java.lang.String">
+         delete  from cf_userroles  where USERID = #{userCode}
+    </update>
+    <update id="deleteUser" parameterType="java.lang.String">
+         delete  from cf_users  where USERID = #{userCode}
+    </update>
+
+    <insert id="batchInsertUserPartyOfMonth">
+        delete from us_party_month where yearMonth = #{yearMonth};
+
+        insert ignore into us_party_month (yearMonth, userCode, partyCode
+        )
+        select #{yearMonth},um.userCode,um.partyCode_by_yearMonth from (
+                          select us.RYBM                                                                  as userCode,
+                                 case when pc.oldPartyCode is not null then pc.oldPartyCode else us.SZDZBDM end as partyCode_by_yearMonth
+                          from zz_ryjbxx us
+                                   inner join zz_djxx zd on us.RYBM = zd.RYBM
+                                   left join (select chg.RYBM, min(chg.newDzzdm) as newPartyCode, min(chg.SZDZB) as oldPartyCode
+                                              from zz_zzgxxx chg
+                                                       inner join (select RYBM, min(cast(chg.ZLZBRQ as signed)) as maxChangeDate
+                                                                   from zz_zzgxxx chg
+                                                                   where chg.newDzzdm is not null
+                                                                     and chg.userPartyChangeStatus = 2
+                                                                     and cast(substr(chg.ZLZBRQ, 1, 6) as signed) > #{yearMonth}
+                                                                   group by RYBM) m on chg.RYBM = m.RYBM and chg.ZLZBRQ = m.maxChangeDate
+                                              group by chg.RYBM) pc on us.RYBM = pc.RYBM
+                                   inner join rs_ryjbxxfb fb on us.RYBM = fb.RYBM
+                          where us.RYZT in ('2', '3') and cast(substr(zd.JRZGZZRQ, 1, 6) as signed) <![CDATA[ <= ]]> #{yearMonth}
+                                and (fb.ISARCHIVE is null
+                                         or fb.ISARCHIVE = 0
+                                         or (fb.ISARCHIVE = 1 and cast(substr(DATE_FORMAT(fb.archiveDate, '%Y%m%d'), 1, 6) as signed) <![CDATA[ >= ]]> #{yearMonth}))
+                      ) um
+                          left join us_party_month upm on um.userCode=upm.userCode and upm.yearMonth=#{yearMonth}
+        where upm.userCode is null
+
+    </insert>
+
+    <update id="batchUpdateUserPartyOfMonth">
+        update us_party_month upm inner join (
+            select us.RYBM as userCode,
+            case when cast(substr(zd.JRZGZZRQ, 1, 6) as signed) <![CDATA[ > ]]> #{yearMonth} then ''
+                 when pc.oldPartyCode is not null then pc.oldPartyCode else us.SZDZBDM end as partyCode_by_yearMonth
+            from zz_ryjbxx us
+            inner join zz_djxx zd on us.RYBM = zd.RYBM
+            left join (select chg.RYBM, min(chg.newDzzdm) as newPartyCode, min(chg.SZDZB) as oldPartyCode
+                 from zz_zzgxxx chg
+                 inner join (select RYBM, min(cast(chg.ZLZBRQ as signed)) as maxChangeDate
+                 from zz_zzgxxx chg
+                 where chg.newDzzdm is not null
+                 and chg.userPartyChangeStatus = 2
+                 and cast(substr(chg.ZLZBRQ, 1, 6) as signed) > #{yearMonth}
+                 group by RYBM) m on chg.RYBM = m.RYBM and chg.ZLZBRQ = m.maxChangeDate
+                 group by chg.RYBM) pc on us.RYBM = pc.RYBM
+            inner join rs_ryjbxxfb fb on us.RYBM = fb.RYBM
+            where us.RYZT in ('2', '3') and zd.JRZGZZRQ is not null
+            ) um
+        on upm.userCode = um.userCode and upm.yearMonth=#{yearMonth}
+            set upm.partyCode=um.partyCode_by_yearMonth
+        where 1=1;
+    </update>
+</mapper>

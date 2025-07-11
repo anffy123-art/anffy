@@ -1,0 +1,51 @@
+<div class="modal" role="dialog" style="min-height:500px;" tabindex="-1">
+    <div class="modal-dialog" role="document" style="width:40%">
+        <div class="card">
+            <div class="header">
+                <button class="close" ng-click="$hide()" type="button">&times;</button>
+                <h3 class="modal-title">{{title}}</h3>
+            </div>
+            <div class="dj-body" activate-input activate-select>
+                <form role="form"
+                      name="modalForm">
+                    <div class="dj-formtable">
+                        <table class="dj-table">
+                            <tr>
+                                <th>年度</th>
+                                <td colspan="3"
+                                    ng-class="{ 'focused error' : this.modalForm.year.$invalid &&  this.modalForm.$submitted}">
+                                    <select class="form-control show-tick" name="year" ng-model="modalData.year"
+                                            ng-options="op.val as op.val for op in ndList" required>
+                                    </select>
+                                    <label class="error"
+                                           ng-show="modalForm.year.$invalid &&  modalForm.$submitted">必填.</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>第几期</th>
+                                <td colspan="3"
+                                    ng-class="{ 'focused error' : this.modalForm.num.$invalid &&  this.modalForm.$submitted}">
+                                    <select class="form-control show-tick" name="num" ng-model="modalData.num"
+                                            ng-options="op.val as op.val for op in numList" required>
+                                    </select>
+                                    <label class="error"
+                                           ng-show="modalForm.num.$invalid &&  modalForm.$submitted">必填.</label>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="form_foot" style="text-align:center">
+                            <button class="btn btn-danger" id="submit" ng-click="submitForm(modalForm.$valid)"
+                                    style="padding:4px 20px 4px 20px"
+                                    type="submit">保存
+                            </button>
+                            <button class="btn btn-default" id="cancel" ng-click="$hide()"
+                                    style="padding:4px 20px 4px 20px"
+                                    type="button">取消
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

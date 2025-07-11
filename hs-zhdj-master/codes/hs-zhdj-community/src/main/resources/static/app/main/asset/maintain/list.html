@@ -1,0 +1,188 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="treeparams.selectdzzdm" data-selectdzzmc="treeparams.selectdzzmc"
+             data-defaultselected="treeparams.defaultselected" data-isunfold="treeparams.isunfold"></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="treeparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="treeparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>资产编号</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="no" class="form-control" type="text"
+                                                       ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.no"
+                                                       placeholder=""/>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>资产名称</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="name" class="form-control" type="text"
+                                                       ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.name"
+                                                       placeholder=""/>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix form-inline" ng-show="isShow">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>维修开始时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="beginDate" class="form-control" ng-change="search()"
+                                                       autocomplete="off"
+                                                       autoclose="true"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       ng-model="selectparams.beginDate"
+                                                       placeholder="" bs-datepicker/>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>维修结束时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="endDate" class="form-control" ng-change="search()"
+                                                       autocomplete="off"
+                                                       autoclose="true"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       ng-model="selectparams.endDate"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <span class="moreSpan" ng-click="isShowClick()"
+                                      style='padding-right:1em;cursor:pointer;'>{{moreTxt}}<i class="material-icons"
+                                                                                              style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>
+                                <button class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <button class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button role-permission-code="assetMaintainList.btnAdd" class="btn btn-default1"
+                                    ng-click="add()">新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>资产编号</th>
+                                    <th>资产名称</th>
+                                    <th>型号</th>
+                                    <th>维修单位</th>
+                                    <th>维修申请人</th>
+                                    <th>维修日期</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">
+                                        {{selectparams.pageSize*(selectparams.pageIndex-1)+$index+1}}
+                                    </td>
+                                    <td>{{it.NO}}</td>
+                                    <td>{{it.NAME}}</td>
+                                    <td>{{it.MODEL}}</td>
+                                    <td>{{it.DZZMC}}</td>
+                                    <td>{{it.AMTUSERNAME}}</td>
+                                    <td>{{it.MAINTAINTIME | date:'yyyy-MM-dd'}}</td>
+                                </tr>
+                                <tr ng-if="dataList.length<=0">
+                                    <td colspan="15" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="zero-target-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList" zero-table-height>
+                                    <td class="text-center">
+                                        <button class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="edit(it.MAINTAINID)"
+                                                title="修改">
+                                            修改
+                                        </button>
+                                        <button class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="show(it.MAINTAINID,it.ASSETID)"
+                                                title="详情">
+                                            详情
+                                        </button>
+                                        <!--<button class="btn td-btn bg-pink waves-effect"
+                                                ng-click="delete(it.MAINTAINID)" title="删除">
+                                            删除
+                                        </button>-->
+                                    </td>
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="1" style="text-align:center">无</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageIndex" data-pagesize="selectparams.pageSize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,136 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="dj-list-content content1">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>计划名称</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="name" class="form-control" type="text"
+                                                       ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.name"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>完成开始日期</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="endTimeStart"
+                                                       ng-model="selectparams.endTimeStart" ng-change="search()"
+                                                       class="form-control"
+                                                       format="yyyy-mm-dd"
+                                                       data-min-view="3" bs-datetimepicker
+                                                       ng-required="true"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>完成结束日期</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input type="text" name="endTimeEnd" ng-model="selectparams.endTimeEnd"
+                                                       ng-change="search()"
+                                                       class="form-control"
+                                                       format="yyyy-mm-dd"
+                                                       data-min-view="3" bs-datetimepicker
+                                                       ng-required="true"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <!--<span class="moreSpan" ng-click="isShowClick()" style='padding-right:2em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>-->
+                                <button class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <button class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body" style="min-height:400px;">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>计划名称</th>
+                                    <th>学习计划类型</th>
+                                    <th>状态</th>
+                                    <th>完成日期</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">
+                                        {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                    </td>
+                                    <td>{{it.name}}</td>
+                                    <td class="text-center">{{it.typeName}}</td>
+                                    <td class="text-center">{{it.state==1?'已接收':'未接收'}}</td>
+                                    <td class="text-center">{{it.endTime | date:'yyyy-MM-dd'}}</td>
+                                </tr>
+                                <tr ng-if="dataList.length<=0">
+                                    <td colspan="10" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="zero-target-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList" zero-table-height>
+                                    <td class="text-center">
+                                        <button ng-if="it.state!=1"
+                                                role-permission-code="learningPlanReceiveList.Receive"
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="receiveData(it.id)"
+                                                title="接收">
+                                            接收
+                                        </button>
+                                        <button class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="detailsData(it.id)"
+                                                title="查看">
+                                            查看
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="1" style="text-align:center">无</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

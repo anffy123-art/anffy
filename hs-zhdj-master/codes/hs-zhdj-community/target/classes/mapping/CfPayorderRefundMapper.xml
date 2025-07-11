@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.CfPayorderRefundMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.CfPayorderRefund">
+    <id column="refundId" jdbcType="VARCHAR" property="refundId" />
+    <result column="payOrderId" jdbcType="VARCHAR" property="payOrderId" />
+    <result column="refundNo" jdbcType="VARCHAR" property="refundNo" />
+    <result column="refundTime" jdbcType="TIMESTAMP" property="refundTime" />
+    <result column="refundAmount" jdbcType="DECIMAL" property="refundAmount" />
+    <result column="refundState" jdbcType="INTEGER" property="refundState" />
+    <result column="queryTime" jdbcType="TIMESTAMP" property="queryTime" />
+    <result column="refundFallMessage" jdbcType="VARCHAR" property="refundFallMessage" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="modifyTime" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="modifyUserId" jdbcType="VARCHAR" property="modifyUserId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    refundId, payOrderId, refundNo, refundTime, refundAmount, refundState, queryTime, 
+    refundFallMessage, createTime, createUserId, modifyTime, modifyUserId
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.CfPayorderRefundExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cf_payorder_refund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cf_payorder_refund
+    where refundId = #{refundId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cf_payorder_refund
+    where refundId = #{refundId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.CfPayorderRefundExample">
+    delete from cf_payorder_refund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.CfPayorderRefund">
+    insert into cf_payorder_refund (refundId, payOrderId, refundNo, 
+      refundTime, refundAmount, refundState, 
+      queryTime, refundFallMessage, createTime, 
+      createUserId, modifyTime, modifyUserId
+      )
+    values (#{refundId,jdbcType=VARCHAR}, #{payOrderId,jdbcType=VARCHAR}, #{refundNo,jdbcType=VARCHAR}, 
+      #{refundTime,jdbcType=TIMESTAMP}, #{refundAmount,jdbcType=DECIMAL}, #{refundState,jdbcType=INTEGER}, 
+      #{queryTime,jdbcType=TIMESTAMP}, #{refundFallMessage,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.CfPayorderRefund">
+    insert into cf_payorder_refund
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="refundId != null">
+        refundId,
+      </if>
+      <if test="payOrderId != null">
+        payOrderId,
+      </if>
+      <if test="refundNo != null">
+        refundNo,
+      </if>
+      <if test="refundTime != null">
+        refundTime,
+      </if>
+      <if test="refundAmount != null">
+        refundAmount,
+      </if>
+      <if test="refundState != null">
+        refundState,
+      </if>
+      <if test="queryTime != null">
+        queryTime,
+      </if>
+      <if test="refundFallMessage != null">
+        refundFallMessage,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="createUserId != null">
+        createUserId,
+      </if>
+      <if test="modifyTime != null">
+        modifyTime,
+      </if>
+      <if test="modifyUserId != null">
+        modifyUserId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="refundId != null">
+        #{refundId,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrderId != null">
+        #{payOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="refundNo != null">
+        #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundTime != null">
+        #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundAmount != null">
+        #{refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundState != null">
+        #{refundState,jdbcType=INTEGER},
+      </if>
+      <if test="queryTime != null">
+        #{queryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundFallMessage != null">
+        #{refundFallMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null">
+        #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.CfPayorderRefundExample" resultType="java.lang.Long">
+    select count(*) from cf_payorder_refund
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cf_payorder_refund
+    <set>
+      <if test="record.refundId != null">
+        refundId = #{record.refundId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payOrderId != null">
+        payOrderId = #{record.payOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundNo != null">
+        refundNo = #{record.refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundTime != null">
+        refundTime = #{record.refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundAmount != null">
+        refundAmount = #{record.refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundState != null">
+        refundState = #{record.refundState,jdbcType=INTEGER},
+      </if>
+      <if test="record.queryTime != null">
+        queryTime = #{record.queryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundFallMessage != null">
+        refundFallMessage = #{record.refundFallMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUserId != null">
+        createUserId = #{record.createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifyTime != null">
+        modifyTime = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyUserId != null">
+        modifyUserId = #{record.modifyUserId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cf_payorder_refund
+    set refundId = #{record.refundId,jdbcType=VARCHAR},
+      payOrderId = #{record.payOrderId,jdbcType=VARCHAR},
+      refundNo = #{record.refundNo,jdbcType=VARCHAR},
+      refundTime = #{record.refundTime,jdbcType=TIMESTAMP},
+      refundAmount = #{record.refundAmount,jdbcType=DECIMAL},
+      refundState = #{record.refundState,jdbcType=INTEGER},
+      queryTime = #{record.queryTime,jdbcType=TIMESTAMP},
+      refundFallMessage = #{record.refundFallMessage,jdbcType=VARCHAR},
+      createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      createUserId = #{record.createUserId,jdbcType=VARCHAR},
+      modifyTime = #{record.modifyTime,jdbcType=TIMESTAMP},
+      modifyUserId = #{record.modifyUserId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.CfPayorderRefund">
+    update cf_payorder_refund
+    <set>
+      <if test="payOrderId != null">
+        payOrderId = #{payOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="refundNo != null">
+        refundNo = #{refundNo,jdbcType=VARCHAR},
+      </if>
+      <if test="refundTime != null">
+        refundTime = #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundAmount != null">
+        refundAmount = #{refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundState != null">
+        refundState = #{refundState,jdbcType=INTEGER},
+      </if>
+      <if test="queryTime != null">
+        queryTime = #{queryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundFallMessage != null">
+        refundFallMessage = #{refundFallMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        createUserId = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modifyTime = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null">
+        modifyUserId = #{modifyUserId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where refundId = #{refundId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.CfPayorderRefund">
+    update cf_payorder_refund
+    set payOrderId = #{payOrderId,jdbcType=VARCHAR},
+      refundNo = #{refundNo,jdbcType=VARCHAR},
+      refundTime = #{refundTime,jdbcType=TIMESTAMP},
+      refundAmount = #{refundAmount,jdbcType=DECIMAL},
+      refundState = #{refundState,jdbcType=INTEGER},
+      queryTime = #{queryTime,jdbcType=TIMESTAMP},
+      refundFallMessage = #{refundFallMessage,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      modifyTime = #{modifyTime,jdbcType=TIMESTAMP},
+      modifyUserId = #{modifyUserId,jdbcType=VARCHAR}
+    where refundId = #{refundId,jdbcType=VARCHAR}
+  </update>
+</mapper>

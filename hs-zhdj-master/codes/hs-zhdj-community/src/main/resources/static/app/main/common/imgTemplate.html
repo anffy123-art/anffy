@@ -1,0 +1,29 @@
+<div class="img-list">
+    <div class="img-item" ng-repeat="it in ngModel.items">
+        <img ng-src="../../api/home/showImg/{{it.fileid}}" data-toggle="modal"
+             data-target="#showBigImg_{{ngModel.selectdata.FileRefID}}" ng-click="downfile(it.fileid)"/>
+        <i class="material-icons remove-icon" ng-if="ngModel.readonly" ng-click="delfile(it.fileid)">remove_circle_outline</i>
+    </div>
+    <i class="material-icons dj-add" ng-class="{'dj-add-pd':ngModel.items.length>0}" ng-click="addFile()" ng-if="ngModel.readonly">add_circle_outline</i>
+</div>
+<!-- 查看大图-->
+<div class="modal fade text-center" id="showBigImg_{{ngModel.selectdata.FileRefID}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: auto;">
+        <div class="card" style="height: 780px;overflow:hidden;">
+            <div style="display: flex; float: right;">
+                <button class="close" ng-click="ngModel.img.rotate=ngModel.img.rotate+90">
+                    <span style="font-size: 23px;padding-right: 10px;padding-top: 4px;"
+                          class="glyphicon glyphicon-repeat"></span>
+                </button>
+                <button style="font-size: 45px;padding-right: 10px;" type="button" class="close" data-dismiss="modal" >
+                    &times;
+                </button>
+            </div>
+            <div class="body">
+                <img ng-src="../../api/home/showImg/{{ngModel.img.showFileId}}"
+                     style="transform:rotate({{ngModel.img.rotate}}deg);-webkit-transform:rotate({{ngModel.img.rotate}}deg);-moz-transform:rotate({{ngModel.img.rotate}}deg);height: 750px"
+                     ng-click="ngModel.img.rotate=ngModel.img.rotate+90"/>
+            </div>
+        </div>
+    </div>
+</div>

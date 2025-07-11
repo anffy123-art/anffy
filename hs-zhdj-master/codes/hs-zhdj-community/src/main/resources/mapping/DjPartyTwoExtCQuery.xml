@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DjPartyTwoExtCQuery">
+    <select id="resultmgListQuery" resultType="java.util.Map">
+        select DJ_RESULTMGID,PARTYNAME,PARTYCODE,RESULTNAME,substr(SCORETEXT,1,10) as scoreText,SCORETIME from dj_resultmg
+        where OPERATESTATE in ('A','M')
+        <if test="partyCode!='' and partyCode!=null">
+            and PARTYCODE like concat('%',#{partyCode},'%')
+        </if>
+        <if test="name!='' and name!=null">
+            and RESULTNAME like concat('%',#{name},'%')
+        </if>
+        <if test="beginTime!='' and beginTime != null">
+            and SCORETIME <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != '' and endTime != null">
+            and SCORETIME <![CDATA[ <= ]]> date_format(#{endTime},'%Y%m%d')
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(PARTYCODE,1,12) in(select DZZDM from ZZ_DZZFBQK where ZZFB= #{zzfbType})
+        </if>
+        order by CREATETIME desc
+    </select>
+
+    <select id="DjBrandListQuery" resultType="java.util.Map">
+        select bd.BRANDID,bd.PARTYNAME,bd.PARTYCODE,bd.PBRANDNAME,bd.CREATTYPE,bd.BRANDTIME,FILEID,FILENAME from dj_brand bd
+        left join CF_FILE fl on bd.BRANDID=fl.FILEREFID
+        where bd.OPERATESTATE in ('A','M')
+        <if test="partyCode!='' and partyCode!=null">
+            and bd.PARTYCODE like concat('%',#{partyCode},'%')
+        </if>
+        <if test="pbrandName !='' and pbrandName !=null">
+            and bd.PBRANDNAME like concat('%',#{pbrandName},'%')
+        </if>
+        <if test="creatType !=null">
+            and bd.CREATTYPE = #{creatType}
+        </if>
+        <if test="beginTime!='' and beginTime != null">
+            and bd.BRANDTIME <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != '' and endTime != null">
+            and bd.BRANDTIME <![CDATA[ <= ]]> date_format(#{endTime},'%Y%m%d')
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(bd.PARTYCODE,1,12) in(select DZZDM from ZZ_DZZFBQK where ZZFB= #{zzfbType})
+        </if>
+        order by bd.CREATETIME desc
+    </select>
+
+    <select id="DjPartyActivityRoomListQuery" resultType="java.util.Map">
+        select PARTYACTIVITYROOMID,PARTYNAME,PARTYCODE,ADDR,PCOUNT,USERANGE,USEAREA from dj_partyActivityRoom
+        where OperateState in ('A','M')
+        <if test="partyCode!='' and partyCode!=null">
+            and PARTYCODE like concat('%',#{partyCode},'%')
+        </if>
+        <if test="addr !='' and addr !=null">
+            and ADDR like concat('%',#{addr},'%')
+        </if>
+        <if test="useRange !=null">
+            and USERANGE = #{useRange}
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(PARTYCODE,1,12) in(select DZZDM from ZZ_DZZFBQK where ZZFB= #{zzfbType})
+        </if>
+        order by CREATETIME desc
+    </select>
+
+    <select id="DjWxGroupListQuery" resultType="java.util.Map">
+        select WXGROUPID,PARTYNAME,PARTYCODE,GROUPNAME,BUILDTIME,IMPLATFORM,GROUPERNAME,SCALENUMBER,UPDATETIME,
+        (select count(1) from dj_wxGroupUser gu where gu.WXGROUPID=g.WXGROUPID) as groupCount
+        from dj_wxGroup g
+        where OperateState in ('A','M')
+        <if test="partyCode!='' and partyCode!=null">
+            and PARTYCODE like concat('%',#{partyCode},'%')
+        </if>
+        <if test="partyName !='' and partyName !=null">
+            and PARTYNAME like concat('%',#{partyName},'%')
+        </if>
+        <if test="groupName !='' and groupName !=null">
+            and GROUPNAME like concat('%',#{groupName},'%')
+        </if>
+        <if test="implatform !=null">
+            and IMPLATFORM = #{implatform}
+        </if>
+        <if test="grouperName !='' and grouperName !=null">
+            and GROUPERNAME like concat('%',#{grouperName},'%')
+        </if>
+        <if test="beginTime!='' and beginTime != null">
+            and BUILDTIME <![CDATA[ >= ]]> date_format(#{beginTime},'%Y%m%d')
+        </if>
+        <if test="endTime != '' and endTime != null">
+            and BUILDTIME <![CDATA[ <= ]]> date_format(#{endTime},'%Y%m%d')
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(partyCode,1,12) in(select DZZDM from ZZ_DZZFBQK where ZZFB= #{zzfbType})
+        </if>
+        <if test="scaleBegin != null">
+            and SCALENUMBER <![CDATA[ >= ]]> #{scaleBegin}
+        </if>
+        <if test="scaleEnd != null">
+            and SCALENUMBER <![CDATA[ <= ]]> #{scaleEnd}
+        </if>
+
+    </select>
+
+    <select id="DjWxGroupUserListQuery" resultType="java.util.Map">
+        select WXGROUPUSERID,WXGROUPID,USERNAME,SEX,MOBILE
+        from dj_wxGroupUser
+        where OPERATESTATE in ('A','M')
+        <if test="wxGroupId!='' and wxGroupId!=null">
+            and WXGROUPID = #{wxGroupId}
+        </if>
+
+    </select>
+
+
+    <select id="selectBrandCount" resultType="java.lang.Long">
+        select count(1) as count from dj_brand bd
+        where bd.OPERATESTATE in ('A','M')
+        <if test="partyCode!='' and partyCode!=null">
+            and bd.PARTYCODE like concat('%',#{partyCode},'%')
+        </if>
+        <if test="creatType !=null">
+            and bd.CREATTYPE = #{creatType}
+        </if>
+    </select>
+
+    <insert id="batchInsertWxgroup">
+        insert into DJ_WXGROUP(WXGROUPID, PARTYNAME, PARTYCODE, GROUPNAME, BUILDTIME, IMPLATFORM, MIRROR, GROUPERNAME, GROUPERDUTY, GROUPERTEL, MAINABLE, MIRRORWAY, CREATETIME, CREATEUSERID, CREATEUSERNAME,  UPDATETIME, UPDATEUSERID, UPDATEUSERNAME,OPERATETIME, OPERATESTATE,SYNCSTATE, SCALENUMBER, MSGTYPE)
+        <foreach collection="wxgroupList" item="c" separator=" union all ">
+            select #{c.wxgroupid},#{c.partyname},#{c.partycode},#{c.groupname},#{c.buildtime},#{c.implatform},#{c.mirror},#{c.groupername},#{c.grouperduty},#{c.groupertel},#{c.mainable},#{c.mirrorway},#{c.createtime},#{c.createuserid},#{c.createusername},#{c.updatetime},#{c.updateuserid},#{c.updateusername},#{c.operatetime},#{c.operatestate},#{c.syncstate},#{c.scalenumber},#{c.msgtype}  FROM DUAL
+        </foreach>
+    </insert>
+
+    <select id="selectGdwydqkList" resultType="java.util.Map">
+        select yd.*,date_format(NY,'%Y%m') as yearmonth from DJ_GDWYDQK yd
+        left join AD_PARTYGROUP pg on yd.DZZMC = pg.NAME
+        where OPERATESTATE in ('A','M')
+        <if test="dzzmc !='' and dzzmc !=null">
+            and yd.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="yearmonth !='' and yearmonth !=null">
+            and   #{yearmonth}= date_format(yd.NY,'%Y%m')
+        </if>
+        <if test="groupId !='' and groupId !=null">
+            and pg.ID like concat('%',#{groupId},'%')
+        </if>
+         order by yd.NY desc,pg.ID,pg.SORT
+    </select>
+
+    <insert id="batchInsertGdwydqk">
+        insert into DJ_GDWYDQK(ID, DZZMC, NY, DWZRS, DWGZZRS, DZBSJYDL, DYYDL, DZLV, DDLDF, LDBZYDL, PJDZL, DDL, YDLV, YDL, DZL, PJYDL, ORDERBY,CREATEUSERID, CREATEUSERNAME, OPERATETIME, OPERATESTATE, SYNCSTATE)
+        <foreach collection="gdwydqkList" item="c" separator=" union all ">
+            select #{c.id},#{c.dzzmc},#{c.ny},#{c.dwzrs},#{c.dwgzzrs},#{c.dzbsjydl},#{c.dyydl},#{c.dzlv},#{c.ddldf},#{c.ldbzydl},#{c.pjdzl},#{c.ddl},#{c.ydlv},#{c.ydl},#{c.dzl},#{c.pjydl},#{c.orderby},#{c.createuserid},#{c.createusername},#{c.operatetime},#{c.operatestate},#{c.syncstate}  FROM DUAL
+        </foreach>
+    </insert>
+</mapper>

@@ -1,0 +1,113 @@
+<div class="f-home-tabs">
+    <!-- Top Bar -->
+    <div class="flex-header">
+        <div class="nav-title">
+            <div>
+                <!--<img style="width:24px;height:24px;" src="images/sys-logo2.png"/>-->
+            </div>
+<!--            <div style="font-size:20px">{{sysName}}</div>-->
+            <img style="width:152px;height:36px;" src="images/titleLog.png" />
+        </div>
+        <div class="nav-user">
+            <div>
+                <select ng-model="roleList.selectedId" class="form-control" style="background-color: transparent;color: #fff;border-color: #fff;"
+                         ng-options="type.roleid as type.rolename for type in roleList">
+                </select>
+              </select>
+              <style>
+                .form-control option {
+                    color: #333;
+                }
+            </style>
+            </div>
+            <div>
+                <!--<a ng-click="logout()" class="dropdown-toggle" data-toggle="dropdown" role="button">-->
+                    <!--&lt;!&ndash;<img style="width:24px;height:24px;" src="images/logout.svg">&ndash;&gt;-->
+                    <!--<span class="icon iconfont">&#xe623;</span>-->
+                <!--</a>-->
+                <i ng-click="updatePwd()"  class="material-icons" style="float: left;margin-right: 7px;font-size: 20px; cursor:pointer;">lock_outline</i>
+                <a ng-click="logout()" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                    <i class="material-icons" style="float: left;margin-right: 7px;font-size: 20px;">power_settings_new</i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- #Top Bar -->
+    <div class="page_content" ng-class="{'sidebar-collapsed':!menuToggle,'sidebar-collapsed-back':menuToggle}">
+        <!-- Left Sidebar -->
+        <aside class="leftsidebar">
+            <!-- User Info -->
+            <!-- <div class="user-info">
+                <div class="toggle-user-info">
+                    <div class="image">
+                        <img ng-src="{{pictureurl}}" onerror="this.src='images/man.jpg'" width="48" height="48"
+                             alt="User"/>
+                    </div>
+                    <div class="info-container" style="display: none;">
+                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></div>
+                    </div>
+                    <div class="user-name1" ng-bind="User.name">
+                    </div>
+                </div>
+                <div class="btn-toggle">
+                    <a class="sidebar-icon" ng-click="toggleClick()">
+                        <i class="material-icons ng-scope">keyboard_arrow_left</i>
+                    </a>
+                </div>
+            </div> -->
+
+                <div class="mainmenu" ng-if="menuToggle">
+                    <!--<div class="header">-->
+                        <!--工作导航-->
+                    <!--</div>-->
+                    <div class="sidebar">
+                        <div class="menu">
+                            <ul class="list">
+                                <li ng-repeat="panel in panels" ng-include="'menuNodes.html'"
+                                    class="{{panel.childShow==1?'active':''}}"
+                                    >
+                                </li>
+                            </ul>
+                            <script type="text/ng-template" id="menuNodes.html">
+                                <a ng-if="panel.isblank!='1' && panel.name"
+                                   class="waves-effect  waves-block {{(panel.cNodes&&panel.cNodes.length>0)?(panel.childShow==0?'menu-toggle ':'menu-toggle toggled'):''}}"
+                                   ng-click="menutoggle(panel)"
+                                   bs-ui-sref="{{panel.name}}">
+                                    <i class="material-icons">{{panel.icon}}</i>
+                                    <span>{{panel.title}}</span>
+                                </a>
+                                <a ng-if="panel.isblank!='1' && !panel.name"
+                                   class="waves-effect waves-block {{(panel.cNodes&&panel.cNodes.length>0)?(panel.childShow==0?'menu-toggle':'menu-toggle toggled'):''}}"
+                                   ng-click="menutoggle(panel)">
+                                    <i class="material-icons">{{panel.icon}}</i>
+                                    <span>{{panel.title}}</span>
+                                </a>
+                                <a ng-if="panel.isblank=='1'"
+                                   class="waves-effect waves-block {{(panel.cNodes&&panel.cNodes.length>0)?(panel.childShow==0?'menu-toggle':'menu-toggle toggled'):''}}"
+                                   href="{{panel.url}}" target="_blank">
+                                    <span>{{panel.title}}</span>
+                                </a>
+                                <div ng-hide="panel.childShow==0" >
+                                    <ul class="ml-menu">
+                                        <li ng-repeat="panel in panel.cNodes" ng-include="'menuNodes.html'"
+                                            class="{{panel.childShow==1?'active':''}}"></li>
+                                    </ul>
+                                </div>
+                            </script>
+                        </div>
+                    </div>
+                </div>
+
+
+        </aside>
+        <!-- tabs content -->
+        <div class="content">
+            <div class="div-f" ng-controller="homeTabsCtrl">
+                <div class="div-tabs" bs-tabs data-template="home/tab.tpl.html" data-nav-class="nav-tabs nav-tabs-a"  bs-active-pane="tabs.activeTab">
+                    <div data-title="{{ tab.title }}" bs-pane-url panedata="tab" name="{{ tab.name }}" ng-repeat="tab in tabs" bs-tab-pane-heigth>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

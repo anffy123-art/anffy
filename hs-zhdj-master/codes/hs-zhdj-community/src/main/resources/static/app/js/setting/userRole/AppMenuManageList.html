@@ -1,0 +1,86 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px;min-width:1000px;">
+    <div class="modal-dialog" role="document">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div class="header">
+                <p>当前角色 ：{{roleInfo.roleName}}</p>
+                <div class="search-param-panel">
+                    <div class="search-input">
+                        <form class="form-horizontal">
+                            <div class="row clearfix form-inline">
+                                <div class="col-lg-5 col-md-5 col-sm-4 col-xs-5">
+                                    <label>菜单名称</label>
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-8 col-xs-7">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="modularname"
+                                                   ng-model="modularname"
+                                                   placeholder="请输入菜单名称"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="search-btn" style="width: 250px">
+                        <div>
+                            <button class="btn btn-primary" ng-click="selectpage()">查询</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="list-table-panel">
+                    <table class="table table-bordered table-hover tlist">
+                        <thead>
+                        <tr>
+                            <th class="col-md-3">菜单名称</th>
+                            <th class="col-md-2">菜单编号</th>
+                            <th class="col-md-2">是否权限</th>
+                            <th class="col-md-2">是否常用</th>
+                            <th class="col-md-3">按钮权限</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-center">
+                        <tr ng-repeat="modular in modularLists">
+                            <td>{{modular.MODULARNAME}}</td>
+                            <td>{{modular.MODULARNO}}</td>
+                            <td>
+                                <input type="checkbox" id="{{modular.MID}}_use_checkbox_{{$index+1}}"
+                                       class="filled-in chk-col-red" ng-checked="modular.ISUSE==1"
+                                       ng-click="changeIsUse(modular)"/>
+                                <label class="checkbox_lable" style="top:6px;"
+                                       for="{{modular.MID}}_use_checkbox_{{$index+1}}"></label>
+                            </td>
+                            <td>
+                                <input type="checkbox" id="{{modular.MID}}_commonuse_checkbox_{{$index+1}}"
+                                       class="filled-in chk-col-red" ng-checked="modular.ISCOMMONUSE==1" ng-disabled="modular.ISUSE!=1"
+                                       ng-click="changeIsCommonuse(modular)"/>
+                                <label class="checkbox_lable" style="top:6px;"
+                                       for="{{modular.MID}}_commonuse_checkbox_{{$index+1}}"></label>
+                            </td>
+                            <td>
+                                <div ng-repeat="btn in modular.childList" ng-click="changeIsUse(btn)">
+                                    <input type="checkbox" id="{{btn.MID}}_use_checkbox_{{$index+1}}"
+                                           class="filled-in chk-col-red" ng-checked="btn.ISUSE==1"/>
+                                    <label class="checkbox_lable" style="top:6px;"
+                                           for="{{btn.mid}}_use_checkbox_{{$index+1}}">{{btn.MODULARNAME}}</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-if="modularLists.length<=0">
+                            <td colspan="5" style="text-align:center">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <pagination data-pageindex="finddata.pageindex" data-pagesize="finddata.pagesize"
+                                data-ptotal="finddata.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

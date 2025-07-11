@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.MhMhflMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.MhMhfl">
+    <id column="MHFLBS" jdbcType="VARCHAR" property="mhflbs" />
+    <result column="SJFL" jdbcType="VARCHAR" property="sjfl" />
+    <result column="FLMC" jdbcType="VARCHAR" property="flmc" />
+    <result column="LMURL" jdbcType="VARCHAR" property="lmurl" />
+    <result column="SFXS" jdbcType="INTEGER" property="sfxs" />
+    <result column="PX" jdbcType="DECIMAL" property="px" />
+    <result column="BZ" jdbcType="VARCHAR" property="bz" />
+    <result column="CJSJ" jdbcType="TIMESTAMP" property="cjsj" />
+    <result column="JB" jdbcType="DECIMAL" property="jb" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    MHFLBS, SJFL, FLMC, LMURL, SFXS, PX, BZ, CJSJ, JB
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.MhMhflExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mh_mhfl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mh_mhfl
+    where MHFLBS = #{mhflbs,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from mh_mhfl
+    where MHFLBS = #{mhflbs,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.MhMhflExample">
+    delete from mh_mhfl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.MhMhfl">
+    insert into mh_mhfl (MHFLBS, SJFL, FLMC, 
+      LMURL, SFXS, PX, BZ, 
+      CJSJ, JB)
+    values (#{mhflbs,jdbcType=VARCHAR}, #{sjfl,jdbcType=VARCHAR}, #{flmc,jdbcType=VARCHAR}, 
+      #{lmurl,jdbcType=VARCHAR}, #{sfxs,jdbcType=INTEGER}, #{px,jdbcType=DECIMAL}, #{bz,jdbcType=VARCHAR}, 
+      #{cjsj,jdbcType=TIMESTAMP}, #{jb,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.MhMhfl">
+    insert into mh_mhfl
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mhflbs != null">
+        MHFLBS,
+      </if>
+      <if test="sjfl != null">
+        SJFL,
+      </if>
+      <if test="flmc != null">
+        FLMC,
+      </if>
+      <if test="lmurl != null">
+        LMURL,
+      </if>
+      <if test="sfxs != null">
+        SFXS,
+      </if>
+      <if test="px != null">
+        PX,
+      </if>
+      <if test="bz != null">
+        BZ,
+      </if>
+      <if test="cjsj != null">
+        CJSJ,
+      </if>
+      <if test="jb != null">
+        JB,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mhflbs != null">
+        #{mhflbs,jdbcType=VARCHAR},
+      </if>
+      <if test="sjfl != null">
+        #{sjfl,jdbcType=VARCHAR},
+      </if>
+      <if test="flmc != null">
+        #{flmc,jdbcType=VARCHAR},
+      </if>
+      <if test="lmurl != null">
+        #{lmurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfxs != null">
+        #{sfxs,jdbcType=INTEGER},
+      </if>
+      <if test="px != null">
+        #{px,jdbcType=DECIMAL},
+      </if>
+      <if test="bz != null">
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="cjsj != null">
+        #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jb != null">
+        #{jb,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.MhMhflExample" resultType="java.lang.Long">
+    select count(*) from mh_mhfl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mh_mhfl
+    <set>
+      <if test="record.mhflbs != null">
+        MHFLBS = #{record.mhflbs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sjfl != null">
+        SJFL = #{record.sjfl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flmc != null">
+        FLMC = #{record.flmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lmurl != null">
+        LMURL = #{record.lmurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfxs != null">
+        SFXS = #{record.sfxs,jdbcType=INTEGER},
+      </if>
+      <if test="record.px != null">
+        PX = #{record.px,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bz != null">
+        BZ = #{record.bz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cjsj != null">
+        CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jb != null">
+        JB = #{record.jb,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mh_mhfl
+    set MHFLBS = #{record.mhflbs,jdbcType=VARCHAR},
+      SJFL = #{record.sjfl,jdbcType=VARCHAR},
+      FLMC = #{record.flmc,jdbcType=VARCHAR},
+      LMURL = #{record.lmurl,jdbcType=VARCHAR},
+      SFXS = #{record.sfxs,jdbcType=INTEGER},
+      PX = #{record.px,jdbcType=DECIMAL},
+      BZ = #{record.bz,jdbcType=VARCHAR},
+      CJSJ = #{record.cjsj,jdbcType=TIMESTAMP},
+      JB = #{record.jb,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.MhMhfl">
+    update mh_mhfl
+    <set>
+      <if test="sjfl != null">
+        SJFL = #{sjfl,jdbcType=VARCHAR},
+      </if>
+      <if test="flmc != null">
+        FLMC = #{flmc,jdbcType=VARCHAR},
+      </if>
+      <if test="lmurl != null">
+        LMURL = #{lmurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfxs != null">
+        SFXS = #{sfxs,jdbcType=INTEGER},
+      </if>
+      <if test="px != null">
+        PX = #{px,jdbcType=DECIMAL},
+      </if>
+      <if test="bz != null">
+        BZ = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="cjsj != null">
+        CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jb != null">
+        JB = #{jb,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where MHFLBS = #{mhflbs,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.MhMhfl">
+    update mh_mhfl
+    set SJFL = #{sjfl,jdbcType=VARCHAR},
+      FLMC = #{flmc,jdbcType=VARCHAR},
+      LMURL = #{lmurl,jdbcType=VARCHAR},
+      SFXS = #{sfxs,jdbcType=INTEGER},
+      PX = #{px,jdbcType=DECIMAL},
+      BZ = #{bz,jdbcType=VARCHAR},
+      CJSJ = #{cjsj,jdbcType=TIMESTAMP},
+      JB = #{jb,jdbcType=DECIMAL}
+    where MHFLBS = #{mhflbs,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,11 @@
+<div class="list-group-item" style="border : 0px;padding-left: 30px" ng-repeat="it in myshykdataList|limitTo: 5">
+    <div style="cursor: pointer;display: flex" ng-click="showShykData(it.MEETINGID,it.meetingType)">
+        <div style="width: 200px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;flex: 1;">{{it.SHYKTYPENAME|limitTo}}</div>
+        <span style="width: 40px">{{it.BEGINTIME|date:'MM-dd'}}</span>
+    </div>
+</div>
+<ul class="list-group" ng-if="myshykdataList.length==0" style="text-align: center">
+    <br>
+    <br>
+    <span>暂无会议</span>
+</ul>

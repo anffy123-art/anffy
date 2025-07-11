@@ -1,0 +1,27 @@
+﻿<table class="table table-bordered tform" ng-controller="devTestPlanCtrl">
+    <tr>
+        <th>序号</th>
+        <th>功能名称</th>
+        <th>状态</th>
+        <th>负责人</th>
+    </tr>
+    <tr ng-repeat="item in items" ng-if="items.length>0">
+        <td>{{$index+1}}</td>
+        <td>{{item.SysDutyName}}</td>
+        <td>{{item.PlanState==0?'未开始':'已开始'}}</td>
+        <td class="col-md-2">
+            <label ng-if="!formdata.readonly" class="input-group">
+                <input readonly type="text" name="UserName" class="form-control" ng-model="item.TestUserName" required/>
+                <span class="input-group-addon" data-url="../../api/MemManage/FindUsersByRoleName"
+                      data-datatext="item.TestUserName" data-aid="测试组员" data-dataval="item.TestUserID" title="测试负责人选择"
+                      bsselectdata><i class="glyphicon glyphicon-zoom-in"></i></span>
+            </label>
+            <label ng-if="formdata.readonly" class="control-label">
+                {{item.TestUserName}}
+            </label>
+        </td>
+    </tr>
+    <tr ng-if="!items.length>0" style="text-align:center">
+        <td colspan="4">暂无数据</td>
+    </tr>
+</table>

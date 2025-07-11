@@ -1,0 +1,87 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所属党组织</th>
+                        <td>
+                            {{dataModel.partyname}}
+                        </td>
+                        <th>月度</th>
+                        <td ng-class="{ 'has-error' : this.editForm.month.$invalid &&  this.editForm.$submitted}">
+                            <input name="month" bs-datepicker class="form-control" data-autoclose="1"
+                                   data-date-format="yyyyMM"
+                                   data-date-type="date"
+                                   data-min-view="1" data-start-view="1"
+                                   ng-model="viewdata.yearMonth"
+                                   ng-change="dateChange()"
+                                   ng-required="true"
+                                   data-max-date="{{maxDate}}"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="this.editForm.month.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>填报人</th>
+                        <td ng-class="{ 'has-error' : this.editForm.writeuser.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="writeuser" ng-model="dataModel.writeuser"
+                                   maxlength="200"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.writeuser.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>审核人</th>
+                        <td ng-class="{ 'has-error' : this.editForm.approveuser.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="approveuser" ng-model="dataModel.approveuser"
+                                   maxlength="200"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.approveuser.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>填报时间</th>
+                        <td ng-class="{ 'has-error' : this.editForm.writetime.$invalid &&  this.editForm.$submitted}">
+                            <input name="writetime" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.writetime"
+                                   ng-required="true"
+                                   data-max-date="{{maxDate}}"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="this.editForm.writetime.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <td colspan="2" style="width: 50%;"></td>
+                    </tr>
+                    <tr>
+                        <th>统计表</th>
+                        <td colspan="3" style="width: 85%;"
+                            ng-class="{ 'has-error' : this.editForm.totalcontent.$invalid &&  this.editForm.$submitted}">
+                             <textarea ng-model="dataModel.totalcontent"
+                                       name="totalcontent"
+                                       ng-required="true"
+                                       class="form-control"
+                                       type="text"
+                                       ui-ueditor></textarea>
+                            <span ng-show="this.editForm.totalcontent.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)"
+                        ng-if="op!=0">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.MhCQuery">
+    <select id="SelectFlOneMcList" resultType="java.util.Map">
+        select MHFLBS "mhflbs",SJFL "sjfl",FLMC "flmc",LMURL "lmurl",SFXS "sfxs",PX "px",BZ "bz",JB "jb" from MH_MHFL
+        where sjfl is null
+        <if test="flmc!='' and flmc!=null">
+            and flmc like CONCAT( '%',#{flmc},'%');
+        </if>
+    </select>
+
+    <select id="selectLinkList" resultType="java.util.HashMap">
+        select LINKID,TITLE,URL,ORDERNO
+        from MH_LINK
+        where 1=1
+        <if test="title!='' and title!=null">
+            and title like concat('%',#{title},'%');
+        </if>
+        order by ORDERNO,LINKID
+    </select>
+
+    <select id="selectSubjectList" resultType="java.util.HashMap">
+        select child.MODULEID,child.MODULENAME,f.FILEID,child.PARENTMODULEID
+        from Xw_Module child
+        inner join Xw_Module parent on child.PARENTMODULEID = parent.MODULEID
+        inner join CF_FILE f on child.MODULEID = f.FILEREFID
+        where parent.ISSUBJECT = 1
+        order by parent.MODULENAME,child.MODULEORDER,child.MODULEID
+    </select>
+</mapper>

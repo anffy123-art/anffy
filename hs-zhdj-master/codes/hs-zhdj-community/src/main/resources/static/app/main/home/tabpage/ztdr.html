@@ -1,0 +1,47 @@
+<div class="dj-formtable">
+    <div class="table-responsive list-table-panel">
+        <div class="list-table-title">
+            <div class="table-title">
+
+            </div>
+            <div class="table-tool">
+                <ul class="header-dropdown">
+                    <li class="dropdown demo-icon-container main-card-more table-more">
+                        <a ng-click="showMore_ztdr()"
+                           class="dropdown-toggle demo-google-material-icon">
+                            <span class="icon-name">更多</span>
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>所在组织</th>
+                <th>主题</th>
+                <th>时间</th>
+                <th>地点</th>
+                <th>类别</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in ztdrList">
+                <td scope="row" class="text-center">
+                    {{$index+1}}
+                </td>
+                <td>{{it.dzzmc}}</td>
+                <td>{{it.title|limitTo:15:0}}<span ng-if="it.title.length>15">...</span></td>
+                <td class="text-center">{{it.activitytime|date:'yyyy-MM-dd'}}</td>
+                <td>{{it.location|limitTo:15:0}}<span ng-if="it.location.length>15">...</span></td>
+                <td class="text-center">{{it.subjecttypename}}</td>
+            </tr>
+            <tr ng-if="ztdrList.length==0">
+                <td colspan="6" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

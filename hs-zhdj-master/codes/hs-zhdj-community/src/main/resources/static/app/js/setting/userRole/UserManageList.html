@@ -1,0 +1,115 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px;min-width:1000px;">
+    <!--<div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{role.roleName}}</h4>
+            </div>
+            <div class="search-param-panel">
+                <form class="form-inline formquery" style="margin: 10px;">
+                    <div class="form-group">
+                        <label for="Name">人员名称：</label>
+                        <input type="text" class="form-control" name="Name" ng-model="Name" placeholder="请输入人员名称"/>
+                    </div>
+                    <div class="form-group formquery-btns-panel">
+                        <button class="btn btn-primary" ng-click="selectpage()">查询</button>
+                        <button class="btn btn-primary" title="新增" ng-click="addModal(userRole)">新增</button>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-hover tlist">
+                    <thead>
+                    <tr>
+                        <th>角色名称</th>
+                        <th>人员名称</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="userRole in RoleUserLists">
+                        <td>{{userRole.RoleName}}</td>
+                        <td>{{userRole.Name}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" title="删除"
+                                    ng-click="deleteUserRole(userRole.UserId,userRole.RoleId)">
+                                删除
+                            </button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <pagination data-pageindex="finddata.pageindex" data-pagesize="finddata.pagesize"
+                            data-ptotal="finddata.ptotal"></pagination>
+            </div>
+        </div>
+
+
+    </div>-->
+    <div class="modal-dialog" role="document">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div class="header">
+                <div class="search-param-panel">
+                    <div class="search-input">
+                        <form class="form-horizontal">
+                            <div class="row clearfix form-inline">
+                                <div class="col-lg-5 col-md-5 col-sm-4 col-xs-5">
+                                    <label>人员名称</label>
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-8 col-xs-7">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="Name" ng-model="Name"
+                                                   placeholder="请输入人员名称"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="search-btn" style="width: 250px">
+                        <div>
+                            <button class="btn btn-primary" ng-click="selectpage()">查询</button>
+                            <button class="btn btn-primary" title="新增" ng-click="addModal(userRole)">新增</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="list-table-panel">
+                    <table class="table table-bordered table-hover tlist">
+                        <thead>
+                        <tr>
+                            <th class="col-md-3">角色名称</th>
+                            <th class="col-md-3">人员名称</th>
+                            <th class="col-md-5">所在组织</th>
+                            <th class="col-md-1">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="userRole in RoleUserLists">
+                            <td>{{userRole.RoleName}}</td>
+                            <td>{{userRole.Name}}</td>
+                            <td>{{userRole.DZZMC}}</td>
+                            <td>
+                                <button class="btn td-btn bg-pink waves-effect"
+                                        ng-click="deleteUserRole(userRole.USERID,userRole.ROLEID)" title="删除">
+                                    <!--<i class="material-icons td-icon">delete_forever</i>-->
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <pagination data-pageindex="finddata.pageindex" data-pagesize="finddata.pagesize"
+                                data-ptotal="finddata.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

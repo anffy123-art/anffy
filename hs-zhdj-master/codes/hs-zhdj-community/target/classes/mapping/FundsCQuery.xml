@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.FundsCQuery">
+
+    <select id="selectFundsUseList" resultType="java.util.HashMap">
+        select fu.FUNDSUSEID, fu.PARTYCODE,z.DZZMC as PARTYNAME, fu.HANDLEUSERID, fu.HANDLEUSERNAME,fu.EXPENDTIME,
+        fu.EXPENDMONEY,
+        fu.EXPENDSCOPE, fu.EXPENDTYPE,
+        fu.CREATETIME, fu.CREATEUSERID, fu.CREATEUSERNAME, fu.UPDATETIME, fu.UPDATEUSERID, fu.UPDATEUSERNAME,
+        fu.OPERATETIME, fu.OPERATESTATE, fu.SYNCSTATE
+        from DJ_FUNDSUSE fu
+        inner join ZZ_ZZQKXX z on fu.partycode=z.dzzdm
+        where 1=1
+        <if test="dzzmc!=null and dzzmc !=''">
+            and z.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="partyCode!=null and partyCode !=''">
+            and fu.partyCode like concat('%',#{partyCode},'%')
+        </if>
+        <if test="beginTime != null and beginTime != '' ">
+            and fu.EXPENDTIME <![CDATA[ >= ]]> date_format(#{beginTime},"%Y%m%d")
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and fu.EXPENDTIME <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        <if test="expendScope!=null">
+            and fu.EXPENDSCOPE=#{expendScope}
+        </if>
+        <if test="expendType!=null">
+            and fu.EXPENDTYPE=#{expendType}
+        </if>
+        order by fu.CREATETIME desc
+    </select>
+    <!-- 党组织工作经费使用情况-->
+    <select id="selectFundsUsageSummary" resultType="java.util.HashMap">
+        select *from (
+        select zz.DZZDM PARTYCODE,zz.DZZMC,
+        ut.奖励经费 奖励经费,ut.活动经费 活动经费,ut.总预算 总预算,
+        ur.奖励支出/10000 奖励支出,ur.活动支出/10000 活动支出,ur.总支出/10000 总支出,
+        case ur.总支出 when 0 then '0.00' ELSE round((ur.奖励支出/ur.总支出),4)*100 END 奖励支出占比,
+        case ur.总支出 when 0 then '0.00' ELSE round((ur.活动支出/ur.总支出),4)*100 END 活动支出占比
+        from ZZ_ZZQKXX zz
+        inner join ZZ_ZZQKXXFB fb on zz.DZZDM=fb.DZZDM
+        left join (
+        select z.DZZDM,
+        ifnull(sum(u.活动经费), 0) 活动经费,
+        ifnull(sum(u.奖励经费), 0) 奖励经费,
+        (ifnull(sum(u.奖励经费), 0)+ ifnull(sum(u.活动经费), 0)) 总预算
+        from ZZ_ZZQKXX z
+        left join(
+        select PARTYCODE,sum(ifnull(ACTIVITYFUNDS, 0)) 活动经费,sum(ifnull(REWARDFUNDS, 0)) 奖励经费
+        from DJ_FUNDSBUDGET budget
+        where year = #{year}
+        group by budget.PARTYCODE
+        ) u on z.DZZDM = substr(u.PARTYCODE, 1, length(z.DZZDM))
+        group by z.DZZDM
+        )ut on zz.DZZDM=ut.DZZDM
+        left join (
+        select z.DZZDM,
+        ifnull(sum(u.活动经费),0) 活动支出,
+        ifnull(sum(u.奖励经费),0) 奖励支出,
+        (ifnull(sum(u.奖励经费),0)+ifnull(sum(u.活动经费),0)) 总支出
+        from ZZ_ZZQKXX z
+        left join(
+        select PARTYCODE,
+        sum(case EXPENDSCOPE when 1 then EXPENDMONEY ELSE 0 END) as 活动经费,
+        sum(case EXPENDSCOPE when 2 then EXPENDMONEY ELSE 0 END) as 奖励经费
+        from DJ_FUNDSUSE
+        where extract(year from EXPENDTIME) = #{year}
+        group by PARTYCODE
+        )u on z.DZZDM=substr(u.PARTYCODE, 1, length(z.DZZDM))
+        group by z.DZZDM
+        )ur on zz.DZZDM=ur.DZZDM
+        where fb.ZZLB in('100','200','300','400') and zz.DZZDM like '001091209%'
+        <if test="isApp==null or isApp==false">
+            and fb.ZZLB in('100','200')
+        </if>
+        <if test="partyCode!=null and partyCode !=''">
+            and zz.DZZDM like concat('%',#{partyCode},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and zz.DZZMC like concat('%',#{dzzmc},'%')
+        </if>
+        order by SUBSTR(zz.DZZDM,1,LENGTH(zz.DZZDM)-3),zz.DZZDM
+        ) tb
+        where 1=1
+        <if test="DZZDM!=null and DZZDM !=''">
+            and tb.PARTYCODE =#{DZZDM}
+        </if>
+    </select>
+    <!-- 党组织工作经费使用情况导出-->
+    <select id="selectFundsUsageDetails" resultType="java.util.HashMap">
+        select  zz.DZZDM PARTYCODE,zz.DZZMC,
+        ut.奖励经费 奖励经费,ut.活动经费 活动经费,ut.总预算 总预算,
+        ur.*,(ur.奖励支出+ur.活动支出) 总支出,
+        (CASE (ur.奖励支出+ur.活动支出) WHEN 0 THEN 0 ELSE round((ur.奖励支出/(ur.奖励支出+ur.活动支出)),2)*100 END) 奖励支出占比,
+        (CASE (ur.奖励支出+ur.活动支出) WHEN 0 THEN 0 ELSE round((ur.活动支出/(ur.奖励支出+ur.活动支出)),2)*100 END) 活动支出占比,
+        (CASE ur.活动支出 WHEN 0 THEN 0 ELSE round((ur.学习教育活动/ur.活动支出),2)*100 END) 学习教育活动占比,
+        (CASE ur.活动支出 WHEN 0 THEN 0 ELSE round((ur.党内主题活动/ur.活动支出),2)*100 END) 党内主题活动占比,
+        (CASE ur.活动支出 WHEN 0 THEN 0 ELSE round((ur.宣传活动/ur.活动支出),2)*100 END) 宣传活动占比,
+        (CASE ur.活动支出 WHEN 0 THEN 0 ELSE round((ur.会议活动/ur.活动支出),2)*100 END) 会议活动占比,
+        (CASE ur.活动支出 WHEN 0 THEN 0 ELSE round((ur.党建日常工作/ur.活动支出),2)*100 END) 党建日常工作占比,
+        (CASE ur.活动支出 WHEN 0 THEN 0 ELSE round((ur.走访慰问活动/ur.活动支出),2)*100 END) 走访慰问活动占比,
+        (CASE ur.活动支出 WHEN 0 THEN 0 ELSE round((ur.设备设施/ur.活动支出),2)*100 END) 设备设施占比,
+        (CASE ur.活动支出 WHEN 0 THEN 0 ELSE round((ur.其他/ur.活动支出),2)*100 END) 其他占比,
+        (CASE ur.奖励支出 WHEN 0 THEN 0 ELSE round((ur.综合考评奖励/ur.奖励支出),2)*100 END) 综合考评奖励占比,
+        (CASE ur.奖励支出 WHEN 0 THEN 0 ELSE round((ur.七一表彰奖励/ur.奖励支出),2)*100 END) 七一表彰奖励占比,
+        (CASE ur.奖励支出 WHEN 0 THEN 0 ELSE round((ur.创岗建区表彰奖励/ur.奖励支出),2)*100 END) 创岗建区表彰奖励占比,
+        (CASE ur.奖励支出 WHEN 0 THEN 0 ELSE round((ur.党建工作成果奖励/ur.奖励支出),2)*100 END) 党建工作成果奖励占比,
+        (CASE ur.奖励支出 WHEN 0 THEN 0 ELSE round((ur.主题竞赛活动奖励/ur.奖励支出),2)*100 END) 主题竞赛活动奖励占比
+        from ZZ_ZZQKXX zz
+        inner join ZZ_ZZQKXXFB fb on zz.DZZDM=fb.DZZDM
+        left join (
+            select z.DZZDM,
+        ifnull(sum(u.活动经费), 0) 活动经费,
+        ifnull(sum(u.奖励经费), 0) 奖励经费,
+            (ifnull(sum(u.奖励经费), 0)+ ifnull(sum(u.活动经费), 0)) 总预算
+            from ZZ_ZZQKXX z
+            left join(
+            select PARTYCODE,sum(ifnull(ACTIVITYFUNDS, 0)) 活动经费,sum(ifnull(REWARDFUNDS, 0)) 奖励经费
+            from DJ_FUNDSBUDGET budget
+            where year =  #{year}
+            group by budget.PARTYCODE
+            ) u on z.DZZDM = substr(u.PARTYCODE, 1, length(z.DZZDM))
+            group by z.DZZDM
+        )ut on zz.DZZDM=ut.DZZDM
+        left join (
+            select z.DZZDM,
+        ifnull(sum(u.学习教育活动),0)/10000 学习教育活动,
+        ifnull(sum(u.党内主题活动),0)/10000 党内主题活动,
+        ifnull(sum(u.宣传活动),0)/10000 宣传活动,
+        ifnull(sum(u.会议活动),0)/10000 会议活动,
+        ifnull(sum(u.党建日常工作),0)/10000 党建日常工作,
+        ifnull(sum(u.走访慰问活动),0)/10000 走访慰问活动,
+        ifnull(sum(u.设备设施),0)/10000 设备设施,
+        ifnull(sum(u.其他),0)/10000 其他,
+        ifnull(sum(u.综合考评奖励),0)/10000 综合考评奖励,
+        ifnull(sum(u.七一表彰奖励),0)/10000 七一表彰奖励,
+        ifnull(sum(u.创岗建区表彰奖励),0)/10000 创岗建区表彰奖励,
+        ifnull(sum(u.党建工作成果奖励),0)/10000 党建工作成果奖励,
+        ifnull(sum(u.主题竞赛活动奖励),0)/10000 主题竞赛活动奖励,
+            (ifnull(sum(u.学习教育活动),0)+ifnull(sum(u.党内主题活动),0)+ ifnull(sum(u.宣传活动),0)+ ifnull(sum(u.会议活动),0)+ ifnull(sum(u.党建日常工作),0)+ ifnull(sum(u.走访慰问活动),0)+
+        ifnull(sum(u.设备设施),0)+ ifnull(sum(u.其他),0))/10000 活动支出,
+            (ifnull(sum(u.综合考评奖励),0)+ifnull(sum(u.七一表彰奖励),0)+ifnull(sum(u.创岗建区表彰奖励),0)+ifnull(sum(u.党建工作成果奖励),0)+ifnull(sum(u.主题竞赛活动奖励),0))/10000 奖励支出
+
+            from ZZ_ZZQKXX z
+            left join(
+                select PARTYCODE,
+                        sum(CASE EXPENDTYPE WHEN 1 THEN EXPENDMONEY ELSE 0 END )as 学习教育活动,
+                        sum(CASE EXPENDTYPE WHEN 2 THEN EXPENDMONEY ELSE 0 END )as 党内主题活动,
+                        sum(CASE EXPENDTYPE WHEN 3 THEN EXPENDMONEY ELSE 0 END )as 宣传活动,
+                        sum(CASE EXPENDTYPE WHEN 4 THEN EXPENDMONEY ELSE 0 END )as 会议活动,
+                        sum(CASE EXPENDTYPE WHEN 5 THEN EXPENDMONEY ELSE 0 END )as 党建日常工作,
+                        sum(CASE EXPENDTYPE WHEN 6 THEN EXPENDMONEY ELSE 0 END )as 走访慰问活动,
+                        sum(CASE EXPENDTYPE WHEN 7 THEN EXPENDMONEY ELSE 0 END )as 设备设施,
+                        sum(CASE EXPENDTYPE WHEN 8 THEN EXPENDMONEY ELSE 0 END )as 其他,
+                        sum(CASE EXPENDTYPE WHEN 20 THEN EXPENDMONEY ELSE 0 END )as 综合考评奖励,
+                        sum(CASE EXPENDTYPE WHEN 21 THEN EXPENDMONEY ELSE 0 END )as 七一表彰奖励,
+                        sum(CASE EXPENDTYPE WHEN 22 THEN EXPENDMONEY ELSE 0 END )as 创岗建区表彰奖励,
+                        sum(CASE EXPENDTYPE WHEN 23 THEN EXPENDMONEY ELSE 0 END )as 党建工作成果奖励,
+                        sum(CASE EXPENDTYPE WHEN 24 THEN EXPENDMONEY ELSE 0 END )as 主题竞赛活动奖励
+                from DJ_FUNDSUSE
+                where extract(year from EXPENDTIME) =  #{year}
+                group by PARTYCODE
+            )u on z.DZZDM=substr(u.PARTYCODE, 1, length(z.DZZDM))
+            group by z.DZZDM
+        )ur on zz.DZZDM=ur.DZZDM
+        where  fb.ZZLB not in('500') and zz.DZZDM like '001091209%'
+        <if test="partyCode!=null and partyCode !=''">
+            and zz.DZZDM like concat('%',#{partyCode},'%')
+        </if>
+        order by SUBSTR(zz.DZZDM,1,LENGTH(zz.DZZDM)-3),zz.DZZDM
+    </select>
+    <!-- 根据党组织获取工作经费使用情况-->
+    <select id="selectPartyFundsUsage" resultType="java.util.HashMap">
+        select  sum(ifnull(use.EXPENDMONEY,0))/10000 EXPENDMONEY, dc.DICKEY,dc.DICVALUE EXPENDTYPEName
+        from CF_DICTIONARY dc
+               left join (
+                 select sum(ifnull(EXPENDMONEY,0)) EXPENDMONEY,EXPENDTYPE from DJ_FUNDSUSE
+                 where partyCode like concat('%',#{partyCode},'%') and extract(year from EXPENDTIME) = #{year}
+                 group by EXPENDTYPE
+        ) use  on use.EXPENDTYPE=dc.DICKEY
+        where  TO_NUMBER(DICNOTE) =#{expendscope} and dc.DICTYPEKEY='expendType'
+        group by dc.DICVALUE,dc.DICKEY
+        order by EXPENDMONEY desc
+    </select>
+</mapper>

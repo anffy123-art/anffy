@@ -1,0 +1,140 @@
+<div class="dj-card" style="min-height: 600px;">
+    <titlemenu></titlemenu>
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>
+                            <span ng-if="dataModel.cgjqtype==1">责任岗</span>
+                            <span ng-if="dataModel.cgjqtype==2">责任区</span>
+                        </th>
+                        <td>
+                            {{dataModel.name}}
+                        </td>
+                        <th>
+                            <span ng-if="dataModel.cgjqtype==1">岗位人员</span>
+                            <span ng-if="dataModel.cgjqtype==2">负责人</span>
+                        </th>
+                        <td>
+                            {{dataModel.headusername}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所属年度</th>
+                        <td>
+                            {{dataModel.year}}
+                        </td>
+                        <th>所属季度</th>
+                        <td>
+                            {{dataModel.quarter}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所属支部</th>
+                        <td>
+                            {{dataModel.partyname}}
+                        </td>
+                        <th>总分</th>
+                        <td>
+                            {{dataModel.score}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="dj-formtable">
+                <div class="table-responsive list-table-panel">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            考核评分
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                        <thead>
+                        <tr>
+                            <th style="width: 70px;">序号</th>
+                            <th style="width: 100px;">项目</th>
+                            <th style="width: 300px;">考核内容和标准</th>
+                            <th style="width: 80px;">分值</th>
+                            <th style="width: 300px;">事由</th>
+                            <th style="width: 100px;">党支部初步加减分</th>
+                            <th style="width: 100px;">党员确认情况</th>
+                            <th style="width: 100px;">最终加减分</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="it in scoreDataList">
+                            <td scope="row" class="text-center">{{$index+1}}</td>
+                            <td>{{it.PROJECTNAME}}</td>
+                            <td>
+                            <textarea type="text" autocomplete="off" class="form-control" name="CONTENT_{{$index}}"
+                                      ng-model="it.CONTENT" rows="6" readonly>
+                            </textarea>
+                            </td>
+                            <td>
+                                {{it.SCOREREFER}}
+                            </td>
+                            <td>
+                             <textarea type="text" autocomplete="off" class="form-control" name="REASON_{{$index}}"
+                                       ng-model="it.REASON" rows="6" readonly>
+                            </textarea>
+                            </td>
+                            <td>
+                                {{it.INITIALSCORE}}
+                            </td>
+                            <td>
+                                {{it.CGJQSCORECHECKNAME}}
+                            </td>
+                            <td>
+                                {{it.SCORE}}
+                            </td>
+                        </tr>
+                        <tr ng-if="scoreDataList.length<=0">
+                            <td colspan="8" style="text-align:center">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="dj-formtable">
+                <div ng-if="dataModel.cgjqtype==2" class="table-responsive list-table-panel" style="margin-top: 10px;">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            责任区成员
+                        </div>
+                    </div>
+                    <div class="outoflow" style="max-height: 300px;">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th class="col-md-1">序号</th>
+                                <th class="col-md-2">姓名</th>
+                                <th class="col-md-1">性别</th>
+                                <th class="col-md-2">联系电话</th>
+                                <th class="col-md-2">职务</th>
+                                <th class="col-md-1">成员类型</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in userList">
+                                <td scope="row">{{$index+1}}</td>
+                                <td>{{it.XM}}</td>
+                                <td>{{it.XBMC}}</td>
+                                <td>{{it.MOBILE}}</td>
+                                <td>{{it.POST}}</td>
+                                <td>{{(it.RYBM!="" && it.RYBM!=null)?"党员":"群众"}}</td>
+                            </tr>
+                            <tr ng-if="userList.length<=0">
+                                <td colspan="5" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="form_foot" style="margin-top: 10px;">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">返回</button>
+            </div>
+        </form>
+    </div>
+</div>

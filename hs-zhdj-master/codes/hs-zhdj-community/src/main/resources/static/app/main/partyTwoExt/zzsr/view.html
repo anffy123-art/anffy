@@ -1,0 +1,55 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" novalidate
+              name="editForm">
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th style="min-width:150px;">所在组织</th>
+                        <td colspan="3">
+                            {{dataModel.dzzmc}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>标题</th>
+                        <td colspan="3">
+                            {{dataModel.title}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>活动时间</th>
+                        <td>
+                            {{dataModel.activitytime|date:'yyyy-MM-dd'}}
+                        </td>
+                        <th>主题</th>
+                        <td>
+                            {{getPositionLevelName()}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>地点</th>
+                        <td colspan="3">
+                            {{dataModel.location}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>内容</th>
+                        <td colspan="3">
+                            <div ng-bind-html="dataModel.subjectcontent|trustAsHtml" style="width: 850px;"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>活动照片</th>
+                        <td colspan="3">
+                            <bsfiles ng-model="img_ReqFileModel"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">关闭</button>
+            </div>
+        </form>
+    </div>
+</div>

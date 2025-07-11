@@ -1,0 +1,29 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div ng-include="'../main/shyk/meetingmodel.html'"></div>
+            <div panel-title data-title="'补学补课'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table dj-table2">
+                    <tr>
+                        <th>补学补课情况</th>
+                        <td ng-class="{ 'has-error' : this.editForm.makeuupstudy.$invalid &&  this.editForm.$submitted}">
+                            <textarea ng-model="meetingUserModel.makeuupstudy" class="form-control"
+                                      required="true" rows="5" name="makeuupstudy"></textarea>
+                            <span ng-show="this.editForm.makeuupstudy.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button ng-if="op==0"
+                        class="btn btn-primary"
+                        ng-click="saveData(this.editForm.$valid)">提交
+                </button>
+                <button type="button" class="btn btn-default" ng-click="pagechange();">返回</button>
+            </div>
+        </form>
+    </div>
+</div>

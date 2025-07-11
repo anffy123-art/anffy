@@ -1,0 +1,48 @@
+﻿<table class="table table-bordered tform" ng-controller="formBugInfoCtrl">
+    <tr>
+        <th class="col-md-2">问题名称：</th>
+        <td class="col-md-4" colspan="3">
+            {{content.ProblemName}}
+        </td>
+    </tr>
+    <tr>
+        <th class="col-md-2">问题类型：</th>
+        <td class="col-md-4">
+            {{selectdatas.problemTypeList| getDicValue:content.ProblemType}}
+        </td>
+        <th class="col-md-2">严重程度：</th>
+        <td class="col-md-4">
+            {{selectdatas.seriousLvList| getDicValue:content.SeriousLv}}
+        </td>
+    </tr>
+    <tr>
+        <th class="col-md-2">功能点：</th>
+        <td class="col-md-4">
+            {{selectdatas.sysDutyList.items|getSysDuty:content.SysDutyID}}
+        </td>
+        <th class="col-md-2">功能点负责人：</th>
+        <td class="col-md-4">
+            {{DutyUserName}}
+        </td>
+    </tr>
+    <tr>
+        <th colspan="4" style="text-align:center;">问题描述</th>
+    </tr>
+    <tr>
+        <td colspan="4">
+            {{content.ProblemDescribe}}
+        </td>
+    </tr>
+    <tr>
+        <th colspan="4" style="text-align:center">问题截图</th>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <div ng-if="files.length>0" class="imageDiv" ng-repeat="file in files">
+                <img class="thumbnail diyimg" ng-src="{{file.FileUrl}}"/>
+                <div class="cover" ng-click="zoomImg(file.FileUrl)"></div>
+            </div>
+            <div ng-if="files.length<=0 " style="text-align:center">暂无截图</div>
+        </td>
+    </tr>
+</table>

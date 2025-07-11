@@ -1,0 +1,155 @@
+﻿<style>
+    li ~ span {
+        padding-left: 4px;
+        padding-right: -4px;
+    }
+
+    .panel-body li:hover {
+        background-color: #F5F5F5;
+    }
+
+    .treeitem > li > span:nth-child(1) {
+        padding-left: 16px;
+        padding-right: -16px;
+    }
+
+    .treeitem .treeitem li > span:nth-child(1) {
+        padding-left: 32px;
+        padding-right: -32px;
+    }
+
+    .treeitem .treeitem .treeitem li > span:nth-child(1) {
+        padding-left: 48px;
+        padding-right: -48px;
+    }
+</style>
+<span class="title-menu">
+    <ol class="breadcrumb gt_breadcrumb">
+        <li>
+            <a href="javascript:void(0);">
+                系统配置
+            </a>
+        </li>
+        <li>
+            <a href="javascript:void(0);">
+                系统菜单配置
+            </a>
+        </li>
+    </ol>
+</span>
+<div class="dj-list" style="padding-top: 5px;">
+    <div class="dj-list-body">
+        <div class="dj-list-content content1">
+            <div class="card">
+                <div activate-input class="header search-header">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <div class="row clearfix form-inline">
+                                <div class="col-lg3 col-md-3 dj-label">
+                                    <label>菜单名称</label>
+                                </div>
+                                <div class="col-lg3 col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" ng-model="MenuName" ng-keypress="($event.which === 13)?searchMenu():0"
+                                                   name="menuname"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg3 col-md-3 dj-label">
+                                    <label>菜单编号</label>
+                                </div>
+                                <div class="col-lg3 col-md-3">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" ng-model="MenuNo" ng-keypress="($event.which === 13)?searchMenu():0"
+                                                   name="menuno"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <button  class="btn btn-default1"
+                                        type="submit"
+                                        ng-click="searchMenu()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                                <!--<button role-permission-code="menumanage.btnAdd" class="btn btn-default1" ng-click="addMenu()">新增-->
+                                <!--</button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button role-permission-code="menumanage.btnAdd" class="btn btn-default1"
+                                    ng-click="addMenu()">新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="list-table-panel">
+                        <script type="text/ng-template" id="nodes.html">
+                            <li class="row" style="border-bottom:1px solid #f5f5f5; padding:6px 0px">
+                                <span style="width:25%;display: inline-block;">
+                                    <div ng-click="loadChildMenu(menu)">
+                                        <i class="material-icons" style="position: relative;top:7px;">{{menu.isExpand ? 'expand_more' : 'chevron_right'}}</i>
+                                        <span class="icon-name">{{menu.menuname}}</span>
+                                    </div>
+                                </span>
+                                <span style="width:15%;display:inline-block;">{{menu.menuno}}</span>
+                                <span style="width:15%;display:inline-block;">{{menu.menupic}}</span>
+
+                                <span style="width:15%;display:inline-block;">{{menu.isvisible==true ? '显示':'不显示'}}</span>
+                                <span style="width:10%;display:inline-block;">{{menu.menuorder}}</span>
+                                <span style="width:15%;display:inline-block;">
+                                    <button role-permission-code="menumanage.btnUpdate"
+                                            class="btn td-btn bg-light-green waves-effect" ng-click="editModal(menu)"
+                                            title="修改">
+                                         修改
+                                    </button>
+                                    <button role-permission-code="menumanage.btnDelete"
+                                            class="btn td-btn bg-pink waves-effect" ng-click="delete(menu)" title="删除">
+                                         删除
+                                    </button>
+                                 </span>
+                            </li>
+                            <div ng-hide="!menu.isExpand">
+                                <div class="treeitem" ng-repeat="menu in menu.childMenus" ng-include="'nodes.html'"
+                                     style="cursor: pointer;"></div>
+                            </div>
+                        </script>
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable"
+                               style="margin-bottom: 0px;">
+                            <thead>
+                            <tr>
+                                <th width="25%">菜单名称</th>
+                                <th width="15%">菜单编号</th>
+                                <th width="15%">菜单图标</th>
+
+                                <th width="15%">是否显示</th>
+                                <th width="10%">排序</th>
+                                <th width="20%">操作</th>
+                            </tr>
+                            <tr ng-if="tempMenu.length<=0">
+                                <td colspan="7" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </thead>
+                        </table>
+                        <ul style="list-style:none;padding:0px 15px; margin:0px;border-left:1px solid #f5f5f5;border-right: 1px solid #f5f5f5 "
+                            ng-repeat="menu in tempMenu"
+                            ng-include="'nodes.html'">
+                        </ul>
+                        <!--参数含义：page-Index：当前页面，page-Size：每页显示多少数据，total-Length:数据总长度-->
+                        <pagination ng-if="tempMenu.length>0" data-pageindex="selectdata.pageindex"
+                                    data-pagesize="selectdata.pagesize" data-ptotal="selectdata.ptotal"></pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+﻿<div class="page-container"
+     ng-class="{'sidebar-collapsed':!menudatas.toggle,'sidebar-collapsed-back':menudatas.toggle}">
+    <!--/content-inner-->
+    <div class="left-content">
+        <div class="inner-content">
+            <!-- //header-starts -->
+            <div class="outter-wp" ui-view></div>
+        </div>
+    </div>
+    <!--//content-inner-->
+    <!--/sidebar-menu-->
+    <div class="sidebar-menu">
+        <header class="logo">
+            <a class="sidebar-icon" ng-click="menudatas.toggle=!menudatas.toggle"><span class="fa fa-bars"></span> </a>
+            <a><span id="logo"> <img style="width:130px;height:40px;" src="images/zclogo2.png"/></span>
+                <!--<a class="sidebar-icon" ng-click="menudatas.toggle=!menudatas.toggle"><span class="fa fa-bars"></span> </a>
+                <a><span id="logo"><h5 style="color:#fff">欢迎您，{{User.Name}}！</h5></span>
+                    <img id="logo" src="" alt="Logo"/>-->
+            </a>
+        </header>
+        <div style="border-top:1px solid rgba(69, 74, 84, 0.7)"></div>
+        <!--/down-->
+        <div class="down">
+            <!--a href="index.html"><img src="../im/images/default-icon.png"></a-->
+            <!--a href="index.html"><span class=" name-caret">{{User.Name}}</span></a-->
+            <p class="cp">
+                <button type="button" class="select1 btn" placeholder="未选择公司" ng-model="Company.selectedCompany"
+                        bs-select data-toggle="true"
+                        bs-options="cp as cp.companyName for cp in Company.companys">
+                </button>
+            </p>
+            <ul class="ul1">
+                <li><a class="tooltips" href="javascript:void(0);" ng-click="showNotify()"><span>通知</span><i
+                        class="lnr lnr-volume-medium" style="color:{{notifyCount>0?'red':''}}"></i></a></li>
+                <!--<li><a class="tooltips" href="javascript:void(0);" ng-click="testPay()"><span>支付</span><i class="lnr lnr-bubble"></i></a></li>-->
+                <li><a class="tooltips" href="javascript:void(0);" ng-click="showServerGuest()"><span>客服</span><i
+                        class="lnr lnr-user" style="color:{{msgCount>0?'red':''}}"></i></a></li>
+
+                <li><a class="tooltips" href="#!/login"><span>退出</span><i class="lnr lnr-power-switch"></i></a></li>
+            </ul>
+            <ul class="ul1">
+                <li>{{notifyCount}}</li>
+                <li>{{msgCount>0?msgCount:'客服'}}</li>
+                <li>退出</li>
+            </ul>
+        </div>
+        <!--//down-->
+        <!--/menu-->
+        <div class="menu">
+            <ul id="menu">
+                <li ng-repeat="panel in panels">
+                    <a><i class="fa" ng-class="panel.icon"></i><span
+                            ng-style="{'position':menudatas.toggle?'relative':'absolute'}">{{panel.title}}</span><span
+                            ng-if="panel.cNodes&&panel.cNodes.length>0" class="fa fa-angle-right right-icon"></span></a>
+                    <ul ng-if="panel.cNodes&&panel.cNodes.length>0">
+                        <li ng-repeat="cli in panel.cNodes"><a ui-sref="{{cli.name?cli.name:'#'}}">{{cli.title}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!--//menu-->
+    </div>
+    <!--//sidebar-menu-->
+</div>

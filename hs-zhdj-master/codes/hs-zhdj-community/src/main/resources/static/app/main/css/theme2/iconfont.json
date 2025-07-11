@@ -1,0 +1,254 @@
+{
+  "id": "1691156",
+  "name": "党建工作台",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "13472789",
+      "name": "箭头",
+      "font_class": "jiantou",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "13472725",
+      "name": "按钮-展开2",
+      "font_class": "anniu-zhankai1",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "13472726",
+      "name": "按钮-折叠2",
+      "font_class": "anniu-zhedie1",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "13472608",
+      "name": "按钮-折叠",
+      "font_class": "anniu-zhedie",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "13472612",
+      "name": "箭头-前",
+      "font_class": "jiantou-qian",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "13472614",
+      "name": "文件树图标",
+      "font_class": "wenjianshutubiao",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "13472615",
+      "name": "退出",
+      "font_class": "tuichu",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "13472578",
+      "name": "按钮-展开",
+      "font_class": "anniu-zhankai",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "13472489",
+      "name": "创岗建区",
+      "font_class": "chuanggangjianqu1",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "13472490",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "13472491",
+      "name": "党员信息",
+      "font_class": "dangyuanxinxi",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "13472492",
+      "name": "发展党员",
+      "font_class": "dangyuanfazhan",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "13472493",
+      "name": "中心组学习",
+      "font_class": "zhongxinzuxuexi",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "13472494",
+      "name": "三会一课",
+      "font_class": "sanhuiyike",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "13472476",
+      "name": "互联网",
+      "font_class": "hulianwang",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "13472477",
+      "name": "换届",
+      "font_class": "huanjie",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "13472479",
+      "name": "宣传",
+      "font_class": "xuanchuan",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "13472480",
+      "name": "考评",
+      "font_class": "kaoping",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "13472482",
+      "name": "学习",
+      "font_class": "xuexi",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "13472037",
+      "name": "关闭tab-on",
+      "font_class": "guanbitab-on",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "13472038",
+      "name": "关闭tab",
+      "font_class": "guanbitab",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "13471978",
+      "name": "菜单图标-组织生活",
+      "font_class": "zuzhishenghuo",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "13471981",
+      "name": "菜单图标-大数据分析",
+      "font_class": "dashujufenxi",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "13471982",
+      "name": "菜单图标-创岗建区",
+      "font_class": "chuanggangjianqu",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "13471983",
+      "name": "菜单图标-党建局情",
+      "font_class": "dangjianjuqing",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "13471984",
+      "name": "菜单图标-党建工作",
+      "font_class": "dangjiangongzuo",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "13471985",
+      "name": "菜单图标-党委办",
+      "font_class": "dangweiban",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "13471986",
+      "name": "菜单图标-党员管理",
+      "font_class": "dangyuanguanli",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "13471987",
+      "name": "菜单图标-队伍管理",
+      "font_class": "duiwuguanli",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "13471988",
+      "name": "菜单图标-首页",
+      "font_class": "shouye",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "13471989",
+      "name": "菜单图标-门户管理",
+      "font_class": "menhuguanli",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "13471990",
+      "name": "菜单图标-系统配置",
+      "font_class": "xitongpeizhi",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "13471991",
+      "name": "制度查询",
+      "font_class": "zhiduchaxun",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "13471992",
+      "name": "组织管理",
+      "font_class": "zuzhiguanli",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "13471993",
+      "name": "菜单图标-宣传思想",
+      "font_class": "xuanchuansixiang",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+﻿<!--<script>
+    $(function () {
+        $.gtPartyApp.input.activate();
+    });
+</script>-->
+<div id="dicmodal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <!--<div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="dicform" name="dicform" ng-submit="submit(dicform.$valid)" novalidate>
+                    <table class="table table-bordered tform">
+                        <tr>
+                            <th class="col-md-3"><span style="color:red;">*</span>字典类别名称：</th>
+                            <td ng-class="{ 'has-error' : dicform.dictypekey.$invalid &&  dicform.$submitted}">
+                                <input type="text" name="dictypekey" ng-model="content.dictypekey" maxlength="100" class="form-control" ng-disabled="params.dicTypeKeyDisabled" ng-required="true" />
+                                <span ng-show="dicform.dictypekey.$invalid &&  dicform.$submitted" class="help-block">请输入字典类别名称</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3"><span style="color:red;">*</span>字典键：</th>
+                            <td  ng-class="{ 'has-error' : dicform.dickey.$invalid &&  dicform.$submitted}">
+                                <input name="dickey" ng-model="content.dickey" type="number" class="form-control" ng-required="true" min="0" max="999999999"/>
+                                <span ng-show="dicform.dickey.$invalid &&  dicform.$submitted" class="help-block">请输入10位以下的字典键</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3"><span style="color:red;">*</span>字典显示名称：</th>
+                            <td ng-class="{ 'has-error' : dicform.dicvalue.$invalid &&  dicform.$submitted}">
+                                <input name="dicvalue" ng-model="content.dicvalue" type="text" class="form-control" ng-required="true" maxlength="800"/>
+                                <span ng-show="dicform.dicvalue.$invalid &&  dicform.$submitted" class="help-block">请输入字典显示名称</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3">字典类型：</th>
+                            <td ng-class="{ 'has-error' : dicform.dictype.$invalid &&  dicform.$submitted}">
+                                &lt;!&ndash;<select name="dicType" class="form-control" ng-model="content.DicType" ng-disabled="params.dicTypeDisabled" ng-options="type.id as type.dictype for type in dicTypeList" ng-required="true"></select>&ndash;&gt;
+                                &lt;!&ndash;<span ng-show="dicform.dicType.$invalid &&  dicform.$submitted" class="help-block">请选择字典类型</span>&ndash;&gt;
+                                <input name="dictype" type="text" class="form-control" value="{{(content.dictype==1?'系统':'普通')}}" disabled/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3">字典描述：</th>
+                            <td>
+                                <textarea class="form-control" ng-model="content.dicnote" name="dicnote" rows="5"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                <button type="submit" class="btn btn-primary" form="dicform">保存</button>
+            </div>
+        </div>-->
+
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div activate-input class="body">
+                <form class="form-horizontal" role="form" id="dicform"
+                      name="dicform" ng-submit="submit(dicform.$valid)" novalidate>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>字典类别名称</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line"
+                                     ng-class="{ 'focused error' : dicform.dictypekey.$invalid &&  dicform.$submitted}">
+                                    <input type="text" name="dictypekey" ng-model="content.dictypekey" maxlength="100"
+                                           class="form-control" ng-disabled="params.dicTypeKeyDisabled"
+                                           ng-required="true"/>
+                                </div>
+                                <label ng-show="dicform.dictypekey.$invalid &&  dicform.$submitted"
+                                       class="error">必填.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>字典键</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line"
+                                     ng-class="{ 'focused error' : dicform.dickey.$invalid &&  dicform.$submitted}">
+                                    <input name="dickey" ng-model="content.dickey" type="number" class="form-control"
+                                           ng-required="true" min="0" max="999999999"/>
+                                </div>
+                                <label ng-show="dicform.dickey.$invalid &&  dicform.$submitted"
+                                       class="error">必填.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>字典显示名称</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line"
+                                     ng-class="{ 'focused error' : dicform.dicvalue.$invalid &&  dicform.$submitted}">
+                                    <input name="dicvalue" ng-model="content.dicvalue" type="text" class="form-control"
+                                           ng-required="true" maxlength="800"/>
+                                </div>
+                                <label ng-show="dicform.dicvalue.$invalid &&  dicform.$submitted"
+                                       class="error">必填.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>字典类型</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input name="dictype" type="text" class="form-control"
+                                           value="{{(content.dictype==1?'系统':'普通')}}" disabled/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 form-control-label">
+                            <label>字典描述</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <textarea class="form-control" ng-model="content.dicnote" name="dicnote"
+                                              rows="5"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" form="dicform">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

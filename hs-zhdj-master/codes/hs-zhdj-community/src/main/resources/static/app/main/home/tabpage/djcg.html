@@ -1,0 +1,47 @@
+<div class="dj-formtable">
+    <div class="table-responsive list-table-panel">
+        <div class="list-table-title">
+            <div class="table-title">
+
+            </div>
+            <div class="table-tool">
+                <ul class="header-dropdown">
+                    <li class="dropdown demo-icon-container main-card-more table-more">
+                        <a ng-click="showMore_djcg()"
+                           class="dropdown-toggle demo-google-material-icon">
+                            <span class="icon-name">更多</span>
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>所属组织</th>
+                <th>党建工作成果名称</th>
+                <th>主要做法及成效</th>
+                <th>申报主体</th>
+                <th>认定时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in djcgList">
+                <td scope="row" class="text-center">
+                    {{$index+1}}
+                </td>
+                <td>{{it.PARTYNAME}}</td>
+                <td>{{it.RESULTNAME}}</td>
+                <td>{{it.SCORETEXT}}</td>
+                <td>{{it.PARTYNAME}}</td>
+                <td class="text-center">{{it.SCORETIME|date:'yyyy-MM-dd'}}</td>
+            </tr>
+            <tr ng-if="djcgList.length==0">
+                <td colspan="6" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

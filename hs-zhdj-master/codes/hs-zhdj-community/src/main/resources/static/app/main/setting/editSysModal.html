@@ -1,0 +1,123 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px;">
+    <div class="modal-dialog" role="document" style="width:70%">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{title}}</h3>
+
+            </div>
+
+            <form class="form-horizontal formtable1 panel-body modal-body" ng-submit="saveSys()" role="form"
+                  name="editSysForm" style="padding: 10px; margin: 10px; " ng-controller="syslistController" novalidate>
+                <table class="table table-bordered tform">
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>系统名称：</th>
+                        <td>
+                            <input name="sysName" type="text" ng-model="sys.SystemName" class="form-control"
+                                   ng-required="true" value={{sys.SystemName}}/>
+
+                        </td>
+                        <th class="col-md-2"><span style="color:red">*</span>系统简称：</th>
+                        <td>
+                            <input name="SystemDescribe" type="text" ng-model="sys.SystemDescribe" class="form-control"
+                                   ng-required="true" value={{sys.SystemDescribe}}/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="col-md-2">建设年份：</th>
+                        <td>
+                            <input name="BuildYear" class="form-control" ng-model="sys.BuildYear"
+                                   value={{sys.BuildYear}} data-date-type="string" data-date-format="yyyy" type="text"
+                                   data-start-view="2" data-min-view="2" autoclose="true" bs-datepicker/>
+                        </td>
+                        <th class="col-md-2">建设厂商：</th>
+                        <td>
+                            <input name="BuildDev" type="text" ng-model="sys.BuildDev" class="form-control"
+                                   value={{sys.BuildDev}}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">技术架构：</th>
+                        <td>
+                            <input name="TechFrame" type="text" ng-model="sys.TechFrame" class="form-control"
+                                   value={{sys.TechFrame}}/>
+                        </td>
+                        <th class="col-md-2">数据库产品：</th>
+                        <td>
+                            <input name="DBType" type="text" ng-model="sys.DBType" class="form-control"
+                                   value={{sys.DBType}}/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>主管需求部门：</th>
+                        <td>
+                            <label class="input-group">
+                                <input name="DemandPD" type="text" ng-model="sys.DemandPDName" class="form-control"
+                                       ng-required="true" value={{sys.DemandPDName}} ng-disabled="true"/>
+                                <span class="input-group-addon" dpselect data-dpid="sys.DemandPD"
+                                      data-dpname="sys.DemandPDName" data-dpitem="selecteddp"><i
+                                        class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+
+                        </td>
+                        <th class="col-md-2"><span style="color:red">*</span>主管需求负责人：</th>
+                        <td>
+                            <label class="input-group">
+                                <input name="DemandMan" type="text" ng-model="sys.DemandManName" class="form-control"
+                                       ng-required="true" value={{sys.DemandManName}} ng-disabled="true"/>
+                                <span class="input-group-addon" userselect data-textids="sys.DemandMan"
+                                      data-textnames="sys.DemandManName" data-datausers="[]" data-textguids=""
+                                      data-selecttype="single"><i class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>建设负责人：</th>
+                        <td>
+                            <label class="input-group">
+                                <input name="Builder" type="text" ng-model="sys.BuilderName" class="form-control"
+                                       ng-required="true" value={{sys.BuilderName}} ng-disabled="true"/>
+                                <span class="input-group-addon" userselect data-textids="sys.Builder"
+                                      data-textnames="sys.BuilderName" data-datausers="[]" data-textguids=""
+                                      data-selecttype="single"><i class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+
+                        </td>
+                        <th class="col-md-2"><span style="color:red">*</span>项目经理：</th>
+                        <td>
+                            <label class="input-group">
+                                <input name="PM" type="text" ng-model="sys.PMName" class="form-control"
+                                       ng-required="true" value={{sys.PMName}} ng-disabled="true"/>
+                                <span class="input-group-addon" userselect data-textids="sys.PM"
+                                      data-textnames="sys.PMName" data-datausers="[]" data-textguids=""
+                                      data-selecttype="single"><i class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">系统描述：</th>
+                        <td colspan="3">
+                            <textarea name="Note" type="text" ng-model="sys.Note" class="form-control"
+                                      value={{sys.Note}} style="height:100px"/>
+
+                        </td>
+                    </tr>
+                </table>
+                <div class="form_foot" style="text-align:center">
+                    <button id="submit" class="btn btn-primary" style="padding:4px 20px 4px 20px" type="submit"
+                            ng-disabled="(editSysForm.$invalid || editSysForm.BuildYear.$error.pattern)">保存
+                    </button>
+                    <button id="cancel" type="button" class="btn btn-default" style="padding:4px 20px 4px 20px"
+                            ng-click="$hide()">取消
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

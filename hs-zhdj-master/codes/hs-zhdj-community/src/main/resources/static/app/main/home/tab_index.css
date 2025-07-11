@@ -1,0 +1,21 @@
+.btn-i {
+    margin-left: 2px;
+    font-size: 20px !important;
+    top:6px !important;
+    right: 5px;
+    position: absolute;
+    z-index: 301;
+    cursor: crosshair;
+}
+.btn-i:hover{
+    border-radius: 2px;
+    background-color: #ff5722;
+    color: #fff;
+}
+.li-a-title{
+    line-height: 1 !important;
+    vertical-align: middle;
+    white-space:nowrap;
+    padding-right: 25px !important;
+    z-index: 300;
+}

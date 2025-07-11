@@ -1,0 +1,74 @@
+﻿.cover {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 130px;
+    height: 125px;
+    display: none;
+    background-color: rgba(0, 0, 0, .3);
+    line-height: 125px;
+    text-align: center;
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+}
+
+.cover > .delbtn {
+    color: white;
+    font-size: 20px;
+}
+
+.imageDiv:hover .cover {
+    display: block;
+}
+
+.addImages {
+    display: inline-block;
+    width: 130px;
+    height: 125px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border: 1px dashed darkgray;
+    background: #f8f8f8;
+    position: relative;
+    overflow: hidden;
+    margin-left: 6px;
+}
+
+.text-detail {
+    color: darkgray;
+    text-align: center;
+}
+
+.text-detail > span {
+    font-size: 60px;
+}
+
+.diyfile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 140px;
+    height: 125px;
+    opacity: 0;
+}
+
+.imageDiv {
+    display: inline-block;
+    width: 130px;
+    height: 125px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #f8f8f8;
+    position: relative;
+    overflow: hidden;
+    margin-left: 6px;
+}
+
+.diyimg {
+    width: 130px;
+    height: 125px;
+}

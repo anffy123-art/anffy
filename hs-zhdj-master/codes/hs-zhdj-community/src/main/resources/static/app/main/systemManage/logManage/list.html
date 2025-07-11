@@ -1,0 +1,107 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="dj-list-content content1">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>操作人</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="userName" class="form-control" type="text" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.userName"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>操作时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="beginTime" class="form-control" ng-change="search()"
+                                                       autocomplete="off"
+                                                       autoclose="true"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       ng-model="selectparams.beginTime"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>至</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="endTime" class="form-control" ng-change="search()"
+                                                       autocomplete="off"
+                                                       autoclose="true"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       ng-model="selectparams.endTime"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <button  class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="table-responsive list-table-panel">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap"
+                               style="table-layout: fixed">
+                            <thead>
+                            <tr>
+                                <th class="col-md-2">日志标题</th>
+                                <th class="col-md-2">请求IP</th>
+                                <th class="col-md-1">操作模块</th>
+                                <th class="col-md-2">日志时间</th>
+                                <th class="col-md-3">客户端信息</th>
+                                <th class="col-md-2">操作人</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in dataList">
+                                <td><a ng-if="it.menuname==null" ng-click="showItem(it)">未知模块</a><a
+                                        ng-click="showItem(it)" ng-if="it.menuname!=null">{{it.pmenuname}}>{{it.menuname}}</a>
+                                </td>
+                                <td>{{it.requestip}}</td>
+                                <td>{{it.opmodule}}</td>
+                                <td>{{it.logtime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                                <td style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;"><span
+                                        title="{{it.clientinfo}}">{{it.clientinfo}}</span></td>
+                                <td>{{it.username}}</td>
+                            </tr>
+                            <tr ng-if="dataList.length<=0">
+                                <td colspan="9" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

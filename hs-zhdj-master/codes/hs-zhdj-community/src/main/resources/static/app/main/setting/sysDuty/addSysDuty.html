@@ -1,0 +1,61 @@
+﻿<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="min-width:720px;">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+
+            <form class="form-horizontal formtable1 panel-body modal-body" role="form" name="formSysDuty">
+                <table class="table table-bordered tform ">
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>系统名称：</th>
+                        <td colspan="3">
+                            <label>{{itemadddata.SystemName}}</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>功能点名称：</th>
+                        <td colspan="3"
+                            ng-class="{ 'has-error' : formSysDuty.SysDutyName.$invalid&&formSysDuty.$submitted}">
+                            <input class="form-control" type="text" name="DutyName" ng-model="item.SysDutyName"
+                                   ng-required="true"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>模块层级:</th>
+                        <td>
+                            <select name="DutyLv" class="form-control" ng-model="item.DutyLv" ng-disabled="true"
+                                    ng-options="d.DutyLv as d.LvName for d in Dlevel"></select>
+                        </td>
+                        <th class="col-md-2"><span style="color:red">*</span>父级节点:</th>
+                        <td>
+                            <label>{{itemadddata.PDutyName}}</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>功能描述：</th>
+                        <td colspan="3"
+                            ng-class="{ 'has-error' : formSysDuty.SysDutyNote.$invalid&&formSysDuty.$submitted}">
+                            <textarea name="SysDutyNote" class="form-control" ng-model="item.SysDutyNote"
+                                      style="resize:none; height:160px" ng-required="true"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">创建人：</th>
+                        <td class="col-md-4"><label name="DutyCreatorName">{{itemadddata.CreatorName}}</label></td>
+                        <th class="col-md-2">操作时间：</th>
+                        <td class="col-md-4"><label name="DutyLastDoneTime">{{item.LastDoneTime}}</label></td>
+                    </tr>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="hidden()">{{hasPermission.hide}}</button>
+                    <button ng-if="hasPermission.showSave" type="submit" class="btn btn-success" ng-click="save();">保存
+                    </button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>

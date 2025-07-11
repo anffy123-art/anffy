@@ -1,0 +1,41 @@
+﻿<table class="table table-bordered tform" ng-controller="stepdemandApplyCtrl">
+    <tr>
+        <th>需求名称:</th>
+        <td colspan="3">{{item.DemandTitle}}</td>
+    </tr>
+    <tr>
+        <th class="col-md-2">工单流水号:</th>
+        <td class="col-md-3">{{item.ApplyNo}}</td>
+        <th class="col-md-2">发起人：</th>
+        <td>{{iteminfo.CreatorName}}</td>
+    </tr>
+    <tr>
+        <th>需求验收人:</th>
+        <td>{{iteminfo.ValidManName}}</td>
+        <th>发起时间：</th>
+        <td>{{item.ApplyTime}}</td>
+    </tr>
+    <tr>
+        <th>紧急程度:</th>
+        <td>{{iteminfo.UrgentStatusName}}</td>
+        <th>期望完成时间：</th>
+        <td>{{item.PlanFinishTime}}</td>
+    </tr>
+    <tr>
+        <th>系统:</th>
+        <td colspan="3">
+            {{iteminfo.SystemName}}
+        </td>
+    </tr>
+    <tr>
+        <th><span style="color:red">*</span>上传需求说明书:</th>
+        <td colspan="3">
+            <bsfiles ng-model="datafiles.reqFileModel"/>
+        </td>
+    </tr>
+    <tr>
+        <th>需求描述:</th>
+        <td colspan="3" ng-bind-html="item.Note|showhtmlfilter">
+        </td>
+    </tr>
+</table>

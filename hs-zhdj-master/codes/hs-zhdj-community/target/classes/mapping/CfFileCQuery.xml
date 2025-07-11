@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.CfFileCQuery">
+    <resultMap id="BaseResultMap" type="com.px.partybuild.vo.DsjTreeFiletype">
+        <id column="FILETYPEID" jdbcType="VARCHAR" property="filetypeid"/>
+        <result column="PARENTTYPEID" jdbcType="VARCHAR" property="parenttypeid"/>
+        <result column="FILETYPENAME" jdbcType="VARCHAR" property="filetypename"/>
+        <result column="TREELEVEL" jdbcType="DECIMAL" property="treelevel"/>
+        <result column="CHILDCOUNT" jdbcType="DECIMAL" property="childcount"/>
+    </resultMap>
+    <select id="selectTreeFiles" resultMap="BaseResultMap">
+        select FILETYPEID, PARENTTYPEID, FILETYPENAME, TREELEVEL,
+        (select count(1) from DSJ_FILETYPE l where l.PARENTTYPEID=f.FILETYPEID) as CHILDCOUNT
+        from DSJ_FILETYPE f
+        where 1=1
+
+        <if test="pFileId !='' and pFileId!=null">
+            and f.PARENTTYPEID = #{ pFileId }
+        </if>
+        <if test="typename !='' and typename!=null">
+            and f.FILETYPENAME like '%'||#{typename}||'%'
+        </if>
+        <if test="pFileId == null or pFileId ==''">
+            and f.PARENTTYPEID is null
+        </if>
+        <if test="typeIds!=null and typeIds.size()!=0">
+            and f.FILETYPEID in
+            <foreach collection="typeIds" item="typeId"
+                     index="index" open="(" close=")" separator=",">
+                #{typeId}
+            </foreach>
+        </if>
+        <if test="passTypeIds!=null and passTypeIds.size()!=0">
+            and f.FILETYPEID not in
+            <foreach collection="passTypeIds" item="typeId"
+                     index="index" open="(" close=")" separator=",">
+                #{typeId}
+            </foreach>
+        </if>
+        order by treelevel asc
+
+    </select>
+    <select id="FindDSJ_File" resultType="java.util.Map">
+    select f.*,ft.FILETYPENAME,ft.TREELEVEL from (
+    select t.*,fn_FileTypeRoot(t.FILETYPEID) as rootTypeId from DSJ_FILEMRG t
+      where 1=1
+        <if test="fileName != null and fileName !=''">
+            and t.fileName like concat('%',#{fileName},'%')
+
+        </if>
+        <if test="typeIds!=null and typeIds.size()!=0">
+            and t.FILETYPEID in
+            <foreach collection="typeIds" item="typeId"
+                     index="index" open="(" close=")" separator=",">
+                #{typeId}
+            </foreach>
+        </if>
+    ) f
+    inner join DSJ_FILETYPE ft on f.rootTypeId=ft.FILETYPEID
+    </select>
+    <select id="FindTestResult" resultType="java.util.Map">
+    select count(1) as tital,ceil((max(CREATETIME)-min(CREATETIME))* 24 * 60 * 60) as diffsec from CF_FILE
+    where fileRefID= #{ fileRefId }
+    </select>
+</mapper>

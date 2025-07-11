@@ -1,0 +1,37 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div ng-include="'../main/shyk/meetingmodel.html'"></div>
+            <div panel-title data-title="'录入审核信息'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table dj-table2">
+                    <tr>
+                        <th>审核意见</th>
+                        <td colspan="3"
+                            ng-class="{ 'has-error' : this.editForm.content.$invalid &&  this.editForm.$submitted}">
+                            <div class="form-control-radio"
+                                 ng-class="{ 'focused error' : this.editForm.meetingapprovestatus.$invalid &&  editMenuForm.$submitted}">
+                                <input name="meetingapprovestatus" type="radio"
+                                       ng-model="dataModel.meetingapprovestatus" value="1"
+                                       ng-checked="dataModel.meetingapprovestatus==1" class="with-gap" id="istemp1"/>
+                                <label for="istemp1">同意</label>
+                                <input name="meetingapprovestatus" type="radio"
+                                       ng-model="dataModel.meetingapprovestatus" value="0"
+                                       ng-checked="dataModel.meetingapprovestatus==0" class="with-gap" id="istemp2"/>
+                                <label for="istemp2">不同意</label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button role-permission-code="shykMeetingAudit.btnPass"
+                        class="btn btn-primary"
+                        ng-click="saveMeetingApprove()">提交
+                </button>
+                <button type="button" class="btn btn-default" ng-click="pagechange();">返回</button>
+            </div>
+        </form>
+    </div>
+</div>

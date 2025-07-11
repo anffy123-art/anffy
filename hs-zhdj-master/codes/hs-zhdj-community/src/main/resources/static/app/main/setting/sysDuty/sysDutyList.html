@@ -1,0 +1,63 @@
+﻿<div class="panel panel-default formquery-panel-height">
+    <div class="panel-heading">
+        <h4>{{Context.title}}</h4>
+    </div>
+    <div class="search-param-panel">
+        <form class="form-inline formquery">
+            <div class="form-group">
+                <label for="selectSys">系统名称：</label>
+                <input type="text" class="form-control" ng-model="selectdata.querySysName" name="querySysName"/>
+            </div>
+            <div class="form-group">
+                <label for="queryDutyName">模块名称：</label>
+                <input type="text" class="form-control" ng-model="selectdata.queryDutyName" name="queryDutyName"/>
+            </div>
+            <div class="form-group formquery-btns-panel">
+                <button class="btn btn-primary" type="submit" ng-click="loadData()">查询</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="panel-body">
+        <table name="dutylist" class="table table-bordered table-hover tlist">
+            <thead>
+            <tr>
+                <th>系统名称</th>
+                <th>建设年份</th>
+                <th>主管需求部门</th>
+                <th>主管需求负责人</th>
+                <th>建设负责人（产品经理）</th>
+                <th>项目经理</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="sys in selectdata.syslist">
+                <td>{{sys.SystemName}}</td>
+                <td>{{sys.BuildYear}}</td>
+                <td>{{sys.DemandPDName}}</td>
+                <td>{{sys.DemandManName}}</td>
+                <td>{{sys.BuilderName}}</td>
+                <td>{{sys.PMName}}</td>
+                <td>
+                    <button class="btn btn-success btn-sm" title="显示功能树" data-placement="center"
+                            ng-click="showTree($event,sys)">
+                        <span class="glyphicon glyphicon-pencil "></span>
+                    </button>
+                </td>
+            </tr>
+            <tr ng-if="selectdata.syslist.length>0" data-id="tr_tree">
+                <td colspan="7">
+                    <bs_lvtree ng-model="tree_option"></bs_lvtree>
+                </td>
+            </tr>
+            <tr ng-if="selectdata.syslist.length<=0">
+                <td colspan="7" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+        <pagination data-pageindex="selectdata.pageindex" data-pagesize="selectdata.pagesize"
+                    data-ptotal="selectdata.ptotal"></pagination>
+
+    </div>
+</div>

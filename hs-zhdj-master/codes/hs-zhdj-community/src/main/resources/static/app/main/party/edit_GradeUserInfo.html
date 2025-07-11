@@ -1,0 +1,257 @@
+<div id="dicmodal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div activate-input activate-select class="body">
+                <form class="form-horizontal" role="form" id="userform"
+                      name="userform" ng-submit="submitGradeUser(userform.$valid)" novalidate>
+                    <div ng-if="isDetail" class="dj-formtable">
+                        <table class="dj-table">
+                            <tr>
+                                <th>
+                                    党组织代码
+                                </th>
+                                <td>
+                                    {{party.dzzdm}}
+                                </td>
+                                <th>
+                                    党组织名称
+                                </th>
+                                <td>
+                                    {{party.dzzmc}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>换届时间</th>
+                                <td ng-class="{ 'has-error' : this.userform.jc.$invalid &&  this.userform.$submitted}">
+                                    <select ng-model="uservm.jc"
+                                            ng-options="type.ldjtjc as type.ldjtdxrq for type in bzjcList"
+                                            class="form-control"
+                                            name="jc"
+                                            ng-required="true">
+                                        <option value="" selected>--请选择--</option>
+                                    </select>
+                                    <span ng-show="this.userform.jc.$invalid &&  this.userform.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>
+                                    姓名
+                                </th>
+                                <td ng-class="{ 'has-error' : this.userform.xm.$invalid &&  this.userform.$submitted}">
+                                    <div class="input-group input-group-search"
+                                         data-dataoptions="selectUserlist"
+                                         title="选择成员" bsselectdata-pro>
+                                        <input name="xm" type="text" ng-model="uservm.xm"
+                                               class="form-control" ng-required="true"
+                                               ng-disabled="true"/>
+                                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                                    </div>
+                                    <span ng-show="this.userform.xm.$invalid &&  this.userform.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <th>党内职务</th>
+                                <td ng-class="{ 'has-error' : this.userform.zwmc.$invalid &&  this.userform.$submitted}">
+                                    <select class="form-control show-tick" ng-model="uservm.zwmc"
+                                            ng-options="type.bm as type.hzmc for type in zwmcList"
+                                            class="form-control"
+                                            name="zwmc"
+                                            ng-required="true">
+                                        <option value="" selected>--请选择--</option>
+                                    </select>
+                                    <span ng-show="this.userform.zwmc.$invalid &&  this.userform.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>
+                                    任职方式
+                                </th>
+                                <td ng-class="{ 'has-error' : this.userform.rzfs.$invalid &&  this.userform.$submitted}">
+                                    <select class="form-control show-tick" ng-model="uservm.rzfs"
+                                            ng-options="type.bm as type.hzmc for type in rzfsList"
+                                            class="form-control"
+                                            name="rzfs"
+                                            ng-required="true">
+                                        <option value="" selected>--请选择--</option>
+                                    </select>
+                                    <span ng-show="this.userform.rzfs.$invalid &&  this.userform.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    专职或兼职情况
+                                </th>
+                                <td>
+                                    <!--<select class="form-control show-tick" ng-model="uservm.zzjzqk"
+                                            class="form-control"
+                                            name="zzjzqk">
+                                        <option value="" selected>&#45;&#45;请选择&#45;&#45;</option>
+                                        <option value="1">专职</option>
+                                        <option value="2">兼职</option>
+                                    </select>-->
+                                    <select class="form-control show-tick" ng-model="uservm.zzjzqk"
+                                            ng-options="type.BM as type.HZMC for type in zzjzqkList"
+                                            class="form-control"
+                                            name="zzjzqk">
+                                        <option value="" selected>--请选择--</option>
+                                    </select>
+                                </td>
+                                <th>
+                                    任职日期
+                                </th>
+                                <td ng-class="{ 'has-error' : this.userform.pzrzrq.$invalid &&  this.userform.$submitted}">
+                                    <input name="pzrzrq" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyyMMdd" data-date-type="date"
+                                           ng-model="uservm.pzrzrq"
+                                           placeholder="" bs-datepicker ng-required="true"/>
+                                    <span ng-show="this.userform.pzrzrq.$invalid &&  this.userform.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    任职结束日期
+                                </th>
+                                <td>
+                                    <input name="pzmzrq" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyyMMdd" data-date-type="date"
+                                           ng-model="uservm.pzmzrq"
+                                           placeholder="" bs-datepicker/>
+                                </td>
+                                <th></th>
+                                <td></td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<th>-->
+                                    <!--备注1-->
+                                <!--</th>-->
+                                <!--<td>-->
+                                    <!--<input type="text" name="yl01" ng-model="uservm.yl01" maxlength="36"-->
+                                           <!--class="form-control"/>-->
+                                <!--</td>-->
+                                <!--<th>-->
+                                    <!--备注2-->
+                                <!--</th>-->
+                                <!--<td>-->
+                                    <!--<input type="text" name="yl02" ng-model="uservm.yl02" maxlength="36"-->
+                                           <!--class="form-control"/>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<th>-->
+                                    <!--备注3-->
+                                <!--</th>-->
+                                <!--<td colspan="3">-->
+                                    <!--<input type="text" name="yl03" ng-model="uservm.yl03" maxlength="36"-->
+                                           <!--class="form-control"/>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        </table>
+                    </div>
+                    <div ng-if="!isDetail" class="dj-formtable">
+                        <table class="dj-table">
+                            <tr>
+                                <th>
+                                    党组织代码
+                                </th>
+                                <td>
+                                    {{party.dzzdm}}
+                                </td>
+                                <th>
+                                    党组织名称
+                                </th>
+                                <td>
+                                    {{party.dzzmc}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>领导集体届次</th>
+                                <td>
+                                    {{uservm.jc}}
+                                </td>
+                                <th>
+                                    姓名
+                                </th>
+                                <td>
+                                    {{uservm.xm}}
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <th>党内职务</th>
+                                <td>
+                                    {{(zwmcList|filter:{bm:uservm.zwmc})[0].hzmc }}
+                                </td>
+                                <th>
+                                    任职方式
+                                </th>
+                                <td>
+                                    {{(rzfsList|filter:{bm:uservm.rzfs})[0].hzmc }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    专职或兼职情况
+                                </th>
+                                <td>
+                                    {{(zzjzqkList|filter:{BM:uservm.zzjzqk})[0].HZMC }}
+                                </td>
+                                <th>
+                                    任职日期
+                                </th>
+                                <td>
+                                    {{uservm.pzrzrq}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    任职结束日期
+                                </th>
+                                <td>
+                                    {{uservm.pzmzrq}}
+                                </td>
+                                <th></th>
+                                <td></td>
+                            </tr>
+                            <!--<tr>-->
+                                <!--<th>-->
+                                    <!--备注1-->
+                                <!--</th>-->
+                                <!--<td>-->
+                                    <!--{{uservm.yl01}}-->
+                                <!--</td>-->
+                                <!--<th>-->
+                                    <!--备注2-->
+                                <!--</th>-->
+                                <!--<td>-->
+                                    <!--{{uservm.yl02}}-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<th>-->
+                                    <!--备注3-->
+                                <!--</th>-->
+                                <!--<td colspan="3">-->
+                                    <!--{{uservm.yl03}}-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        </table>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" form="userform" ng-if="isDetail">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

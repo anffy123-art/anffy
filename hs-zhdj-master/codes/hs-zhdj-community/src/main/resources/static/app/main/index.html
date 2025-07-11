@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!--<meta http-equiv="pragma" content="no-cache">-->
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+
+    <link href="../../content/bootstrap.min.css" rel="stylesheet" type='text/css' />
+    <link href="../css/bootstrap-additions.css" rel="stylesheet" />
+    <link href="../css/angular-motion.css" rel="stylesheet" />
+    <link href="../css/angular-awesome-slider.min.css" rel="stylesheet" />
+
+    <!--add-->
+    <link href="../../content/themes/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../../content/themes/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet">
+    <!--<link href="../../content/themes/css/gt-font.css" rel="stylesheet" type="text/css">-->
+    <link href="../../content/themes/css/gt-font-icon.css" rel="stylesheet" type="text/css">
+    <!--<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">-->
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">-->
+    <link href="../../content/themes/plugins/node-waves/waves.css" rel="stylesheet" />
+    <link href="../../content/themes/plugins/animate-css/animate.css" rel="stylesheet" />
+    <link href="../../content/themes/css/style.css" rel="stylesheet">
+    <link href="../../content/themes/css/themes/theme-red.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../content/themes/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="css/theme2/iconfont.css" />
+    <link href="../../content/themes/plugins/fixedheadertable/defaultTheme.css" rel="stylesheet" />
+    <!--add-->
+
+    <script src="../../scripts/jquery-1.11.1.js"></script>
+    <script src="css/theme2/iconfont.js"></script>
+    <script>
+        //var now=new Date();
+        //window.sysVersion='v=v7'+now.getFullYear()+(now.getMonth()+1)+now.getDate();
+        window.sysVersion='v=v06.18';
+        window.sysCompanyName='';
+        $(function () {
+            $.get("../../api/home/sysName",function(data) {
+                if(data.item){
+                    window.sysCompanyName=data.item;
+                }
+                var $title=$("head>title");
+                $title.text(window.sysCompanyName+$title.text());
+            });
+        });
+    </script>
+    <!--style src="js/bootstrap.min.js"></style-->
+    <script src="../../scripts/angular.js"></script>
+    <script src="../../scripts/angular-ui-router.js"></script>
+    <script src="../../scripts/crypto-js/crypto-js.js"></script>
+    <script src="../../scripts/moment.min.js"></script>
+    <script src="../../scripts/ocLazyLoad.js"></script>
+    <script src="../../scripts/angular-animate.js"></script>
+    <script src="../../scripts/angular-sanitize.js"></script>
+    <script src="../../scripts/bootstrap.js"></script>
+    <script src="../../scripts/angular-strap.js"></script>
+    <script src="../../scripts/angular-strap.tpl.js"></script>
+    <script src="../../scripts/angular-strap.tpl.js"></script>
+    <script src="../../scripts/ng-file-upload-shim.min.js"></script>
+    <script src="../../scripts/ng-file-upload.min.js"></script>
+    <script src="../../scripts/i18n/angular-locale_zh-cn.js"></script>
+    <script src="../../scripts/angular-awesome-slider.min.js"></script>
+    <script src="../../content/themes/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+    <script src="../../scripts/ueditor/ueditor.config.js"></script>
+    <script src="../../scripts/ueditor/ueditor.all.js"></script>
+    <!--add-->
+    <script src="../../content/themes/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <script src="../../content/themes/plugins/node-waves/waves.js"></script>
+    <script src="../../content/themes/plugins/fixedheadertable/jquery.fixedheadertable.js"></script>
+    <script src="../../scripts/jquery.actual.js"></script>
+    <!--add-->
+
+    <script src="../js/service.js?v=v06.18"></script>
+    <script src="app.js?v=v06.18"></script>
+
+</head>
+<body ng-app="gtPartyApp" class="theme-red">
+    <div ui-view>
+    </div>
+</body>
+</html>

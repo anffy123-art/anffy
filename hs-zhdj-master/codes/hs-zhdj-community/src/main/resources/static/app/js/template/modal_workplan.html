@@ -1,0 +1,130 @@
+﻿<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal formtable1 panel-body modal-body" role="form"
+                      ng-submit="saveTaskPlan(btnflag)" name="workPlanForm" style="padding: 10px; margin: 10px;"
+                      novalidate>
+                    <table class="table table-bordered tform">
+                        <tr>
+                            <th>系统:</th>
+                            <td><input type="text" class="form-control" name="SystemName" ng-model="modal.SystemName"
+                                       readonly="readonly"/></td>
+                            <th><span style="color:red">*</span>功能点:</th>
+                            <td ng-class="{ 'has-error' : workPlanForm.SysDutyName.$invalid &&  workPlanForm.$submitted}">
+                                <select class="form-control" ng-change="synchronized()" ng-required="true"
+                                        name="SysDutyName" disabled="disabled" ng-model="modal.SysDutyID"
+                                        ng-options="x.SysDutyName for x in SysDutyName">
+                                    <option value="">-- 请选择 --</option>
+                                </select>
+                                <span style="color:brown"
+                                      ng-show="workPlanForm.SysDutyName.$error.required && (issubmitted||workPlanForm.$submitted)">
+                                    功能点不能为空
+                                </span>
+                            </td>
+                            <!--<td ng-if="btnflag==2"><input class="form-control" type="text" name="SystemName" ng-required="true" ng-model="modal.SysDutyName" ng-readonly="btnflag!=1" /></td>-->
+                        </tr>
+                        <tr>
+                            <th><span style="color:red">*</span>任务名称：</th>
+                            <td colspan="3"
+                                ng-class="{ 'has-error' : workPlanForm.TaskName.$invalid &&  (workPlanForm.$submitted||issubmitted) }">
+                                <input type="text" class="form-control" ng-required="true" name="TaskName"
+                                       ng-model="modal.TaskName"/>
+                                <span style="color:brown"
+                                      ng-show="workPlanForm.TaskName.$error.required&&(issubmitted||workPlanForm.$submitted)">
+                                    任务名称不能为空
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span style="color:red">*</span>任务负责人:</th>
+                            <td ng-class="{ 'has-error' : workPlanForm.UserName.$invalid&&workPlanForm.$submitted}">
+                                <label class="input-group">
+                                    <input type="text" name="UserName" class="form-control" ng-model="modal.UserName"
+                                           required/>
+                                    <span class="input-group-addon"
+                                          data-url="../../api/MemManage/FindMemsdataByrolename"
+                                          data-datatext="modal.UserName" data-aid="{{roleParams}}"
+                                          data-dataval="modal.UserID" title="团队人员选择" bsselectdata><i
+                                            class="glyphicon glyphicon-zoom-in"></i></span>
+                                </label>
+                                <span style="color:brown"
+                                      ng-show="workPlanForm.UserName.$invalid&&workPlanForm.$submitted"
+                                      class="help-block">
+                                    请填写任务负责人
+                                </span>
+                            </td>
+
+                            <!--<th><span style="color:red">*</span>责任人:</th>
+                            <td  ng-class="{ 'has-error' : workPlanForm.UserName.$invalid &&  (workPlanForm.$submitted||issubmitted) }">
+                                <label class="input-group">
+                                    <input type="text" class="form-control" name="UserName" ng-model="modal.UserName" ng-required="true" />
+                                    <span class="input-group-addon" data-textids="modal.UserID" data-textnames="modal.UserName" data-textguids="" data-datausers="" data-selecttype="single" userselect><i class="glyphicon glyphicon-zoom-in"></i></span>
+                                </label>
+                                    <span  style="color:brown" ng-show="workPlanForm.UserName.$invalid &&  (workPlanForm.$submitted||issubmitted)" class="help-block">
+                                        责任人不能为空
+                                    </span>
+                            </td>-->
+                            <th><span style="color:red">*</span>预计完成时间：</th>
+                            <td ng-class="{ 'has-error' : workPlanForm.ExpectFinishDate.$invalid &&  (workPlanForm.$submitted||issubmitted) }">
+                                <input class="form-control" type="text" name="ExpectFinishDate" data-timezone=null
+                                       data-date-type="date" data-date-format="yyyy-MM-dd" autoclose="true"
+                                       ng-model="modal.ExpectFinishDate" ng-required="true" bs-datepicker/>
+                                <span style="color:brown"
+                                      ng-show="workPlanForm.ExpectFinishDate.$invalid &&  (workPlanForm.$submitted||issubmitted)">
+                                    <span ng-show="workPlanForm.ExpectFinishDate.$error.required" class="help-block">
+                                        预计完成时间不能为空
+                                    </span>
+                                    <span ng-show="!workPlanForm.ExpectFinishDate.$error.required">请输入正确的时间格式“yyyy-MM-dd”</span>
+                                </span>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span style="color:red">*</span>预计工作量:</th>
+                            <td ng-class="{ 'has-error' : workPlanForm.ExpectWorkValue.$invalid &&  (workPlanForm.$submitted||issubmitted) }">
+                                <input type="number" class="form-control" name="ExpectWorkValue"
+                                       ng-model="modal.ExpectWorkValue" ng-required="true" min="0"/>
+                                <span style="color:brown"
+                                      ng-show="workPlanForm.ExpectWorkValue.$invalid &&  (workPlanForm.$submitted||issubmitted)"
+                                      class="help-block">
+                                    预计工作量不能为空
+                                </span>
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th style="text-align:right"><span style="color:red">*</span>任务描述:</th>
+                            <td colspan="3"
+                                ng-class="{ 'has-error' : workPlanForm.TaskNote.$invalid&&workPlanForm.$submitted}">
+                                <textarea id="Note" rows="5" typeof="text" ng-keyup="changeText(modal.TaskNote.length)"
+                                          class="form-control" name="TaskNote" required ng-required="true"
+                                          ng-model="modal.TaskNote" placeholder="请输入500字以内"></textarea>
+                                <span class="fontColor">你还可以输入<span style="color: red;">{{textLength}}</span>字</span>
+                                <span style="color:brown"
+                                      ng-show="workPlanForm.TaskNote.$error.required&&missionForm.$submitted"
+                                      class="help-block">
+                                    请填写任务描述
+                                </span>
+                                <span style="color:brown"
+                                      ng-show="workPlanForm.TaskNote.$error.maxlength&&missionForm.$submitted"
+                                      class="help-block">
+                                    最多输入500字
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="form_foot">
+                        <button type="submit" name="btn_up" class="btn btn-danger" value="保存">保存</button>
+                        <button type="reset" class="btn btn-default" ng-click="hidemodal()">取消</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="dj-list-content content1">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-3 col-md-3 dj-label">
+                                        <label>党委名称</label>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="dwName" class="form-control" type="text"
+                                                       ng-model="selectparams.dwName"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div>
+                                <button role-permission-code="learningSecretaryList.btnSearch" class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body" style="min-height:400px;">
+                    <div class="table-responsive list-table-panel" style="max-height: 550px">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>党委名称</th>
+                                <th>负责人</th>
+                                <th>所在党支部</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in dataList">
+                                <td scope="row" class="text-center">{{$index+1}}</td>
+                                <td>{{it.dwName}}</td>
+                                <td>{{it.leaderName}}</td>
+                                <td>{{it.leaderDzbName}}</td>
+                                <th>
+                                    <button role-permission-code="home.learningSecretaryAdd" class="btn td-btn bg-light-green waves-effect"
+                                            ng-click="editData(it.dzzdm,it.dwName,it.leader,it.leaderName)"
+                                            title="更改">
+                                        <!--<i class="material-icons td-icon">border_color</i>-->
+                                        更改
+                                    </button>
+                                </th>
+                            </tr>
+                            <tr ng-if="dataList.length<=0">
+                                <td colspan="5" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

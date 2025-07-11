@@ -1,0 +1,223 @@
+﻿<style>
+    .tablefix {
+        table-layout: fixed;
+    }
+
+    .tablefix tbody td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .spantoa {
+        cursor: pointer;
+    }
+
+    .spantoa:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div ng-controller="formDevProblemkCtrl">
+    <devtestproblem data-typedatas="typedatas.InternalTest" data-formparams="formdata"/>
+    <devtestproblem ng-if="typedatas.FucnTest.showAllForm" data-typedatas="typedatas.FucnTest"
+                    data-formparams="formdata"/>
+</div>
+
+<script type="text/ng-template" id="templateDevTestProblem.html">
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <h3 class="panel-title">
+                <span data-toggle="collapse" href="#testtype{{typedatas.type}}"
+                      class="spantoa">{{typedatas.title}}</span>
+                <span ng-if="typedatas.showBtnExec">
+                    <button type="button" class="btn btn-link"
+                            style="float:right;margin-right:2%; color:#007bff;padding:1px;"
+                            ng-click="execTestPlan($event.target)" id="test11"><strong>执行测试计划</strong></button>
+                </span>
+            </h3>
+
+        </div>
+        <div id="testtype{{typedatas.type}}" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div bs-tabs>
+                    <div ng-repeat="tab in tabs" data-title="{{tab.title}}" disabled="{{ tab.disabled }}" bs-pane>
+                        <div ng-include="tab.content"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="probleminfolist.html">
+    <div class="search-param-panel">
+        <form class="form-inline formquery ng-pristine ng-valid">
+            <div class="form-group">
+                <label for="problemName">问题名称：</label>
+                <input name="problemName" class="form-control ng-pristine ng-untouched ng-valid ng-empty" type="text"
+                       ng-model="searchparam.problemName" placeholder="请输入问题名称">
+            </div>
+            <div class="form-group">
+                <label for="problemType">问题类型：</label>
+                <select class="form-control" ng-model="searchparam.problemType"
+                        ng-options="type.DicKey as type.DicValue for type in problemTypeList" name="problemType">
+                    <option value="" ng-readonly="params.isShow">--请选择--</option>
+                </select>
+            </div>
+            <div class="form-group formquery-btns-panel">
+                <button class="btn btn-primary" ng-click="loadItem()">查询</button>
+            </div>
+            <button class="btn btn-success" style="float:right;" ng-click="assignAllProblem(items)"
+                    ng-if="!typedatas.readonly">一键派发
+            </button>
+        </form>
+    </div>
+    <table class="table table-bordered table-hover tlist tablefix ng-isolate-scope">
+        <thead>
+        <tr>
+            <th width="5%">序号</th>
+            <th width="20%">问题名称</th>
+            <th width="35%">问题描述</th>
+            <th width="10%">问题类型</th>
+            <th width="10%">严重程度</th>
+            <th width="10%">处理结果</th>
+            <th width="10%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in items">
+            <td>{{$index+1}}</td>
+            <td title="{{item.ProblemName}}">{{item.ProblemName}}</td>
+            <td title="{{item.ProblemDescribe}}">{{item.ProblemDescribe}}</td>
+            <td>{{item.ProblemTypeName}}</td>
+            <td>{{item.SeriousLvName}}</td>
+            <td>{{item.ProblemState |isProblemState}}</td>
+            <td>
+                <button type="button" class="btn btn-success btn-sm" ng-click="openBugFixTask(item.FlowDatas)"
+                        ng-if="(item.ProblemState>0 && typedatas.readonly) || item.ProblemState>0" title="查看">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                </button>
+                <button type="button" class="btn btn-success btn-sm" ng-click="editProblem(item)"
+                        ng-if="item.ProblemState==0" title="修改">
+                    <span class="glyphicon"
+                          ng-class="{'glyphicon-pencil':!typedatas.readonly,'glyphicon-search':typedatas.readonly}"></span>
+                </button>
+                <button type="button" class="btn btn-success btn-sm" ng-click="assignOneProblem(item)"
+                        ng-if="!(typedatas.readonly || item.ProblemState!=0)" title="指派">
+                    <span class="glyphicon glyphicon-hand-right"></span>
+                </button>
+                <button type="button" class="btn btn-danger btn-sm" ng-click="deleteProblem(item.DevTestDataID)"
+                        ng-if="!(typedatas.readonly || item.ProblemState!=0)" title="删除">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
+        </tr>
+        <tr ng-if="items.length<=0">
+            <td colspan="7" style="text-align:center">暂无数据</td>
+        </tr>
+        </tbody>
+    </table>
+    <pagination data-pageindex="page.pageIndex" data-pagesize="page.pageSize"
+                data-ptotal="page.totalCount"></pagination>
+</script>
+
+<script type="text/ng-template" id="problemcount.html">
+    <table class="table table-bordered tablefix tlist table-hover">
+        <thead>
+        <tr>
+            <th>功能点</th>
+            <th>问题总数</th>
+            <th>处理中</th>
+            <th>已处理</th>
+            <th>测试结果</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in ProblemCountItems">
+            <td title="{{item.SysDutyName}}">{{item.SysDutyName}}</td>
+            <td><a ng-click="showlist(item,null)">{{item.count|isZero}}</a></td>
+            <td><a ng-click="showlist(item,1)">{{item.notdone|isZero}}</a></td>
+            <td><a ng-click="showlist(item,2)">{{item.done|isZero}}</a></td>
+            <td>{{item.PlanState|isPlanState}}</td>
+            <td style="width:10%">
+                <button class="btn btn-success btn-sm " ng-class="{'disabled':item.PlanState==0}"
+                        ng-if="!typedatas.readonly && item.PlanState!=2" ng-click="addProblem(item)" type="button">
+                    添加BUG
+                </button>
+                <button class="btn btn-success btn-sm" ng-class="{'disabled':item.PlanState==0}"
+                        ng-if="!typedatas.readonly && typedatas.type==2 && item.PlanState!=2 " ng-click="passPlan(item)"
+                        type="button">
+                    通过
+                </button>
+                <button class="btn btn-success btn-sm"
+                        ng-if="(item.PlanState==2  && typedatas.type!=1) || typedatas.readonly"
+                        ng-disabled="item.count<=0" data-placement="center" ng-click="showlist(item,null)">
+                    查看
+                </button>
+            </td>
+        </tr>
+        <tr ng-if="ProblemCountItems.length<=0">
+            <td colspan="6" style="text-align:center">暂无数据</td>
+        </tr>
+        </tbody>
+    </table>
+    <pagination data-pageindex="ProblemCountPage.pageIndex" data-pagesize="ProblemCountPage.pageSize"
+                data-ptotal="ProblemCountPage.totalCount"></pagination>
+</script>
+
+<!--点击数字后弹出的问题列表-->
+<script type="text/ng-template" id="problemlist.html">
+    <div class="modal" id="problemListModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" style="width:70%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- 关闭按钮 -->
+                    <button type="button" class="close" ng-click="$hide()">
+                        ×
+                    </button>
+                    <!-- 标题 -->
+                    <h3 class="modal-title">{{title}}</h3>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered tablefix tlist table-hover">
+                        <thead>
+                        <tr>
+                            <th width="4%">序号</th>
+                            <th width="26%">功能点</th>
+                            <th width="32%">问题名称</th>
+                            <th width="10%">问题类型</th>
+                            <th width="10%">严重程度</th>
+                            <th width="6%">测试负责人</th>
+                            <th width="6%">问题负责人</th>
+                            <th width="6%">状态</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in items">
+                            <td>{{$index+1}}</td>
+                            <td title="{{item.SysDutyName}}">{{item.SysDutyName}}</td>
+                            <td title="{{item.ProblemName}}"><a ng-click="editProblem(item)">{{item.ProblemName}}</a>
+                            </td>
+                            <td>{{item.ProblemTypeName}}</td>
+                            <td>{{item.SeriousLvName}}</td>
+                            <td>{{item.TestUserName}}</td>
+                            <td>{{item.ToDoUserName}}</td>
+                            <td>{{item.ProblemState|isProblemState}}</td>
+                        </tr>
+                        <tr ng-if="showitems.length<=0">
+                            <td colspan="8" style="text-align:center">暂无数据</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <pagination data-pageindex="page.pageIndex" data-pagesize="page.pageSize"
+                                data-ptotal="page.totalCount"></pagination>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</script>
+
+
+

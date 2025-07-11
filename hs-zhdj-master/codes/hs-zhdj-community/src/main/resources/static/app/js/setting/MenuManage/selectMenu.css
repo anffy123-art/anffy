@@ -1,0 +1,7 @@
+﻿.treeitem {
+    padding-left: 15px;
+}
+
+.treeitem .treeitem {
+    padding-left: 28px;
+}

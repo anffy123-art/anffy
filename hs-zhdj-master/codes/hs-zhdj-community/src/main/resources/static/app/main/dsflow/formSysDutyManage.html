@@ -1,0 +1,52 @@
+﻿<div ng-controller="formSysDutyManageCtrl">
+    <!--<div>-->
+    <table class="table table-bordered tlist">
+        <thead>
+        <tr>
+            <td colspan="7" style="text-align:center; background-color:#f5f5f5">
+                <span style="color:black;"><strong>功能点</strong></span>
+                <span>
+                        <button ng-hide="params.readonly_sysDuty" type="button" class="btn btn-link"
+                                style="float:right;margin-right:3%; color:#007bff;padding:1px;" data-placement="center"
+                                data-animation="am-fade-and-scale"
+                                ng-click="selectSysDuty()"><strong>添加功能点</strong></button>
+                    </span>
+            </td>
+        </tr>
+        <tr>
+            <th>序号</th>
+            <th>顶层模块</th>
+            <th>功能名称</th>
+            <th>创建人</th>
+            <th>操作时间</th>
+            <th>功能点负责人</th>
+            <th ng-hide="params.readonly_sysDuty">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="it in sysDutyItemsList">
+            <td>{{$index+1+(selectdata.pageindex-1)*selectdata.pagesize}}</td>
+            <td>{{it.Top.DutyName}}</td>
+            <td>{{it.item.SysDutyName}}</td>
+            <td>{{it.item.CreatorName}}</td>
+            <td>{{it.item.LastDoneTime}}</td>
+            <td>{{it.item.ProjectName}}</td>
+            <td ng-hide="params.readonly_sysDuty">
+                <!--<button class="btn btn-success btn-sm" ng-hide="params.readonly_sysDuty" ng-click="showOrEditSysDuty(it)">
+                    <span class="glyphicon glyphicon-eye-open "></span>
+                </button>-->
+                <button class="btn btn-danger btn-sm" ng-hide="params.readonly_sysDuty" ng-click="deleteSysDuty(it)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
+        </tr>
+        <tr ng-if="selectdata.ptotal<=0">
+            <td colspan="7" style="text-align:center">暂无数据</td>
+        </tr>
+        </tbody>
+    </table>
+    <!--参数含义：page-Index：当前页面，page-Size：每页显示多少数据，total-Length:数据总长度-->
+    <pagination ng-if="selectdata.ptotal>selectdata.pagesize" data-pageindex="selectdata.pageindex"
+                data-pagesize="selectdata.pagesize" data-ptotal="selectdata.ptotal"></pagination>
+
+</div>

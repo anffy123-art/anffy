@@ -1,0 +1,173 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" novalidate
+              name="editForm">
+            <div panel-title data-title="'政工约稿信息'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>标题</th>
+                        <td colspan="3"
+                            ng-class="{ 'focused error' : this.editForm.title.$invalid &&  this.editForm.$submitted}">
+                            <input class="form-control" maxlength="2000" name="title"
+                                   ng-model="dataModel.title"
+                                   ng-required="true" type="text"/>
+                            <label class="error"
+                                   ng-show="this.editForm.title.$invalid &&  this.editForm.$submitted">必填.</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所属类型</th>
+                        <td ng-class="{ 'focused error' : this.editForm.typevalue.$invalid &&  this.editForm.$submitted}">
+                            <select name="typevalue" ng-model="dataModel.typevalue"
+                                    ng-options="op.val as op.label for op in ndList"
+                                    ng-required="true"
+                                    required>
+                            </select>
+                            <label class="error"
+                                   ng-show="this.editForm.typevalue.$invalid &&  this.editForm.$submitted">必填.</label>
+                        </td>
+                        <th>截止日期</th>
+                        <td ng-class="{ 'focused error' : this.editForm.closedate.$invalid &&  this.editForm.$submitted}">
+                            <input bs-datetimepicker class="form-control" format="yyyy-mm-dd"
+                                   name="closedate" ng-model="dataModel.closedate"
+                                   ng-required="true" ng-value="dataModel.closedate|date:'yyyy-MM-dd'" type="text"/>
+                            <label class="error"
+                                   ng-show="this.editForm.chairuser.$invalid &&  this.editForm.$submitted">必填.</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>要求</th>
+                        <td colspan="3"
+                            ng-class="{ 'focused error' : this.editForm.ask.$invalid &&  this.editForm.$submitted}">
+                            <textarea class="form-control" name="ask" ng-model="dataModel.ask"
+                                      ng-required="true"
+                                      rows="6"></textarea>
+                            <label class="error"
+                                   ng-show="this.editForm.ask.$invalid &&  this.editForm.$submitted">必填.</label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div class="table-responsive list-table-panel dsj_dydt" style="font-size: 16px;">
+                <div class="list-table-title">
+                    <div class="table-title">
+                        约稿情况
+                    </div>
+                    <div class="table-tool">
+                        <button class="btn btn-default1" ng-click="addYg()" ng-if="dataModel.typevalue==1">新增
+                        </button>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>开始月份</th>
+                        <th>结束月份</th>
+                        <th ng-if="dataModel.typevalue=='1'&&yg_dataList.length>1">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="it in yg_dataList">
+                        <td align="center"
+                            ng-class="{ 'has-error' : invalidValue($index,this.editForm,'title') &&  this.editForm.$submitted}">
+                            <input autocomplete="off" class="form-control" name="title_{{$index}}"
+                                   ng-model="it.title"
+                                   ng-required="true"/>
+                        </td>
+                        <td align="center"
+                            ng-class="{ 'has-error' : invalidValue($index,this.editForm,'begindate') &&  this.editForm.$submitted}">
+                            <input bs-datetimepicker class="form-control" format="yyyy-mm-dd"
+                                   name="begindate_{{$index}}"
+                                   ng-model="it.begindate" ng-required="true"
+                                   ng-value="it.begindate|date:'yyyy-MM-dd'"
+                                   type="text"/>
+                        </td>
+                        <td align="center"
+                            ng-class="{ 'has-error' : invalidValue($index,this.editForm,'enddate') &&  this.editForm.$submitted}">
+                            <input bs-datetimepicker class="form-control" format="yyyy-mm-dd"
+                                   name="enddate_{{$index}}"
+                                   ng-model="it.enddate" ng-required="true" ng-value="it.enddate|date:'yyyy-MM-dd'"
+                                   type="text"/>
+                        </td>
+                        <td align="center" ng-if="dataModel.typevalue=='1'&&yg_dataList.length>1">
+                            <button class="btn td-btn bg-pink waves-effect" ng-click="deleteYg($index)"
+                                    title="删除">
+                                <!--<i class="material-icons td-icon">delete_forever</i>-->
+                                删除
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+             <div class="table-responsive list-table-panel" style="font-size: 16px;margin-top:20px">
+                 <div class="list-table-title">
+                     <div class="table-title">
+                         接收单位
+                     </div>
+                     <div class="table-tool">
+                         <button class="btn btn-primary dropdown-toggle" ng-click="selectAllDw()" ng-if="typeMod!='d'"
+                                 title="全部"
+                                 type="button">
+                             <span></span>全部
+                         </button>
+                         <button class="btn btn-primary dropdown-toggle" ng-click="selectDw()" ng-if="typeMod!='d'"
+                                 title="选择"
+                                 type="button">
+                             <span></span>选择
+                         </button>
+                     </div>
+                 </div>
+                 <div class="outoflow" style="max-height: 300px;">
+                     <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                         <thead>
+                         <tr>
+                             <th>序号</th>
+                             <th>党委名称</th>
+                             <th>负责人</th>
+                             <th>所在党支部</th>
+                             <th>操作</th>
+                         </tr>
+                         </thead>
+                         <tbody>
+                         <tr ng-repeat="it in receiveDWs">
+                             <th scope="row">{{$index+1}}</th>
+                             <th>{{it.dwName}}</th>
+                             <th>{{it.leaderName}}</th>
+                             <th>{{it.leaderDzbName}}</th>
+                             <th>
+                                 <button class="btn td-btn bg-pink waves-effect" ng-click="deleteReceiveDWs($index)"
+                                         ng-if="typeMod!='d'" title="删除">
+                                     <!--<i class="material-icons td-icon">delete_forever</i>-->
+                                     删除
+                                 </button>
+                             </th>
+                         </tr>
+                         <tr ng-if="receiveDWs.length<=0">
+                             <td colspan="5" style="text-align:center">暂无数据</td>
+                         </tr>
+                         </tbody>
+                     </table>
+                 </div>
+             </div>
+
+            <div class=" list-table-panel" style="font-size: 16px; margin-bottom: 20px;">
+                <bsfiles ng-model="reqFileModel"/>
+            </div>
+            <div class="form_foot">
+                <button class="btn btn-default" ng-click="pagechange();" type="button">取消</button>
+                <button class="btn btn-primary" ng-click="submitData(this.editForm.$valid,true)" type="submit">暂存
+                </button>
+                <button class="btn btn-primary" ng-click="submitData(this.editForm.$valid,false)"
+                        role-permission-code="zgyg.btn.send" type="submit">发送
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

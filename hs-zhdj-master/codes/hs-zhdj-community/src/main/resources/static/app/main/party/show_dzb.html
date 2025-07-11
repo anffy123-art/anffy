@@ -1,0 +1,88 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="dyuserform" novalidate>
+            <div panel-title data-title="'党总支（支部）基本信息'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table dj-table3">
+                    <tr>
+                        <th>党总支（支部）名称</th>
+                        <td colspan="5">
+                            {{partyModel.dzzmc}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>组织类别</th>
+                        <td>
+                            {{partyFBModel.zzlbmc}}
+                        </td>
+                        <th>委员数</th>
+                        <td>
+                            {{pageInfo_GradeUser.ptotal}}
+                        </td>
+                        <th>所属党组织数</th>
+                        <td>
+                            {{partyModel.childCount}}
+                        </td>
+                    </tr>
+                    <tr>
+
+
+                        <th>党员数</th>
+                        <td>
+                            {{partyModel.dys}}
+                        </td>
+                        <th>在岗党员数</th>
+                        <td>
+                            {{partyModel.zgcount}}
+                        </td>
+                        <th></th>
+                        <td>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>预备党员数</th>
+                        <td>
+                            {{partyModel.ybdys}}
+                        </td>
+                        <th>入党积极分子数</th>
+                        <td>
+                            {{partyModel.rdjjfzs}}
+                        </td>
+                        <th>申请入党数</th>
+                        <td>
+                            {{partyModel.sqrds}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>年度分类定级</th>
+                        <td>
+                            {{djkp_DataList.length>0?djkp_DataList[0].JUDGELEVELNAME:''}}
+                        </td>
+                        <th>上次换届时间</th>
+                        <td>
+                            {{jcModel.LDJTDXRQ}}
+                        </td>
+                        <th>到期换届时间</th>
+                        <td>
+                            {{jcModel.GJJMRQ}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            
+
+            
+
+            
+
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+

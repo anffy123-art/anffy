@@ -1,0 +1,39 @@
+<div class="dj-formtable">
+    <div class="table-responsive list-table-panel">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>双重组织生活</th>
+                <th>民主生活会</th>
+                <th>日常谈心谈话</th>
+                <th>下基层讲党课</th>
+                <th>落实请示报告制度</th>
+                <th>落实联系点制度</th>
+                <th>指导联系点党支部组织生活会</th>
+                <th>指导所属单位党代会或党支部换届</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in userLeaderList">
+                <td scope="row" class="text-center">
+                    {{$index+1}}
+                </td>
+                <td>{{it.XM}}</td>
+                <td class="text-center"> <a ng-click="showLeader(it.XM,1)">{{it.NUM_LEADERTYPE1}}</a></td>
+                <td class="text-center"> <a ng-click="showLeader(it.XM,2)">{{it.NUM_LEADERTYPE2}}</a></td>
+                <td class="text-center"> <a ng-click="showLeader(it.XM,3)">{{it.NUM_LEADERTYPE3}}</a></td>
+                <td class="text-center"> <a ng-click="showLeader(it.XM,4)">{{it.NUM_LEADERTYPE4}}</a></td>
+                <td class="text-center"> <a ng-click="showLeader(it.XM,5)">{{it.NUM_LEADERTYPE5}}</a></td>
+                <td class="text-center"> <a ng-click="showLeader(it.XM,6)">{{it.NUM_LEADERTYPE6}}</a></td>
+                <td class="text-center"> <a ng-click="showLeader(it.XM,7)">{{it.NUM_LEADERTYPE7}}</a></td>
+                <td class="text-center"> <a ng-click="showLeader(it.XM,8)">{{it.NUM_LEADERTYPE8}}</a></td>
+            </tr>
+            <tr ng-if="userLeaderList.length==0">
+                <td colspan="10" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

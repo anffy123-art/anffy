@@ -1,0 +1,64 @@
+﻿<div ng-controller="DevPlanReportCtrl">
+    <table class="table table-bordered table-hover tlist">
+        <thead>
+        <tr>
+            <td colspan="5" style="text-align:center; background-color:#f5f5f5">
+                <span style="color:black;"><strong>实施日志</strong></span>
+            </td>
+        </tr>
+        <tr>
+            <!--<th style="text-align:center">任务名称</th>-->
+            <th style="text-align:center" class="col-md-3">日期</th>
+            <th style="text-align:center" class="col-md-2">进度</th>
+            <th style="text-align:center" class="col-md-3">简述</th>
+            <th style="text-align:center" class="col-md-3">负责人</th>
+            <th style="text-align:center" class="col-md-1">操作</th>
+        </tr>
+        </thead>
+        <tbody class="Report" ng-repeat="TaskReport in TaskReportLists">
+        <tr>
+            <td style="text-align:center">{{TaskReport.reportDate}}</td>
+            <td style="text-align:center">{{TaskReport.Progress}}%</td>
+            <td style="text-align:center">{{TaskReport.Note}}</td>
+            <td style="text-align:center">{{TaskReport.Tasker}}</td>
+            <td style="text-align:center">
+                <button class="btn btn-success btn-sm" title="查看" data-placement="center"
+                        ng-click="getOneImpLog($event,TaskReport.TaskbaseID)"><span
+                        class="glyphicon glyphicon-eye-open"></span></button>
+                <!--<button class="btn btn-danger btn-sm" title="删除"><span class="glyphicon glyphicon-remove " ng-click="deletetTaskReport(TaskReport.TaskReportID)"></span></button>-->
+            </td>
+        </tr>
+        <tr class="secondTr" style="display:none;">
+            <td colspan="4" style="padding:0px;margin:0px;font-size:small;">
+                <div style="max-height:300px;overflow:auto">
+                    <table class="table table-bordered table-hover tlist" style="padding:0px;margin:0px;">
+                        <tbody style="height:50px">
+                        <tr ng-repeat="TaskReport in DevPlanReportLists" style="background-color: #eeeeee;">
+                            <td style="text-align:center; border-color: #cccaca;" class="col-md-3">
+                                {{TaskReport.reportDate}}
+                            </td>
+                            <td style="text-align:center;border-color: #cccaca;" class="col-md-2">
+                                {{TaskReport.Progress}}%
+                            </td>
+                            <td style="text-align:center;border-color: #cccaca;" class="col-md-3">{{TaskReport.Note}}
+                            </td>
+                            <td style="text-align:center;border-color: #cccaca;" class="col-md-3">
+                                {{TaskReport.Tasker}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </td>
+            <td></td>
+        </tr>
+
+        </tbody>
+        <tr ng-show="finddata.ptotal<=0">
+            <td colspan="5" style="text-align:center">暂无数据</td>
+        </tr>
+    </table>
+
+    <pagination ng-if="finddata.ptotal>finddata.pagesize" data-pageindex="finddata.pageindex"
+                data-pagesize="finddata.pagesize" data-ptotal="finddata.ptotal"></pagination>
+</div>

@@ -1,0 +1,34 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 450px;">
+        <div class="card">
+            <div class="header" dragable-header>
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">归档</h4>
+            </div>
+            <div activate-input activate-select class="body">
+                <form class="form-horizontal" role="form" id="editForm"
+                      name="editForm" ng-submit="save(editForm.$valid)" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table dj-table3">
+                            <tr>
+                                <th>归档日期<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.archiveDate.$invalid &&  this.editForm.$submitted}">
+                                    <input name="archiveDate" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="string" ng-model="archiveDate"
+                                           ng-required="true"
+                                           class="form-control" bs-datepicker/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" form="editForm">确定归档</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,183 @@
+﻿﻿
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h5>需求提出</h5>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal formtable1" role="form" name="demandupForm" novalidate>
+            <div ng-if="!viewdata.readonly">
+                <table class="table-bordered tform table3col">
+                    <tr>
+                        <th><span style="color:red">*</span>系统:</th>
+                        <td ng-class="{ 'has-error' : demandupForm.SystemName.$invalid&&demandupForm.$submitted}">
+                            <label class="input-group">
+                                <input type="text" name="SystemName" class="form-control"
+                                       ng-model="viewdata.selectTest.selectedLabeData" required
+                                       ng-readonly="viewdata.readonly"/>
+                                <span class="input-group-addon" data-dataoptions="viewdata.selectTest" title="系统选择"
+                                      bsselectdata-pro><i class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+                            <span style="color:brown"
+                                  ng-show="demandupForm.SystemName.$invalid&&demandupForm.$submitted"
+                                  class="help-block">
+                                请选择系统
+                            </span>
+                        </td>
+                        <th><span style="color:red">*</span>工单流水号:</th>
+                        <td><input type="text" class="form-control" name="ApplyNo" value="{{item.ApplyNo}}"
+                                   ng-required="true" ng-readonly="viewdata.readonly"/></td>
+                        <th><span style="color:red">*</span>系统:</th>
+                        <td><input class="form-control" type="text" value="11"/></td>
+                    </tr>
+                    <tr>
+                        <th><span style="color:red">*</span>需求名称:</th>
+                        <td colspan="3"
+                            ng-class="{ 'has-error' : demandupForm.DemandTitle.$invalid &&demandupForm.$submitted }">
+                            <input class="form-control" type="text" name="DemandTitle" required ng-required="true"
+                                   ng-model="item.DemandTitle" ng-pattern="pattern" ng-readonly="viewdata.readonly"/>
+                            <span style="color:brown"
+                                  ng-show="demandupForm.DemandTitle.$error.required && demandupForm.$submitted"
+                                  class="help-block">
+                                请填写需求名称
+                            </span>
+                            <span style="color:brown"
+                                  ng-show="demandupForm.DemandTitle.$error.pattern&&demandupForm.$submitted"
+                                  class="help-block">
+                                请输入正确的需求名称格式：“关于{{iteminfo.SystemName}}-XXX的需求”
+                            </span>
+                        </td>
+                        <th>测试:</th>
+                        <td><input class="form-control" type="text"/></td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <span style="color:red">*</span>
+                            需求验收人:
+                        </th>
+                        <td ng-class="{ 'has-error' : demandupForm.ValidManName.$invalid&&demandupForm.$submitted}">
+                            <label class="input-group">
+                                <input type="text" class="form-control" name="ValidManName" ng-required="true"
+                                       ng-model="iteminfo.ValidManName"/>
+                                <span class="input-group-addon" data-textids="item.ValidManID"
+                                      data-textnames="iteminfo.ValidManName" data-textguids="" data-datausers=""
+                                      data-selecttype="single" userselect><i
+                                        class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+                            <span style="color:brown"
+                                  ng-show="demandupForm.ValidManName.$invalid&&demandupForm.$submitted"
+                                  class="help-block">
+                                请填写需求验收人
+                            </span>
+                        </td>
+                        <th>发起人：</th>
+                        <td><input type="text" class="form-control" readonly="readonly" ng-required="true"
+                                   name="CreatorName" ng-model="iteminfo.CreatorName"/></td>
+                        <th>测试:</th>
+                        <td><input class="form-control" type="text"/></td>
+                    </tr>
+                    <tr>
+                        <th><span style="color:red">*</span>紧急程度:</th>
+                        <td ng-class="{ 'has-error' : demandupForm.UrgentStatus.$invalid&&demandupForm.$submitted}">
+                            <select class="form-control" name="UrgentStatus" required ng-model="item.UrgentStatus"
+                                    ng-options="op.DicKey as op.DicValue for op in UrgentStatuslist">
+                                <option value="">-- 请选择 --</option>
+                            </select>
+                            <span style="color:brown"
+                                  ng-show="demandupForm.UrgentStatus.$invalid&&demandupForm.$submitted"
+                                  class="help-block">
+                                请填写紧急程度
+                            </span>
+                        </td>
+                        <th>发起时间：</th>
+                        <td><input type="text" class="form-control" readonly="readonly" data-date-type="string"
+                                   data-date-format="yyyy-MM-dd" ng-model="item.ApplyTime"/></td>
+                        <th>测试:</th>
+                        <td><input class="form-control" type="text"/></td>
+                    </tr>
+                    <tr>
+                        <th><span style="color:red">*</span>期望完成时间：</th>
+                        <td ng-class="{ 'has-error' : demandupForm.PlanFinishTime.$invalid&&demandupForm.$submitted}">
+                            <!--<input type="text"id="datepicker" class="form-control" data-date-type="string" ng-model="item.PlanFinishTime" />-->
+                            <input type="text" autocomplete="off" class="form-control" autoclose="true" timezone="null"
+                                   ng-required="true" data-date-format="yyyy-MM-dd" name="PlanFinishTime"
+                                   ng-model="item.PlanFinishTime" data-date-type="date" data-min-date="today"
+                                   bs-datepicker/>
+                            <span style="color:brown"
+                                  ng-show="demandupForm.PlanFinishTime.$invalid&&demandupForm.$submitted"
+                                  class="help-block">
+                                请填写期望完成时间
+                            </span>
+                        </td>
+                        <td colspan="2"></td>
+                        <th>测试:</th>
+                        <td><input class="form-control" type="text"/></td>
+                    </tr>
+                    <tr>
+                        <th><span style="color:red">*</span>上传需求说明书:</th>
+                        <td colspan="5">
+                            <bsfiles ng-model="viewdata.reqFileModel"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>需求描述:</th>
+                        <td colspan="5">
+                            <textarea ui-kindeditor ng-model="item.Note"></textarea>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div ng-if="viewdata.readonly">
+                <table class="table table-bordered tform">
+                    <tr>
+                        <th>需求名称:</th>
+                        <td colspan="3">{{item.DemandTitle}}</td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">工单流水号:</th>
+                        <td class="col-md-3">{{item.ApplyNo}}</td>
+                        <th class="col-md-2">发起人：</th>
+                        <td>{{iteminfo.CreatorName}}</td>
+                    </tr>
+                    <tr>
+                        <th>需求验收人:</th>
+                        <td>{{iteminfo.ValidManName}}</td>
+                        <th>发起时间：</th>
+                        <td>{{item.ApplyTime}}</td>
+                    </tr>
+                    <tr>
+                        <th>紧急程度:</th>
+                        <td>{{iteminfo.UrgentStatusName}}</td>
+                        <th>期望完成时间：</th>
+                        <td>{{item.PlanFinishTime}}</td>
+                    </tr>
+                    <tr>
+                        <th>系统:</th>
+                        <td colspan="3">
+                            {{iteminfo.SystemName}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><span style="color:red">*</span>上传需求说明书:</th>
+                        <td colspan="3">
+                            <bsfiles ng-model="viewdata.reqFileModel"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>需求描述:</th>
+                        <td colspan="5" ng-bind-html="item.Note|showhtmlfilter"></td>
+                    </tr>
+                </table>
+            </div>
+            <bsflowstep ng-if="viewdata.params.fid" data-fid="viewdata.params.fid"></bsflowstep>
+            <div class="form_foot">
+                <input type="submit" ng-show="item.FlowStep==0||viewdata.params.st==1" name="btn_up"
+                       ng-click="UpflowdoAsync()" class="btn btn-danger" value="提交"/>
+                <input type="submit" ng-show="item.FlowStep==0||viewdata.params.st==1" name="btn_save" ng-click="save()"
+                       class="btn btn-primary" value="保存"/>
+                <input type="button" name="btn_change" class="btn btn-default" ng-click="pagechange()" value="取消"/>
+            </div>
+        </form>
+    </div>
+</div>
+

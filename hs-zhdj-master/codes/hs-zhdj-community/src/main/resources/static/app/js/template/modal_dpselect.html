@@ -1,0 +1,72 @@
+﻿<div id="dpselect" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div class="modal-body" style="padding-left:0px">
+                <div class="row" style="height: 50px; line-height: 50px;">
+                    <div style="padding: 0px;" class="col-md-6 col-lg-6 col-md-offset-5 col-lg-offset-5">
+                        <!--查询框-->
+                        <div class="input-group" style="margin-left:25px;width:108%">
+                            <input ng-model="searchParam" class="form-control" type="text"
+                                   ng-keypress="($event.which === 13)?searchDP():0">
+                            <span class="input-group-addon ng-isolate-scope" style="cursor: pointer;"
+                                  ng-click="searchDP()" data-loading-text="正在查询"><i
+                                    class="glyphicon glyphicon-zoom-in"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="panel panel-custom">-->
+                <div class="row row_border" style="padding-bottom: 0px;margin-left:10px">
+                    <div class="col-md-5 col-lg-5" style="padding-right: 0px;padding-left:0px">
+                        <div class="panel panel-default">
+                            <!--部门树模板-->
+                            <script type="text/ng-template" id="tree.html">
+                                <div class="treeitem" style="cursor: pointer;">
+                                    <a href="" class="glyphicon"
+                                       ng-class="dep.isExpand?'glyphicon-chevron-down' : 'glyphicon-chevron-right'"
+                                       ng-click="loadChildDep(dep)"></a>
+                                    <span class="DepItem" ng-class="{depSelected:dep.DPID==curdepid}"
+                                          ng-click="clickDep(dep,$event)" ng-dblclick="loadChildDep(dep)"><span>{{dep.DPName}}</span></span>
+                                </div>
+                                <div ng-hide="!dep.isExpand">
+                                    <div class="treebody" ng-repeat="dep in dep.childDepList"
+                                         ng-include="'tree.html'"></div>
+                                </div>
+                            </script>
+                            <div class="panel-heading">组织机构列表</div>
+                            <div class="panel-body" style="overflow-y: auto;overflow-y: auto;height:300px">
+                                <!--下拉列表树-->
+                                <div class="treebody" ng-repeat="dep in depList" ng-include="'tree.html'"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-7"
+                         style="padding-left: 0px; padding-right: 0px; margin-left:10px;width:56%">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">选择部门<img style="height:18px" ng-show="isloading"
+                                                                src="../../scripts/loading-2.gif"/></div>
+                            <div class="panel-body" style="padding: 0px;overflow-y: auto;height:300px;border:none">
+                                <select class="form-control"
+                                        style="padding: 5px 0px 5px 10px; font-size: 14px;height:inherit;border:none"
+                                        size="2000" ng-model="selectDP" ng-options="dp.DPName for dp in dpresultlist"
+                                        ng-dblclick="selectedDp()"></select>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <!--</div>-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="selectedDp()">选择</button>
+            </div>
+
+        </div>
+    </div>
+</div>

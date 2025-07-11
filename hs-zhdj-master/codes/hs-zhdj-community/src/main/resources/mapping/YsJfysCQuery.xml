@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.YsJfysCQuery">
+    <resultMap id="BaseResultMap" type="com.px.partybuild.vo.YsJfysmxVo">
+        <id column="ysmxid" jdbcType="VARCHAR" property="ysmxid"/>
+        <result column="jfysid" jdbcType="VARCHAR" property="jfysid"/>
+        <result column="dzzdm" jdbcType="VARCHAR" property="dzzdm"/>
+        <result column="v1sl" jdbcType="NUMERIC" property="v1sl"/>
+        <result column="v2sl" jdbcType="NUMERIC" property="v2sl"/>
+        <result column="v3sl" jdbcType="NUMERIC" property="v3sl"/>
+        <result column="v4sl" jdbcType="NUMERIC" property="v4sl"/>
+        <result column="dzbjfxj" jdbcType="NUMERIC" property="dzbjfxj"/>
+        <result column="v1hdbz" jdbcType="NUMERIC" property="v1hdbz"/>
+        <result column="v2hdbz" jdbcType="NUMERIC" property="v2hdbz"/>
+        <result column="v3hdbz" jdbcType="NUMERIC" property="v3hdbz"/>
+        <result column="v4hdbz" jdbcType="NUMERIC" property="v4hdbz"/>
+        <result column="zgdyrs" jdbcType="NUMERIC" property="zgdyrs"/>
+        <result column="hdbz" jdbcType="NUMERIC" property="hdbz"/>
+        <result column="xtysze" jdbcType="NUMERIC" property="xtysze"/>
+        <result column="sjysze" jdbcType="NUMERIC" property="sjysze"/>
+        <result column="DZZMC" jdbcType="VARCHAR" property="dzzmc"/>
+    </resultMap>
+    <!-- 统计党组织人数-->
+    <select id="selectPartyAndUserTotal" resultType="java.util.Map">
+        select t1.dzzdm as "dzzdm",t1.dzzmc as "dzzmc",
+        ifnull(t1.numType1,0) as "v1sl",ifnull(t1.numType2,0) as "v2sl",ifnull(t1.numType3,0) as "v3sl",ifnull(t1.numType4,0) as "v4sl",
+               ifnull(t2.userCount,0) as "zgdyrs"
+        from (
+             select dzzdm,dzzmc,numType1,numType2,numType3,numType4
+             from (
+                  select t1.dzzdm,t1.dzzmc,t1.numType,ifnull(t2.num,0) as num
+                  from (
+                       select dzzdm,dzzmc,numType from (
+                          select dzzdm,dzzmc,1 as t_st,2 as t_nd,3 as t_rd,4 as t_th from zz_zzqkxx where length(dzzdm)=12
+                          and dzzdm like concat('%',#{gddwdm},'%')
+                       ) t1  unpivot (numType for title in (t_st,t_nd,t_rd,t_th)) t1
+                  ) t1
+                  left join (
+                       select t1.dzzdm,t1.dzzmc,t2.numType,count(t2.numType) as num
+                       from (select dzzdm,dzzmc from zz_zzqkxx where length(dzzdm)=12) t1
+                       inner join (
+                          select p.dzzdm,
+                                 p.dzzmc,
+                                 count(u.rybm)  as userNum,
+                                 (case
+                                    when count(u.rybm) <![CDATA[ <= ]]>50 then 1 --50人以下
+                                    when count(u.rybm) > 50 and count(u.rybm) <![CDATA[ <= ]]> 100 then 2 --51到100人
+                                    when count(u.rybm) > 100 and count(u.rybm) <![CDATA[ <= ]]> 300 then 3 --101到300人
+                                    when count(u.rybm) > 300 then 4 --300人以上
+                                    else 0 end) as numType
+                          from (select * from zz_zzqkxx where  dzzdm like concat('%',#{gddwdm},'%')) p
+                                 left join ZZ_ZZQKXXFB fb on p.DZZDM = fb.DZZDM
+                                 left join vm_ryjbxx u on p.dzzdm = substr(u.szdzbdm, 1, 15)
+                          where fb.ZZLB in ('300', '400') and fb.jczzfl='21' --and  p.DZZDM like '001091209017%'
+                          group by p.dzzdm,p.dzzmc
+                      ) t2 on t1.dzzdm=substr(t2.dzzdm, 1, 12)
+                       group by t1.dzzdm,t1.dzzmc,t2.numType
+                  ) t2 on t1.dzzdm=t2.dzzdm and t1.numType=t2.numType
+             )  pivot (max(num) for numType in ('1' as numType1,'2' AS numType2,'3' AS numType3,'4' as numType4 ))
+        ) t1
+        left join (
+             select SUBSTR(us.szdzbdm,1,12) as dzzdm,count(us.rybm) as userCount from vm_ryjbxx us
+             inner join gg_zgjbxx info on us.rybm = info.rybm
+             inner join zd_rylb rylb on info.rylb = rylb.bm
+             where 1=1
+             and rylb.bm like '1%' and length(rylb.bm)=3 -- 在岗人员
+             group by SUBSTR(us.szdzbdm,1,12)
+        ) t2 on t1.DZZDM=t2.dzzdm -- 在岗人员数量
+    </select>
+
+    <select id="selectYsjybmxList" resultType="java.util.Map" resultMap="BaseResultMap">
+        select ysmxid, jfysid, mx.dzzdm, v1sl, v2sl, v3sl, v4sl, dzbjfxj, v1hdbz, v2hdbz, v3hdbz, v4hdbz,
+    zgdyrs, hdbz, xtysze, sjysze,zz.DZZMC from Ys_Jfysmx mx
+        inner join  ZZ_ZZQKXX zz on mx.DZZDM=zz.DZZDM
+        where Jfysid=#{Jfysid}
+    </select>
+</mapper>

@@ -1,0 +1,45 @@
+<style>
+    .partytree .card {
+        box-shadow: none;
+        margin-bottom: 0px;
+    }
+
+    .partytree .card .header {
+        padding: 15px 20px;
+    }
+</style>
+<div class="modal" tabindex="-1" role="dialog" id="selectParentMenu">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">选择党支部</h4>
+            </div>
+            <div class="panel-body modal-body">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div style="display:inline-block;">
+                            <label>选择支部为：</label>
+                            <span>{{selectdzzmc}}</span>
+                        </div>
+                    </div>
+                    <div class="panel-body" style="padding: 0px;">
+                        <div class="partytree" party-tree data-selectdzzdm="selectdzzdm" data-selectdzzmc="selectdzzmc"
+                             data-height="40" data-isshowxz="$partyData.$config.isshowxz"
+                             data-parentcode="$partyData.$config.parentcode"
+                             data-parentname="$partyData.$config.parentname"
+                             data-dzzdm="$partyData.$config.szdzzdm"
+                             data-dzzmc="$partyData.$config.szdzzmc"
+                             data-datadzzdm="$partyData.$config.datadzzdm"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="$hide()">取消</button>
+                <button type="submit" class="btn btn-success" ng-click="choose()" ng-disabled="chooseOne.hasName">确定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+﻿<table class="table-bordered tlist table">
+    <thead>
+    <tr>
+        <th>步骤名称</th>
+        <th>待办人</th>
+        <th>处理人</th>
+        <th>处理时间</th>
+        <th>意见</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="it in items">
+        <td>{{it.pname}}</td>
+        <td>{{it.pendingname}}</td>
+        <td>{{it.workname}}</td>
+        <td>{{it.donetime}}</td>
+        <td>{{it.comment}}</td>
+    </tr>
+    </tbody>
+</table>

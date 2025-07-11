@@ -1,0 +1,77 @@
+﻿<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="min-width:720px;">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+
+            <form class="form-horizontal formtable1 panel-body modal-body" role="form" name="saveSysDuty">
+                <table class="table table-bordered tform ">
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>系统名称：</th>
+                        <td colspan="3">
+                            <label class="input-group " ng-if="hasPermission.editTitle" style="width:100%">
+                                <input type="text" name="SystemName"
+                                       class="form-control" ng-model="iteminfo.SystemName" required/>
+                                <span class="input-group-addon" data-url="../../api/DemandDev/FindSysdata"
+                                      data-datatext="iteminfo.SystemName" data-dataval="addOrUp.selectSystemID"
+                                      title="系统选择" bsselectdata><i class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+                            <select name="SystemID" class="form-control" ng-model="addOrUp.selectSystemID"
+                                    ng-required="true" ng-if="!hasPermission.editTitle"
+                                    ng-disabled="!hasPermission.editTitle">
+                                <option ng-repeat="oneSys in sysNameAndID" value="{{oneSys.SystemID}}">
+                                    {{oneSys.SystemName}}
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>功能点名称：</th>
+                        <td colspan="3">
+                            <input class="form-control" type="text" name="DutyName" ng-model="addOrUp.DutyName"
+                                   ng-disabled="!(hasPermission.showSave)" ng-required="true"/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>模块层级:</th>
+                        <td>
+                            <select name="DutyLv" class="form-control" ng-model="addOrUp.DutyLv"
+                                    ng-disabled="!(hasPermission.showSave)" ng-required="true"
+                                    ng-options="d.DutyLv as d.LvName for d in Dlevel"></select>
+                        </td>
+                        <th class="col-md-2"><span style="color:red">*</span>父级节点:</th>
+                        <td>
+                            <select name="PDutyID" class="form-control" ng-model="addOrUp.PDutyID"
+                                    ng-disabled="!(addOrUp.DutyLv && hasPermission.showSave)" ng-required="true"
+                                    ng-options="p.SysDutyID as p.SysDutyName for p in PDuty"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>功能描述：</th>
+                        <td colspan="3">
+                            <textarea name="SysDutyNote" class="form-control" ng-model="addOrUp.SysDutyNote"
+                                      ng-disabled="!(hasPermission.showSave)" style="resize:none; height:160px"
+                                      ng-required="true"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">创建人：</th>
+                        <td class="col-md-4"><label name="DutyCreatorName">{{addOrUp.DutyCreatorName}}</label></td>
+                        <th class="col-md-2">操作时间：</th>
+                        <td class="col-md-4"><label name="DutyLastDoneTime">{{addOrUp.DutyLastDoneTime}}</label></td>
+                    </tr>
+                </table>
+            </form>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="hidden()">{{hasPermission.hide}}</button>
+                <button type="submit" class="btn btn-success" ng-click="save();$hide()"
+                        ng-disabled="saveSysDuty.$invalid" ng-if="hasPermission.showSave">保存
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

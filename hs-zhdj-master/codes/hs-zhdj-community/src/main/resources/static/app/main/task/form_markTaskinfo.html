@@ -1,0 +1,27 @@
+﻿<table class="table table-bordered tform" ng-controller="MarkTaskCtrl">
+    <tr>
+        <th class="col-md-2">任务类型:</th>
+        <td class="col-md-4">
+            {{taskType}}
+        </td>
+
+        <th class="col-md-2">任务负责人:</th>
+        <td class="col-md-4">{{taskName}}</td>
+    </tr>
+    <tr>
+        <th>任务描述:</th>
+        <td colspan="3">{{task.TaskNote}}</td>
+    </tr>
+    <tr>
+        <th>完成时限:</th>
+        <td>{{task.TaskLimitTime}}</td>
+        <th>创建时间：</th>
+        <td>{{task.LastDoneTime}}</td>
+    </tr>
+    <tr>
+        <th>预计工作量:</th>
+        <td>{{task.ExpectQuantity}}</td>
+        <th>实际工作量：</th>
+        <td>{{task.RealQuantity}}</td>
+    </tr>
+</table>

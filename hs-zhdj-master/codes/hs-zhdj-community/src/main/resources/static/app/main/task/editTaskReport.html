@@ -1,0 +1,72 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{params.title}}</h3>
+
+            </div>
+            <form class="form-horizontal formtable1 panel-body modal-body"
+                  ng-submit="saveTaskReport(TaskReportForm.$valid)" role="form" id="TaskReportForm"
+                  name="TaskReportForm" style="padding: 10px; margin: 10px;" novalidate>
+                <table class="table table-bordered tform">
+                    <tr>
+                        <th class="col-md-2"><span style="color:red;">*</span>报告日期:</th>
+                        <td ng-class="{ 'has-error' : TaskReportForm.ReportDate.$invalid &&  (TaskReportForm.$submitted) }">
+                            <input type="text" autocomplete="off" class="form-control" name="ReportDate"
+                                   autoclose="true" timezone="null" ng-required="true" bs-datepicker
+                                   data-date-format="yyyy-MM-dd" data-has-clear="true" ng-model="content.ReportDate"
+                                   data-date-type="date"/>
+                            <!--<input class="form-control" type="text" name="ReportDate" data-date-type="string" data-date-format="yyyy-MM-dd" ng-model="content.ReportDate" required bs-datepicker />-->
+                            <span style="color:red" ng-show="TaskReportForm.ReportDate.$error.required"
+                                  ng-if="TaskReportForm.ReportDate.$touched||TaskReportForm.$submitted">
+                                报告日期不能为空
+                            </span>
+                        </td>
+                    </tr>
+                    <tr ng-class="{ 'has-error' : TaskReportForm.Progress.$invalid &&  (TaskReportForm.$submitted) }">
+                        <th class="col-md-2"><span style="color:red;">*</span>任务进度:</th>
+                        <td>
+                            <div style="display:inline">
+                                <div style="float:left;">
+                                    <input name="Progress" class="form-control" style="width:80px;" type="number"
+                                           ng-model="content.progress" ng-change="myFunc(content.progress)" required/>
+                                </div>
+                                <div class="progress progress-striped">
+                                    <div class="progress-bar progress-bar-info" ng-class="['Bar','blue']"
+                                         ng-style="{width:content.progress+'%'}">
+                                        <div>{{content.progress}}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/><br/>
+                            <span style="color:red;float:left;" ng-show="TaskReportForm.Progress.$error.required"
+                                  ng-if="TaskReportForm.Progress.$touched||TaskReportForm.$submitted">
+                                任务进度不能为空
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">任务简述:</th>
+                        <td>
+                            <textarea id="Note" class="form-control" ng-model="content.Note"
+                                      ng-keyup="changeText(content.Note.length)" placeholder="简单50字内，不超过200字">{{content.Note}}</textarea>
+                            <span class="fontColor">你还可以输入<span style="color: red;">{{textLength}}</span>字</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="form_foot">
+                    <button id="submit" class="btn btn-danger" style="padding:4px 20px 4px 20px" type="submit"
+                            form="TaskReportForm">提交
+                    </button>
+                    <button id="cancel" type="button" class="btn btn-default" style="padding:4px 20px 4px 20px"
+                            ng-click="$hide()">取消
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

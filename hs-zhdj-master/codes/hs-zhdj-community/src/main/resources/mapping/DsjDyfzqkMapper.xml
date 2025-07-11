@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DsjDyfzqkMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.DsjDyfzqk">
+    <id column="DYFZQKID" jdbcType="VARCHAR" property="dyfzqkid" />
+    <result column="ND" jdbcType="DECIMAL" property="nd" />
+    <result column="JHFZDYSL" jdbcType="DECIMAL" property="jhfzdysl" />
+    <result column="NV" jdbcType="DECIMAL" property="nv" />
+    <result column="SSMZ" jdbcType="DECIMAL" property="ssmz" />
+    <result column="SWJYX" jdbcType="DECIMAL" property="swjyx" />
+    <result column="DZJYSXL" jdbcType="DECIMAL" property="dzjysxl" />
+    <result column="GR" jdbcType="DECIMAL" property="gr" />
+    <result column="SCGZDYX" jdbcType="DECIMAL" property="scgzdyx" />
+    <result column="QYSCDYX" jdbcType="DECIMAL" property="qyscdyx" />
+    <result column="YSDYX" jdbcType="DECIMAL" property="ysdyx" />
+    <result column="BZZ" jdbcType="DECIMAL" property="bzz" />
+    <result column="GTLY" jdbcType="DECIMAL" property="gtly" />
+    <result column="GTCWLY" jdbcType="DECIMAL" property="gtcwly" />
+    <result column="LWPQG" jdbcType="DECIMAL" property="lwpqg" />
+    <result column="XJMFRW" jdbcType="DECIMAL" property="xjmfrw" />
+    <result column="GZSQT" jdbcType="DECIMAL" property="gzsqt" />
+    <result column="GQTY" jdbcType="DECIMAL" property="gqty" />
+    <result column="MQWDYBZS" jdbcType="DECIMAL" property="mqwdybzs" />
+    <result column="JHFZS" jdbcType="DECIMAL" property="jhfzs" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    DYFZQKID, ND, JHFZDYSL, NV, SSMZ, SWJYX, DZJYSXL, GR, SCGZDYX, QYSCDYX, YSDYX, BZZ, 
+    GTLY, GTCWLY, LWPQG, XJMFRW, GZSQT, GQTY, MQWDYBZS, JHFZS
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.DsjDyfzqkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dsj_dyfzqk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dsj_dyfzqk
+    where DYFZQKID = #{dyfzqkid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dsj_dyfzqk
+    where DYFZQKID = #{dyfzqkid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.DsjDyfzqkExample">
+    delete from dsj_dyfzqk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.DsjDyfzqk">
+    insert into dsj_dyfzqk (DYFZQKID, ND, JHFZDYSL, 
+      NV, SSMZ, SWJYX, DZJYSXL, 
+      GR, SCGZDYX, QYSCDYX, 
+      YSDYX, BZZ, GTLY, GTCWLY, 
+      LWPQG, XJMFRW, GZSQT, 
+      GQTY, MQWDYBZS, JHFZS
+      )
+    values (#{dyfzqkid,jdbcType=VARCHAR}, #{nd,jdbcType=DECIMAL}, #{jhfzdysl,jdbcType=DECIMAL}, 
+      #{nv,jdbcType=DECIMAL}, #{ssmz,jdbcType=DECIMAL}, #{swjyx,jdbcType=DECIMAL}, #{dzjysxl,jdbcType=DECIMAL}, 
+      #{gr,jdbcType=DECIMAL}, #{scgzdyx,jdbcType=DECIMAL}, #{qyscdyx,jdbcType=DECIMAL}, 
+      #{ysdyx,jdbcType=DECIMAL}, #{bzz,jdbcType=DECIMAL}, #{gtly,jdbcType=DECIMAL}, #{gtcwly,jdbcType=DECIMAL}, 
+      #{lwpqg,jdbcType=DECIMAL}, #{xjmfrw,jdbcType=DECIMAL}, #{gzsqt,jdbcType=DECIMAL}, 
+      #{gqty,jdbcType=DECIMAL}, #{mqwdybzs,jdbcType=DECIMAL}, #{jhfzs,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.DsjDyfzqk">
+    insert into dsj_dyfzqk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dyfzqkid != null">
+        DYFZQKID,
+      </if>
+      <if test="nd != null">
+        ND,
+      </if>
+      <if test="jhfzdysl != null">
+        JHFZDYSL,
+      </if>
+      <if test="nv != null">
+        NV,
+      </if>
+      <if test="ssmz != null">
+        SSMZ,
+      </if>
+      <if test="swjyx != null">
+        SWJYX,
+      </if>
+      <if test="dzjysxl != null">
+        DZJYSXL,
+      </if>
+      <if test="gr != null">
+        GR,
+      </if>
+      <if test="scgzdyx != null">
+        SCGZDYX,
+      </if>
+      <if test="qyscdyx != null">
+        QYSCDYX,
+      </if>
+      <if test="ysdyx != null">
+        YSDYX,
+      </if>
+      <if test="bzz != null">
+        BZZ,
+      </if>
+      <if test="gtly != null">
+        GTLY,
+      </if>
+      <if test="gtcwly != null">
+        GTCWLY,
+      </if>
+      <if test="lwpqg != null">
+        LWPQG,
+      </if>
+      <if test="xjmfrw != null">
+        XJMFRW,
+      </if>
+      <if test="gzsqt != null">
+        GZSQT,
+      </if>
+      <if test="gqty != null">
+        GQTY,
+      </if>
+      <if test="mqwdybzs != null">
+        MQWDYBZS,
+      </if>
+      <if test="jhfzs != null">
+        JHFZS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dyfzqkid != null">
+        #{dyfzqkid,jdbcType=VARCHAR},
+      </if>
+      <if test="nd != null">
+        #{nd,jdbcType=DECIMAL},
+      </if>
+      <if test="jhfzdysl != null">
+        #{jhfzdysl,jdbcType=DECIMAL},
+      </if>
+      <if test="nv != null">
+        #{nv,jdbcType=DECIMAL},
+      </if>
+      <if test="ssmz != null">
+        #{ssmz,jdbcType=DECIMAL},
+      </if>
+      <if test="swjyx != null">
+        #{swjyx,jdbcType=DECIMAL},
+      </if>
+      <if test="dzjysxl != null">
+        #{dzjysxl,jdbcType=DECIMAL},
+      </if>
+      <if test="gr != null">
+        #{gr,jdbcType=DECIMAL},
+      </if>
+      <if test="scgzdyx != null">
+        #{scgzdyx,jdbcType=DECIMAL},
+      </if>
+      <if test="qyscdyx != null">
+        #{qyscdyx,jdbcType=DECIMAL},
+      </if>
+      <if test="ysdyx != null">
+        #{ysdyx,jdbcType=DECIMAL},
+      </if>
+      <if test="bzz != null">
+        #{bzz,jdbcType=DECIMAL},
+      </if>
+      <if test="gtly != null">
+        #{gtly,jdbcType=DECIMAL},
+      </if>
+      <if test="gtcwly != null">
+        #{gtcwly,jdbcType=DECIMAL},
+      </if>
+      <if test="lwpqg != null">
+        #{lwpqg,jdbcType=DECIMAL},
+      </if>
+      <if test="xjmfrw != null">
+        #{xjmfrw,jdbcType=DECIMAL},
+      </if>
+      <if test="gzsqt != null">
+        #{gzsqt,jdbcType=DECIMAL},
+      </if>
+      <if test="gqty != null">
+        #{gqty,jdbcType=DECIMAL},
+      </if>
+      <if test="mqwdybzs != null">
+        #{mqwdybzs,jdbcType=DECIMAL},
+      </if>
+      <if test="jhfzs != null">
+        #{jhfzs,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.DsjDyfzqkExample" resultType="java.lang.Long">
+    select count(*) from dsj_dyfzqk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dsj_dyfzqk
+    <set>
+      <if test="record.dyfzqkid != null">
+        DYFZQKID = #{record.dyfzqkid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nd != null">
+        ND = #{record.nd,jdbcType=DECIMAL},
+      </if>
+      <if test="record.jhfzdysl != null">
+        JHFZDYSL = #{record.jhfzdysl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.nv != null">
+        NV = #{record.nv,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ssmz != null">
+        SSMZ = #{record.ssmz,jdbcType=DECIMAL},
+      </if>
+      <if test="record.swjyx != null">
+        SWJYX = #{record.swjyx,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dzjysxl != null">
+        DZJYSXL = #{record.dzjysxl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gr != null">
+        GR = #{record.gr,jdbcType=DECIMAL},
+      </if>
+      <if test="record.scgzdyx != null">
+        SCGZDYX = #{record.scgzdyx,jdbcType=DECIMAL},
+      </if>
+      <if test="record.qyscdyx != null">
+        QYSCDYX = #{record.qyscdyx,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ysdyx != null">
+        YSDYX = #{record.ysdyx,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bzz != null">
+        BZZ = #{record.bzz,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gtly != null">
+        GTLY = #{record.gtly,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gtcwly != null">
+        GTCWLY = #{record.gtcwly,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lwpqg != null">
+        LWPQG = #{record.lwpqg,jdbcType=DECIMAL},
+      </if>
+      <if test="record.xjmfrw != null">
+        XJMFRW = #{record.xjmfrw,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gzsqt != null">
+        GZSQT = #{record.gzsqt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gqty != null">
+        GQTY = #{record.gqty,jdbcType=DECIMAL},
+      </if>
+      <if test="record.mqwdybzs != null">
+        MQWDYBZS = #{record.mqwdybzs,jdbcType=DECIMAL},
+      </if>
+      <if test="record.jhfzs != null">
+        JHFZS = #{record.jhfzs,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dsj_dyfzqk
+    set DYFZQKID = #{record.dyfzqkid,jdbcType=VARCHAR},
+      ND = #{record.nd,jdbcType=DECIMAL},
+      JHFZDYSL = #{record.jhfzdysl,jdbcType=DECIMAL},
+      NV = #{record.nv,jdbcType=DECIMAL},
+      SSMZ = #{record.ssmz,jdbcType=DECIMAL},
+      SWJYX = #{record.swjyx,jdbcType=DECIMAL},
+      DZJYSXL = #{record.dzjysxl,jdbcType=DECIMAL},
+      GR = #{record.gr,jdbcType=DECIMAL},
+      SCGZDYX = #{record.scgzdyx,jdbcType=DECIMAL},
+      QYSCDYX = #{record.qyscdyx,jdbcType=DECIMAL},
+      YSDYX = #{record.ysdyx,jdbcType=DECIMAL},
+      BZZ = #{record.bzz,jdbcType=DECIMAL},
+      GTLY = #{record.gtly,jdbcType=DECIMAL},
+      GTCWLY = #{record.gtcwly,jdbcType=DECIMAL},
+      LWPQG = #{record.lwpqg,jdbcType=DECIMAL},
+      XJMFRW = #{record.xjmfrw,jdbcType=DECIMAL},
+      GZSQT = #{record.gzsqt,jdbcType=DECIMAL},
+      GQTY = #{record.gqty,jdbcType=DECIMAL},
+      MQWDYBZS = #{record.mqwdybzs,jdbcType=DECIMAL},
+      JHFZS = #{record.jhfzs,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.DsjDyfzqk">
+    update dsj_dyfzqk
+    <set>
+      <if test="nd != null">
+        ND = #{nd,jdbcType=DECIMAL},
+      </if>
+      <if test="jhfzdysl != null">
+        JHFZDYSL = #{jhfzdysl,jdbcType=DECIMAL},
+      </if>
+      <if test="nv != null">
+        NV = #{nv,jdbcType=DECIMAL},
+      </if>
+      <if test="ssmz != null">
+        SSMZ = #{ssmz,jdbcType=DECIMAL},
+      </if>
+      <if test="swjyx != null">
+        SWJYX = #{swjyx,jdbcType=DECIMAL},
+      </if>
+      <if test="dzjysxl != null">
+        DZJYSXL = #{dzjysxl,jdbcType=DECIMAL},
+      </if>
+      <if test="gr != null">
+        GR = #{gr,jdbcType=DECIMAL},
+      </if>
+      <if test="scgzdyx != null">
+        SCGZDYX = #{scgzdyx,jdbcType=DECIMAL},
+      </if>
+      <if test="qyscdyx != null">
+        QYSCDYX = #{qyscdyx,jdbcType=DECIMAL},
+      </if>
+      <if test="ysdyx != null">
+        YSDYX = #{ysdyx,jdbcType=DECIMAL},
+      </if>
+      <if test="bzz != null">
+        BZZ = #{bzz,jdbcType=DECIMAL},
+      </if>
+      <if test="gtly != null">
+        GTLY = #{gtly,jdbcType=DECIMAL},
+      </if>
+      <if test="gtcwly != null">
+        GTCWLY = #{gtcwly,jdbcType=DECIMAL},
+      </if>
+      <if test="lwpqg != null">
+        LWPQG = #{lwpqg,jdbcType=DECIMAL},
+      </if>
+      <if test="xjmfrw != null">
+        XJMFRW = #{xjmfrw,jdbcType=DECIMAL},
+      </if>
+      <if test="gzsqt != null">
+        GZSQT = #{gzsqt,jdbcType=DECIMAL},
+      </if>
+      <if test="gqty != null">
+        GQTY = #{gqty,jdbcType=DECIMAL},
+      </if>
+      <if test="mqwdybzs != null">
+        MQWDYBZS = #{mqwdybzs,jdbcType=DECIMAL},
+      </if>
+      <if test="jhfzs != null">
+        JHFZS = #{jhfzs,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where DYFZQKID = #{dyfzqkid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.DsjDyfzqk">
+    update dsj_dyfzqk
+    set ND = #{nd,jdbcType=DECIMAL},
+      JHFZDYSL = #{jhfzdysl,jdbcType=DECIMAL},
+      NV = #{nv,jdbcType=DECIMAL},
+      SSMZ = #{ssmz,jdbcType=DECIMAL},
+      SWJYX = #{swjyx,jdbcType=DECIMAL},
+      DZJYSXL = #{dzjysxl,jdbcType=DECIMAL},
+      GR = #{gr,jdbcType=DECIMAL},
+      SCGZDYX = #{scgzdyx,jdbcType=DECIMAL},
+      QYSCDYX = #{qyscdyx,jdbcType=DECIMAL},
+      YSDYX = #{ysdyx,jdbcType=DECIMAL},
+      BZZ = #{bzz,jdbcType=DECIMAL},
+      GTLY = #{gtly,jdbcType=DECIMAL},
+      GTCWLY = #{gtcwly,jdbcType=DECIMAL},
+      LWPQG = #{lwpqg,jdbcType=DECIMAL},
+      XJMFRW = #{xjmfrw,jdbcType=DECIMAL},
+      GZSQT = #{gzsqt,jdbcType=DECIMAL},
+      GQTY = #{gqty,jdbcType=DECIMAL},
+      MQWDYBZS = #{mqwdybzs,jdbcType=DECIMAL},
+      JHFZS = #{jhfzs,jdbcType=DECIMAL}
+    where DYFZQKID = #{dyfzqkid,jdbcType=VARCHAR}
+  </update>
+</mapper>

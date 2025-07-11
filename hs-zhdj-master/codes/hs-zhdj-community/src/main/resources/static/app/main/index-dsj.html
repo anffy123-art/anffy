@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>党建工作信息管理系统</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <meta http-equiv="Cache-Control" content="no-cache">
+
+    <script src="../../scripts/jquery-1.11.1.js"></script>
+    <style src="js/bootstrap.min.js"></style>
+    <script src="../../scripts/angular.js"></script>
+    <script src="../../scripts/angular-ui-router.js"></script>
+    <script src="../../scripts/crypto-js/crypto-js.js"></script>
+    <script src="../../scripts/moment.min.js"></script>
+    <script src="../../scripts/ocLazyLoad.js"></script>
+    <script src="../../scripts/angular-animate.js"></script>
+    <script src="../../scripts/angular-sanitize.js"></script>
+    <script src="../../scripts/bootstrap.js"></script>
+    <script src="../../scripts/angular-strap.js"></script>
+    <script src="../../scripts/angular-strap.tpl.js"></script>
+    <script src="../../scripts/angular-strap.tpl.js"></script>
+    <script src="../../scripts/ng-file-upload-shim.min.js"></script>
+    <script src="../../scripts/ng-file-upload.min.js"></script>
+    <script src="../../scripts/i18n/angular-locale_zh-cn.js"></script>
+    <script src="../../scripts/angular-awesome-slider.min.js"></script>
+
+    <!--add-->
+    <script src="../../content/themes/plugins/node-waves/waves.js"></script>
+    <link href="../../content/themes/css/gt-font-icon.css" rel="stylesheet" type="text/css">
+
+    <!--add-->
+    <script src="../js/service.js?v=20190624_v1"></script>
+
+    <script>
+        var gtdj_v = "20190624_v1";//版本号
+        (function () {
+            "use strict";
+            angular.module('gtPartyApp', ['ui.router', 'oc.lazyLoad', 'ngSanitize', 'ngAnimate', 'mgcrea.ngStrap', 'ngFileUpload', 'devself.common', 'angularAwesomeSlider']).config(function ($stateProvider, $urlRouterProvider, $modalProvider, $tooltipProvider, $asideProvider, $alertProvider, $qProvider) {
+
+                angular.extend($modalProvider.defaults, {
+                    animation: 'am-flip-x',
+                    backdrop: 'static'
+                });
+
+                angular.extend($tooltipProvider.defaults, {
+                    html: true
+                });
+
+                angular.extend($asideProvider.defaults, {
+                    container: 'body',
+                    html: true
+                });
+
+                $qProvider.errorOnUnhandledRejections(false);
+
+                //设置路由
+                $stateProvider.state("login", {
+                    url: "/login",
+                    templateUrl: "login.html",
+                    controller: "loginCtrl",
+                    resolve: {
+                        load: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            $ocLazyLoad.load('css/login.css');
+                            return $ocLazyLoad.load('login.js');
+                        }]
+                    }
+                }).state("showDjdsj", {
+                    url: "/showDjdsj?id",
+                    templateUrl: "../main/bigdata/showDjdsj/home.html?v=" + gtdj_v,
+                    controller: "showDjdsjCtrl",
+                    resolve: {
+                        load: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            $ocLazyLoad.load(['../main/bigdata/showDjdsj/css/reset.css?v=' + gtdj_v,
+                                '../main/bigdata/showDjdsj/css/style.css?v=' + gtdj_v]);
+                            return $ocLazyLoad.load('../main/bigdata/showDjdsj/home.js?v=' + gtdj_v);
+                        }]
+                    }
+                }).state("showDjdsj_dwdt", {
+                    url: "/showDjdsj_dwdt",
+                    templateUrl: "../main/bigdata/showDjdsj/dwdt.html?v=" + gtdj_v,
+                    controller: "showDjdsj_dwdtCtrl",
+                    resolve: {
+                        load: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            $ocLazyLoad.load(['../main/bigdata/showDjdsj/css/reset.css?v=' + gtdj_v,
+                                '../main/bigdata/showDjdsj/css/style.css?v=' + gtdj_v]);
+                            return $ocLazyLoad.load('../main/bigdata/showDjdsj/dwdt.js?v=' + gtdj_v);
+                        }]
+                    }
+                }).state("showDjdsj_dwgzz", {
+                    url: "/showDjdsj_dwgzz",
+                    templateUrl: "../main/bigdata/showDjdsj/dwgzz.html?v=" + gtdj_v,
+                    controller: "showDjdsj_dwgzzCtrl",
+                    resolve: {
+                        load: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            $ocLazyLoad.load(['../main/bigdata/showDjdsj/css/reset.css?v=' + gtdj_v,
+                                '../main/bigdata/showDjdsj/css/style.css?v=' + gtdj_v]);
+                            return $ocLazyLoad.load('../main/bigdata/showDjdsj/dwgzz.js?v=' + gtdj_v);
+                        }]
+                    }
+                }).state("teams", {
+                    url: "/teams",
+                    templateUrl: "../main/bigdata/showDjdsj/teams.html?v=" + gtdj_v,
+                    controller: "teamsCtrl",
+                    resolve: {
+                        load: ['$ocLazyLoad', function ($ocLazyLoad) {
+                            $ocLazyLoad.load(['../main/bigdata/showDjdsj/css/reset.css?v=' + gtdj_v,
+                                '../main/bigdata/showDjdsj/css/style.css?v=' + gtdj_v]);
+                            return $ocLazyLoad.load('../main/bigdata/showDjdsj/teams.js?v=' + gtdj_v);
+                        }]
+                    }
+                });
+            }).directive("pageResizes",['$timeout',function($timeout){
+                var setSizes=function() {
+                    var $cbox = $('.charts');
+                    var $cbox2 = $('.charts2');
+                    var $cbox3 = $('.charts3');
+                    var $cbox3_1 = $('.charts3_1');
+                    var $cbox4 = $('.charts4');
+                    var $cbox5 = $('.charts5');
+                    var $cbox6 = $('.boxheight');
+                    var WindoHeit = $(window).height();
+
+                    $cbox.css({'height': '' + WindoHeit-775 + 'px'});
+                    $cbox2.css({'height': '' + WindoHeit-706 + 'px'});
+                    $cbox3.css({'height': '' + WindoHeit/3-156 + 'px'});
+                    $cbox3_1.css({'height': '' + WindoHeit/3-156+46 + 'px'});
+                    $cbox4.css({'height': '' + WindoHeit-650 + 'px'});
+                    $cbox5.css({'height': '' + WindoHeit/3-140 + 'px'});
+                    $cbox6.css({'height': '' + WindoHeit-110 + 'px'});
+                };
+
+                var directiveObject = {
+                    restrict: 'EAC',
+                    link: function (scope, element, attr, controller) {
+                        $(window).resize(function () {
+                            setSizes();
+                        });
+                        $timeout(function () {
+                            setSizes();
+                        }, 100);
+                    }
+
+                };
+                return directiveObject;
+            }]);
+        })();
+
+    </script>
+
+</head>
+<body ng-app="gtPartyApp" class="theme-red">
+<div ui-view>
+</div>
+</body>
+</html>

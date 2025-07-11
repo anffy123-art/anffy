@@ -1,0 +1,70 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div activate-input activate-select class="header search-header">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                        <label>姓名</label>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                    <input name="userName" class="form-control" type="text"
+                                                    ng-model="selectUserList.userName"
+                                                    placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div>
+                                <button  class="btn btn-default1"
+                                        ng-click="selectUserListSelect()">查询
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <div activate-input class="body">
+                    <div class="table-responsive list-table-panel" style="font-size: 16px;overflow-x:hidden">
+                            <div class="outoflow" style="height: 350px;">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap" style="position:relative">
+                                    <thead>
+                                    <tr>
+                                        <th>选择</th>
+                                        <th>姓名</th>
+                                        <th>所在党支部</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="it in receivePcommListUser">
+                                        <th><input type="checkbox" id="{{it.rydm}}" name="itChecked" ng-model="it.checked" ng-click="chkchildrenUser(it)"><label for="{{it.rydm}}"></label></th>
+                                        <th>{{it.msName}}</th>
+                                        <th>{{it.dzbmc}}</th>
+                                    </tr>
+                                    <tr ng-if="receivePcommListPlan.length<=0">
+                                        <td colspan="3" style="text-align:center">暂无数据</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <pagination data-pageindex="paramsMod.pageindex" data-pagesize="paramsMod.pagesize" data-ptotal="paramsMod.pageInfo.ptotal"></pagination>
+                        </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" ng-click="quedingxuyaoUser()">选择</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

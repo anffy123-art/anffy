@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.GgZgzpMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.GgZgzp">
+    <result column="ZGZPBS" jdbcType="VARCHAR" property="zgzpbs" />
+    <result column="RYBM" jdbcType="VARCHAR" property="rybm" />
+    <result column="YL04" jdbcType="VARCHAR" property="yl04" />
+    <result column="YL07" jdbcType="VARCHAR" property="yl07" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.px.partybuild.model.GgZgzp">
+    <result column="GRZP" jdbcType="LONGVARBINARY" property="grzp" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ZGZPBS, RYBM, YL04, YL07
+  </sql>
+  <sql id="Blob_Column_List">
+    GRZP
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.px.partybuild.model.GgZgzpExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from gg_zgzp
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.GgZgzpExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from gg_zgzp
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.GgZgzpExample">
+    delete from gg_zgzp
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.GgZgzp">
+    insert into gg_zgzp (ZGZPBS, RYBM, YL04, 
+      YL07, GRZP)
+    values (#{zgzpbs,jdbcType=VARCHAR}, #{rybm,jdbcType=VARCHAR}, #{yl04,jdbcType=VARCHAR}, 
+      #{yl07,jdbcType=VARCHAR}, #{grzp,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.GgZgzp">
+    insert into gg_zgzp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="zgzpbs != null">
+        ZGZPBS,
+      </if>
+      <if test="rybm != null">
+        RYBM,
+      </if>
+      <if test="yl04 != null">
+        YL04,
+      </if>
+      <if test="yl07 != null">
+        YL07,
+      </if>
+      <if test="grzp != null">
+        GRZP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="zgzpbs != null">
+        #{zgzpbs,jdbcType=VARCHAR},
+      </if>
+      <if test="rybm != null">
+        #{rybm,jdbcType=VARCHAR},
+      </if>
+      <if test="yl04 != null">
+        #{yl04,jdbcType=VARCHAR},
+      </if>
+      <if test="yl07 != null">
+        #{yl07,jdbcType=VARCHAR},
+      </if>
+      <if test="grzp != null">
+        #{grzp,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.GgZgzpExample" resultType="java.lang.Long">
+    select count(*) from gg_zgzp
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update gg_zgzp
+    <set>
+      <if test="record.zgzpbs != null">
+        ZGZPBS = #{record.zgzpbs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rybm != null">
+        RYBM = #{record.rybm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yl04 != null">
+        YL04 = #{record.yl04,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yl07 != null">
+        YL07 = #{record.yl07,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grzp != null">
+        GRZP = #{record.grzp,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update gg_zgzp
+    set ZGZPBS = #{record.zgzpbs,jdbcType=VARCHAR},
+      RYBM = #{record.rybm,jdbcType=VARCHAR},
+      YL04 = #{record.yl04,jdbcType=VARCHAR},
+      YL07 = #{record.yl07,jdbcType=VARCHAR},
+      GRZP = #{record.grzp,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update gg_zgzp
+    set ZGZPBS = #{record.zgzpbs,jdbcType=VARCHAR},
+      RYBM = #{record.rybm,jdbcType=VARCHAR},
+      YL04 = #{record.yl04,jdbcType=VARCHAR},
+      YL07 = #{record.yl07,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

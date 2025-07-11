@@ -1,0 +1,57 @@
+﻿<div ng-controller="formQuantityOfWorkCtrl">
+    <table class="table table-bordered tlist">
+        <thead>
+        <tr>
+            <td colspan="8" style="text-align:center; background-color:#f5f5f5">
+                <span style="color:black;"><strong>工作量</strong></span>
+                <span><button ng-hide="params.readonly_Quantity" type="button" class="btn btn-link"
+                              style="float:right;margin-right:5%; color:#007bff;padding:1px;" data-placement="center"
+                              data-animation="am-fade-and-scale"
+                              ng-click="savemodal()"><strong>新增</strong></button></span>
+            </td>
+        </tr>
+        <tr>
+            <th>序号</th>
+            <th>流程阶段</th>
+            <th>工作量类型</th>
+            <th>成员</th>
+            <th>成员角色</th>
+            <th>人/天</th>
+            <th>备注</th>
+            <th ng-hide="params.readonly_Quantity">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="QuantityOfWork in QuantityOfWorkLists">
+            <td>{{$index+1+(finddata.pageindex-1)*finddata.pagesize}}</td>
+            <td>{{QuantityOfWork.FlowStageName}}</td>
+            <td>{{QuantityOfWork.dicValue}}</td>
+            <td>{{QuantityOfWork.Name}}</td>
+            <td>{{QuantityOfWork.roleName}}</td>
+            <td>{{QuantityOfWork.ValueOfDate}}</td>
+            <td>{{QuantityOfWork.Note}}</td>
+            <td ng-hide="params.readonly_Quantity">
+                <button ng-hide="params.readonly_Quantity" class="btn btn-success btn-sm" title="修改"
+                        data-animation="am-fade-and-scale"
+                        ng-click="editmodal(QuantityOfWork.QuantityOfWorkID,QuantityOfWork.DemandApplyID)"><span
+                        class="glyphicon glyphicon-pencil "></span></button>
+                <button ng-hide="params.readonly_Quantity" class="btn btn-danger btn-sm"
+                        ng-click="deletetQuantityOfWork(QuantityOfWork.QuantityOfWorkID)" title="删除"><span
+                        class="glyphicon glyphicon-remove "></span></button>
+            </td>
+        </tr>
+        <tr ng-if="finddata.ptotal>0">
+            <td colspan="5" style="text-align:center; ">工作量汇总</td>
+            <td style="color:red">{{totalQuantity}}</td>
+            <td colspan="2"></td>
+        </tr>
+        <tr ng-if="finddata.ptotal<=0">
+            <td colspan="8" style="text-align:center">暂无数据</td>
+        </tr>
+        </tbody>
+    </table>
+    <pagination ng-if="finddata.ptotal>finddata.pagesize" data-pageindex="finddata.pageindex"
+                data-pagesize="finddata.pagesize" data-ptotal="finddata.ptotal"></pagination>
+</div>
+
+

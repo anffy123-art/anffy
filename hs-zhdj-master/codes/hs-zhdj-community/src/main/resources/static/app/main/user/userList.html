@@ -1,0 +1,175 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="selectparams.selectdzzdm"
+             data-selectdzzmc="selectparams.selectdzzmc" data-parentcode="selectparams.parentcode"
+             data-parentname="selectparams.parentname"
+             data-dzzdm="selectparams.szdzzdm"
+             data-dzzmc="selectparams.szdzzmc"
+             data-userid="selectparams.userid"
+             data-isunfold="selectparams.isunfold"
+        ></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="selectparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label>学号/工号</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="xm" class="form-control" type="text" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.userNo"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label>姓名</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="xm" class="form-control" type="text" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.xm"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>政治面貌</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-model="selectparams.ryzt" ng-change="search()"
+                                                        ng-options="type.bm as type.hzmc for type in ryztList"
+                                                        class="form-control"
+                                                        name="zwjb">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <!--<span class="moreSpan" ng-click="isShowClick()" style='padding-right:2em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>-->
+                                <button  class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+<!--                                <button  class="btn btn-default1 btn-reset"-->
+<!--                                        ng-click="reset()">重置-->
+<!--                                </button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button role-permission-code="userList.btnDelete" class="btn  btn-default1"
+                                    ng-click="import()">导入群众信息
+                            </button>
+                            <button role-permission-code="userList.btnDelete" class="btn  btn-default1"
+                                    ng-click="deleteUserInfo()">清除账号
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="table-responsive list-table-panel">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>姓名</th>
+                                <th>学号/工号（帐号）</th>
+                                <th>政治面貌</th>
+                                <th>党组织名称</th>
+                                <th>角色</th>
+                                <!--<th>状态</th>-->
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in datalist">
+                                <td scope="row" class="text-center">
+                                    {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                </td>
+                                <td>{{it.XM}}</td>
+                                <td>{{it.userNo}}</td>
+                                <td>{{it.RYZTMC}}</td>
+                                <td>{{it.DZZMC}}</td>
+                                <td style="min-width:300px;white-space:pre-line;">{{it.roleName.toString()}}</td>
+                                <!--<td>{{it.isenable==1?'启用':'禁用'}}</td>-->
+                                <td class="text-center">
+                                    <!--<a ng-click="editUser(it.userId)" title="修改">
+                                        编辑
+                                    </a>-->
+                                    <button class="btn td-btn bg-light-green waves-effect"
+                                            role-permission-code="userList.btnUpdatepwd"
+                                            ng-click="editPassword(it.RYBM)"
+                                            title="修改密码">
+                                        修改密码
+                                    </button>
+                                    <button class="btn td-btn bg-light-green waves-effect"
+                                            role-permission-code="userList.btnAssignRole"
+                                            data-dataoptions="selectRolelist"
+                                            ng-click="assetRole(it.RYBM,roleIdUserList[$index],it.ROLENAME)"
+                                            title="分配角色" bsselectdata-pro>
+                                        分配角色
+                                    </button>
+                                    <!--<button class="btn td-btn bg-light-green waves-effect"-->
+                                            <!--role-permission-code="userList.btnQiyong"-->
+                                            <!--ng-show="it.isenable==0" title="启用"-->
+                                            <!--ng-click="enableUser(it.RYBM,1)">-->
+                                        <!--启用-->
+                                    <!--</button>-->
+                                    <!--<button class="btn td-btn bg-light-green waves-effect"-->
+                                            <!--role-permission-code="userList.btnJinyong"-->
+                                            <!--ng-show="it.isenable==1"-->
+                                            <!--title="禁用"-->
+                                            <!--ng-click="enableUser(it.RYBM,0)">-->
+                                        <!--禁用-->
+                                    <!--</button>-->
+                                </td>
+                            </tr>
+                            <tr ng-if="datalist.length<=0">
+                                <td colspan="10" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,45 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="quxiaoguanbi()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div activate-input class="body">
+                    <div class="table-responsive list-table-panel" style="font-size: 16px">
+                            <div class="list-table-title">
+                                <div class="table-title" >
+                                    接收党总支
+                                </div>
+                            </div>
+                            <div class="outoflow" style="height: 350px;">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap" style="position:relative">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>党总支名称</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="it in receivePcommList">
+                                        <th><input type="checkbox" id="{{it.dwId}}" class="filled-in chk-col-cyan" ng-model="it.checked" ng-change="chkchildren(it)"><label for="{{it.dwId}}"></label></th>
+                                        <th>{{it.dwName}}</th>
+
+                                    </tr>
+                                    <tr ng-if="userList.length<=0">
+                                        <td colspan="3" style="text-align:center">暂无数据</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="quxiaoguanbi()">取消</button>
+                        <button type="submit" class="btn btn-primary" ng-click="quedingxuyao()">选择</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

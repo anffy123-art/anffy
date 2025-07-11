@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.CfLogMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.CfLog">
+    <id column="LOGID" jdbcType="VARCHAR" property="logid" />
+    <result column="REQUESTIP" jdbcType="VARCHAR" property="requestip" />
+    <result column="LOGTIME" jdbcType="TIMESTAMP" property="logtime" />
+    <result column="OPMODULE" jdbcType="VARCHAR" property="opmodule" />
+    <result column="USERID" jdbcType="VARCHAR" property="userid" />
+    <result column="LOGTITLE" jdbcType="VARCHAR" property="logtitle" />
+    <result column="CLIENTINFO" jdbcType="VARCHAR" property="clientinfo" />
+    <result column="RESPONSETIME" jdbcType="DECIMAL" property="responsetime" />
+    <result column="ISERROR" jdbcType="DECIMAL" property="iserror" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.px.partybuild.model.CfLog">
+    <result column="LOGTEXT" jdbcType="LONGVARCHAR" property="logtext" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    LOGID, REQUESTIP, LOGTIME, OPMODULE, USERID, LOGTITLE, CLIENTINFO, RESPONSETIME, 
+    ISERROR
+  </sql>
+  <sql id="Blob_Column_List">
+    LOGTEXT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.px.partybuild.model.CfLogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cf_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.CfLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cf_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cf_log
+    where LOGID = #{logid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cf_log
+    where LOGID = #{logid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.CfLogExample">
+    delete from cf_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.CfLog">
+    insert into cf_log (LOGID, REQUESTIP, LOGTIME, 
+      OPMODULE, USERID, LOGTITLE, 
+      CLIENTINFO, RESPONSETIME, ISERROR, 
+      LOGTEXT)
+    values (#{logid,jdbcType=VARCHAR}, #{requestip,jdbcType=VARCHAR}, #{logtime,jdbcType=TIMESTAMP}, 
+      #{opmodule,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{logtitle,jdbcType=VARCHAR}, 
+      #{clientinfo,jdbcType=VARCHAR}, #{responsetime,jdbcType=DECIMAL}, #{iserror,jdbcType=DECIMAL}, 
+      #{logtext,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.CfLog">
+    insert into cf_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="logid != null">
+        LOGID,
+      </if>
+      <if test="requestip != null">
+        REQUESTIP,
+      </if>
+      <if test="logtime != null">
+        LOGTIME,
+      </if>
+      <if test="opmodule != null">
+        OPMODULE,
+      </if>
+      <if test="userid != null">
+        USERID,
+      </if>
+      <if test="logtitle != null">
+        LOGTITLE,
+      </if>
+      <if test="clientinfo != null">
+        CLIENTINFO,
+      </if>
+      <if test="responsetime != null">
+        RESPONSETIME,
+      </if>
+      <if test="iserror != null">
+        ISERROR,
+      </if>
+      <if test="logtext != null">
+        LOGTEXT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="logid != null">
+        #{logid,jdbcType=VARCHAR},
+      </if>
+      <if test="requestip != null">
+        #{requestip,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null">
+        #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opmodule != null">
+        #{opmodule,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="logtitle != null">
+        #{logtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="clientinfo != null">
+        #{clientinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="responsetime != null">
+        #{responsetime,jdbcType=DECIMAL},
+      </if>
+      <if test="iserror != null">
+        #{iserror,jdbcType=DECIMAL},
+      </if>
+      <if test="logtext != null">
+        #{logtext,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.CfLogExample" resultType="java.lang.Long">
+    select count(*) from cf_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cf_log
+    <set>
+      <if test="record.logid != null">
+        LOGID = #{record.logid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestip != null">
+        REQUESTIP = #{record.requestip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtime != null">
+        LOGTIME = #{record.logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.opmodule != null">
+        OPMODULE = #{record.opmodule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        USERID = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logtitle != null">
+        LOGTITLE = #{record.logtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientinfo != null">
+        CLIENTINFO = #{record.clientinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.responsetime != null">
+        RESPONSETIME = #{record.responsetime,jdbcType=DECIMAL},
+      </if>
+      <if test="record.iserror != null">
+        ISERROR = #{record.iserror,jdbcType=DECIMAL},
+      </if>
+      <if test="record.logtext != null">
+        LOGTEXT = #{record.logtext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update cf_log
+    set LOGID = #{record.logid,jdbcType=VARCHAR},
+      REQUESTIP = #{record.requestip,jdbcType=VARCHAR},
+      LOGTIME = #{record.logtime,jdbcType=TIMESTAMP},
+      OPMODULE = #{record.opmodule,jdbcType=VARCHAR},
+      USERID = #{record.userid,jdbcType=VARCHAR},
+      LOGTITLE = #{record.logtitle,jdbcType=VARCHAR},
+      CLIENTINFO = #{record.clientinfo,jdbcType=VARCHAR},
+      RESPONSETIME = #{record.responsetime,jdbcType=DECIMAL},
+      ISERROR = #{record.iserror,jdbcType=DECIMAL},
+      LOGTEXT = #{record.logtext,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cf_log
+    set LOGID = #{record.logid,jdbcType=VARCHAR},
+      REQUESTIP = #{record.requestip,jdbcType=VARCHAR},
+      LOGTIME = #{record.logtime,jdbcType=TIMESTAMP},
+      OPMODULE = #{record.opmodule,jdbcType=VARCHAR},
+      USERID = #{record.userid,jdbcType=VARCHAR},
+      LOGTITLE = #{record.logtitle,jdbcType=VARCHAR},
+      CLIENTINFO = #{record.clientinfo,jdbcType=VARCHAR},
+      RESPONSETIME = #{record.responsetime,jdbcType=DECIMAL},
+      ISERROR = #{record.iserror,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.CfLog">
+    update cf_log
+    <set>
+      <if test="requestip != null">
+        REQUESTIP = #{requestip,jdbcType=VARCHAR},
+      </if>
+      <if test="logtime != null">
+        LOGTIME = #{logtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opmodule != null">
+        OPMODULE = #{opmodule,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        USERID = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="logtitle != null">
+        LOGTITLE = #{logtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="clientinfo != null">
+        CLIENTINFO = #{clientinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="responsetime != null">
+        RESPONSETIME = #{responsetime,jdbcType=DECIMAL},
+      </if>
+      <if test="iserror != null">
+        ISERROR = #{iserror,jdbcType=DECIMAL},
+      </if>
+      <if test="logtext != null">
+        LOGTEXT = #{logtext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where LOGID = #{logid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.px.partybuild.model.CfLog">
+    update cf_log
+    set REQUESTIP = #{requestip,jdbcType=VARCHAR},
+      LOGTIME = #{logtime,jdbcType=TIMESTAMP},
+      OPMODULE = #{opmodule,jdbcType=VARCHAR},
+      USERID = #{userid,jdbcType=VARCHAR},
+      LOGTITLE = #{logtitle,jdbcType=VARCHAR},
+      CLIENTINFO = #{clientinfo,jdbcType=VARCHAR},
+      RESPONSETIME = #{responsetime,jdbcType=DECIMAL},
+      ISERROR = #{iserror,jdbcType=DECIMAL},
+      LOGTEXT = #{logtext,jdbcType=LONGVARCHAR}
+    where LOGID = #{logid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.CfLog">
+    update cf_log
+    set REQUESTIP = #{requestip,jdbcType=VARCHAR},
+      LOGTIME = #{logtime,jdbcType=TIMESTAMP},
+      OPMODULE = #{opmodule,jdbcType=VARCHAR},
+      USERID = #{userid,jdbcType=VARCHAR},
+      LOGTITLE = #{logtitle,jdbcType=VARCHAR},
+      CLIENTINFO = #{clientinfo,jdbcType=VARCHAR},
+      RESPONSETIME = #{responsetime,jdbcType=DECIMAL},
+      ISERROR = #{iserror,jdbcType=DECIMAL}
+    where LOGID = #{logid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DjGdwydqkMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.DjGdwydqk">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DZZMC" jdbcType="VARCHAR" property="dzzmc" />
+    <result column="NY" jdbcType="TIMESTAMP" property="ny" />
+    <result column="DWZRS" jdbcType="DECIMAL" property="dwzrs" />
+    <result column="DWGZZRS" jdbcType="DECIMAL" property="dwgzzrs" />
+    <result column="DZBSJYDL" jdbcType="DECIMAL" property="dzbsjydl" />
+    <result column="DYYDL" jdbcType="DECIMAL" property="dyydl" />
+    <result column="DZLV" jdbcType="INTEGER" property="dzlv" />
+    <result column="DDLDF" jdbcType="INTEGER" property="ddldf" />
+    <result column="LDBZYDL" jdbcType="DECIMAL" property="ldbzydl" />
+    <result column="PJDZL" jdbcType="INTEGER" property="pjdzl" />
+    <result column="DDL" jdbcType="INTEGER" property="ddl" />
+    <result column="YDLV" jdbcType="INTEGER" property="ydlv" />
+    <result column="YDL" jdbcType="DECIMAL" property="ydl" />
+    <result column="DZL" jdbcType="DECIMAL" property="dzl" />
+    <result column="PJYDL" jdbcType="INTEGER" property="pjydl" />
+    <result column="ORDERBY" jdbcType="DECIMAL" property="orderby" />
+    <result column="CREATEUSERID" jdbcType="VARCHAR" property="createuserid" />
+    <result column="CREATEUSERNAME" jdbcType="VARCHAR" property="createusername" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="UPDATEUSERID" jdbcType="VARCHAR" property="updateuserid" />
+    <result column="UPDATEUSERNAME" jdbcType="VARCHAR" property="updateusername" />
+    <result column="OPERATETIME" jdbcType="TIMESTAMP" property="operatetime" />
+    <result column="OPERATESTATE" jdbcType="VARCHAR" property="operatestate" />
+    <result column="SYNCSTATE" jdbcType="VARCHAR" property="syncstate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, DZZMC, NY, DWZRS, DWGZZRS, DZBSJYDL, DYYDL, DZLV, DDLDF, LDBZYDL, PJDZL, DDL, 
+    YDLV, YDL, DZL, PJYDL, ORDERBY, CREATEUSERID, CREATEUSERNAME, UPDATETIME, UPDATEUSERID, 
+    UPDATEUSERNAME, OPERATETIME, OPERATESTATE, SYNCSTATE
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.DjGdwydqkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dj_gdwydqk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dj_gdwydqk
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dj_gdwydqk
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.DjGdwydqkExample">
+    delete from dj_gdwydqk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.DjGdwydqk">
+    insert into dj_gdwydqk (ID, DZZMC, NY, 
+      DWZRS, DWGZZRS, DZBSJYDL, 
+      DYYDL, DZLV, DDLDF, 
+      LDBZYDL, PJDZL, DDL, 
+      YDLV, YDL, DZL, PJYDL, 
+      ORDERBY, CREATEUSERID, CREATEUSERNAME, 
+      UPDATETIME, UPDATEUSERID, UPDATEUSERNAME, 
+      OPERATETIME, OPERATESTATE, SYNCSTATE
+      )
+    values (#{id,jdbcType=VARCHAR}, #{dzzmc,jdbcType=VARCHAR}, #{ny,jdbcType=TIMESTAMP}, 
+      #{dwzrs,jdbcType=DECIMAL}, #{dwgzzrs,jdbcType=DECIMAL}, #{dzbsjydl,jdbcType=DECIMAL}, 
+      #{dyydl,jdbcType=DECIMAL}, #{dzlv,jdbcType=INTEGER}, #{ddldf,jdbcType=INTEGER}, 
+      #{ldbzydl,jdbcType=DECIMAL}, #{pjdzl,jdbcType=INTEGER}, #{ddl,jdbcType=INTEGER}, 
+      #{ydlv,jdbcType=INTEGER}, #{ydl,jdbcType=DECIMAL}, #{dzl,jdbcType=DECIMAL}, #{pjydl,jdbcType=INTEGER}, 
+      #{orderby,jdbcType=DECIMAL}, #{createuserid,jdbcType=VARCHAR}, #{createusername,jdbcType=VARCHAR}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{updateuserid,jdbcType=VARCHAR}, #{updateusername,jdbcType=VARCHAR}, 
+      #{operatetime,jdbcType=TIMESTAMP}, #{operatestate,jdbcType=VARCHAR}, #{syncstate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.DjGdwydqk">
+    insert into dj_gdwydqk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="dzzmc != null">
+        DZZMC,
+      </if>
+      <if test="ny != null">
+        NY,
+      </if>
+      <if test="dwzrs != null">
+        DWZRS,
+      </if>
+      <if test="dwgzzrs != null">
+        DWGZZRS,
+      </if>
+      <if test="dzbsjydl != null">
+        DZBSJYDL,
+      </if>
+      <if test="dyydl != null">
+        DYYDL,
+      </if>
+      <if test="dzlv != null">
+        DZLV,
+      </if>
+      <if test="ddldf != null">
+        DDLDF,
+      </if>
+      <if test="ldbzydl != null">
+        LDBZYDL,
+      </if>
+      <if test="pjdzl != null">
+        PJDZL,
+      </if>
+      <if test="ddl != null">
+        DDL,
+      </if>
+      <if test="ydlv != null">
+        YDLV,
+      </if>
+      <if test="ydl != null">
+        YDL,
+      </if>
+      <if test="dzl != null">
+        DZL,
+      </if>
+      <if test="pjydl != null">
+        PJYDL,
+      </if>
+      <if test="orderby != null">
+        ORDERBY,
+      </if>
+      <if test="createuserid != null">
+        CREATEUSERID,
+      </if>
+      <if test="createusername != null">
+        CREATEUSERNAME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+      <if test="updateuserid != null">
+        UPDATEUSERID,
+      </if>
+      <if test="updateusername != null">
+        UPDATEUSERNAME,
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME,
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE,
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzmc != null">
+        #{dzzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="ny != null">
+        #{ny,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dwzrs != null">
+        #{dwzrs,jdbcType=DECIMAL},
+      </if>
+      <if test="dwgzzrs != null">
+        #{dwgzzrs,jdbcType=DECIMAL},
+      </if>
+      <if test="dzbsjydl != null">
+        #{dzbsjydl,jdbcType=DECIMAL},
+      </if>
+      <if test="dyydl != null">
+        #{dyydl,jdbcType=DECIMAL},
+      </if>
+      <if test="dzlv != null">
+        #{dzlv,jdbcType=INTEGER},
+      </if>
+      <if test="ddldf != null">
+        #{ddldf,jdbcType=INTEGER},
+      </if>
+      <if test="ldbzydl != null">
+        #{ldbzydl,jdbcType=DECIMAL},
+      </if>
+      <if test="pjdzl != null">
+        #{pjdzl,jdbcType=INTEGER},
+      </if>
+      <if test="ddl != null">
+        #{ddl,jdbcType=INTEGER},
+      </if>
+      <if test="ydlv != null">
+        #{ydlv,jdbcType=INTEGER},
+      </if>
+      <if test="ydl != null">
+        #{ydl,jdbcType=DECIMAL},
+      </if>
+      <if test="dzl != null">
+        #{dzl,jdbcType=DECIMAL},
+      </if>
+      <if test="pjydl != null">
+        #{pjydl,jdbcType=INTEGER},
+      </if>
+      <if test="orderby != null">
+        #{orderby,jdbcType=DECIMAL},
+      </if>
+      <if test="createuserid != null">
+        #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetime != null">
+        #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        #{syncstate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.DjGdwydqkExample" resultType="java.lang.Long">
+    select count(*) from dj_gdwydqk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dj_gdwydqk
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dzzmc != null">
+        DZZMC = #{record.dzzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ny != null">
+        NY = #{record.ny,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dwzrs != null">
+        DWZRS = #{record.dwzrs,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dwgzzrs != null">
+        DWGZZRS = #{record.dwgzzrs,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dzbsjydl != null">
+        DZBSJYDL = #{record.dzbsjydl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dyydl != null">
+        DYYDL = #{record.dyydl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dzlv != null">
+        DZLV = #{record.dzlv,jdbcType=INTEGER},
+      </if>
+      <if test="record.ddldf != null">
+        DDLDF = #{record.ddldf,jdbcType=INTEGER},
+      </if>
+      <if test="record.ldbzydl != null">
+        LDBZYDL = #{record.ldbzydl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pjdzl != null">
+        PJDZL = #{record.pjdzl,jdbcType=INTEGER},
+      </if>
+      <if test="record.ddl != null">
+        DDL = #{record.ddl,jdbcType=INTEGER},
+      </if>
+      <if test="record.ydlv != null">
+        YDLV = #{record.ydlv,jdbcType=INTEGER},
+      </if>
+      <if test="record.ydl != null">
+        YDL = #{record.ydl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dzl != null">
+        DZL = #{record.dzl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pjydl != null">
+        PJYDL = #{record.pjydl,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderby != null">
+        ORDERBY = #{record.orderby,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createuserid != null">
+        CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createusername != null">
+        CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null">
+        UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateuserid != null">
+        UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateusername != null">
+        UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatetime != null">
+        OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatestate != null">
+        OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.syncstate != null">
+        SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dj_gdwydqk
+    set ID = #{record.id,jdbcType=VARCHAR},
+      DZZMC = #{record.dzzmc,jdbcType=VARCHAR},
+      NY = #{record.ny,jdbcType=TIMESTAMP},
+      DWZRS = #{record.dwzrs,jdbcType=DECIMAL},
+      DWGZZRS = #{record.dwgzzrs,jdbcType=DECIMAL},
+      DZBSJYDL = #{record.dzbsjydl,jdbcType=DECIMAL},
+      DYYDL = #{record.dyydl,jdbcType=DECIMAL},
+      DZLV = #{record.dzlv,jdbcType=INTEGER},
+      DDLDF = #{record.ddldf,jdbcType=INTEGER},
+      LDBZYDL = #{record.ldbzydl,jdbcType=DECIMAL},
+      PJDZL = #{record.pjdzl,jdbcType=INTEGER},
+      DDL = #{record.ddl,jdbcType=INTEGER},
+      YDLV = #{record.ydlv,jdbcType=INTEGER},
+      YDL = #{record.ydl,jdbcType=DECIMAL},
+      DZL = #{record.dzl,jdbcType=DECIMAL},
+      PJYDL = #{record.pjydl,jdbcType=INTEGER},
+      ORDERBY = #{record.orderby,jdbcType=DECIMAL},
+      CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.DjGdwydqk">
+    update dj_gdwydqk
+    <set>
+      <if test="dzzmc != null">
+        DZZMC = #{dzzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="ny != null">
+        NY = #{ny,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dwzrs != null">
+        DWZRS = #{dwzrs,jdbcType=DECIMAL},
+      </if>
+      <if test="dwgzzrs != null">
+        DWGZZRS = #{dwgzzrs,jdbcType=DECIMAL},
+      </if>
+      <if test="dzbsjydl != null">
+        DZBSJYDL = #{dzbsjydl,jdbcType=DECIMAL},
+      </if>
+      <if test="dyydl != null">
+        DYYDL = #{dyydl,jdbcType=DECIMAL},
+      </if>
+      <if test="dzlv != null">
+        DZLV = #{dzlv,jdbcType=INTEGER},
+      </if>
+      <if test="ddldf != null">
+        DDLDF = #{ddldf,jdbcType=INTEGER},
+      </if>
+      <if test="ldbzydl != null">
+        LDBZYDL = #{ldbzydl,jdbcType=DECIMAL},
+      </if>
+      <if test="pjdzl != null">
+        PJDZL = #{pjdzl,jdbcType=INTEGER},
+      </if>
+      <if test="ddl != null">
+        DDL = #{ddl,jdbcType=INTEGER},
+      </if>
+      <if test="ydlv != null">
+        YDLV = #{ydlv,jdbcType=INTEGER},
+      </if>
+      <if test="ydl != null">
+        YDL = #{ydl,jdbcType=DECIMAL},
+      </if>
+      <if test="dzl != null">
+        DZL = #{dzl,jdbcType=DECIMAL},
+      </if>
+      <if test="pjydl != null">
+        PJYDL = #{pjydl,jdbcType=INTEGER},
+      </if>
+      <if test="orderby != null">
+        ORDERBY = #{orderby,jdbcType=DECIMAL},
+      </if>
+      <if test="createuserid != null">
+        CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.DjGdwydqk">
+    update dj_gdwydqk
+    set DZZMC = #{dzzmc,jdbcType=VARCHAR},
+      NY = #{ny,jdbcType=TIMESTAMP},
+      DWZRS = #{dwzrs,jdbcType=DECIMAL},
+      DWGZZRS = #{dwgzzrs,jdbcType=DECIMAL},
+      DZBSJYDL = #{dzbsjydl,jdbcType=DECIMAL},
+      DYYDL = #{dyydl,jdbcType=DECIMAL},
+      DZLV = #{dzlv,jdbcType=INTEGER},
+      DDLDF = #{ddldf,jdbcType=INTEGER},
+      LDBZYDL = #{ldbzydl,jdbcType=DECIMAL},
+      PJDZL = #{pjdzl,jdbcType=INTEGER},
+      DDL = #{ddl,jdbcType=INTEGER},
+      YDLV = #{ydlv,jdbcType=INTEGER},
+      YDL = #{ydl,jdbcType=DECIMAL},
+      DZL = #{dzl,jdbcType=DECIMAL},
+      PJYDL = #{pjydl,jdbcType=INTEGER},
+      ORDERBY = #{orderby,jdbcType=DECIMAL},
+      CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{syncstate,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DjZtdrxxMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.DjZtdrxx">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DZZMC" jdbcType="VARCHAR" property="dzzmc" />
+    <result column="DZZDM" jdbcType="VARCHAR" property="dzzdm" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="ACTIVITYTIME" jdbcType="TIMESTAMP" property="activitytime" />
+    <result column="LOCATION" jdbcType="VARCHAR" property="location" />
+    <result column="SUBJECTTYPE" jdbcType="INTEGER" property="subjecttype" />
+    <result column="CREATEUSERID" jdbcType="VARCHAR" property="createuserid" />
+    <result column="CREATEUSERNAME" jdbcType="VARCHAR" property="createusername" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="UPDATEUSERID" jdbcType="VARCHAR" property="updateuserid" />
+    <result column="UPDATEUSERNAME" jdbcType="VARCHAR" property="updateusername" />
+    <result column="OPERATETIME" jdbcType="TIMESTAMP" property="operatetime" />
+    <result column="OPERATESTATE" jdbcType="VARCHAR" property="operatestate" />
+    <result column="SYNCSTATE" jdbcType="VARCHAR" property="syncstate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.px.partybuild.model.DjZtdrxx">
+    <result column="SUBJECTCONTENT" jdbcType="LONGVARCHAR" property="subjectcontent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, DZZMC, DZZDM, TITLE, ACTIVITYTIME, LOCATION, SUBJECTTYPE, CREATEUSERID, CREATEUSERNAME, 
+    UPDATETIME, UPDATEUSERID, UPDATEUSERNAME, OPERATETIME, OPERATESTATE, SYNCSTATE
+  </sql>
+  <sql id="Blob_Column_List">
+    SUBJECTCONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.px.partybuild.model.DjZtdrxxExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dj_ztdrxx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.DjZtdrxxExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dj_ztdrxx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dj_ztdrxx
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dj_ztdrxx
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.DjZtdrxxExample">
+    delete from dj_ztdrxx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.DjZtdrxx">
+    insert into dj_ztdrxx (ID, DZZMC, DZZDM, 
+      TITLE, ACTIVITYTIME, LOCATION, 
+      SUBJECTTYPE, CREATEUSERID, CREATEUSERNAME, 
+      UPDATETIME, UPDATEUSERID, UPDATEUSERNAME, 
+      OPERATETIME, OPERATESTATE, SYNCSTATE, 
+      SUBJECTCONTENT)
+    values (#{id,jdbcType=VARCHAR}, #{dzzmc,jdbcType=VARCHAR}, #{dzzdm,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{activitytime,jdbcType=TIMESTAMP}, #{location,jdbcType=VARCHAR}, 
+      #{subjecttype,jdbcType=INTEGER}, #{createuserid,jdbcType=VARCHAR}, #{createusername,jdbcType=VARCHAR}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{updateuserid,jdbcType=VARCHAR}, #{updateusername,jdbcType=VARCHAR}, 
+      #{operatetime,jdbcType=TIMESTAMP}, #{operatestate,jdbcType=VARCHAR}, #{syncstate,jdbcType=VARCHAR}, 
+      #{subjectcontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.DjZtdrxx">
+    insert into dj_ztdrxx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="dzzmc != null">
+        DZZMC,
+      </if>
+      <if test="dzzdm != null">
+        DZZDM,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+      <if test="activitytime != null">
+        ACTIVITYTIME,
+      </if>
+      <if test="location != null">
+        LOCATION,
+      </if>
+      <if test="subjecttype != null">
+        SUBJECTTYPE,
+      </if>
+      <if test="createuserid != null">
+        CREATEUSERID,
+      </if>
+      <if test="createusername != null">
+        CREATEUSERNAME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+      <if test="updateuserid != null">
+        UPDATEUSERID,
+      </if>
+      <if test="updateusername != null">
+        UPDATEUSERNAME,
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME,
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE,
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE,
+      </if>
+      <if test="subjectcontent != null">
+        SUBJECTCONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzmc != null">
+        #{dzzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzdm != null">
+        #{dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="activitytime != null">
+        #{activitytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="subjecttype != null">
+        #{subjecttype,jdbcType=INTEGER},
+      </if>
+      <if test="createuserid != null">
+        #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetime != null">
+        #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        #{syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectcontent != null">
+        #{subjectcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.DjZtdrxxExample" resultType="java.lang.Long">
+    select count(*) from dj_ztdrxx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dj_ztdrxx
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dzzmc != null">
+        DZZMC = #{record.dzzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dzzdm != null">
+        DZZDM = #{record.dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        TITLE = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activitytime != null">
+        ACTIVITYTIME = #{record.activitytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.location != null">
+        LOCATION = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjecttype != null">
+        SUBJECTTYPE = #{record.subjecttype,jdbcType=INTEGER},
+      </if>
+      <if test="record.createuserid != null">
+        CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createusername != null">
+        CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null">
+        UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateuserid != null">
+        UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateusername != null">
+        UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatetime != null">
+        OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatestate != null">
+        OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.syncstate != null">
+        SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectcontent != null">
+        SUBJECTCONTENT = #{record.subjectcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update dj_ztdrxx
+    set ID = #{record.id,jdbcType=VARCHAR},
+      DZZMC = #{record.dzzmc,jdbcType=VARCHAR},
+      DZZDM = #{record.dzzdm,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      ACTIVITYTIME = #{record.activitytime,jdbcType=TIMESTAMP},
+      LOCATION = #{record.location,jdbcType=VARCHAR},
+      SUBJECTTYPE = #{record.subjecttype,jdbcType=INTEGER},
+      CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      SUBJECTCONTENT = #{record.subjectcontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dj_ztdrxx
+    set ID = #{record.id,jdbcType=VARCHAR},
+      DZZMC = #{record.dzzmc,jdbcType=VARCHAR},
+      DZZDM = #{record.dzzdm,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      ACTIVITYTIME = #{record.activitytime,jdbcType=TIMESTAMP},
+      LOCATION = #{record.location,jdbcType=VARCHAR},
+      SUBJECTTYPE = #{record.subjecttype,jdbcType=INTEGER},
+      CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.DjZtdrxx">
+    update dj_ztdrxx
+    <set>
+      <if test="dzzmc != null">
+        DZZMC = #{dzzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzdm != null">
+        DZZDM = #{dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="activitytime != null">
+        ACTIVITYTIME = #{activitytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="location != null">
+        LOCATION = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="subjecttype != null">
+        SUBJECTTYPE = #{subjecttype,jdbcType=INTEGER},
+      </if>
+      <if test="createuserid != null">
+        CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectcontent != null">
+        SUBJECTCONTENT = #{subjectcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.px.partybuild.model.DjZtdrxx">
+    update dj_ztdrxx
+    set DZZMC = #{dzzmc,jdbcType=VARCHAR},
+      DZZDM = #{dzzdm,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      ACTIVITYTIME = #{activitytime,jdbcType=TIMESTAMP},
+      LOCATION = #{location,jdbcType=VARCHAR},
+      SUBJECTTYPE = #{subjecttype,jdbcType=INTEGER},
+      CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      SUBJECTCONTENT = #{subjectcontent,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.DjZtdrxx">
+    update dj_ztdrxx
+    set DZZMC = #{dzzmc,jdbcType=VARCHAR},
+      DZZDM = #{dzzdm,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      ACTIVITYTIME = #{activitytime,jdbcType=TIMESTAMP},
+      LOCATION = #{location,jdbcType=VARCHAR},
+      SUBJECTTYPE = #{subjecttype,jdbcType=INTEGER},
+      CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{syncstate,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

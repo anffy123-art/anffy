@@ -1,0 +1,94 @@
+<style>
+    li ~ span {
+        padding-left: 4px;
+        padding-right: -4px;
+    }
+
+    .panel-body li:hover {
+        background-color: #F5F5F5;
+    }
+
+    .treeitem > li > span:nth-child(1) {
+        padding-left: 16px;
+        padding-right: -16px;
+    }
+
+    .treeitem .treeitem li > span:nth-child(1) {
+        padding-left: 32px;
+        padding-right: -32px;
+    }
+
+    .treeitem .treeitem .treeitem li > span:nth-child(1) {
+        padding-left: 48px;
+        padding-right: -48px;
+    }
+</style>
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input class="header search-header">
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button class="btn btn-default1"
+                                    ng-click="add()">新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="list-table-panel" style="padding-bottom: 20px;">
+                        <script type="text/ng-template" id="nodes.html">
+                            <li class="row" style="border-bottom:1px solid #f5f5f5; padding:6px 0px">
+                                <span style="width:70%;display: inline-block;">
+                                    <div ng-click="loadChildList(item)">
+                                        <i class="material-icons" style="position: relative;top:7px;" ng-if="item.childList.length>0">{{item.isExpand ? 'expand_more' : 'chevron_right'}}</i>
+                                        <span class="icon-name" ng-class="item.childList.length>0?'':'grouptree-icon-name-spac'">{{item.name}}</span>
+                                    </div>
+                                </span>
+                                <span style="width:10%;display:inline-block;">{{item.sort}}</span>
+                                <span style="width:10%;display:inline-block;">
+                                    <button class="btn td-btn bg-light-green waves-effect" ng-click="edit(item.id)"
+                                            title="修改">
+                                         修改
+                                    </button>
+                                    <button class="btn td-btn bg-pink waves-effect" ng-click="delete(item.id)" title="删除">
+                                         删除
+                                    </button>
+                                 </span>
+                            </li>
+                            <div ng-hide="!item.isExpand">
+                                <div class="treeitem" ng-repeat="item in item.childList" ng-include="'nodes.html'"
+                                     style="cursor: pointer;"></div>
+                            </div>
+                        </script>
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable"
+                               style="margin-bottom: 0px;">
+                            <thead>
+                            <tr>
+                                <th width="70%">名称</th>
+                                <th width="10%">排序</th>
+                                <th width="20%">操作</th>
+                            </tr>
+                            <tr ng-if="dataList.length<=0">
+                                <td colspan="7" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </thead>
+                        </table>
+                        <ul style="list-style:none;padding:0px 15px; margin:0px;border-left:1px solid #f5f5f5;border-right: 1px solid #f5f5f5 "
+                            ng-repeat="item in dataList"
+                            ng-include="'nodes.html'">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .grouptree-icon-name-spac{
+        padding-left: 24px;
+    }
+</style>

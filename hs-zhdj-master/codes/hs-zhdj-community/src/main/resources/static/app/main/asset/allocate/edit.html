@@ -1,0 +1,193 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div panel-title data-title="'选择资产'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>资产名称</th>
+                        <td ng-class="{ 'has-error' : this.editForm.assetName.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 title="选择资产"
+                                 data-dataoptions="selectAsset" bsselectdata-pro>
+                                <input name="assetName" type="text" ng-model="assetModel.name"
+                                       class="form-control"
+                                       ng-disabled="true"
+                                       ng-required="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                        </td>
+                        <th>资产编号</th>
+                        <td>
+                            {{assetModel.no}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>型号</th>
+                        <td>
+                            {{assetModel.model}}
+                        </td>
+                        <th>数量</th>
+                        <td>
+                            {{assetModel.count}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>计量单位</th>
+                        <td>
+                            {{assetModel.unittype}}
+                        </td>
+                        <th>使用部门</th>
+                        <td>
+                            {{assetModel.usepartyname}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>资产原值</th>
+                        <td>
+                            {{assetModel.originalvalue}}
+                        </td>
+                        <th>税额</th>
+                        <td>
+                            {{assetModel.tax}}
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>价税合计</th>
+                        <td>
+                            {{assetModel.pricetaxtotal}}
+                        </td>
+                        <th>购置人</th>
+                        <td>
+                            {{assetModel.purchaseuserid}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>建卡时间</th>
+                        <td>
+                            {{assetModel.buildtime | date:'yyyy-MM-dd'}}
+                        </td>
+                        <th>预计使用年限</th>
+                        <td>
+                            {{assetModel.expectedusefullife}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>保管单位</th>
+                        <td>
+                            {{assetModel.takecarepartyname}}
+                        </td>
+                        <th>保管人</th>
+                        <td>
+                            {{assetModel.takecareusername}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>保管时间段</th>
+                        <td colspan="3">
+                            {{assetModel.startdate | date:'yyyy-MM-dd'}} - {{assetModel.enddate | date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div panel-title data-title="'录入资产调拨信息'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>调拨后保管单位</th>
+                        <td ng-class="{ 'has-error' : this.editForm.newpartyname.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 title="选择保管单位" ng-click="selectTakecareParty()">
+                                <input name="newpartyname" type="text" ng-model="dataModel.newpartyname"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.takecarepartyname.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>调拨后保管人</th>
+                        <td ng-class="{ 'has-error' : this.editForm.newusername.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 data-dataoptions="selectTakecareuser"
+                                 title="选择保管人" bsselectdata-pro>
+                                <input name="newusername" type="text" ng-model="dataModel.newusername"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.newusername.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>保管时间段</th>
+                        <td ng-class="{ 'has-error' : (this.editForm.newstartdate.$invalid || this.editForm.newenddate.$invalid) &&  this.editForm.$submitted}">
+                            <input style="width: 100px;display: inline;" name="newstartdate" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.newstartdate"
+                                   ng-required="true"
+                                   placeholder="" bs-datepicker/>
+                            至
+                            <input style="width: 100px;display: inline;" name="newenddate" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.newenddate"
+                                   ng-required="true"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="(this.editForm.newstartdate.$invalid || this.editForm.newenddate.$invalid) &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>调拨时间</th>
+                        <td ng-class="{ 'has-error' : this.editForm.allocatedate.$invalid &&  this.editForm.$submitted}">
+                            <input name="allocatedate" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.allocatedate"
+                                   ng-required="true"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="this.editForm.allocatedate.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>调拨人</th>
+                        <td ng-class="{ 'has-error' : this.editForm.allocateusername.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 data-dataoptions="selectAllocateuser"
+                                 title="选择保管人" bsselectdata-pro>
+                                <input name="allocateusername" type="text" ng-model="dataModel.allocateusername"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.allocateusername.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <th>备注</th>
+                        <td colspan="3">
+                            <textarea class="form-control" ng-model="dataModel.remark" rows="5" placeholder=""></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

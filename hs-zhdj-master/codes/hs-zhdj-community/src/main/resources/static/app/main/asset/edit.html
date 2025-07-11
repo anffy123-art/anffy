@@ -1,0 +1,167 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table dj-table3">
+                    <tr>
+                        <th>资产编号</th>
+                        <td ng-class="{ 'has-error' : this.editForm.no.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="no" ng-model="dataModel.no"
+                                   maxlength="500"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.no.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>资产名称</th>
+                        <td ng-class="{ 'has-error' : this.editForm.name.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="name" ng-model="dataModel.name"
+                                   maxlength="300"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.name.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>型号</th>
+                        <td ng-class="{ 'has-error' : this.editForm.model.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="model" ng-model="dataModel.model"
+                                   maxlength="300"
+                                   class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>数量</th>
+                        <td ng-class="{ 'has-error' : this.editForm.count.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="count" ng-model="dataModel.count"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.count.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>计量单位</th>
+                        <td ng-class="{ 'has-error' : this.editForm.unittype.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="unittype" ng-model="dataModel.unittype"
+                                   maxlength="100"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.unittype.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>使用部门</th>
+                        <td>
+                            <div class="input-group input-group-search"
+                                 title="选择党组织" ng-click="selectUseParty()">
+                                <input name="usepartyname" type="text" ng-model="dataModel.usepartyname"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.usepartyname.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>资产原值</th>
+                        <td ng-class="{ 'has-error' : this.editForm.originalvalue.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="originalvalue" ng-model="dataModel.originalvalue"
+                                   class="form-control"/>
+                        </td>
+                        <th>税额</th>
+                        <td ng-class="{ 'has-error' : this.editForm.tax.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="tax" ng-model="dataModel.tax"
+                                   class="form-control"/>
+                        </td>
+                        <th>价税合计</th>
+                        <td ng-class="{ 'has-error' : this.editForm.pricetaxtotal.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="pricetaxtotal" ng-model="dataModel.pricetaxtotal"
+                                   class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>购置人</th>
+                        <td ng-class="{ 'has-error' : this.editForm.purchaseuserid.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="model" ng-model="dataModel.purchaseuserid"
+                                   maxlength="300"
+                                   class="form-control"/>
+                        </td>
+                        <th>建卡时间</th>
+                        <td ng-class="{ 'has-error' : this.editForm.buildtime.$invalid &&  this.editForm.$submitted}">
+                            <input name="buildtime" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.buildtime"
+                                   data-max-date="{{maxDate}}"
+                                   placeholder="" bs-datepicker/>
+                        </td>
+                        <th>预计使用年限</th>
+                        <td ng-class="{ 'has-error' : this.editForm.expectedusefullife.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="expectedusefullife" ng-model="dataModel.expectedusefullife"
+                                   class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>保管单位</th>
+                        <td ng-class="{ 'has-error' : this.editForm.takecarepartyname.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 title="选择保管单位" ng-click="selectTakecareParty()">
+                                <input name="takecarepartyname" type="text" ng-model="dataModel.takecarepartyname"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.takecarepartyname.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>保管人</th>
+                        <td ng-class="{ 'has-error' : this.editForm.takecareusername.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 data-dataoptions="selectTakecareuser"
+                                 title="选择保管人" bsselectdata-pro>
+                                <input name="takecareusername" type="text" ng-model="dataModel.takecareusername"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.takecareusername.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>保管时间段</th>
+                        <td colspan="5" ng-class="{ 'has-error' : (this.editForm.startdate.$invalid || this.editForm.enddate.$invalid) &&  this.editForm.$submitted}">
+                            <input style="width: 130px;display: inline;" name="startdate" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.startdate"
+                                   ng-required="true"
+                                   placeholder="" bs-datepicker/>
+                            至
+                            <input style="width: 130px;display: inline;" name="enddate" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.enddate"
+                                   ng-required="true"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="(this.editForm.startdate.$invalid || this.editForm.enddate.$invalid) &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>资产状况</th>
+                        <td colspan="6">
+                            <textarea class="form-control" ng-model="dataModel.assetcondition" rows="5" placeholder="请填资产状况"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

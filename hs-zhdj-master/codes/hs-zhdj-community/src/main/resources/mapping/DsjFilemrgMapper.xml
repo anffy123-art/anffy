@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DsjFilemrgMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.DsjFilemrg">
+    <id column="FILEID" jdbcType="VARCHAR" property="fileid" />
+    <result column="FILENAME" jdbcType="VARCHAR" property="filename" />
+    <result column="FILEURL" jdbcType="VARCHAR" property="fileurl" />
+    <result column="EXTENDEDNAME" jdbcType="VARCHAR" property="extendedname" />
+    <result column="CREATEDATETIME" jdbcType="TIMESTAMP" property="createdatetime" />
+    <result column="FILETYPEID" jdbcType="VARCHAR" property="filetypeid" />
+    <result column="FILECODE" jdbcType="VARCHAR" property="filecode" />
+    <result column="FILECODE2" jdbcType="INTEGER" property="filecode2" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    FILEID, FILENAME, FILEURL, EXTENDEDNAME, CREATEDATETIME, FILETYPEID, FILECODE, FILECODE2
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.DsjFilemrgExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dsj_filemrg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by  ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from dsj_filemrg
+    where FILEID = #{fileid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dsj_filemrg
+    where FILEID = #{fileid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.DsjFilemrgExample">
+    delete from dsj_filemrg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.DsjFilemrg">
+    insert into dsj_filemrg (FILEID, FILENAME, FILEURL, 
+      EXTENDEDNAME, CREATEDATETIME, FILETYPEID, 
+      FILECODE, FILECODE2)
+    values (#{fileid,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{fileurl,jdbcType=VARCHAR}, 
+      #{extendedname,jdbcType=VARCHAR}, #{createdatetime,jdbcType=TIMESTAMP}, #{filetypeid,jdbcType=VARCHAR}, 
+      #{filecode,jdbcType=VARCHAR}, #{filecode2,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.DsjFilemrg">
+    insert into dsj_filemrg
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fileid != null">
+        FILEID,
+      </if>
+      <if test="filename != null">
+        FILENAME,
+      </if>
+      <if test="fileurl != null">
+        FILEURL,
+      </if>
+      <if test="extendedname != null">
+        EXTENDEDNAME,
+      </if>
+      <if test="createdatetime != null">
+        CREATEDATETIME,
+      </if>
+      <if test="filetypeid != null">
+        FILETYPEID,
+      </if>
+      <if test="filecode != null">
+        FILECODE,
+      </if>
+      <if test="filecode2 != null">
+        FILECODE2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fileid != null">
+        #{fileid,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null">
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="fileurl != null">
+        #{fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="extendedname != null">
+        #{extendedname,jdbcType=VARCHAR},
+      </if>
+      <if test="createdatetime != null">
+        #{createdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filetypeid != null">
+        #{filetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="filecode != null">
+        #{filecode,jdbcType=VARCHAR},
+      </if>
+      <if test="filecode2 != null">
+        #{filecode2,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.DsjFilemrgExample" resultType="java.lang.Long">
+    select count(*) from dsj_filemrg
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dsj_filemrg
+    <set>
+      <if test="record.fileid != null">
+        FILEID = #{record.fileid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filename != null">
+        FILENAME = #{record.filename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileurl != null">
+        FILEURL = #{record.fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendedname != null">
+        EXTENDEDNAME = #{record.extendedname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdatetime != null">
+        CREATEDATETIME = #{record.createdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.filetypeid != null">
+        FILETYPEID = #{record.filetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filecode != null">
+        FILECODE = #{record.filecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filecode2 != null">
+        FILECODE2 = #{record.filecode2,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dsj_filemrg
+    set FILEID = #{record.fileid,jdbcType=VARCHAR},
+      FILENAME = #{record.filename,jdbcType=VARCHAR},
+      FILEURL = #{record.fileurl,jdbcType=VARCHAR},
+      EXTENDEDNAME = #{record.extendedname,jdbcType=VARCHAR},
+      CREATEDATETIME = #{record.createdatetime,jdbcType=TIMESTAMP},
+      FILETYPEID = #{record.filetypeid,jdbcType=VARCHAR},
+      FILECODE = #{record.filecode,jdbcType=VARCHAR},
+      FILECODE2 = #{record.filecode2,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.DsjFilemrg">
+    update dsj_filemrg
+    <set>
+      <if test="filename != null">
+        FILENAME = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="fileurl != null">
+        FILEURL = #{fileurl,jdbcType=VARCHAR},
+      </if>
+      <if test="extendedname != null">
+        EXTENDEDNAME = #{extendedname,jdbcType=VARCHAR},
+      </if>
+      <if test="createdatetime != null">
+        CREATEDATETIME = #{createdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filetypeid != null">
+        FILETYPEID = #{filetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="filecode != null">
+        FILECODE = #{filecode,jdbcType=VARCHAR},
+      </if>
+      <if test="filecode2 != null">
+        FILECODE2 = #{filecode2,jdbcType=INTEGER},
+      </if>
+    </set>
+    where FILEID = #{fileid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.DsjFilemrg">
+    update dsj_filemrg
+    set FILENAME = #{filename,jdbcType=VARCHAR},
+      FILEURL = #{fileurl,jdbcType=VARCHAR},
+      EXTENDEDNAME = #{extendedname,jdbcType=VARCHAR},
+      CREATEDATETIME = #{createdatetime,jdbcType=TIMESTAMP},
+      FILETYPEID = #{filetypeid,jdbcType=VARCHAR},
+      FILECODE = #{filecode,jdbcType=VARCHAR},
+      FILECODE2 = #{filecode2,jdbcType=INTEGER}
+    where FILEID = #{fileid,jdbcType=VARCHAR}
+  </update>
+</mapper>

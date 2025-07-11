@@ -1,0 +1,30 @@
+<div class="modal" name="sendTempUser" tabindex="-1" role="dialog" style="min-height:500px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">确认是否加入邀请</h3>
+            </div>
+            <div class="body">
+                <table class="table table-bordered tform">
+                    <tr >
+                        <th class="col-md-2">消息内容:</th>
+                        <td>
+                            {{msgItem.msgtitle}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button name="btn_agree" ng-click="msgAgree(3)" class="btn btn-danger" style="padding:4px 20px 4px 20px" type="submit">同意
+                </button>
+                <button name="btn_disagree" ng-click="msgAgree(2)" class="btn btn-warning" style="padding:4px 20px 4px 20px" type="submit">拒绝
+                </button>
+                <button name="btn_cancel" type="button" class="btn btn-default" style="padding:4px 20px 4px 20px"
+                        ng-click="$hide()">取消
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

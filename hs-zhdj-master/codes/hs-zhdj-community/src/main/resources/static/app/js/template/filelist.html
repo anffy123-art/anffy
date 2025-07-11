@@ -1,0 +1,56 @@
+﻿<!--by heyw想和其他正常表单融合得好些，所以样式改成了动态的-->
+<div ng-class="styleConfig.mainClass" ng-style="styleConfig.mainStyle">
+    <div ng-class="styleConfig.titleClass">
+        <div class="table-title">
+            {{(ngModel.title==null ||ngModel.title=='')?'附件列表':ngModel.title}}
+        </div>
+        <div class="table-tool">
+            <button type="button" ng-if="ngModel.type!='details'" ng-hide="ngModel.readonly" class="btn btn-primary" data-placement="center"
+                    data-animation="am-fade-and-scale" ng-click="addFile()">{{(ngModel.addFileButton==null ||ngModel.addFileButton=='')?'新增':ngModel.addFileButton}}
+            </button>
+            <button type="button" ng-if="ngModel.zipdown==true" class="btn btn-primary" data-placement="center"
+                    data-animation="am-fade-and-scale" ng-click="zipdown()">打包下载
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive list-table-panel">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>文件名</th>
+                <th>扩展名</th>
+                <th>文件类型</th>
+                <th>上传时间</th>
+                <th ng-if="ngModel.showUser==true">上传人</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in ngModel.items">
+                <td>
+                    <span title="{{it.filename}}"
+                          style="display: block;width: 400px; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;">{{it.filename}}</span>
+                </td>
+                <td>{{it.filesuffix}}</td>
+                <td>{{it.filetypename}}</td>
+                <td>{{it.createtime|date:'yyyy-MM-dd HH:mm'}}</td>
+                <td ng-if="ngModel.showUser==true">{{it.username}}</td>
+                <td>
+                    <button class="btn btn-success btn-sm" ng-click="downfile(it.fileid)" title="下载">
+                        <span class="glyphicon glyphicon-download-alt"></span>
+                    </button>
+                    <button ng-if="ngModel.type!='details'" ng-hide="ngModel.readonly || (ngModel.onlyuserdel && ngModel.loginUserId!=it.userID )"
+                            class="btn btn-danger btn-sm" title="删除"
+                            ng-click="delfile(it.fileid)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!--参数含义：page-Index：当前页面，page-Size：每页显示多少数据，total-Length:数据总长度-->
+    <pagination data-pageindex="ngModel.selectdata.pageindex" data-pagesize="ngModel.selectdata.pagesize"
+                data-ptotal="ngModel.selectdata.ptotal" style="margin-left: 0px;margin-right: 0px;"></pagination>
+</div>

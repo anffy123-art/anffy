@@ -1,0 +1,67 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px;">
+    <div class="modal-dialog" role="document" style="width:70%">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{title}}</h3>
+
+            </div>
+
+            <form class="form-horizontal formtable1 panel-body modal-body" ng-submit="saveMem()" role="form"
+                  name="editMemForm" style="padding: 10px; margin: 10px; " ng-controller="formMembershipManageCtrl"
+                  novalidate>
+                <table class="table table-bordered tform">
+                    <tr>
+                        <th class="col-md-2"><span style="color:red">*</span>开发角色：</th>
+                        <td class="col-md-4">
+                            <select name="WorkType" class="form-control" required ng-model="member.Roledic"
+                                    ng-options="x.DicKey as x.DicValue for x in DicValueList">
+                                <option value="">-----------------------请选择-----------------------</option>
+                            </select>
+                            <!--<label class="input-group">
+                                <input name="MemRole" type="text" ng-model="RoleName" class="form-control" ng-required="true" value={{RoleName}} ng-disabled="true"/>
+                                <span class="input-group-addon" data-url="../../api/UserRole/GetRoleLists" data-datatext="RoleName" data-dataval="member.RoleID" roleselect><i class="glyphicon glyphicon-zoom-in"></i></span>
+                                <span class="input-group-addon" data-url="../../api/MemManage/FindRolesdata" data-datatext="RoleName" data-aid="{{member.appid}}+{{member.UserID}}" data-dataval="member.RoleID" title="人员对应的角色选择" bsselectdata><i class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>-->
+
+                        </td>
+                        <th class="col-md-2"><span style="color:red">*</span>姓名：</th>
+                        <td class="col-md-4">
+                            <label class="input-group">
+                                <input name="MemName" type="text" ng-model="MemName" class="form-control"
+                                       ng-required="true" value={{MemName}} ng-disabled="true"/>
+                                <!--<span class="input-group-addon" userselect data-textids="member.UserID" data-textnames="MemName" data-datausers="selectedDataUsers" data-textguids="member.ID" data-selecttype="single"><i class="glyphicon glyphicon-zoom-in"></i></span>-->
+                                <span class="input-group-addon" data-url="../../api/MemManage/FindUserdata"
+                                      data-datatext="MemName" data-aid="{{member.Roledic}}" data-dataval="member.UserID"
+                                      title="角色对应的人员选择" data-selecttype="multi" bsselectdata><i
+                                        class="glyphicon glyphicon-zoom-in"></i></span>
+                            </label>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">备注：</th>
+                        <td colspan="3">
+                            <textarea name="Note" ng-model="member.Note" type="text" class="form-control"
+                                      style="height:100px"></textarea>
+                        </td>
+                    </tr>
+
+
+                </table>
+                <div class="form_foot" style="text-align:center">
+
+                    <button id="submit" class="btn btn-danger" style="padding:4px 20px 4px 20px" type="submit"
+                            ng-disabled="editMemForm.MemName.$invalid||editMemForm.MemRole.$invalid||editMemForm.WorkValue.$invalid">
+                        提交
+                    </button>
+                    <button id="cancel" type="button" class="btn btn-default" style="padding:4px 20px 4px 20px"
+                            ng-click="$hide()">取消
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

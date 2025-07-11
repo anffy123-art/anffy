@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.AdPartyGroupCQuery">
+    <select id="selectList" resultType="com.px.partybuild.vo.AdPartyGroupVo">
+        select ID, PARENTID, NAME, FULLIDS, SORT, CREATEUSERID, CREATETIME, MODIFYUSERID, MODIFYTIME
+        from AD_PARTYGROUP pg
+        where 1=1
+        <if test="parentId != null and parentId != ''">
+            and pg.PARENTID=#{parentId}
+        </if>
+        order by ID,SORT
+    </select>
+
+    <update id="deleteGroup" parameterType="java.lang.String">
+         delete  from AD_PARTYGROUP  where ID like concat('%',#{id},'%')
+    </update>
+
+</mapper>

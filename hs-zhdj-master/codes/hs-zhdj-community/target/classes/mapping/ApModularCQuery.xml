@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.ApModularCQuery">
+    <select id="selectModularByRoleId" resultType="java.util.HashMap">
+        select m.MID,dic.DICVALUE as MODULARGROUP,m.MODULARNAME,m.PARENTID,m.ICON,m.MODULARNO,mr.ROLEID,mr.ISCOMMONUSE,mr.ORDERBY,m.ORDERBY as MODULARORDERBY,m.MODULARGROUPTYPE from
+        AP_ROLEMODULAR mr
+        inner join AP_MODULAR m on mr.MODULARID=m.MID
+        left join CF_DICTIONARY dic on m.MODULARGROUPTYPE=dic.DICKEY and dic.DICTYPEKEY='ModularGroupName'
+        where 1=1 and m.PARENTID is null
+        <if test="roleId != null and roleId != ''">
+            and mr.ROLEID=#{roleId}
+        </if>
+        order by m.ORDERBY
+    </select>
+    <select id="selectUserUseModularList" resultType="java.util.HashMap">
+        select *from (
+        select
+        m.MID,
+        dic.DICVALUE as MODULARGROUP,
+        m.MODULARNAME,
+        m.PARENTID,
+        m.ICON,
+        m.MODULARNO,
+        mr.ISDISPLAY,
+        mr.ORDERBY,m.MODULARGROUPTYPE
+        from AP_USERUSEMODULAR mr
+        inner join AP_MODULAR m on mr.MODULARID = m.MID
+        inner join AP_ROLEMODULAR rm on m.MID=rm.MODULARID and mr.ROLEID=rm.ROLEID
+        left join CF_DICTIONARY dic on m.MODULARGROUPTYPE=dic.DICKEY and dic.DICTYPEKEY='ModularGroupName'
+        where 1=1 and m.PARENTID is null and rm.ROLEID=#{roleId}
+        <if test="userId != null and userId != ''">
+            and mr.USERID=#{userId}
+        </if>
+        order by mr.ORDERBY
+        ) t limit 7
+    </select>
+    <select id="selectRoleUseModularList" resultType="java.util.HashMap">
+        select *from (
+        select
+        m.MID,dic.DICVALUE as MODULARGROUP,m.MODULARNAME,m.PARENTID,m.ICON,m.MODULARNO,mr.ROLEID,mr.ISCOMMONUSE,mr.ORDERBY,m.MODULARGROUPTYPE from
+        AP_ROLEMODULAR mr
+        inner join AP_MODULAR m on mr.MODULARID=m.MID
+        left join CF_DICTIONARY dic on m.MODULARGROUPTYPE=dic.DICKEY and dic.DICTYPEKEY='ModularGroupName'
+        where 1=1 and mr.ISCOMMONUSE=1
+        <if test="roleId != null and roleId != ''">
+            and mr.ROLEID=#{roleId}
+        </if>
+        order by m.ORDERBY
+        ) t limit 7
+    </select>
+
+    <select id="selectModularList" resultType="java.util.HashMap">
+
+        select
+        m.MID,dic.DICVALUE as MODULARGROUP,m.MODULARNAME,m.PARENTID,m.ICON,m.MODULARNO,m.ORDERBY,m.MODULARGROUPTYPE,
+        (select m1.MODULARNAME from AP_MODULAR m1 where m1.MID = m.PARENTID) as PARENTMODULARNAME
+        <if test="roleId != null and roleId != ''">
+            ,(select count(*) from AP_ROLEMODULAR mr1 where mr1.MODULARID = m.MID and mr1.ROLEID = #{roleId}) as ISUSE,
+            (select mr2.ISCOMMONUSE from AP_ROLEMODULAR mr2 where mr2.MODULARID = m.MID and mr2.ROLEID = #{roleId}) as
+            ISCOMMONUSE,
+            (select mr3.RMID from AP_ROLEMODULAR mr3 where mr3.MODULARID = m.MID and mr3.ROLEID = #{roleId}) as
+            RMID
+        </if>
+        from AP_MODULAR m
+        left join CF_DICTIONARY dic on m.MODULARGROUPTYPE=dic.DICKEY and dic.DICTYPEKEY='ModularGroupName'
+        where 1=1
+        <if test="parentIdList == null">
+            and m.PARENTID is null
+        </if>
+        <if test="parentIdList != null and parentIdList.size()>0">
+            and m.PARENTID in
+            <foreach collection="parentIdList" item="parentId" index="index" open="(" close=")" separator=",">
+                #{parentId}
+            </foreach>
+        </if>
+        <if test="modularname != null and modularname != ''">
+            and m.MODULARNAME like concat("%",#{modularname},"%")
+        </if>
+        order by m.MODULARGROUPTYPE,m.ORDERBY
+    </select>
+
+    <select id="selectModularByMid" resultType="java.util.HashMap">
+        select
+        m.MID,dic.DICVALUE as MODULARGROUP,m.MODULARNAME,m.PARENTID,m.ICON,m.MODULARNO,m.ORDERBY,m.MODULARGROUPTYPE,
+        (select m1.MODULARNAME from AP_MODULAR m1 where m1.MID = m.PARENTID) as PARENTMODULARNAME
+        from AP_MODULAR m
+        left join CF_DICTIONARY dic on m.MODULARGROUPTYPE=dic.DICKEY and dic.DICTYPEKEY='ModularGroupName'
+        where 1=1
+        <if test="MID != null and MID != ''">
+            and m.MID=#{MID}
+        </if>
+        order by m.ORDERBY
+    </select>
+
+    <delete id="deleteModularRole" parameterType="java.lang.String">
+    delete from AP_ROLEMODULAR
+    where MODULARID = #{MODULARID,jdbcType=VARCHAR} and ROLEID = #{ROLEID,jdbcType=VARCHAR}
+  </delete>
+    <insert id="batchUserusemodular">
+        insert into AP_USERUSEMODULAR(uumid, modularid, userid,roleid, orderby, isdisplay)
+        <foreach collection="list" item="c" separator=" union all ">
+            select #{c.uumid},#{c.modularid},#{c.userid},#{c.roleid},#{c.orderby},#{c.isdisplay} FROM DUAL
+        </foreach>
+    </insert>
+
+
+    <select id="selectButtonByRoleId" resultType="java.util.HashMap">
+        select m.MID,m.MODULARNAME,m.PARENTID,m.ICON,m.MODULARNO,mr.ROLEID
+        from AP_ROLEMODULAR mr
+        inner join AP_MODULAR m on mr.MODULARID=m.MID
+        where 1=1 and m.PARENTID is not null
+        <if test="roleId != null and roleId != ''">
+            and mr.ROLEID=#{roleId}
+        </if>
+        order by m.PARENTID
+    </select>
+</mapper>

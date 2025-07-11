@@ -1,0 +1,776 @@
+<style>
+    .mt_topic {
+        display: flex;
+        flex-flow: wrap;
+    }
+
+    .col_margin_bottom_0 {
+        margin-bottom: 0px !important;
+    }
+
+    .panel-danger {
+        border: 1px solid #ddd !important;;
+    }
+
+    .panel-group .panel-danger .panel-title {
+        background-color: #ddd !important;
+        color: #F44336;
+    }
+
+    .anniuyesi {
+        border-bottom: solid 1px #ddd;
+        margin-bottom: 20px;
+    }
+
+    .anniuyesi a {
+        border: solid 1px #ddd;
+        border-width: 1px 1px 0;
+        display: inline-block;
+        padding: 10px;
+        color: #777;
+        background-color: #fff;
+        position: relative;
+    }
+
+    .anniuyesi a.mod {
+        background-color: #fd9f02;
+        color: #fff;
+        top: 1px;
+    }
+
+    .necessary-span {
+        color: red;
+    }
+
+</style>
+<!--<div class="card">
+    <titlemenu data-parentno="parentUrl"></titlemenu>
+    <div activate-input activate-select class="body">
+        <div class="anniuyesi">
+            <a href="javascript:void(0)" ng-class="mod1">方案制定</a>
+            <a href="javascript:void(0)" ng-class="mod2">党总支书记审定</a>
+            <a href="javascript:void(0)" ng-class="mod3">学习考勤</a>
+            <a href="javascript:void(0)" ng-class="mod4">上传成果</a>
+        </div>
+        <div ng-show="prog1">
+            <form class="form-horizontal" role="form" name="editForm1" autocomplete="off" novalidate>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label><span class="necessary-span">*</span>所属计划 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            &lt;!&ndash;<div class="input-group" style="margin-bottom: 0px;">&ndash;&gt;
+                            &lt;!&ndash;<div class="form-line"  ng-class="{ 'focused error' : this.editForm1.planName.$invalid &&  this.editForm1.$submitted}" >&ndash;&gt;
+                            &lt;!&ndash;<input type="hidden" name="planId" ng-model="changevm.planId" class="form-control"/>&ndash;&gt;
+                            &lt;!&ndash;<input type="text" name="planName" ng-model="changevm.planName" ng-click="xuanzePlan()" readonly&ndash;&gt;
+                            &lt;!&ndash;class="form-control" ng-required="true"/>&ndash;&gt;
+                            &lt;!&ndash;</div>&ndash;&gt;
+                            &lt;!&ndash;<span class="input-group-addon" data-dataoptions="viewdata.selectSjflOp"&ndash;&gt;
+                            &lt;!&ndash;ng-click="xuanzePlan()"><i class="glyphicon glyphicon-zoom-in"></i></span>&ndash;&gt;
+                            &lt;!&ndash;</div>&ndash;&gt;
+                            <div class="form-line form-line-select"
+                                 ng-class="{ 'focused error' : this.editForm1.planName.$invalid &&  this.editForm1.$submitted}">
+                                <div class="input-group input-group-search" title="选择所属计划">
+                                    <input type="hidden" name="planId" ng-model="changevm.planId" class="form-control"/>
+                                    <input name="planName" type="text" ng-model="changevm.planName"
+                                           class="form-control" ng-required="true" ng-click="xuanzePlan()" readonly/>
+                                    <span class="input-group-addon" data-dataoptions="viewdata.selectSjflOp"
+                                          ng-click="xuanzePlan()"><i class="material-icons">search</i></span>
+                                </div>
+                            </div>
+                            <label ng-show="this.editForm1.planName.$invalid &&  this.editForm1.$submitted"
+                                   class="error">请选择所属计划</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label><span class="necessary-span">*</span>所属党总支 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="text" name="sendDepartmentName" ng-model="sendDepartmentName" readonly
+                                       class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label><span class="necessary-span">*</span>学习方案名称 :</label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <div class="form-line"
+                                 ng-class="{'focused error': this.editForm1.caseName.$invalid && this.editForm1.$submitted}">
+                                <input type="text" name="caseName" ng-model="changevm.caseName" class="form-control"
+                                       ng-required="true"/>
+                            </div>
+                            <label ng-show="this.editForm1.caseName.$invalid &&  this.editForm1.$submitted"
+                                   class="error">请填写学习方案名称</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label><span class="necessary-span">*</span>学习时间 :</label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <div class="form-line"
+                                 ng-class="{'focused error': this.editForm1.studyStartTime.$invalid && this.editForm1.$submitted}">
+                                <input type="text" name="studyStartTime" ng-model="changevm.studyStartTime"
+                                       class="form-control"
+                                       format="yyyy-mm-dd"
+                                       data-min-view="0" bs-datepicker
+                                       ng-required="true"/>
+                            </div>
+                            <label ng-show="this.editForm1.studyStartTime.$invalid &&  this.editForm1.$submitted"
+                                   class="error">请选择学习时间</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label><span class="necessary-span">*</span>学习地点 :</label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <div class="form-line"
+                                 ng-class="{'focused error': this.editForm1.studyAddress.$invalid && this.editForm1.$submitted}">
+                                <input type="text" name="studyAddress" ng-model="changevm.studyAddress"
+                                       class="form-control" ng-required="true"/>
+                            </div>
+                            <label ng-show="this.editForm1.studyAddress.$invalid &&  this.editForm1.$submitted"
+                                   class="error">请填写学习地点</label>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label><span class="necessary-span">*</span>学习形式 :</label>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select class="form-control show-tick" ng-model="changevmStudyModalityCode"
+                                        ng-options="type.label for type in studyModalityList"
+                                        class="form-control"
+                                        name="studyModalityCode">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    &lt;!&ndash;<div class="table-responsive list-table-panel" >&ndash;&gt;
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>领导班子</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding-left: 0px;padding-right: 28px;">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>姓名</th>
+                                <th>职务</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in upstepUsers">
+                                <th style="font-weight: normal">{{$index+1}}</th>
+                                <th style="font-weight: normal">{{it.userName}}</th>
+                                <th style="font-weight: normal">{{it.zwmc}}</th>
+                            </tr>
+                            <tr ng-if="upstepUsers.length<=0">
+                                <td colspan="3" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    &lt;!&ndash;</div>&ndash;&gt;
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label><span class="necessary-span">*</span>主持人 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line form-line-select"
+                                 ng-class="{ 'focused error' : this.editForm1.hostUserName.$invalid &&  this.editForm1.$submitted}">
+                                <div class="input-group input-group-search" title="选择主持人">
+                                    <input type="hidden" name="hostUserId" ng-model="changevm.hostUserId"
+                                           class="form-control"/>
+                                    <input name="hostUserName" type="text" ng-model="changevm.hostUserName"
+                                           class="form-control" ng-click="xuanzeHostUser()" ng-required="true"
+                                           readonly/>
+                                    <span class="input-group-addon" data-dataoptions="viewdata.selectSjflOp"
+                                          ng-click="xuanzeHostUser()"><i class="material-icons">search</i></span>
+                                </div>
+                            </div>
+                            <label ng-show="this.editForm1.hostUserName.$invalid &&  this.editForm1.$submitted"
+                                   class="error">请选择主持人</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>重点发言人 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            &lt;!&ndash;<div class="input-group" style="margin-bottom: 0px;">&ndash;&gt;
+                            &lt;!&ndash;<div class="form-line" >&ndash;&gt;
+                            &lt;!&ndash;<input type="hidden" name="vipUserIds" ng-model="vipUserIds" class="form-control"/>&ndash;&gt;
+                            &lt;!&ndash;<input type="text" name="vipUserNames" ng-model="vipUserNames" ng-click="xuanzeVipUser()" readonly&ndash;&gt;
+                            &lt;!&ndash;class="form-control" />&ndash;&gt;
+                            &lt;!&ndash;</div>&ndash;&gt;
+                            &lt;!&ndash;<span class="input-group-addon" data-dataoptions="viewdata.selectSjflOp"&ndash;&gt;
+                            &lt;!&ndash;ng-click="xuanzeVipUser()"><i class="glyphicon glyphicon-zoom-in"></i></span>&ndash;&gt;
+                            &lt;!&ndash;</div>&ndash;&gt;
+                            <div class="form-line form-line-select">
+                                <div class="input-group input-group-search" title="选择重点发言人">
+                                    <input type="hidden" name="vipUserIds" ng-model="vipUserIds" class="form-control"/>
+                                    <input name="vipUserNames" type="text" ng-model="vipUserNames"
+                                           class="form-control" ng-click="xuanzeVipUser()" readonly/>
+                                    <span class="input-group-addon" data-dataoptions="viewdata.selectSjflOp"
+                                          ng-click="xuanzeVipUser()"><i class="material-icons">search</i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>补充发言人 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            &lt;!&ndash;<div class="input-group" style="margin-bottom: 0px;">&ndash;&gt;
+                            &lt;!&ndash;<div class="form-line" >&ndash;&gt;
+                            &lt;!&ndash;<input type="hidden" name="supplementUserIds" ng-model="supplementUserIds" class="form-control"/>&ndash;&gt;
+                            &lt;!&ndash;<input type="text" name="supplementUserNames" ng-model="supplementUserNames" ng-click="xuanzeSupplementUser()" readonly&ndash;&gt;
+                            &lt;!&ndash;class="form-control"/>&ndash;&gt;
+                            &lt;!&ndash;</div>&ndash;&gt;
+                            &lt;!&ndash;<span class="input-group-addon" data-dataoptions="viewdata.selectSjflOp"&ndash;&gt;
+                            &lt;!&ndash;ng-click="xuanzeSupplementUser()"><i class="glyphicon glyphicon-zoom-in"></i></span>&ndash;&gt;
+                            &lt;!&ndash;</div>&ndash;&gt;
+                            <div class="form-line form-line-select">
+                                <div class="input-group input-group-search" title="请选择补充发言人">
+                                    <input type="hidden" name="supplementUserIds" ng-model="supplementUserIds"
+                                           class="form-control"/>
+                                    <input name="supplementUserNames" type="text" ng-model="supplementUserNames"
+                                           class="form-control" ng-click="xuanzeSupplementUser()"
+                                           readonly/>
+                                    <span class="input-group-addon" data-dataoptions="viewdata.selectSjflOp"
+                                          ng-click="xuanzeSupplementUser()"><i class="material-icons">search</i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>学习内容 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <textarea class="form-control" name="studyContent" ng-model="changevm.studyContent"
+                                          rows="5"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>扩大范围 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div>
+                                <textarea class="form-control" name="expandScope" ng-model="changevm.expandScope"
+                                          rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                    &lt;!&ndash;<button type="submit" class="btn btn-primary" form="editForm1" ng-click="submitData(editForm1)">保存并下一步&ndash;&gt;
+                    &lt;!&ndash;</button>&ndash;&gt;
+                    <button type="submit" class="btn btn-primary" ng-click="submitData(this.editForm1.$valid)">保存并下一步
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div ng-show="prog2">
+            <form class="form-horizontal" role="form" name="editForm2" novalidate>
+                <input type="hidden" name="id" ng-model="changevm2.id" class="form-control"/>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label><span class="necessary-span">*</span>党总支书记审定时间 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line"
+                                 ng-class="{ 'focused error' : this.editForm2.examineTime.$invalid &&  this.editForm2.$submitted}">
+                                <input type="text" name="examineTime" ng-model="changevm2.examineTime"
+                                       class="form-control"
+                                       format="yyyy-mm-dd"
+                                       data-min-view="0" bs-datepicker
+                                       ng-required="true"/>
+                            </div>
+                            <label ng-show="this.editForm2.examineTime.$invalid &&  this.editForm2.$submitted"
+                                   class="error">请选择审定时间</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label><span class="necessary-span">*</span>审定意见 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line"
+                                 ng-class="{ 'focused error' : this.editForm2.opinion.$invalid &&  this.editForm2.$submitted}">
+                                <textarea class="form-control" name="opinion" ng-model="changevm2.opinion" rows="5"
+                                          ng-required="true"></textarea>
+                            </div>
+                            <label ng-show="this.editForm2.opinion.$invalid &&  this.editForm2.$submitted"
+                                   class="error">请填写审定意见</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                    <button type="button" class="btn btn-primary" ng-click="yekafanwei(1)">上一步</button>
+                    &lt;!&ndash;<button type="submit" class="btn btn-primary" form="editForm2" ng-click="submitData2(editForm2)">保存并下一步</button>&ndash;&gt;
+                    <button type="submit" class="btn btn-primary" ng-click="submitData2(this.editForm2.$valid)">保存并下一步
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div ng-show="prog3">
+            <form class="form-horizontal" role="form" name="editForm3" novalidate>
+                <input type="hidden" name="id" ng-model="changevm3.id" class="form-control"/>
+                <div class="table-responsive list-table-panel" style="font-size: 16px">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            学习班子考勤
+                        </div>
+                    </div>
+                    <div class="outoflow" style="max-height: 300px;">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>是否缺席</th>
+                                <th>原因</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in receiveDWs3">
+                                <th>{{it.leaderUserName}}</th>
+                                <th><input type="checkbox" id="{{it.id}}" name="itChecked" ng-model="it.checked"
+                                           ng-click="chkchildrenReceiveDWs3(it,$index)"><label for="{{it.id}}"></label>
+                                </th>
+                                <th>
+                                    <select class="form-control show-tick" ng-model="it.absentReasonCode"
+                                            ng-change="chkchildrenStepList3(it.absentReasonCode,$index)"
+                                            ng-options="type.val as type.label for type in stepList3"
+                                            class="form-control"
+                                            name="step">
+                                        <option value="" selected>&#45;&#45;请选择&#45;&#45;</option>
+                                    </select>
+                                </th>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                    <button type="button" class="btn btn-primary" ng-click="yekafanwei(2)">上一步</button>
+                    <button type="submit" class="btn btn-primary" ng-click="submitData3(this.editForm3)">
+                        保存并下一步
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div ng-show="prog4">
+            <form class="form-horizontal" role="form" name="editForm4" novalidate>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label><span class="necessary-span">*</span>学习总结 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line"
+                                 ng-class="{'focused error': this.editForm4.summary.$invalid && this.editForm4.$submitted}">
+                                <textarea class="form-control" name="summary" ng-model="changevm4.summary" rows="5"
+                                          ng-required="true"></textarea>
+                            </div>
+                            <label ng-show="this.editForm4.summary.$invalid &&  this.editForm4.$submitted"
+                                   class="error">请填写学习总结</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive list-table-panel" style="font-size: 16px; margin-bottom: 20px;">
+                    <bsfiles ng-model="reqFileModel"/>
+                </div>
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                    <button type="button" class="btn btn-primary" ng-click="yekafanwei(3)">上一步</button>
+                    &lt;!&ndash;<button type="submit" class="btn btn-primary" form="editForm4" ng-click="submitData4(editForm4)">完成</button>&ndash;&gt;
+                    <button type="submit" class="btn btn-primary" ng-click="submitData4(this.editForm4.$valid)">完成
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>-->
+
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input>
+        <div class="anniuyesi">
+            <a href="javascript:void(0)" ng-class="mod1" ng-click="isAdd?false:yekafanwei(1)">方案制定</a>
+            <a href="javascript:void(0)" ng-class="mod2" ng-click="isAdd?false:yekafanwei(2)">党总支书记审定</a>
+            <a href="javascript:void(0)" ng-class="mod3" ng-click="isAdd?false:yekafanwei(3)">学习考勤</a>
+            <a href="javascript:void(0)" ng-class="mod4" ng-click="isAdd?false:yekafanwei(4)">上传成果</a>
+        </div>
+        <div ng-show="prog1">
+            <form role="form" name="editForm1" novalidate>
+                <div class="dj-formtable">
+                    <table class="dj-table">
+                        <tr>
+                            <th><span class="necessary-span">*</span>所属计划</th>
+                            <td colspan="3"
+                                ng-class="{ 'has-error' : this.editForm1.planName.$invalid &&  this.editForm1.$submitted}">
+                                <div class="input-group input-group-search" title="选择所属计划">
+                                    <input type="hidden" name="planId" ng-model="changevm.planId" class="form-control"/>
+                                    <input name="planName" type="text" ng-model="changevm.planName"
+                                           class="form-control" ng-required="true" ng-click="xuanzePlan()" readonly/>
+                                    <span class="input-group-addon" data-dataoptions="viewdata.selectSjflOp"
+                                          ng-click="xuanzePlan()"><i class="material-icons">search</i></span>
+                                </div>
+                                <span ng-show="this.editForm1.planName.$invalid &&  this.editForm1.$submitted"
+                                      class="error">请选择所属计划</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span class="necessary-span">*</span>所属党总支</th>
+                            <td colspan="3">
+                                <input type="text" name="sendDepartmentName" ng-model="sendDepartmentName" readonly
+                                       class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span class="necessary-span">*</span>学习方案名称</th>
+                            <td ng-class="{ 'has-error' : this.editForm1.caseName.$invalid &&  this.editForm1.$submitted}">
+                                <input type="text" name="caseName" ng-model="changevm.caseName" class="form-control"
+                                       ng-required="true"/>
+                                <span ng-show="this.editForm1.caseName.$invalid &&  this.editForm1.$submitted"
+                                      class="error">请填写学习方案名称</span>
+                            </td>
+                            <th><span class="necessary-span">*</span>学习时间</th>
+                            <td ng-class="{ 'has-error' : this.editForm1.studyStartTime.$invalid &&  this.editForm1.$submitted}">
+                                <input type="text" name="studyStartTime" ng-model="changevm.studyStartTime"
+                                       class="form-control"
+                                       format="yyyy-mm-dd"
+                                       data-min-view="0" bs-datepicker
+                                       ng-required="true"/>
+                                <span ng-show="this.editForm1.studyStartTime.$invalid &&  this.editForm1.$submitted"
+                                      class="error">请选择学习时间</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span class="necessary-span">*</span>学习地点</th>
+                            <td ng-class="{ 'has-error' : this.editForm1.studyAddress.$invalid &&  this.editForm1.$submitted}">
+                                <input type="text" name="studyAddress" ng-model="changevm.studyAddress"
+                                       class="form-control" ng-required="true"/>
+                                <span ng-show="this.editForm1.studyAddress.$invalid &&  this.editForm1.$submitted"
+                                      class="error">请填写学习地点</span>
+                            </td>
+                            <th><span class="necessary-span">*</span>学习形式</th>
+                            <td ng-class="{ 'has-error' : this.editForm1.studyModalityCode.$invalid &&  this.editForm1.$submitted}">
+                                <select class="form-control show-tick" ng-model="changevmStudyModalityCode"
+                                        ng-options="type.label for type in studyModalityList"
+                                        class="form-control"
+                                        name="studyModalityCode">
+                                </select>
+                                <span ng-show="this.editForm1.studyModalityCode.$invalid &&  this.editForm1.$submitted"
+                                      class="error">请选择学习形式</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>领导班子</th>
+                            <td colspan="3">
+                                <!--<table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <th>序号</th>
+                                        <th>姓名</th>
+                                        <th>职务</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="it in upstepUsers">
+                                        <th style="font-weight: normal">{{$index+1}}</th>
+                                        <th style="font-weight: normal">{{it.XM}}</th>
+                                        <th style="font-weight: normal">{{it.ZWMCMC}}</th>
+                                    </tr>
+                                    <tr ng-if="upstepUsers.length<=0">
+                                        <td colspan="3" style="text-align:center">暂无数据</td>
+                                    </tr>
+                                    </tbody>
+                                </table>-->
+                                <div class="table-responsive list-table-panel" style="padding-top: 10px;">
+                                    <div class="list-table-title">
+                                        <div class="table-title">
+                                        </div>
+                                        <div class="table-tool">
+                                            <button type="button" class="btn btn-primary dropdown-toggle"
+                                                    data-dataoptions="selectUserlist" title="选择领导班子"
+                                                    bsselectdata-pro>
+                                                选择领导班子
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="outoflow" style="max-height: 300px;">
+                                        <table class="table table-bordered" style="margin-bottom: 0px;">
+                                            <thead>
+                                            <tr>
+                                                <th>序号</th>
+                                                <th>姓名</th>
+                                                <th>职务</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="it in upstepUsers">
+                                                <th style="font-weight: normal">{{$index+1}}</th>
+                                                <th style="font-weight: normal">{{it.XM}}</th>
+                                                <th style="font-weight: normal">{{it.ZWMCMC}}</th>
+                                                <th class="text-center">
+                                                    <button class="btn td-btn bg-pink waves-effect"
+                                                            ng-click="deleteUser($index)" title="删除">
+                                                        删除
+                                                    </button>
+                                                </th>
+                                            </tr>
+                                            <tr ng-if="upstepUsers.length<=0">
+                                                <td colspan="4" style="text-align:center">暂无数据</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span class="necessary-span">*</span>主持人</th>
+                            <td colspan="3"
+                                ng-class="{ 'has-error' : this.editForm1.hostUserName.$invalid &&  this.editForm1.$submitted}">
+                                <div class="input-group input-group-search" title="选择主持人">
+                                    <div class="input-group input-group-search"
+                                         data-dataoptions="selecthostUserlist"
+                                         title="选择成员" bsselectdata-pro >
+                                        <input name="hostUserName" type="text" ng-model="selecthostUserlist.selectedLabeData"
+                                               class="form-control" ng-required="true"
+                                               ng-disabled="true"/>
+                                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                                    </div>
+                                </div>
+                                <span ng-show="this.editForm1.hostUserName.$invalid &&  this.editForm1.$submitted"
+                                      class="error">请选择主持人</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>重点发言人</th>
+                            <td colspan="3">
+                                <div class="input-group input-group-search" title="选择重点发言人">
+                                    <div class="input-group input-group-search"
+                                         data-dataoptions="selectvipUserlist"
+                                         title="选择成员" bsselectdata-pro >
+                                        <input name="username" type="text" ng-model="selectvipUserlist.selectedLabeData"
+                                               class="form-control"
+                                               ng-disabled="true"/>
+                                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>补充发言人</th>
+                            <td colspan="3">
+                                <div class="input-group input-group-search" title="请选择补充发言人">
+                                    <div class="input-group input-group-search"
+                                         data-dataoptions="selectsupplementUserlist"
+                                         title="选择成员" bsselectdata-pro >
+                                        <input name="username2" type="text" ng-model="selectsupplementUserlist.selectedLabeData"
+                                               class="form-control"
+                                               ng-disabled="true"/>
+                                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>学习内容</th>
+                            <td colspan="3">
+                                <textarea class="form-control" name="studyContent" ng-model="changevm.studyContent"
+                                          rows="5"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>扩大范围</th>
+                            <td colspan="3">
+                                <textarea class="form-control" name="expandScope" ng-model="changevm.expandScope"
+                                          rows="3"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                    <!--<button type="submit" class="btn btn-primary" form="editForm1" ng-click="submitData(editForm1)">保存并下一步-->
+                    <!--</button>-->
+                    <button type="submit" class="btn btn-primary" ng-click="submitData(this.editForm1.$valid)">保存并下一步
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div ng-show="prog2">
+            <form role="form" name="editForm2" novalidate>
+                <div class="dj-formtable">
+                    <table class="dj-table">
+                        <tr>
+                            <th><span class="necessary-span">*</span>党总支书记审定时间</th>
+                            <td ng-class="{ 'has-error' : this.editForm2.examineTime.$invalid &&  this.editForm2.$submitted}">
+                                <input type="text" name="examineTime" ng-model="changevm2.examineTime"
+                                       class="form-control"
+                                       format="yyyy-mm-dd"
+                                       data-min-view="0" bs-datepicker
+                                       ng-required="true"/>
+                                <span ng-show="this.editForm2.examineTime.$invalid &&  this.editForm2.$submitted"
+                                      class="error">请选择审定时间</span>
+                            </td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th><span class="necessary-span">*</span>审定意见</th>
+                            <td colspan="3"
+                                ng-class="{ 'has-error' : this.editForm2.opinion.$invalid &&  this.editForm2.$submitted}">
+                                <textarea class="form-control" name="opinion" ng-model="changevm2.opinion" rows="5"
+                                          ng-required="true"></textarea>
+                                <span ng-show="this.editForm2.opinion.$invalid &&  this.editForm2.$submitted"
+                                      class="error">请填写审定意见</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                    <button type="button" class="btn btn-primary" ng-click="yekafanwei(1)">上一步</button>
+                    <!--<button type="submit" class="btn btn-primary" form="editForm2" ng-click="submitData2(editForm2)">保存并下一步</button>-->
+                    <button type="submit" class="btn btn-primary" ng-click="submitData2(this.editForm2.$valid)">保存并下一步
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div ng-show="prog3">
+            <form role="form" name="editForm3" novalidate>
+                <div class="dj-formtable">
+                    <div class="table-responsive list-table-panel">
+                        <div class="list-table-title">
+                            <div class="table-title">
+                                学习班子考勤
+                            </div>
+                        </div>
+                        <div class="outoflow">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>姓名</th>
+                                    <th>是否缺席</th>
+                                    <th style="width: 35%" >原因</th>
+                                    <th ng-if="changevmStudyModalityCode.val==1">重点发言次数</th>
+                                    <th>发言成果</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in receiveDWs3">
+                                    <th>{{it.leadeUserName}}</th>
+                                    <th><input type="checkbox" id="{{it.id}}" name="itChecked" ng-model="it.checked"
+                                               ng-click="chkchildrenReceiveDWs3(it,$index)"><label
+                                            for="{{it.id}}"></label>
+                                    </th>
+                                    <th>
+                                        <!--<select class="form-control show-tick" ng-model="it.absentReasonCode"
+                                                ng-change="chkchildrenStepList3(it.absentReasonCode,$index)"
+                                                ng-options="type.val as type.label for type in stepList3"
+                                                class="form-control"
+                                                name="step">
+                                            <option value="" selected>&#45;&#45;请选择&#45;&#45;</option>
+                                        </select>-->
+                                        <insert-select model-data="it.absentReason"
+                                                       option-list="stepList3"
+                                                       placeholder="''"
+                                                       valuefield="'label'"
+                                                       textfield="'label'">
+                                        </insert-select>
+                                    </th>
+                                    <th style="width: 10%" ng-if="changevmStudyModalityCode.val==1">
+                                        <input type="number" name="speaknumber" style="width: 120px;" ng-pattern="/^[0-9]+$/" min="0"  step="1" max="9999" class="form-control" ng-model="it.speaknumber"/>
+                                    </th>
+                                    <th style="width: 30%">
+                                        <singlefile data-id="it.id" data-readonly="false"></singlefile>
+                                    </th>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                    <button type="button" class="btn btn-primary" ng-click="yekafanwei(2)">上一步</button>
+                    <button type="submit" class="btn btn-primary" ng-click="submitData3(this.editForm3.$valid)">
+                        保存并下一步
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div ng-show="prog4">
+            <form role="form" name="editForm4" novalidate>
+                <div class="dj-formtable">
+                    <table class="dj-table dj-table2">
+                        <tr>
+                            <th><span class="necessary-span">*</span>学习总结</th>
+                            <td ng-class="{ 'has-error' : this.editForm4.summary.$invalid &&  this.editForm4.$submitted}">
+                                <textarea class="form-control" name="summary" ng-model="changevm4.summary" rows="5"
+                                          ng-required="true"></textarea>
+                                <span ng-show="this.editForm4.summary.$invalid &&  this.editForm4.$submitted"
+                                      class="error">请填写学习总结</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <bsfiles ng-model="reqFileModel"/>
+
+                <div class="form_foot">
+                    <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                    <button type="button" class="btn btn-primary" ng-click="yekafanwei(3)">上一步</button>
+                    <!--<button type="submit" class="btn btn-primary" form="editForm4" ng-click="submitData4(editForm4)">完成</button>-->
+                    <button type="submit" class="btn btn-primary" ng-click="submitData4(this.editForm4.$valid)">完成
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

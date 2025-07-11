@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.CfRolesCQuery">
+    <resultMap id="BaseResultMap" type="com.px.partybuild.model.CfRoles">
+        <id column="ROLEID" jdbcType="VARCHAR" property="roleid"/>
+        <result column="APPLICATIONID" jdbcType="VARCHAR" property="applicationid"/>
+        <result column="ROLENAME" jdbcType="VARCHAR" property="rolename"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+        <result column="GROUPBY" jdbcType="VARCHAR" property="groupby"/>
+        <result column="ORDERBY" jdbcType="NUMERIC" property="orderby"/>
+        <result column="DICTIONARYID" jdbcType="VARCHAR" property="dictionaryid"/>
+    </resultMap>
+    <select id="selectRoleUserList" resultType="java.util.HashMap">
+
+            select distinct ur.UserId,ur.RoleId,r.RoleName,us.XM as Name,r.GROUPBY,r.ORDERBY,r.DICTIONARYID,p.DZZMC
+                    from VM_RYJBXX us -- 视图
+                    inner join ZZ_ZZQKXX p on us.szdzbdm=p.dzzdm -- 党组织信息
+                    inner join CF_USERS ui on ui.USERID=us.RYBM
+                    inner join cf_userroles ur on ur.UserId=ui.USERID
+                    inner join CF_ROLES r on r.RoleId=ur.RoleId
+                    where ur.RoleId=#{roleId}
+        <if test="username !=null and username !=''">
+            and us.XM like concat('%',#{username},'%')
+        </if>
+    </select>
+
+    <select id="getUserRoles" resultType="java.util.HashMap">
+        select r.GROUPBY,max(r.orderby) orderby
+        from CF_USERROLES us
+        inner join CF_ROLES  r on us.ROLEID=r.ROLEID
+        where us.USERID=#{userId}
+        group by r.GROUPBY
+    </select>
+
+    <select id="valUserRole" resultType="java.util.HashMap">
+       select *
+        from CF_USERROLES us
+               inner join CF_ROLES  r on us.ROLEID=r.ROLEID
+        where us.USERID=#{userId} and r.ROLENAME=#{roleName}
+    </select>
+
+    <select id="selectRoleByExample" resultType="java.util.HashMap" resultMap="BaseResultMap">
+        select r.* from CF_ROLES r where 1=1
+        <if test="roleName !=null and roleName !=''">
+            and r.roleName = #{roleName}
+        </if>
+        ${roleCondition}
+
+    </select>
+
+    <select id="selectRoleByUserid" resultType="java.util.HashMap" resultMap="BaseResultMap">
+        select distinct r.* from CF_ROLES r
+inner join CF_USERROLES ur on r.ROLEID = ur.ROLEID
+where 1=1
+        <if test="userId !=null and userId !=''">
+            and ur.USERID = #{userId}
+        </if>
+        order by r.ORDERBY desc
+    </select>
+
+    <select id="getUserDataScope" resultType="java.lang.Integer">
+        select ifnull(min(dc.DICKEY), 999)
+        from CF_USERROLES us
+        inner join CF_ROLES  r on us.ROLEID=r.ROLEID
+        left join CF_DICTIONARY dc on r.DICTIONARYID=dc.DICTIONARYID
+        where us.USERID=#{userId}
+        <if test="roleId !=null and roleId !=''">
+            and r.roleId = #{roleId}
+        </if>
+    </select>
+
+    <select id="GetRoleByUserName" resultType="java.util.HashMap">
+        SELECT u.USERID,ur.ROLEID,r.ROLENAME FROM CF_USERS u
+	left join CF_USERROLES ur on u.USERID = ur.USERID
+	left join CF_ROLES r on ur.ROLEID = r.ROLEID
+	WHERE u.USERNAME = #{userName} and ur.ROLEID is not null
+    </select>
+
+    <insert id="insertUserRole">
+        insert into CF_USERROLES (ROLEID, USERID)
+       values (#{roleId}, (SELECT USERID FROM CF_USERS WHERE CF_USERS.USERNAME = #{userName}))
+    </insert>
+
+</mapper>

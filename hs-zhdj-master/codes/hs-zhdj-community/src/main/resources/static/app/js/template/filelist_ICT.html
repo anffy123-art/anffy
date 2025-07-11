@@ -1,0 +1,43 @@
+﻿<div class="panel-body">
+    <div class="search-param-panel">
+        <div class="form-group form_op_btns">
+            <button type="button" ng-hide="ngModel.readonly" class="btn btn-primary" data-placement="center"
+                    data-animation="am-fade-and-scale" ng-click="addFile()">新增
+            </button>
+        </div>
+    </div>
+    <table class="table table-bordered tlist">
+        <thead>
+        <tr>
+            <th>文件名</th>
+            <th>扩展名</th>
+            <th>文件类型</th>
+            <th>上传人</th>
+            <th>上传时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="it in ngModel.items">
+            <td>{{it.FileName}}</td>
+            <td>{{it.FileSuffix}}</td>
+            <td>{{it.FileTypeName}}</td>
+            <td>{{it.UserName}}</td>
+            <td>{{it.CreateTime}}</td>
+            <td>
+                <button class="btn btn-success btn-sm" ng-click="downfile(it.FileUrl)" title="下载">
+                    <span class="glyphicon glyphicon-download-alt"></span>
+                </button>
+                <button ng-hide="ngModel.readonly||!it.isDelete" class="btn btn-danger btn-sm" title="删除"
+                        ng-click="delfile(it.FileId)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <!--参数含义：page-Index：当前页面，page-Size：每页显示多少数据，total-Length:数据总长度-->
+    <pagination data-pageindex="ngModel.selectdata.pageindex" data-pagesize="ngModel.selectdata.pagesize"
+                data-ptotal="ngModel.selectdata.ptotal"></pagination>
+</div>

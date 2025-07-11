@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.LearningPlanCQuery">
+
+    <select id="selectPlanList" resultType="com.px.partybuild.vo.LearningPlanVo">
+        select plan.learningPlanID,plan.name,plan.partyCode,plan.learningPlanType,plan.publicDate,plan.request
+        ,plan.content,plan.recordStatus,plan.createTime,plan.createUserId,plan.createUserName,plan.updateTime,plan.updateUserId,plan.updateUserName
+        ,dicType.DICVALUE as learningPlanTypeName,dicStatus.DICVALUE as recordStatusName,p.DZZMC as partyName
+        from zz_learningplan plan
+        left join cf_dictionary dicType on plan.learningPlanType = dicType.DICKEY and dicType.DICTYPEKEY='LearningPlanType'
+        left join cf_dictionary dicStatus on plan.recordStatus = dicStatus.DICKEY and dicStatus.DICTYPEKEY='LearningPlanPublicStatus'
+        left join zz_zzqkxx p on plan.partyCode = p.DZZDM
+        <where>
+            <if test="planID!=null and planID!=''">
+                and plan.learningPlanID = #{planID}
+            </if>
+            <if test="planName!=null and planName!=''">
+                and plan.name like concat('%',#{planName},'%')
+            </if>
+            <if test="startDate!=null">
+                and plan.publicDate >= #{startDate}
+            </if>
+            <if test="endDate!=null">
+                and plan.publicDate <![CDATA[<=]]> #{endDate}
+            </if>
+            <if test="recordStatus!=null">
+                and plan.recordStatus = #{recordStatus}
+            </if>
+            <if test="learningPlanType!=null">
+                and plan.learningPlanType = #{learningPlanType}
+            </if>
+        </where>
+        order by plan.publicDate desc
+    </select>
+
+</mapper>

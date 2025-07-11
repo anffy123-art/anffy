@@ -1,0 +1,32 @@
+<div class="error_page">
+    <!--/login-top-->
+    <div class="inner-tittle page">
+        <h2>
+            <!--<img src="images/sys-logo.png"/>
+            -->
+            {{sysName}}
+        </h2>
+    </div>
+    <div class="error-top">
+        <div class="login">
+            <h3 class="inner-tittle t-inner">系统本地登录</h3>
+            <form>
+                <input type="text" ng-model="loginuser.uid" class="text" placeholder="用户"
+                       aria-describedby="basic-addon1">
+                <input type="password" ng-model="loginuser.pwd" placeholder="密码" aria-describedby="basic-addon1">
+                <div class="submit">
+                    <button type="submit" ng-click="login()" class="btn btn-primary active" style="font-size: 16px">登录
+                    </button>
+                    <button type="submit" ng-click="reset()" class="btn btn-primary active" style="font-size: 16px">重置
+                    </button>
+                    <button type="submit" ng-click="apply()" class="btn btn-primary active" style="font-size: 16px">入党申请
+                    </button>
+                </div>
+                <div class="clearfix form-group">
+                    <label class="error">{{errorMsg}}</label>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--//login-top-->
+</div>

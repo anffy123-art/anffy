@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.RsRyjbxxfbMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.RsRyjbxxfb">
+    <id column="RYBM" jdbcType="VARCHAR" property="rybm" />
+    <result column="SFZG" jdbcType="DECIMAL" property="sfzg" />
+    <result column="BZGYY" jdbcType="VARCHAR" property="bzgyy" />
+    <result column="SFSLDRY" jdbcType="DECIMAL" property="sfsldry" />
+    <result column="LDRYLXDBM" jdbcType="VARCHAR" property="ldrylxdbm" />
+    <result column="LDRYLXDMC" jdbcType="VARCHAR" property="ldrylxdmc" />
+    <result column="NL" jdbcType="DECIMAL" property="nl" />
+    <result column="LEADTYPE" jdbcType="DECIMAL" property="leadtype" />
+    <result column="APPLYDATE" jdbcType="DATE" property="applydate" />
+    <result column="ACTIVEDATE" jdbcType="DATE" property="activedate" />
+    <result column="PASSDATE" jdbcType="DATE" property="passdate" />
+    <result column="ISARCHIVE" jdbcType="DECIMAL" property="isarchive" />
+    <result column="gradeName" jdbcType="VARCHAR" property="gradename" />
+    <result column="className" jdbcType="VARCHAR" property="classname" />
+    <result column="enrollmentDate" jdbcType="DATE" property="enrollmentdate" />
+    <result column="graduateDate" jdbcType="DATE" property="graduatedate" />
+    <result column="workDate" jdbcType="DATE" property="workdate" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="technologyPosition" jdbcType="VARCHAR" property="technologyposition" />
+    <result column="trainUser1" jdbcType="VARCHAR" property="trainuser1" />
+    <result column="trainUser2" jdbcType="VARCHAR" property="trainuser2" />
+    <result column="isStudent" jdbcType="BIT" property="isstudent" />
+    <result column="exportDate" jdbcType="DATE" property="exportdate" />
+    <result column="exportPartyName" jdbcType="VARCHAR" property="exportpartyname" />
+    <result column="applyApproveStatus" jdbcType="INTEGER" property="applyapprovestatus" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="applyFileReId" jdbcType="VARCHAR" property="applyfilereid" />
+    <result column="partyDuesStartMonth" jdbcType="INTEGER" property="partyduesstartmonth" />
+    <result column="archiveDate" jdbcType="DATE" property="archivedate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    RYBM, SFZG, BZGYY, SFSLDRY, LDRYLXDBM, LDRYLXDMC, NL, LEADTYPE, APPLYDATE, ACTIVEDATE, 
+    PASSDATE, ISARCHIVE, gradeName, className, enrollmentDate, graduateDate, workDate, 
+    mobile, technologyPosition, trainUser1, trainUser2, isStudent, exportDate, exportPartyName, 
+    applyApproveStatus, password, applyFileReId, partyDuesStartMonth, archiveDate
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.RsRyjbxxfbExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rs_ryjbxxfb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rs_ryjbxxfb
+    where RYBM = #{rybm,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rs_ryjbxxfb
+    where RYBM = #{rybm,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.RsRyjbxxfbExample">
+    delete from rs_ryjbxxfb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.RsRyjbxxfb">
+    insert into rs_ryjbxxfb (RYBM, SFZG, BZGYY, 
+      SFSLDRY, LDRYLXDBM, LDRYLXDMC, 
+      NL, LEADTYPE, APPLYDATE, 
+      ACTIVEDATE, PASSDATE, ISARCHIVE, 
+      gradeName, className, enrollmentDate, 
+      graduateDate, workDate, mobile, 
+      technologyPosition, trainUser1, trainUser2, 
+      isStudent, exportDate, exportPartyName, 
+      applyApproveStatus, password, applyFileReId, 
+      partyDuesStartMonth, archiveDate)
+    values (#{rybm,jdbcType=VARCHAR}, #{sfzg,jdbcType=DECIMAL}, #{bzgyy,jdbcType=VARCHAR}, 
+      #{sfsldry,jdbcType=DECIMAL}, #{ldrylxdbm,jdbcType=VARCHAR}, #{ldrylxdmc,jdbcType=VARCHAR}, 
+      #{nl,jdbcType=DECIMAL}, #{leadtype,jdbcType=DECIMAL}, #{applydate,jdbcType=DATE}, 
+      #{activedate,jdbcType=DATE}, #{passdate,jdbcType=DATE}, #{isarchive,jdbcType=DECIMAL}, 
+      #{gradename,jdbcType=VARCHAR}, #{classname,jdbcType=VARCHAR}, #{enrollmentdate,jdbcType=DATE}, 
+      #{graduatedate,jdbcType=DATE}, #{workdate,jdbcType=DATE}, #{mobile,jdbcType=VARCHAR}, 
+      #{technologyposition,jdbcType=VARCHAR}, #{trainuser1,jdbcType=VARCHAR}, #{trainuser2,jdbcType=VARCHAR}, 
+      #{isstudent,jdbcType=BIT}, #{exportdate,jdbcType=DATE}, #{exportpartyname,jdbcType=VARCHAR}, 
+      #{applyapprovestatus,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, #{applyfilereid,jdbcType=VARCHAR}, 
+      #{partyduesstartmonth,jdbcType=INTEGER}, #{archivedate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.RsRyjbxxfb">
+    insert into rs_ryjbxxfb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rybm != null">
+        RYBM,
+      </if>
+      <if test="sfzg != null">
+        SFZG,
+      </if>
+      <if test="bzgyy != null">
+        BZGYY,
+      </if>
+      <if test="sfsldry != null">
+        SFSLDRY,
+      </if>
+      <if test="ldrylxdbm != null">
+        LDRYLXDBM,
+      </if>
+      <if test="ldrylxdmc != null">
+        LDRYLXDMC,
+      </if>
+      <if test="nl != null">
+        NL,
+      </if>
+      <if test="leadtype != null">
+        LEADTYPE,
+      </if>
+      <if test="applydate != null">
+        APPLYDATE,
+      </if>
+      <if test="activedate != null">
+        ACTIVEDATE,
+      </if>
+      <if test="passdate != null">
+        PASSDATE,
+      </if>
+      <if test="isarchive != null">
+        ISARCHIVE,
+      </if>
+      <if test="gradename != null">
+        gradeName,
+      </if>
+      <if test="classname != null">
+        className,
+      </if>
+      <if test="enrollmentdate != null">
+        enrollmentDate,
+      </if>
+      <if test="graduatedate != null">
+        graduateDate,
+      </if>
+      <if test="workdate != null">
+        workDate,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="technologyposition != null">
+        technologyPosition,
+      </if>
+      <if test="trainuser1 != null">
+        trainUser1,
+      </if>
+      <if test="trainuser2 != null">
+        trainUser2,
+      </if>
+      <if test="isstudent != null">
+        isStudent,
+      </if>
+      <if test="exportdate != null">
+        exportDate,
+      </if>
+      <if test="exportpartyname != null">
+        exportPartyName,
+      </if>
+      <if test="applyapprovestatus != null">
+        applyApproveStatus,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="applyfilereid != null">
+        applyFileReId,
+      </if>
+      <if test="partyduesstartmonth != null">
+        partyDuesStartMonth,
+      </if>
+      <if test="archivedate != null">
+        archiveDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rybm != null">
+        #{rybm,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzg != null">
+        #{sfzg,jdbcType=DECIMAL},
+      </if>
+      <if test="bzgyy != null">
+        #{bzgyy,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsldry != null">
+        #{sfsldry,jdbcType=DECIMAL},
+      </if>
+      <if test="ldrylxdbm != null">
+        #{ldrylxdbm,jdbcType=VARCHAR},
+      </if>
+      <if test="ldrylxdmc != null">
+        #{ldrylxdmc,jdbcType=VARCHAR},
+      </if>
+      <if test="nl != null">
+        #{nl,jdbcType=DECIMAL},
+      </if>
+      <if test="leadtype != null">
+        #{leadtype,jdbcType=DECIMAL},
+      </if>
+      <if test="applydate != null">
+        #{applydate,jdbcType=DATE},
+      </if>
+      <if test="activedate != null">
+        #{activedate,jdbcType=DATE},
+      </if>
+      <if test="passdate != null">
+        #{passdate,jdbcType=DATE},
+      </if>
+      <if test="isarchive != null">
+        #{isarchive,jdbcType=DECIMAL},
+      </if>
+      <if test="gradename != null">
+        #{gradename,jdbcType=VARCHAR},
+      </if>
+      <if test="classname != null">
+        #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollmentdate != null">
+        #{enrollmentdate,jdbcType=DATE},
+      </if>
+      <if test="graduatedate != null">
+        #{graduatedate,jdbcType=DATE},
+      </if>
+      <if test="workdate != null">
+        #{workdate,jdbcType=DATE},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="technologyposition != null">
+        #{technologyposition,jdbcType=VARCHAR},
+      </if>
+      <if test="trainuser1 != null">
+        #{trainuser1,jdbcType=VARCHAR},
+      </if>
+      <if test="trainuser2 != null">
+        #{trainuser2,jdbcType=VARCHAR},
+      </if>
+      <if test="isstudent != null">
+        #{isstudent,jdbcType=BIT},
+      </if>
+      <if test="exportdate != null">
+        #{exportdate,jdbcType=DATE},
+      </if>
+      <if test="exportpartyname != null">
+        #{exportpartyname,jdbcType=VARCHAR},
+      </if>
+      <if test="applyapprovestatus != null">
+        #{applyapprovestatus,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="applyfilereid != null">
+        #{applyfilereid,jdbcType=VARCHAR},
+      </if>
+      <if test="partyduesstartmonth != null">
+        #{partyduesstartmonth,jdbcType=INTEGER},
+      </if>
+      <if test="archivedate != null">
+        #{archivedate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.RsRyjbxxfbExample" resultType="java.lang.Long">
+    select count(*) from rs_ryjbxxfb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rs_ryjbxxfb
+    <set>
+      <if test="record.rybm != null">
+        RYBM = #{record.rybm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfzg != null">
+        SFZG = #{record.sfzg,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bzgyy != null">
+        BZGYY = #{record.bzgyy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfsldry != null">
+        SFSLDRY = #{record.sfsldry,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ldrylxdbm != null">
+        LDRYLXDBM = #{record.ldrylxdbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ldrylxdmc != null">
+        LDRYLXDMC = #{record.ldrylxdmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nl != null">
+        NL = #{record.nl,jdbcType=DECIMAL},
+      </if>
+      <if test="record.leadtype != null">
+        LEADTYPE = #{record.leadtype,jdbcType=DECIMAL},
+      </if>
+      <if test="record.applydate != null">
+        APPLYDATE = #{record.applydate,jdbcType=DATE},
+      </if>
+      <if test="record.activedate != null">
+        ACTIVEDATE = #{record.activedate,jdbcType=DATE},
+      </if>
+      <if test="record.passdate != null">
+        PASSDATE = #{record.passdate,jdbcType=DATE},
+      </if>
+      <if test="record.isarchive != null">
+        ISARCHIVE = #{record.isarchive,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gradename != null">
+        gradeName = #{record.gradename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classname != null">
+        className = #{record.classname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enrollmentdate != null">
+        enrollmentDate = #{record.enrollmentdate,jdbcType=DATE},
+      </if>
+      <if test="record.graduatedate != null">
+        graduateDate = #{record.graduatedate,jdbcType=DATE},
+      </if>
+      <if test="record.workdate != null">
+        workDate = #{record.workdate,jdbcType=DATE},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.technologyposition != null">
+        technologyPosition = #{record.technologyposition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainuser1 != null">
+        trainUser1 = #{record.trainuser1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainuser2 != null">
+        trainUser2 = #{record.trainuser2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isstudent != null">
+        isStudent = #{record.isstudent,jdbcType=BIT},
+      </if>
+      <if test="record.exportdate != null">
+        exportDate = #{record.exportdate,jdbcType=DATE},
+      </if>
+      <if test="record.exportpartyname != null">
+        exportPartyName = #{record.exportpartyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyapprovestatus != null">
+        applyApproveStatus = #{record.applyapprovestatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applyfilereid != null">
+        applyFileReId = #{record.applyfilereid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyduesstartmonth != null">
+        partyDuesStartMonth = #{record.partyduesstartmonth,jdbcType=INTEGER},
+      </if>
+      <if test="record.archivedate != null">
+        archiveDate = #{record.archivedate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rs_ryjbxxfb
+    set RYBM = #{record.rybm,jdbcType=VARCHAR},
+      SFZG = #{record.sfzg,jdbcType=DECIMAL},
+      BZGYY = #{record.bzgyy,jdbcType=VARCHAR},
+      SFSLDRY = #{record.sfsldry,jdbcType=DECIMAL},
+      LDRYLXDBM = #{record.ldrylxdbm,jdbcType=VARCHAR},
+      LDRYLXDMC = #{record.ldrylxdmc,jdbcType=VARCHAR},
+      NL = #{record.nl,jdbcType=DECIMAL},
+      LEADTYPE = #{record.leadtype,jdbcType=DECIMAL},
+      APPLYDATE = #{record.applydate,jdbcType=DATE},
+      ACTIVEDATE = #{record.activedate,jdbcType=DATE},
+      PASSDATE = #{record.passdate,jdbcType=DATE},
+      ISARCHIVE = #{record.isarchive,jdbcType=DECIMAL},
+      gradeName = #{record.gradename,jdbcType=VARCHAR},
+      className = #{record.classname,jdbcType=VARCHAR},
+      enrollmentDate = #{record.enrollmentdate,jdbcType=DATE},
+      graduateDate = #{record.graduatedate,jdbcType=DATE},
+      workDate = #{record.workdate,jdbcType=DATE},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      technologyPosition = #{record.technologyposition,jdbcType=VARCHAR},
+      trainUser1 = #{record.trainuser1,jdbcType=VARCHAR},
+      trainUser2 = #{record.trainuser2,jdbcType=VARCHAR},
+      isStudent = #{record.isstudent,jdbcType=BIT},
+      exportDate = #{record.exportdate,jdbcType=DATE},
+      exportPartyName = #{record.exportpartyname,jdbcType=VARCHAR},
+      applyApproveStatus = #{record.applyapprovestatus,jdbcType=INTEGER},
+      password = #{record.password,jdbcType=VARCHAR},
+      applyFileReId = #{record.applyfilereid,jdbcType=VARCHAR},
+      partyDuesStartMonth = #{record.partyduesstartmonth,jdbcType=INTEGER},
+      archiveDate = #{record.archivedate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.RsRyjbxxfb">
+    update rs_ryjbxxfb
+    <set>
+      <if test="sfzg != null">
+        SFZG = #{sfzg,jdbcType=DECIMAL},
+      </if>
+      <if test="bzgyy != null">
+        BZGYY = #{bzgyy,jdbcType=VARCHAR},
+      </if>
+      <if test="sfsldry != null">
+        SFSLDRY = #{sfsldry,jdbcType=DECIMAL},
+      </if>
+      <if test="ldrylxdbm != null">
+        LDRYLXDBM = #{ldrylxdbm,jdbcType=VARCHAR},
+      </if>
+      <if test="ldrylxdmc != null">
+        LDRYLXDMC = #{ldrylxdmc,jdbcType=VARCHAR},
+      </if>
+      <if test="nl != null">
+        NL = #{nl,jdbcType=DECIMAL},
+      </if>
+      <if test="leadtype != null">
+        LEADTYPE = #{leadtype,jdbcType=DECIMAL},
+      </if>
+      <if test="applydate != null">
+        APPLYDATE = #{applydate,jdbcType=DATE},
+      </if>
+      <if test="activedate != null">
+        ACTIVEDATE = #{activedate,jdbcType=DATE},
+      </if>
+      <if test="passdate != null">
+        PASSDATE = #{passdate,jdbcType=DATE},
+      </if>
+      <if test="isarchive != null">
+        ISARCHIVE = #{isarchive,jdbcType=DECIMAL},
+      </if>
+      <if test="gradename != null">
+        gradeName = #{gradename,jdbcType=VARCHAR},
+      </if>
+      <if test="classname != null">
+        className = #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollmentdate != null">
+        enrollmentDate = #{enrollmentdate,jdbcType=DATE},
+      </if>
+      <if test="graduatedate != null">
+        graduateDate = #{graduatedate,jdbcType=DATE},
+      </if>
+      <if test="workdate != null">
+        workDate = #{workdate,jdbcType=DATE},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="technologyposition != null">
+        technologyPosition = #{technologyposition,jdbcType=VARCHAR},
+      </if>
+      <if test="trainuser1 != null">
+        trainUser1 = #{trainuser1,jdbcType=VARCHAR},
+      </if>
+      <if test="trainuser2 != null">
+        trainUser2 = #{trainuser2,jdbcType=VARCHAR},
+      </if>
+      <if test="isstudent != null">
+        isStudent = #{isstudent,jdbcType=BIT},
+      </if>
+      <if test="exportdate != null">
+        exportDate = #{exportdate,jdbcType=DATE},
+      </if>
+      <if test="exportpartyname != null">
+        exportPartyName = #{exportpartyname,jdbcType=VARCHAR},
+      </if>
+      <if test="applyapprovestatus != null">
+        applyApproveStatus = #{applyapprovestatus,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="applyfilereid != null">
+        applyFileReId = #{applyfilereid,jdbcType=VARCHAR},
+      </if>
+      <if test="partyduesstartmonth != null">
+        partyDuesStartMonth = #{partyduesstartmonth,jdbcType=INTEGER},
+      </if>
+      <if test="archivedate != null">
+        archiveDate = #{archivedate,jdbcType=DATE},
+      </if>
+    </set>
+    where RYBM = #{rybm,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.RsRyjbxxfb">
+    update rs_ryjbxxfb
+    set SFZG = #{sfzg,jdbcType=DECIMAL},
+      BZGYY = #{bzgyy,jdbcType=VARCHAR},
+      SFSLDRY = #{sfsldry,jdbcType=DECIMAL},
+      LDRYLXDBM = #{ldrylxdbm,jdbcType=VARCHAR},
+      LDRYLXDMC = #{ldrylxdmc,jdbcType=VARCHAR},
+      NL = #{nl,jdbcType=DECIMAL},
+      LEADTYPE = #{leadtype,jdbcType=DECIMAL},
+      APPLYDATE = #{applydate,jdbcType=DATE},
+      ACTIVEDATE = #{activedate,jdbcType=DATE},
+      PASSDATE = #{passdate,jdbcType=DATE},
+      ISARCHIVE = #{isarchive,jdbcType=DECIMAL},
+      gradeName = #{gradename,jdbcType=VARCHAR},
+      className = #{classname,jdbcType=VARCHAR},
+      enrollmentDate = #{enrollmentdate,jdbcType=DATE},
+      graduateDate = #{graduatedate,jdbcType=DATE},
+      workDate = #{workdate,jdbcType=DATE},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      technologyPosition = #{technologyposition,jdbcType=VARCHAR},
+      trainUser1 = #{trainuser1,jdbcType=VARCHAR},
+      trainUser2 = #{trainuser2,jdbcType=VARCHAR},
+      isStudent = #{isstudent,jdbcType=BIT},
+      exportDate = #{exportdate,jdbcType=DATE},
+      exportPartyName = #{exportpartyname,jdbcType=VARCHAR},
+      applyApproveStatus = #{applyapprovestatus,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
+      applyFileReId = #{applyfilereid,jdbcType=VARCHAR},
+      partyDuesStartMonth = #{partyduesstartmonth,jdbcType=INTEGER},
+      archiveDate = #{archivedate,jdbcType=DATE}
+    where RYBM = #{rybm,jdbcType=VARCHAR}
+  </update>
+</mapper>

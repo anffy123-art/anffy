@@ -1,0 +1,123 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px">
+    <div class="modal-dialog" role="document">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{params.title}}</h3>
+            </div>
+            <div class="body">
+                <!--<form class="form-horizontal" ng-submit="saveRole(editRoleForm.$valid)" role="form" id="editRoleForm" name="editRoleForm" novalidate>
+                    <table class="table table-bordered formtable1">
+                        <tr>
+                            <th class="col-md-3"><span style="color:red;">*</span>角色名称:</th>
+                            <td ng-class="{ 'has-error' : editRoleForm.rolename.$invalid &&  (editRoleForm.$submitted) }">
+                                <input name="rolename" type="text" ng-model="content.rolename" class="form-control" ng-required="true" value={{content.rolename}} />
+                                <span ng-show="editRoleForm.rolename.$invalid &&  (editRoleForm.$submitted)" class="help-block">请输入角色名称</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3">角色描述:</th>
+                            <td>
+                                <input name="description" type="text" ng-model="content.description" class="form-control" value={{content.description}} />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3" rowspan="9"><span style="color:red;">*</span>权限管理:</th>
+                            <td>
+                                <table style="border-collapse:collapse; width:100%;text-align: left;">
+                                    &lt;!&ndash;<tr style="list-style:none; border-bottom:1.5px ridge #eee" ng-model="content.menu.MenuId" ng-repeat="menu in menuLists" ng-include="'node.html'"></tr>&ndash;&gt;
+                                    <tr class="treebody" style="list-style:none; border-bottom:1.5px ridge #eee" ng-repeat="menu in PmenuLists"  ng-include="'node.html'">
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="form_foot">
+                        <button id="submit" class="btn btn-danger" style="padding:4px 20px 4px 20px" type="submit" form="editRoleForm">提交</button>
+                        <button id="cancel" type="button" class="btn btn-default" style="padding:4px 20px 4px 20px" ng-click="$hide()">取消</button>
+                    </div>
+                </form>-->
+                <form activate-input ng-submit="saveRole(editRoleForm.$valid)" role="form" id="editRoleForm"
+                      name="editRoleForm"
+                      novalidate>
+                    <label>角色名称</label>
+                    <div class="form-group">
+                        <div class="form-line"
+                             ng-class="{ 'focused error' : editRoleForm.rolename.$invalid &&  editRoleForm.$submitted}">
+                            <input name="rolename" type="text" ng-model="content.rolename" class="form-control"
+                                   ng-required="true"
+                                   value={{content.rolename}} placeholder="请输入角色名称"/>
+                        </div>
+                    </div>
+                    <label>角色描述</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input name="description" type="text" ng-model="content.description" class="form-control"
+                                   value={{content.description}}
+                                   placeholder="请输入角色描述"/>
+                        </div>
+                    </div>
+                    <label>分组</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input name="groupby" type="text" ng-model="content.groupby" class="form-control"
+                                   value={{content.groupby}}
+                                   placeholder="请输入分组"/>
+                        </div>
+                    </div>
+                    <label>排序</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input name="orderby" type="text" ng-model="content.orderby" class="form-control"
+                                   value={{content.orderby}}
+                                   placeholder="请输入排序"/>
+                        </div>
+                    </div>
+                    <label>数据范围</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <select class="form-control show-tick" ng-model="content.dictionaryid"
+                                    class="form-control"
+                                    name="dictionaryid">
+                                <option ng-repeat="x in $parent.roleConfigList" value="{{x.dictionaryid}}">{{x.dicvalue}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <label>权限管理</label>
+                    <div class="form-group">
+                        <div class="form-line">
+                            <table style="border-collapse:collapse; width:100%;text-align: left;">
+                                <tr class="treebody" style="list-style:none; border-bottom:1.5px ridge #eee"
+                                    ng-repeat="menu in PmenuLists" ng-include="'node.html'">
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form_foot">
+                        <button id="submit" class="btn btn-default1" type="submit" form="editRoleForm">提交</button>
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                    </div>
+                </form>
+
+                <script type="text/ng-template" id="node.html">
+                    <li class="row" style="padding:8px 15px">
+                    <span>
+                        <a href="" class="glyphicon {{menu.changeClass}}" ng-click="getMenuByPMenuID(menu)"></a>
+                        <input type="checkbox" id="{{menu.myMenu.menuid}}" class="filled-in chk-col-cyan"
+                               ng-model="menu.isChecked" ng-change="chkchildren(menu)"
+                        >
+                        <label for="{{menu.myMenu.menuid}}">{{menu.myMenu.menuname}}</label>
+                        <!-- <span class="ModulesSpan"
+                               style="cursor: pointer; margin-top:2px;">{{menu.myMenu.menuname}}</span>-->
+                    </span>
+                    </li>
+                    <div>
+                        <div class="treebody" ng-if="menu.changeShow" ng-repeat="menu in menu.childMenu"
+                             ng-include="'node.html'" style="cursor: pointer;"></div>
+                    </div>
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+

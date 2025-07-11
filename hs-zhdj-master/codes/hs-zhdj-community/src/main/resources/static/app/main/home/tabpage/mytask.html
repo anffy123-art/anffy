@@ -1,0 +1,11 @@
+<div class="list-group-item" style="border : 0px;padding-left: 30px" ng-repeat="it in taskdataList|limitTo: 5">
+    <div ng-click="showTaskData(it.ID,it.TASKTYPE)" style="cursor: pointer;">
+        {{it.TASKNAME|limitTo:14}}<span
+            ng-if="it.TASKNAME.length>14">...</span>
+        <span style="float: right">{{it.ENDTIME|date:'MM-dd'}}</span></div>
+</div>
+<ul class="list-group" ng-if="taskdataList.length==0" style="text-align: center; ">
+    <br>
+    <br>
+    <span>暂无数据</span>
+</ul>

@@ -1,0 +1,59 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form  role="form" novalidate
+               name="editForm" >
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所在组织</th>
+                        <td>
+                            {{dataModel.dzzmc}}
+                        </td>
+                        <th>年度</th>
+                        <td >
+                            {{dataModel.year}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>一季度评分</th>
+                        <td >
+                           {{dataModel.quarter1}}
+                        </td>
+                        <th>二季度评分</th>
+                        <td >
+                            {{dataModel.quarter2}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>三季度评分</th>
+                        <td>
+                            {{dataModel.quarter3}}
+                        </td>
+                        <th>四季度评分</th>
+                        <td >
+                            {{dataModel.quarter4}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>评定等级</th>
+                        <td >
+                          {{getJudgeLevelName()}}
+                        </td>
+                        <th><span ng-if="type=='1'">年度评分</span></th>
+                        <td>
+                            {{dataModel.annualscore}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!--<div class="table-responsive list-table-panel" style="margin-bottom: 20px;">
+                <bsfiles ng-model="reqFileModel"/>
+            </div>-->
+
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">关闭</button>
+            </div>
+        </form>
+    </div>
+</div>

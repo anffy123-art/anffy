@@ -1,0 +1,189 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="selectparams.dzzdm" data-selectdzzmc="selectparams.dzzmc"
+             data-userid="selectparams.userid" data-isshowxz="0"
+             data-onlyshowdw="selectparams.onlyshow_dw"
+             data-showtogglebtn="true"
+             data-zzfbtype="selectparams.zzfbType"
+             data-isunfold="selectparams.isunfold"
+        ></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="selectparams.dzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>标题</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="title" class="form-control" type="text" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.title"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>作者</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="author" class="form-control" type="text" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.author"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix form-inline" ng-show="isShow">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>栏目</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick"
+                                                        name="topicValue" ng-model="selectparams.topicValue" ng-change="search()"
+                                                        ng-options="op.val as op.label for op in ndList">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>状态</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-change="search()"
+                                                        name="status" ng-model="selectparams.status"
+                                                        ng-options="op.val as op.label for op in statusList">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <span class="moreSpan" ng-click="isShowClick()" style='padding-right:1em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>
+                                <button  class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body" style="min-height:400px;">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>标题</th>
+                                    <th>单位</th>
+                                    <th>栏目</th>
+                                    <th>年份</th>
+                                    <th>第几期</th>
+                                    <th>作者</th>
+                                    <th>状态</th>
+                                    <th>投稿人</th>
+                                    <th>投稿时间</th>
+                                    <!--<th>操作</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">
+                                        {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                    </td>
+                                    <td>{{it.title}}</td>
+                                    <td>{{it.dwName}}</td>
+                                    <td class="text-center">{{it.topicname}}</td>
+                                    <td class="text-center">{{it.year}}</td>
+                                    <td class="text-center">{{it.num}}</td>
+                                    <td class="text-center">{{it.author}}</td>
+                                    <td class="text-center">{{it.statusName}}</td>
+                                    <td class="text-center">{{it.createusername}}</td>
+                                    <td class="text-center">{{it.createtime | date:'yyyy-MM-dd'}}</td>
+
+                                </tr>
+                                <tr ng-if="dataList.length<=0">
+                                    <td colspan="10" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="zero-target-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList" zero-table-height>
+                                    <td>
+                                        <button
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="viewItem(it.fqtgid)"
+                                                title="查看">
+                                            查看
+                                        </button>
+                                        <button role-permission-code="home.programmeDetails"
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="usable(it)" ng-if="it.statusName=='可用'"
+                                                title="设为已用">
+                                            设为已用
+                                        </button>
+                                        <button role-permission-code="home.programmeDetails"
+                                                class="btn td-btn bg-pink waves-effect"
+                                                ng-click="approve(it.fqtgid)" ng-if="it.statusName=='提交'"
+                                                title="审核">
+                                            审核
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="1" style="text-align:center">无</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

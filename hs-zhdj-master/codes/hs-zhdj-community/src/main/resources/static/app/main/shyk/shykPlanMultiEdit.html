@@ -1,0 +1,60 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 600px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div activate-input class="body">
+                <form class="form-horizontal" role="form"
+                      name="editForm" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table">
+                            <!--<tr>
+                                <th >
+                                    配置情况
+                                </th>
+                                <td ng-class="{ 'has-error' : this.editForm.settingType.$invalid &&  this.editForm.$submitted}">
+                                    <select class="form-control show-tick" name="settingType" ng-model="dataModel.settingType" ng-required="true">
+                                        <option value="">&#45;&#45;请选择&#45;&#45;</option>
+                                        <option value="0">未配置</option>
+                                        <option value="1">已配置</option>
+                                    </select>
+                                    <span ng-show="this.editForm.settingType.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+
+                            </tr>-->
+                            <tr>
+                                <th>类别</th>
+                                <td ng-class="{ 'has-error' : this.editForm.partyType.$invalid &&  this.editForm.$submitted}">
+                                    <select class="form-control show-tick" name="partyType" ng-model="dataModel.partyType" ng-required="true">
+                                        <option value="">--请选择--</option>
+                                        <option value="400">党支部</option>
+                                        <option value="300">党总支</option>
+                                    </select>
+                                    <span ng-show="this.editForm.partyType.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="type in settingList">
+                                <th style="color: #8d2b2a">{{type.shykTypeName}}</th>
+                                <td>
+                                    <select class="form-control show-tick" name="targettype_{{type.shyktype}}" ng-model="type.targettype"
+                                            ng-options="op.dickey as op.dicvalue for op in numList" >
+                                        <option value="">--请选择--</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" ng-click="saveTargetMulti(this.editForm.$valid)">提交
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<div class="aside" tabindex="-1" role="dialog">
+    <div class="aside-dialog">
+        <div class="aside-content">
+            <div class="aside-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">支付选择</h4>
+            </div>
+            <div bs-tabs bs-active-pane="data.activeTab">
+                <div bs-pane data-title="支付" name="pay">
+                    <div class="aside-body">
+                        <div ng-if="!data.hasInit" class="form-group">
+                            <label>{{data.msg}}</label>
+                        </div>
+                        <div ng-if="data.hasInit" class="form-group">
+                            <label>支付金额：{{data.item.amt}}</label>
+                        </div>
+
+                        <div ng-if="data.hasInit" class="form-group">
+                            <label>当前支付单号：{{data.item.payNo}}</label>
+                        </div>
+                        <div class="form-group">
+                            <label>支付类型</label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" ng-model="data.selectedPayType" name="paytype"
+                                       ng-disabled="!data.changePayType" value="1">
+                            </label>
+                            <img ng-class="{'selected-icon':data.selectedPayType=='1'}"
+                                 src="../js/setting/payment/wx.png">
+                            <span>微信支付</span>
+                        </div>
+                        <div style="display: none;" class="radio">
+                            <label>
+                                <input type="radio" ng-model="data.selectedPayType" name="paytype"
+                                       ng-disabled="!data.changePayType" value="2">
+                            </label>
+                            <img ng-class="{'selected-icon':data.selectedPayType=='2'}"
+                                 src="../js/setting/payment/yl.png">
+                            <span>在线支付</span>
+                        </div>
+                    </div>
+                    <div class="aside-footer">
+                        <button type="button" class="btn btn-danger" ng-click="resetPay()" ng-if="!data.changePayType">
+                            重置
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="button" class="btn btn-primary" ng-click="startPay()" ng-disabled="!data.hasInit">
+                            {{data.changePayType?'支付':'继续支付'}}
+                        </button>
+                        <br>
+                        <div style="color:red; text-align: left">
+                            注意：<br/>
+                            1、如需开专票，强烈建议选择网银支付。（网银待开通）<br/>
+                            2、公对公账号转账，才允许开专票。
+                        </div>
+                    </div>
+
+                </div>
+                <div bs-pane data-title="记录" name="history">
+                    <div class="aside-body">
+                        <table class="table table-striped">
+                            <tr>
+                                <th>单号</th>
+                                <th>类型</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr ng-repeat="it in data.pageList">
+                                <td>{{it.payNo}}</td>
+                                <td>{{it.payTypeName}}</td>
+                                <td>{{it.payStateName}}</td>
+                                <td>
+                                    <button class="btn-success td-btn"
+                                            ng-if="(it.payState==0||it.payState==1&&it.payWhere==1)"
+                                            ng-click="selectPay(it)" title="继续支付">
+                                        <span class="glyphicon glyphicon-pencil "></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="aside-footer">
+                        <pagination data-pageindex="data.logData.pageindex" data-pagesize="data.logData.pagesize"
+                                    data-ptotal="data.logData.ptotal"></pagination>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

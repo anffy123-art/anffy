@@ -1,0 +1,103 @@
+<div class="card">
+    <titlemenu></titlemenu>
+    <div class="body">
+        <div class="row clearfix">
+            <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                <div party-tree data-selectdzzdm="selectparams.selectdzzdm" data-selectdzzmc="selectparams.selectdzzmc"
+                      data-userid="selectparams.userid" data-parentcode="selectparams.parentcode"
+                     data-isshowxz="0" data-zzfbtype="selectparams.zzfbType"></div>
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                <div class="card">
+                    <div activate-input activate-select class="header search-header">
+                        <div class="search-param-panel">
+                            <div class="search-input">
+                                <form class="form-horizontal">
+                                    <div class="row clearfix form-inline">
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                            <label>党小组名称</label>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input name="dzzmc" class="form-control" type="text"
+                                                           ng-model="selectparams.dzzmc"
+                                                           placeholder=""/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                            <label>党小组代码</label>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                    <input name="ldjtjc" class="form-control" type="text"
+                                                           ng-model="selectparams.dzzdm"
+                                                           placeholder=""/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="search-btn" style="margin-right: 20px;">
+                                <div>
+                                    <button class="btn btn-default1"
+                                            ng-click="search()">查询
+                                    </button>
+                                    <button role-permission-code="partyGroupList.btnExport" class="btn  btn-default1"
+                                            ng-click="export()">导出
+                                    </button>
+                                    <button role-permission-code="partyGroupList.btnAdd" class="btn btn-default1"
+                                            ng-click="addDXZ()">新增
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body" style="padding: 10px">
+                        <div class="table-responsive list-table-panel">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>党小组名称</th>
+                                    <th>党小组代码</th>
+                                    <th>党小组成员数量</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">{{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}</td>
+                                    <td>{{it.DZZMC}}</td>
+                                    <td>{{it.DZZDM}}</td>
+                                    <td>{{it.DXZCYSL}}</td>
+                                    <td class="text-center">
+                                        <button role-permission-code="partyGroupList.btnUpdate"
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="editDXZ(it.ZZQKXXBS)"
+                                                title="修改">
+                                            <!--<i class="material-icons td-icon">border_color</i>-->
+                                            修改
+                                        </button>
+                                        <button role-permission-code="partyGroupList.btnDelete"
+                                                class="btn td-btn bg-pink waves-effect"
+                                                ng-click="delete(it)" title="删除">
+                                            <!--<i class="material-icons td-icon">delete_forever</i>-->
+                                            删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                    data-ptotal="pageInfo.ptotal"></pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

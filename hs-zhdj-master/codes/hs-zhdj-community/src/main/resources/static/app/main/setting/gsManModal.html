@@ -1,0 +1,51 @@
+<div id="dicmodal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">客服人员配置</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal formtable1" role="form" id="gsmanForm" name="gsmanForm" ng-submit="save()"
+                      novalidate>
+                    <table class="table table-bordered tform">
+                        <tr>
+                            <th class="col-md-3">客服名：</th>
+                            <td ng-class="{ 'has-error' : gsmanForm.userName.$invalid &&  gsmanForm.$submitted}">
+                                <label class="input-group">
+                                    <input type="text" name="userName" ng-model="extdata.userName" class="form-control"
+                                           ng-required="true"/>
+                                    <span class="input-group-addon" data-selecttype="single" userselect
+                                          data-textids="extdata.uids" data-textnames="extdata.userName"
+                                          data-datausers="extdata.selectedDataUsers" data-textguids="item.userID"><i
+                                            class="glyphicon glyphicon-zoom-in"></i></span>
+                                </label>
+                                <span ng-show="gsmanForm.userName.$invalid && gsmanForm.$submitted" class="help-block">请选择具体人员</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>客服类型：</th>
+                            <td ng-class="{ 'has-error' : gsmanForm.guestServerType.$invalid &&  gsmanForm.$submitted}">
+                                <select name="guestServerType" ng-required="true" ng-model="item.guestServerType"
+                                        ng-options="type.dickey as type.dicvalue for type in guestServerTypeList"
+                                        class="form-control">
+                                    <option value="" selected>--全部--</option>
+                                </select>
+                                <span ng-show="gsmanForm.guestServerType.$invalid && gsmanForm.$submitted"
+                                      class="help-block">请选择客服类型</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>心跳时间：</th>
+                            <td>{{item.heartbeatTime |date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                <button type="submit" class="btn btn-primary" form="gsmanForm">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

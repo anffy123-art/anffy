@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.PEUserCQuery">
+
+    <select id="selectJoinUserList" resultType="java.util.HashMap">
+       select us.RYBM,us.XM as NAME,z.DZZDM as PARTYCODE,z.DZZMC as PARTYNAME,
+       u.JOINUSERID,u.FLOWID,u.FLOWNAME,u.PFLOWID,u.PFLOWNAME,u.SORT,ifnull(u.lateDays,0) as lateDays,ifnull(u.PROGRESS,0) as PROGRESS,
+       ryzt.hzmc as RYZTMC
+       from VM_RYJBXX_ALL us
+       inner join ZZ_ZZQKXX z on us.SZDZBDM=z.DZZDM
+       left join Zzzd_ryzt ryzt on us.ryzt=ryzt.bm -- 人员状态
+       left join (
+           select u.JOINUSERID,u.USERCODE,nowflow.lateDays,nowflow.FLOWID,nowflow.FLOWNAME,nowflow.PFLOWNAME,nowflow.PARENTID as PFLOWID,
+           nowflow.SORT,(ifnull(nowflow.PROGRESS,0)*100) as PROGRESS
+           from PE_JOINUSER u
+           left join (
+                select usernow.JOINUSERID, p.FLOWNAME as PFLOWNAME,f.PARENTID,f.FLOWNAME,f.FLOWID,uf.ACCOMPLISHTIME,usernow.SORT,
+                nextflow.FLOWID as next_flowid,nextflow.FLOWNAME as next_flowname,nextflow.SORT as next_sort,
+                (case when nextflow.WARNDAYS is null then 0 when (sysdate() - warn.ACCOMPLISHTIME) > nextflow.WARNDAYS then (sysdate() - warn.ACCOMPLISHTIME) - nextflow.WARNDAYS else 0 end) as lateDays,
+                round(usernow.SORT/25,4) as PROGRESS
+                from (
+                     select uf.JOINUSERID,max(f.SORT) as SORT
+                     from PE_JOINUSER_FLOW uf
+                     inner join PE_FLOW f on uf.FLOWID = f.FLOWID
+                     where uf.OPERATESTATE not in ('D')
+                     group by uf.JOINUSERID
+                ) usernow  -- 当前环节
+                inner join PE_FLOW f on usernow.SORT = f.SORT and f.PARENTID is not null
+                inner join PE_FLOW p on f.PARENTID = p.FLOWID
+                inner join PE_JOINUSER_FLOW uf on f.FLOWID = uf.FLOWID and usernow.JOINUSERID = uf.JOINUSERID and uf.OPERATESTATE not in ('D')
+                left join PE_FLOW nextflow on (f.SORT+1)=nextflow.SORT and nextflow.PARENTID is not null
+                left join PE_JOINUSER_FLOW warn on nextflow.WARNUPFLOWID = warn.FLOWID and usernow.JOINUSERID = warn.JOINUSERID and warn.OPERATESTATE not in ('D')
+                order by usernow.JOINUSERID
+           ) nowflow on u.JOINUSERID= nowflow.JOINUSERID
+        ) u on us.RYBM=u.USERCODE
+        where 1=1 and (us.RYZT in('1','2','5','6') or (us.RYZT='3' and u.USERCODE is not null))
+        <if test="id!=null and id !=''">
+            and u.JOINUSERID =#{id}
+        </if>
+        <if test="isLateDay !=null">
+            <if test="isLateDay == 1">
+                and u.lateDays>0
+            </if>
+            <if test="isLateDay == 0">
+                and (u.lateDays <![CDATA[ <= ]]> 0 or u.lateDays is null)
+            </if>
+        </if>
+
+        <if test="partyCode!=null and partyCode !=''">
+            and us.SZDZBDM like concat( '%',#{partyCode},'%')
+        </if>
+        <if test="name!=null and name !=''">
+            and us.xm like concat('%',#{name},'%')
+        </if>
+        <if test="flowId!=null and flowId !=''">
+            and u.flowId =#{flowId}
+        </if>
+        <if test="pflowid != null and pflowid.size()>0">
+            and u.pflowid in
+            <foreach collection="pflowid" item="flowId" index="index" open="(" close=")" separator=",">
+                #{flowId}
+            </foreach>
+        </if>
+        <if test="beginSort != null">
+            and u.SORT <![CDATA[ >= ]]> #{beginSort}
+        </if>
+        <if test="endSort != null">
+            and u.SORT <![CDATA[ <= ]]> #{endSort}
+        </if>
+        <if test="ryztList != null and ryztList.size()>0">
+            and us.RYZT in
+            <foreach collection="ryztList" item="ryzt" index="index" open="(" close=")" separator=",">
+                #{ryzt}
+            </foreach>
+        </if>
+        order by ifnull(u.lateDays,0) desc,us.XMPY,us.RYJBXXBS
+    </select>
+
+    <select id="selectJoinUserListForApp" resultType="java.util.HashMap">
+        select us.RYBM,us.XM as NAME,z.DZZDM as PARTYCODE,z.DZZMC as PARTYNAME,
+        u.JOINUSERID,u.FLOWID,u.FLOWNAME,u.PFLOWID,u.PFLOWNAME,u.SORT,ifnull(u.lateDays,0) as lateDays,ifnull(u.PROGRESS,0) as PROGRESS,
+        ryzt.hzmc as RYZTMC
+        from VM_RYJBXX_ALL us
+        inner join ZZ_ZZQKXX z on us.SZDZBDM=z.DZZDM
+        left join Zzzd_ryzt ryzt on us.ryzt=ryzt.bm -- 人员状态
+        left join (
+        select u.JOINUSERID,u.USERCODE,nowflow.lateDays,nowflow.FLOWID,nowflow.FLOWNAME,nowflow.PFLOWNAME,nowflow.PARENTID as PFLOWID,
+        nowflow.SORT,(ifnull(nowflow.PROGRESS,0)*100) as PROGRESS
+        from PE_JOINUSER u
+        left join (
+        select usernow.JOINUSERID, p.FLOWNAME as PFLOWNAME,f.PARENTID,f.FLOWNAME,f.FLOWID,uf.ACCOMPLISHTIME,usernow.SORT,
+        nextflow.FLOWID as next_flowid,nextflow.FLOWNAME as next_flowname,nextflow.SORT as next_sort,
+        (case when nextflow.WARNDAYS is null then 0 when (sysdate - warn.ACCOMPLISHTIME) > nextflow.WARNDAYS then (sysdate - warn.ACCOMPLISHTIME) - nextflow.WARNDAYS else 0 end) as lateDays,
+        round(usernow.SORT/25,4) as PROGRESS
+        from (
+        select uf.JOINUSERID,max(f.SORT) as SORT
+        from PE_JOINUSER_FLOW uf
+        inner join PE_FLOW f on uf.FLOWID = f.FLOWID
+        where uf.OPERATESTATE not in ('D')
+        group by uf.JOINUSERID
+        ) usernow --当前环节
+        inner join PE_FLOW f on usernow.SORT = f.SORT and f.PARENTID is not null
+        inner join PE_FLOW p on f.PARENTID = p.FLOWID
+        inner join PE_JOINUSER_FLOW uf on f.FLOWID = uf.FLOWID and usernow.JOINUSERID = uf.JOINUSERID and uf.OPERATESTATE not in ('D')
+        left join PE_FLOW nextflow on (f.SORT+1)=nextflow.SORT and nextflow.PARENTID is not null
+        left join PE_JOINUSER_FLOW warn on nextflow.WARNUPFLOWID = warn.FLOWID and usernow.JOINUSERID = warn.JOINUSERID and warn.OPERATESTATE not in ('D')
+        order by usernow.JOINUSERID
+        ) nowflow on u.JOINUSERID= nowflow.JOINUSERID
+        ) u on us.RYBM=u.USERCODE
+        where 1=1 and us.RYZT in('1','2','5','6')
+        <if test="id!=null and id !=''">
+            and u.JOINUSERID =#{id}
+        </if>
+        <if test="isLateDay !=null">
+            <if test="isLateDay == 1">
+                and u.lateDays>0
+            </if>
+            <if test="isLateDay == 0">
+                and (u.lateDays <![CDATA[ <= ]]> 0 or u.lateDays is null)
+            </if>
+        </if>
+
+        <if test="partyCode!=null and partyCode !=''">
+            and us.SZDZBDM like concat( '%',#{partyCode},'%')
+        </if>
+        <if test="name!=null and name !=''">
+            and us.xm like concat('%',#{name},'%')
+        </if>
+        <if test="flowId!=null and flowId !=''">
+            and u.flowId =#{flowId}
+        </if>
+        <if test="pflowid != null and pflowid.size()>0">
+            and u.pflowid in
+            <foreach collection="pflowid" item="flowId" index="index" open="(" close=")" separator=",">
+                #{flowId}
+            </foreach>
+        </if>
+        <if test="beginSort != null">
+            and u.SORT <![CDATA[ >= ]]> #{beginSort}
+        </if>
+        <if test="endSort != null">
+            and u.SORT <![CDATA[ <= ]]> #{endSort}
+        </if>
+        <if test="ryztList != null and ryztList.size()>0">
+            and us.RYZT in
+            <foreach collection="ryztList" item="ryzt" index="index" open="(" close=")" separator=",">
+                #{ryzt}
+            </foreach>
+        </if>
+        <if test="szdzbdm!=null and szdzbdm !=''">
+            and us.SZDZBDM = #{szdzbdm}
+        </if>
+        order by ifnull(u.lateDays,0) desc,us.XMPY,us.RYJBXXBS
+    </select>
+
+    <select id="selectJoinFlowList" resultType="java.util.HashMap">
+        select FLOWID,FLOWNAME from PE_FLOW where OperateState <![CDATA[ <> ]]> 'D'
+        order by SORT
+    </select>
+
+    <select id="selectUserFlowList" resultType="java.util.HashMap">
+        select p.FLOWNAME as PROCESSNAME,p.SORT as PROCESSSORT,w.FLOWCOUNT,w.MINSORT,c.FLOWID,c.FLOWNAME,c.URL,c.WARNDAYS,
+        c.SORT,c.WARNUPFLOWID,userflow.ACCOMPLISHTIME,
+        warnflow.ACCOMPLISHTIME as BEGINTIME,
+        (sysdate()-warnflow.ACCOMPLISHTIME) as ACCOMPLISHTDAYS,
+        nowFlow.SORT as NOWSORT,
+        nextFlow.SORT as NEXTSORT,
+        (select max(sort) from PE_FLOW where PARENTID is not null) as MAXSORT
+        from PE_FLOW p
+        left join PE_FLOW c on p.FLOWID=c.PARENTID
+        left join PE_JOINUSER_FLOW userflow on c.FLOWID=userflow.FLOWID and userflow.JOINUSERID=#{joinUserId} and userflow.OPERATESTATE <![CDATA[ <> ]]> 'D' -- 用户环节填写记录
+        left join (select p.FLOWID,count(1) as FLOWCOUNT,min(c.SORT) as MINSORT from PE_FLOW p
+                   left join PE_FLOW c on p.FLOWID=c.PARENTID where p.PARENTID is null group by p.FLOWID
+        ) w on p.FLOWID=w.FLOWID -- 统计子节点数量
+        left join (
+            select wjf.JOINUSERID,
+            max(wf.SORT) as SORT
+            from PE_JOINUSER_FLOW wjf
+            inner join PE_FLOW wf on wjf.FLOWID=wf.FLOWID
+            inner join PE_FLOW p on wf.PARENTID=p.FLOWID
+            where wjf.JOINUSERID=#{joinUserId}
+            and wjf.OPERATESTATE <![CDATA[ <> ]]> 'D'
+            group by wjf.JOINUSERID
+        ) nowFlow on userflow.JOINUSERID=nowFlow.JOINUSERID -- 用户当前填写环节
+        left join (
+            select nextFlow.SORT,flow.FLOWID,flow.WARNUPFLOWID,flow.WARNDAYS
+            from (
+                  select min(f.SORT) SORT
+                  from PE_FLOW f
+                  left join PE_JOINUSER_FLOW uf on f.FLOWID=uf.FLOWID and  uf.JOINUSERID=#{joinUserId}
+                  where  uf.ID is null and f.PARENTID is not null
+             ) nextFlow
+            inner join PE_FLOW flow on  nextFlow.SORT=flow.SORT and flow.PARENTID is not null
+        ) nextFlow on c.FLOWID=nextFlow.FLOWID -- 用户下一待填写环节
+        left join PE_JOINUSER_FLOW warnflow on nextFlow.WARNUPFLOWID=warnflow.FLOWID  and warnflow.JOINUSERID=#{joinUserId} and warnflow.OPERATESTATE <![CDATA[ <> ]]> 'D' -- 待填写环节的设置的预警环节填写记录
+        where p.PARENTID is null
+        order  by p.SORT,c.SORT
+    </select>
+
+
+    <!--删除个人简历-->
+    <update id="deletePeJoinapplyResume" parameterType="java.lang.String">
+        update PE_JOINAPPLY_RESUME set OPERATESTATE='D',OPERATETIME=sysdate,SYNCSTATE='N' where applyId=#{applyId}
+        and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </update>
+    <!--删除社会关系-->
+    <update id="deletePeJoinapplyRelation" parameterType="java.lang.String">
+        update PE_JOINAPPLY_RELATION set OPERATESTATE='D',OPERATETIME=sysdate,SYNCSTATE='N' where applyId=#{applyId}
+        and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </update>
+
+    <select id="selectPeJoinapplyResumeList" resultType="java.util.HashMap">
+        select * from PE_JOINAPPLY_RESUME where applyId=#{applyId} and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </select>
+
+    <select id="selectPeJoinapplyRelationList" resultType="java.util.HashMap">
+        select * from PE_JOINAPPLY_RELATION where applyId=#{applyId} and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </select>
+
+    <!--删除谈话人-->
+    <update id="deleteTaskUser" parameterType="java.lang.String">
+        update PE_TALK_USER set OPERATESTATE='D',OPERATETIME=sysdate(),SYNCSTATE='N' where talkId=#{talkId}
+        and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </update>
+    <select id="selectTalkUserList" resultType="java.util.HashMap">
+        select * from PE_TALK_USER where talkId=#{talkId} and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </select>
+
+
+    <!--删除培养人-->
+    <update id="deleteTrainuserDetail" parameterType="java.lang.String">
+        update PE_TRAINUSER_DETAIL set OPERATESTATE='D',OPERATETIME=sysdate,SYNCSTATE='N' where trainUserId=#{trainUserId}
+        and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </update>
+    <select id="selectTrainuserDetailList" resultType="java.util.HashMap">
+        select * from PE_TRAINUSER_DETAIL where trainUserId=#{trainUserId} and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </select>
+    <select id="selectSjprthmxList" resultType="java.util.HashMap">
+        select userName,position,joinTime,cast(isClan as varchar(30)) isClan,memo from PE_sjprthmx where sjprthid=#{sjprthId} and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </select>
+
+    <!--删除培养教育考察-->
+    <update id="deleteTraininspectRecord" parameterType="java.lang.String">
+        update PE_TRAININSPECT_RECORD set OPERATESTATE='D',OPERATETIME=sysdate,SYNCSTATE='N' where trainInspectId=#{trainInspectId}
+        and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </update>
+    <resultMap type="java.util.HashMap" id="traininspectRecordPropertyMap">
+        <result column="TRAININSPECTID" jdbcType="VARCHAR" property="TRAININSPECTID"/>
+        <result column="YEARS" jdbcType="NUMERIC" property="YEARS"/>
+        <result column="QUARTER" jdbcType="NUMERIC" property="QUARTER"/>
+        <result column="CREATETIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="CREATEUSERID" jdbcType="VARCHAR" property="CREATEUSERID"/>
+        <result column="CREATEUSERNAME" jdbcType="VARCHAR" property="CREATEUSERNAME"/>
+        <result column="UPDATETIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="UPDATEUSERID" jdbcType="VARCHAR" property="UPDATEUSERID"/>
+        <result column="UPDATEUSERNAME" jdbcType="VARCHAR" property="UPDATEUSERNAME"/>
+        <result column="OPERATETIME" jdbcType="TIMESTAMP" property="OPERATETIME"/>
+        <result column="OPERATESTATE" jdbcType="VARCHAR" property="OPERATESTATE"/>
+        <result column="SYNCSTATE" jdbcType="VARCHAR" property="SYNCSTATE"/>
+        <result column="PRACTICECONTENT" jdbcType="CLOB" property="PRACTICECONTENT" javaType="String"/>
+        <result column="TALKCONTENT" jdbcType="CLOB" property="TALKCONTENT" javaType="String"/>
+        <result column="ACTIVITYCONTENT" jdbcType="CLOB" property="ACTIVITYCONTENT" javaType="String"/>
+        <result column="REPORTCONTENT" jdbcType="CLOB" property="REPORTCONTENT" javaType="String"/>
+    </resultMap>
+    <select id="selectTraininspectRecordList" resultMap="traininspectRecordPropertyMap">
+        select * from PE_TRAININSPECT_RECORD where trainInspectId=#{trainInspectId} and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </select>
+    <resultMap id="JxjykcqkResultMap" type="java.util.HashMap">
+        <id column="ID" jdbcType="VARCHAR" property="ID"/>
+        <result column="KCID" jdbcType="VARCHAR" property="KCID"/>
+        <result column="YEARS" jdbcType="NUMERIC" property="YEARS"/>
+        <result column="QUARTER" jdbcType="NUMERIC" property="QUARTER"/>
+        <result column="CREATETIME" jdbcType="TIMESTAMP" property="CREATETIME"/>
+        <result column="CREATEUSERID" jdbcType="VARCHAR" property="CREATEUSERID"/>
+        <result column="CREATEUSERNAME" jdbcType="VARCHAR" property="CREATEUSERNAME"/>
+        <result column="UPDATETIME" jdbcType="TIMESTAMP" property="UPDATETIME"/>
+        <result column="UPDATEUSERID" jdbcType="VARCHAR" property="UPDATEUSERID"/>
+        <result column="UPDATEUSERNAME" jdbcType="VARCHAR" property="UPDATEUSERNAME"/>
+        <result column="OPERATETIME" jdbcType="TIMESTAMP" property="OPERATETIME"/>
+        <result column="OPERATESTATE" jdbcType="VARCHAR" property="OPERATESTATE"/>
+        <result column="SYNCSTATE" jdbcType="VARCHAR" property="SYNCSTATE"/>
+        <result column="PRACTICECONTENT" jdbcType="CLOB" property="PRACTICECONTENT" javaType="String"/>
+        <result column="TALKCONTENT" jdbcType="CLOB" property="TALKCONTENT" javaType="String"/>
+        <result column="ACTIVITYCONTENT" jdbcType="CLOB" property="ACTIVITYCONTENT" javaType="String"/>
+        <result column="REPORTCONTENT" jdbcType="CLOB" property="REPORTCONTENT" javaType="String"/>
+        <result column="APPRAISALCONTENT" jdbcType="CLOB" property="APPRAISALCONTENT" javaType="String"/>
+    </resultMap>
+    <select id="selectJxjykcqkList" resultMap="JxjykcqkResultMap">
+        select * from PE_jxjykcqk where KCID=#{kcid} and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </select>
+
+    <!--删除入党介绍人-->
+    <update id="deleteConfirmsponsorUser" parameterType="java.lang.String">
+        update PE_CONFIRMSPONSOR_USER set OPERATESTATE='D',OPERATETIME=sysdate,SYNCSTATE='N' where confirmSponsorId=#{confirmSponsorId}
+        and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </update>
+    <select id="selectConfirmsponsorUserList" resultType="java.util.HashMap">
+        select * from PE_CONFIRMSPONSOR_USER where confirmSponsorId=#{confirmSponsorId} and OPERATESTATE <![CDATA[ <> ]]> 'D'
+    </select>
+
+
+    <update id="updateJoinuserCode" parameterType="java.lang.String">
+        update PE_JOINUSER i set i.userCode=(
+          select v.RYBM from VM_RYJBXX_ALL v where v.SFZH=i.IDCARD
+          and v.SFZH not in (select SFZH from VM_RYJBXX_ALL where SFZH is not null group by SFZH having (count(*)>1))
+          and v.SFZH is not null
+        )
+        where exists (select 1 from VM_RYJBXX_ALL where SFZH=i.IDCARD)
+          and i.userCode is null
+          and i.IDCARD is not null
+          and i.IDCARD not in (select SFZH from VM_RYJBXX_ALL where SFZH is not null group by SFZH having (count(*)>1))
+    </update>
+
+
+    <select id="selectJoinuserForUpdateList" resultType="java.util.HashMap">
+        select u.JOINUSERID,u.USERCODE,u.IDCARD,createuser.XM,z.DZZDM,z.DZZMC,
+        apply.JOINTIME,recommend.CONFIRMTIME as RECOMMENDCONFIRMTIME,confir.CONFIRMTIME,u.CREATETIME
+        from PE_JOINUSER u
+        left join VM_RYJBXX_ALL us on u.USERCODE=us.RYBM
+        left join PE_JOINAPPLY apply on u.JOINUSERID = apply.JOINUSERID
+        left join VM_RYJBXX createuser on apply.CREATEUSERID = createuser.RYBM
+        left join ZZ_ZZQKXX z on createuser.SZDZBDM=z.DZZDM
+        left join PE_Recommend recommend on u.JOINUSERID = recommend.JOINUSERID
+        left join PE_CONFIRMUSER confir on u.JOINUSERID = confir.JOINUSERID
+        where us.RYBM is null
+        <if test="partyCode!=null and partyCode !=''">
+            and z.DZZDM like concat('%',#{partyCode},'%')
+        </if>
+        <if test="name!=null and name !=''">
+            and u.NAME like concat('%',#{name},'%')
+        </if>
+        <if test="startDate != null and startDate != '' ">
+            and apply.JOINTIME <![CDATA[ >= ]]> date_forma(#{startDate},'yyyyMMdd')
+        </if>
+        <if test="endDate != null and endDate != '' ">
+            and apply.JOINTIME <![CDATA[ < ]]> (date_forma(#{endDate},'yyyyMMdd')+1)
+        </if>
+        order by u.CREATETIME
+    </select>
+
+</mapper>

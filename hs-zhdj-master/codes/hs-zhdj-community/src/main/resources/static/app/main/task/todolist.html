@@ -1,0 +1,50 @@
+﻿<div class="panel-default theme-panel">
+    <titlemenu></titlemenu>
+    <div class="graph-form">
+        <form class="search-param-panel">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="TodoTitle">待办标题：</label>
+                    <input type="text" class="form-control" id="TodoTitle" ng-model="finddata.todoTitle"
+                           placeholder="请输入待办标题"/>
+                </div>
+                <div class="form-group">
+                    <label for="createUserName">发起人：</label>
+                    <input type="text" class="form-control" id="createUserName" ng-model="finddata.createUserName"
+                           placeholder="请输入推送人"/>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default1" ng-click="selectpage()">查询</button>
+                </div>
+            </div>
+        </form>
+        <div class="list-table-panel">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-md-2">流程步骤</th>
+                    <th class="col-md-5">待办标题</th>
+                    <th class="col-md-2">发起人</th>
+                    <th class="col-md-3">创建时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--<tr ng-repeat="it in items| filter:{'ToDoTitle':todoTitle,'UserName':pushPerson}">-->
+                <tr ng-repeat="it in items">
+                    <td>{{it.toDoAttrVal}}</td>
+
+                    <td><a ng-href="#!/{{it.toDoUrl}}">{{it.toDoTitle}}</a></td>
+                    <td>{{it.userName}}</td>
+                    <td>{{it.createTimeString}}</td>
+                </tr>
+                <tr ng-if="items.length<=0">
+                    <td colspan="7" style="text-align:center">暂无数据</td>
+                </tr>
+                </tbody>
+            </table>
+            <!--参数含义：page-Index：当前页面，page-Size：每页显示多少数据，total-Length:数据总长度-->
+            <pagination data-pageindex="finddata.pageindex" data-pagesize="finddata.pagesize"
+                        data-ptotal="finddata.total"></pagination>
+        </div>
+    </div>
+</div>

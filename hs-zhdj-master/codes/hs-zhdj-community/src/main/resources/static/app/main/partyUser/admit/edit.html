@@ -1,0 +1,243 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 850px;">
+        <div class="card">
+            <div class="header" dragable-header>
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{editParams.title}}</h4>
+            </div>
+            <div activate-input activate-select class="body">
+                <form class="form-horizontal" role="form" id="editForm"
+                      name="editForm" ng-submit="save(editForm.$valid)" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table">
+                            <tr ng-if="userStatus==1">
+                                <th>学号/工号<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.userCode.$invalid &&  this.editForm.$submitted}">
+                                    <input type="text" class="form-control" name="userCode"
+                                           ng-model="dataModel.userCode" ng-required="true"/>
+                                </td>
+                                <th>姓名<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.userName.$invalid &&  this.editForm.$submitted}">
+                                    <input type="text" class="form-control" name="userName"
+                                           ng-model="dataModel.userName" ng-required="true"/>
+                                </td>
+                            </tr>
+                            <tr ng-if="userStatus != 1 && isNew">
+                                <th>学号/工号<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.userCode.$invalid &&  this.editForm.$submitted}">
+                                    <div class="input-group input-group-search" data-dataoptions="selectUserlist" title="选择成员" bsselectdata-pro>
+                                        <input name="userCode" type="text" ng-model="dataModel.userCode"
+                                               class="form-control" ng-required="true" ng-disabled="true"/>
+                                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                                    </div>
+                                    <span ng-show="this.editForm.userCode.$invalid &&  this.editForm.$submitted" class="error">必填.</span>
+                                </td>
+                                <th>姓名</th>
+                                <td>
+                                    {{dataModel.userName}}
+                                </td>
+                            </tr>
+                            <tr ng-if="userStatus != 1 && !isNew">
+                                <th>学号/工号</th>
+                                <td>
+                                    {{dataModel.userNo}}
+                                </td>
+                                <th>姓名</th>
+                                <td>
+                                    {{dataModel.userName}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>所属党组织<span style="color: red">*</span></th>
+                                <td colspan="3" ng-class="{ 'has-error' : this.editForm.partyName.$invalid &&  this.editForm.$submitted}">
+                                    <div class="input-group input-group-search"
+                                         title="选择党组织" ng-click="selectParty()">
+                                        <input name="partyName" type="text" ng-model="dataModel.partyName"
+                                               class="form-control" ng-required="true"
+                                               ng-disabled="true"/>
+                                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                                    </div>
+                                    <span ng-show="this.editForm.partyName.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>性别</th>
+                                <td>
+                                    <select class="form-control show-tick" ng-model="dataModel.sexId"
+                                            ng-options="type.BM as type.HZMC for type in xbList"
+                                            class="form-control"
+                                            name="sexId">
+                                        <option value="" selected>--请选择--</option>
+                                    </select>
+                                </td>
+                                <th>出生年月<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.birthDate.$invalid &&  this.editForm.$submitted}">
+                                    <input name="birthDate" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="date"
+                                           ng-model="dataModel.birthDate"
+                                           placeholder="" bs-datepicker ng-required="true"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>籍贯</th>
+                                <td>
+                                    <input type="text" class="form-control" name="nativePlace" ng-model="dataModel.nativePlace"/>
+                                </td>
+                                <th>民族</th>
+                                <td>
+                                    <select class="form-control show-tick" ng-model="dataModel.nationalId"
+                                            ng-options="type.BM as type.HZMC for type in mzList"
+                                            class="form-control"
+                                            name="nationalId">
+                                        <option value="" selected>--请选择--</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>年级</th>
+                                <td>
+                                    <input type="text" class="form-control" name="gradeName" ng-model="dataModel.gradeName"/>
+                                </td>
+                                <th>班级</th>
+                                <td>
+                                    <input type="text" class="form-control" name="className" ng-model="dataModel.className"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>身份证号</th>
+                                <td>
+                                    <input type="text" class="form-control" name="idCard" ng-model="dataModel.idCard"/>
+                                </td>
+                                <th>学历</th>
+                                <td>
+                                    <select class="form-control show-tick" ng-model="dataModel.educationalId"
+                                            ng-options="type.BM as type.HZMC for type in xlList"
+                                            class="form-control"
+                                            name="educationalId">
+                                        <option value="" selected>--请选择--</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>最高学历入学日期</th>
+                                <td>
+                                    <input name="enrollmentDate" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="date" ng-model="dataModel.enrollmentDate"
+                                           class="form-control" bs-datepicker/>
+                                </td>
+                                <th>最高学历毕业日期</th>
+                                <td>
+                                    <input name="graduateDate" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="date" ng-model="dataModel.graduateDate"
+                                           class="form-control" bs-datepicker/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>是否学生身份<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.isStudent.$invalid &&  this.editForm.$submitted}">
+                                    <select class="form-control show-tick"
+                                            ng-model="dataModel.isStudent"
+                                            ng-options="type.dickey as type.dicvalue for type in boolList"
+                                            class="form-control"
+                                            name="isStudent" ng-required="true">
+                                        <option value="" selected>--请选择--</option>
+                                    </select>
+                                    <span ng-show="this.editForm.isStudent.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>联系电话</th>
+                                <td><input type="text" class="form-control" name="contactMobile" ng-model="dataModel.contactMobile"/></td>
+                            </tr>
+                            <tr ng-if="dataModel.userStatus=='1' || dataModel.userStatus==null">
+                                <th>入党申请日期<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.applyDate.$invalid &&  this.editForm.$submitted}">
+                                    <input name="applyDate" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="date"
+                                           ng-model="dataModel.applyDate"
+                                           ng-required="true"
+                                           placeholder="" bs-datepicker/>
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr ng-if="dataModel.userStatus=='5'">
+                                <th>确定积极分子时间<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.activeDate.$invalid &&  this.editForm.$submitted}">
+                                    <input name="activeDate" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="date"
+                                           ng-model="dataModel.activeDate"
+                                           ng-required="true"
+                                           placeholder="" bs-datepicker/>
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr ng-if="dataModel.userStatus=='5'">
+                                <th>培养联系人1</th>
+                                <td>
+                                    <input type="text" class="form-control" name="trainUser1" ng-model="dataModel.trainUser1"/>
+                                </td>
+                                <th>培养联系人2</th>
+                                <td>
+                                    <input type="text" class="form-control" name="trainUser2" ng-model="dataModel.trainUser2"/>
+                                </td>
+                            </tr>
+                            <tr ng-if="dataModel.userStatus=='6'">
+                                <th>确认发展对象日期<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.passDate.$invalid &&  this.editForm.$submitted}">
+                                    <input name="passDate" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="date"
+                                           ng-model="dataModel.passDate"
+                                           ng-required="true"
+                                           placeholder="" bs-datepicker/>
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr ng-if="dataModel.userStatus=='2'">
+                                <th>入党日期<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.inPartyDate.$invalid &&  this.editForm.$submitted}">
+                                    <input name="inPartyDate" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="date"
+                                           ng-model="dataModel.inPartyDate"
+                                           ng-required="true"
+                                           placeholder="" bs-datepicker/>
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr ng-if="dataModel.userStatus=='3'">
+                                <th>转正日期<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.becomeFullDate.$invalid &&  this.editForm.$submitted}">
+                                    <input name="becomeFullDate" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="date"
+                                           ng-model="dataModel.becomeFullDate"
+                                           ng-required="true"
+                                           placeholder="" bs-datepicker/>
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" form="editForm">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

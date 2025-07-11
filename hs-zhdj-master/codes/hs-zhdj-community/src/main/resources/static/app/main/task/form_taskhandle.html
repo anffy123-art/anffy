@@ -1,0 +1,52 @@
+﻿<div>
+    <form class="form-horizontal formtable1" role="form" name="taskForm" novalidate>
+        <table class="table table-bordered tform" ng-controller="taskHandle">
+            <tr>
+                <th class="col-md-2">任务类型:</th>
+                <td class="col-md-4">
+                    {{task.TypeValue}}
+                </td>
+
+                <th class="col-md-2">任务负责人:</th>
+                <td class="col-md-4">{{task.TaskerName}}</td>
+            </tr>
+            <tr>
+                <th>任务描述:</th>
+                <td colspan="3">{{task.TaskNote}}</td>
+
+            </tr>
+            <tr>
+                <th>完成时限:</th>
+                <td>{{task.TaskLimitTime}}</td>
+                <th>创建时间：</th>
+                <td>{{task.LastDoneTime}}</td>
+            </tr>
+            <tr>
+                <th>预计工作量:</th>
+                <td>{{task.ExpectQuantity}}</td>
+                <th>实际工作量：</th>
+                <td ng-class="{ 'has-error' : isShow}">
+                    <label>
+                        <input type="number" step="0.01" min="0" name="RealQuantity" ng-change="change()"
+                               ng-readonly="flowdata.readonly" class="form-control" ng-model="task.RealQuantity"
+                               required/>
+                    </label>
+                    <span colspan="3" style="color:brown" ng-show="isShow" class="help-block">
+                        请填写实际工作量
+                    </span>
+                </td>
+            </tr>
+            <!--<tr ng-if="task.DelegateDuty">
+                <th>功能点:</th>
+                <td colspan="3"><span style="color:blue;cursor:pointer" title="下载" ng-repeat="file in fileList" ng-click="downfile(file.FileUrl)">{{file.FileName}}; </span></td>
+            </tr>-->
+            <!--<tr ng-if="task.DelegateAddFile">
+                <th>附件:</th>
+                <td colspan="3">
+                    <span style="color:blue;cursor:pointer" title="下载" ng-repeat="file in folderlist" ng-click="downfile(file.FileUrl)">{{file.FileName}}; </span>
+                </td>
+            </tr>-->
+        </table>
+    </form>
+
+</div>

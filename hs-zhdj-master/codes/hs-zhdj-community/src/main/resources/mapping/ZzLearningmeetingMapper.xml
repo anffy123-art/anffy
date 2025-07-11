@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.ZzLearningmeetingMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.ZzLearningmeeting">
+    <id column="meetingId" jdbcType="VARCHAR" property="meetingid" />
+    <result column="dzzdm" jdbcType="VARCHAR" property="dzzdm" />
+    <result column="meetingName" jdbcType="VARCHAR" property="meetingname" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="meetingDate" jdbcType="DATE" property="meetingdate" />
+    <result column="topics" jdbcType="VARCHAR" property="topics" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createuserid" />
+    <result column="createUserName" jdbcType="VARCHAR" property="createusername" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="updateUserId" jdbcType="VARCHAR" property="updateuserid" />
+    <result column="updateUserName" jdbcType="VARCHAR" property="updateusername" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    meetingId, dzzdm, meetingName, location, meetingDate, topics, remark, createTime, 
+    createUserId, createUserName, updateTime, updateUserId, updateUserName
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.ZzLearningmeetingExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zz_learningmeeting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from zz_learningmeeting
+    where meetingId = #{meetingid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from zz_learningmeeting
+    where meetingId = #{meetingid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.ZzLearningmeetingExample">
+    delete from zz_learningmeeting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.ZzLearningmeeting">
+    insert into zz_learningmeeting (meetingId, dzzdm, meetingName, 
+      location, meetingDate, topics, 
+      remark, createTime, createUserId, 
+      createUserName, updateTime, updateUserId, 
+      updateUserName)
+    values (#{meetingid,jdbcType=VARCHAR}, #{dzzdm,jdbcType=VARCHAR}, #{meetingname,jdbcType=VARCHAR}, 
+      #{location,jdbcType=VARCHAR}, #{meetingdate,jdbcType=DATE}, #{topics,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{createuserid,jdbcType=VARCHAR}, 
+      #{createusername,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, #{updateuserid,jdbcType=VARCHAR}, 
+      #{updateusername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.ZzLearningmeeting">
+    insert into zz_learningmeeting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="meetingid != null">
+        meetingId,
+      </if>
+      <if test="dzzdm != null">
+        dzzdm,
+      </if>
+      <if test="meetingname != null">
+        meetingName,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="meetingdate != null">
+        meetingDate,
+      </if>
+      <if test="topics != null">
+        topics,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="createuserid != null">
+        createUserId,
+      </if>
+      <if test="createusername != null">
+        createUserName,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="updateuserid != null">
+        updateUserId,
+      </if>
+      <if test="updateusername != null">
+        updateUserName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="meetingid != null">
+        #{meetingid,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzdm != null">
+        #{dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingname != null">
+        #{meetingname,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingdate != null">
+        #{meetingdate,jdbcType=DATE},
+      </if>
+      <if test="topics != null">
+        #{topics,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuserid != null">
+        #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        #{updateusername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.ZzLearningmeetingExample" resultType="java.lang.Long">
+    select count(*) from zz_learningmeeting
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update zz_learningmeeting
+    <set>
+      <if test="record.meetingid != null">
+        meetingId = #{record.meetingid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dzzdm != null">
+        dzzdm = #{record.dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingname != null">
+        meetingName = #{record.meetingname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null">
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.meetingdate != null">
+        meetingDate = #{record.meetingdate,jdbcType=DATE},
+      </if>
+      <if test="record.topics != null">
+        topics = #{record.topics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createuserid != null">
+        createUserId = #{record.createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createusername != null">
+        createUserName = #{record.createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null">
+        updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateuserid != null">
+        updateUserId = #{record.updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateusername != null">
+        updateUserName = #{record.updateusername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update zz_learningmeeting
+    set meetingId = #{record.meetingid,jdbcType=VARCHAR},
+      dzzdm = #{record.dzzdm,jdbcType=VARCHAR},
+      meetingName = #{record.meetingname,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      meetingDate = #{record.meetingdate,jdbcType=DATE},
+      topics = #{record.topics,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      createUserId = #{record.createuserid,jdbcType=VARCHAR},
+      createUserName = #{record.createusername,jdbcType=VARCHAR},
+      updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+      updateUserId = #{record.updateuserid,jdbcType=VARCHAR},
+      updateUserName = #{record.updateusername,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.ZzLearningmeeting">
+    update zz_learningmeeting
+    <set>
+      <if test="dzzdm != null">
+        dzzdm = #{dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingname != null">
+        meetingName = #{meetingname,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingdate != null">
+        meetingDate = #{meetingdate,jdbcType=DATE},
+      </if>
+      <if test="topics != null">
+        topics = #{topics,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuserid != null">
+        createUserId = #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        createUserName = #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        updateUserId = #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        updateUserName = #{updateusername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where meetingId = #{meetingid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.ZzLearningmeeting">
+    update zz_learningmeeting
+    set dzzdm = #{dzzdm,jdbcType=VARCHAR},
+      meetingName = #{meetingname,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      meetingDate = #{meetingdate,jdbcType=DATE},
+      topics = #{topics,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      createUserId = #{createuserid,jdbcType=VARCHAR},
+      createUserName = #{createusername,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updateUserId = #{updateuserid,jdbcType=VARCHAR},
+      updateUserName = #{updateusername,jdbcType=VARCHAR}
+    where meetingId = #{meetingid,jdbcType=VARCHAR}
+  </update>
+</mapper>

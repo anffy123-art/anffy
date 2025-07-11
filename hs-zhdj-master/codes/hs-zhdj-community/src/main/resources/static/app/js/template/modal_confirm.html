@@ -1,0 +1,50 @@
+﻿<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:50%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">确认派送以下任务?</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-hover tlist">
+                    <thead>
+                    <tr>
+                        <th>任务名称</th>
+                        <th>任务描述</th>
+                        <th>责任人</th>
+                        <th>预计完成时间</th>
+                        <th>预计工作量</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="it in items">
+                        <td>{{it.TaskName}}</td>
+                        <td>{{it.TaskNote}}</td>
+                        <td>{{it.UserName}}</td>
+                        <td>{{it.ExpectFinishDate}}</td>
+                        <td>{{it.ExpectWorkValue}}</td>
+                        <td>
+                            <button class="btn btn-danger btn-sm" title="删除" ng-click="deleteSend(it)">
+                                <span class="glyphicon glyphicon-remove "></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr ng-if="items.length<=0">
+                        <td colspan="7" style="text-align:center">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div style="float:right">
+                    <p>共{{total}}条任务</p>
+                </div>
+                <br/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="upflow()">确认</button>
+            </div>
+        </div>
+    </div>
+</div>

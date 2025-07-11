@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.CfPayorderCQuery">
+    <select id="selectPayorderList" resultType="com.px.partybuild.vo.PayorderVo">
+       select pay.payOrderId, pay.payRelId, pay.payNo, pay.payTime, pay.payAmount, pay.title, pay.remark, pay.payState, pay.queryTime, pay.tradeState, pay.payFallMessage
+       , pay.createTime, pay.createUserId, pay.modifyTime, pay.modifyUserId
+       from cf_payorder pay
+       where 1=1
+       <if test="payState!=null">
+           and pay.payState = #{payState}
+       </if>
+       order by pay.createTime desc
+    </select>
+
+
+</mapper>

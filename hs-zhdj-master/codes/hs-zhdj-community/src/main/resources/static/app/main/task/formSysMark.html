@@ -1,0 +1,39 @@
+﻿<div ng-controller="formSysMarkCtrl">
+    <table class="table table-bordered tlist">
+        <thead>
+        <tr>
+            <td colspan="6" style="text-align:center; background-color:#f5f5f5">
+                <span style="color:black;"><strong>系统计算分数</strong></span>
+            </td>
+        </tr>
+        <tr>
+            <th>角色</th>
+            <th>人名</th>
+            <th>评定工作量结果</th>
+            <th>需求内容评分</th>
+            <th>需求验收评分</th>
+            <th>最终工作量结果</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="sysMark in SysScoreList">
+            <td>{{sysMark.roleName}}</td>
+            <td>{{sysMark.userName}}</td>
+            <td>{{sysMark.WorkValue|number:2}}</td>
+            <td><span><button type="button" class="btn btn-link" data-placement="center"
+                              data-animation="am-fade-and-scale"
+                              ng-click="editDemandmodal(sysMark.userid,sysMark.roleid)">{{sysMark.demandSum|number:2}}</button></span>
+            </td>
+            <td><span><button type="button" class="btn btn-link" data-placement="center"
+                              data-animation="am-fade-and-scale" ng-click="editAcceptmodal()">{{sysMark.acceptSum|number:2}}</button></span>
+            </td>
+            <td>{{sysMark.finalWorkValue|number:2}}</td>
+        </tr>
+        <tr ng-show="!isShow">
+            <td colspan="6" style="text-align:center">数据正在统计中...</td>
+        </tr>
+        </tbody>
+    </table>
+    <pagination data-pageindex="finddata.pageindex" data-pagesize="finddata.pagesize"
+                data-ptotal="finddata.ptotal"></pagination>
+</div>

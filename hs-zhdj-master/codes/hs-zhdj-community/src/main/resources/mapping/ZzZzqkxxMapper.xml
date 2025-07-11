@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.ZzZzqkxxMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.ZzZzqkxx">
+    <result column="ZZQKXXBS" jdbcType="VARCHAR" property="zzqkxxbs" />
+    <result column="DZZDM" jdbcType="VARCHAR" property="dzzdm" />
+    <result column="DZZMC" jdbcType="VARCHAR" property="dzzmc" />
+    <result column="ZZLB" jdbcType="VARCHAR" property="zzlb" />
+    <result column="JCZZFL" jdbcType="VARCHAR" property="jczzfl" />
+    <result column="JLDZZRQ" jdbcType="VARCHAR" property="jldzzrq" />
+    <result column="SCYTDZB" jdbcType="VARCHAR" property="scytdzb" />
+    <result column="KZPYRQ" jdbcType="VARCHAR" property="kzpyrq" />
+    <result column="JSPYRQ" jdbcType="VARCHAR" property="jspyrq" />
+    <result column="YL01" jdbcType="VARCHAR" property="yl01" />
+    <result column="YL02" jdbcType="VARCHAR" property="yl02" />
+    <result column="YL03" jdbcType="VARCHAR" property="yl03" />
+    <result column="YL04" jdbcType="VARCHAR" property="yl04" />
+    <result column="YL05" jdbcType="VARCHAR" property="yl05" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ZZQKXXBS, DZZDM, DZZMC, ZZLB, JCZZFL, JLDZZRQ, SCYTDZB, KZPYRQ, JSPYRQ, YL01, YL02, 
+    YL03, YL04, YL05
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.ZzZzqkxxExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zz_zzqkxx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.ZzZzqkxxExample">
+    delete from zz_zzqkxx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.ZzZzqkxx">
+    insert into zz_zzqkxx (ZZQKXXBS, DZZDM, DZZMC, 
+      ZZLB, JCZZFL, JLDZZRQ, 
+      SCYTDZB, KZPYRQ, JSPYRQ, 
+      YL01, YL02, YL03, YL04, 
+      YL05)
+    values (#{zzqkxxbs,jdbcType=VARCHAR}, #{dzzdm,jdbcType=VARCHAR}, #{dzzmc,jdbcType=VARCHAR}, 
+      #{zzlb,jdbcType=VARCHAR}, #{jczzfl,jdbcType=VARCHAR}, #{jldzzrq,jdbcType=VARCHAR}, 
+      #{scytdzb,jdbcType=VARCHAR}, #{kzpyrq,jdbcType=VARCHAR}, #{jspyrq,jdbcType=VARCHAR}, 
+      #{yl01,jdbcType=VARCHAR}, #{yl02,jdbcType=VARCHAR}, #{yl03,jdbcType=VARCHAR}, #{yl04,jdbcType=VARCHAR}, 
+      #{yl05,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.ZzZzqkxx">
+    insert into zz_zzqkxx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="zzqkxxbs != null">
+        ZZQKXXBS,
+      </if>
+      <if test="dzzdm != null">
+        DZZDM,
+      </if>
+      <if test="dzzmc != null">
+        DZZMC,
+      </if>
+      <if test="zzlb != null">
+        ZZLB,
+      </if>
+      <if test="jczzfl != null">
+        JCZZFL,
+      </if>
+      <if test="jldzzrq != null">
+        JLDZZRQ,
+      </if>
+      <if test="scytdzb != null">
+        SCYTDZB,
+      </if>
+      <if test="kzpyrq != null">
+        KZPYRQ,
+      </if>
+      <if test="jspyrq != null">
+        JSPYRQ,
+      </if>
+      <if test="yl01 != null">
+        YL01,
+      </if>
+      <if test="yl02 != null">
+        YL02,
+      </if>
+      <if test="yl03 != null">
+        YL03,
+      </if>
+      <if test="yl04 != null">
+        YL04,
+      </if>
+      <if test="yl05 != null">
+        YL05,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="zzqkxxbs != null">
+        #{zzqkxxbs,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzdm != null">
+        #{dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzmc != null">
+        #{dzzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="zzlb != null">
+        #{zzlb,jdbcType=VARCHAR},
+      </if>
+      <if test="jczzfl != null">
+        #{jczzfl,jdbcType=VARCHAR},
+      </if>
+      <if test="jldzzrq != null">
+        #{jldzzrq,jdbcType=VARCHAR},
+      </if>
+      <if test="scytdzb != null">
+        #{scytdzb,jdbcType=VARCHAR},
+      </if>
+      <if test="kzpyrq != null">
+        #{kzpyrq,jdbcType=VARCHAR},
+      </if>
+      <if test="jspyrq != null">
+        #{jspyrq,jdbcType=VARCHAR},
+      </if>
+      <if test="yl01 != null">
+        #{yl01,jdbcType=VARCHAR},
+      </if>
+      <if test="yl02 != null">
+        #{yl02,jdbcType=VARCHAR},
+      </if>
+      <if test="yl03 != null">
+        #{yl03,jdbcType=VARCHAR},
+      </if>
+      <if test="yl04 != null">
+        #{yl04,jdbcType=VARCHAR},
+      </if>
+      <if test="yl05 != null">
+        #{yl05,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.ZzZzqkxxExample" resultType="java.lang.Long">
+    select count(*) from zz_zzqkxx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update zz_zzqkxx
+    <set>
+      <if test="record.zzqkxxbs != null">
+        ZZQKXXBS = #{record.zzqkxxbs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dzzdm != null">
+        DZZDM = #{record.dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dzzmc != null">
+        DZZMC = #{record.dzzmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zzlb != null">
+        ZZLB = #{record.zzlb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jczzfl != null">
+        JCZZFL = #{record.jczzfl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jldzzrq != null">
+        JLDZZRQ = #{record.jldzzrq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scytdzb != null">
+        SCYTDZB = #{record.scytdzb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kzpyrq != null">
+        KZPYRQ = #{record.kzpyrq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jspyrq != null">
+        JSPYRQ = #{record.jspyrq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yl01 != null">
+        YL01 = #{record.yl01,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yl02 != null">
+        YL02 = #{record.yl02,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yl03 != null">
+        YL03 = #{record.yl03,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yl04 != null">
+        YL04 = #{record.yl04,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yl05 != null">
+        YL05 = #{record.yl05,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update zz_zzqkxx
+    set ZZQKXXBS = #{record.zzqkxxbs,jdbcType=VARCHAR},
+      DZZDM = #{record.dzzdm,jdbcType=VARCHAR},
+      DZZMC = #{record.dzzmc,jdbcType=VARCHAR},
+      ZZLB = #{record.zzlb,jdbcType=VARCHAR},
+      JCZZFL = #{record.jczzfl,jdbcType=VARCHAR},
+      JLDZZRQ = #{record.jldzzrq,jdbcType=VARCHAR},
+      SCYTDZB = #{record.scytdzb,jdbcType=VARCHAR},
+      KZPYRQ = #{record.kzpyrq,jdbcType=VARCHAR},
+      JSPYRQ = #{record.jspyrq,jdbcType=VARCHAR},
+      YL01 = #{record.yl01,jdbcType=VARCHAR},
+      YL02 = #{record.yl02,jdbcType=VARCHAR},
+      YL03 = #{record.yl03,jdbcType=VARCHAR},
+      YL04 = #{record.yl04,jdbcType=VARCHAR},
+      YL05 = #{record.yl05,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

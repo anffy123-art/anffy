@@ -1,0 +1,309 @@
+<!--<style>
+    .mt_topic {
+        display: flex;
+        flex-flow: wrap;
+    }
+
+    .col_margin_bottom_0 {
+        margin-bottom: 0px !important;
+    }
+
+    .panel-danger {
+        border: 1px solid #ddd !important;;
+    }
+
+    .panel-group .panel-danger .panel-title {
+        background-color: #ddd !important;
+        color: #F44336;
+    }
+
+</style>-->
+<!--<div class="card">
+    <titlemenu data-parentno="parentUrl"></titlemenu>
+    <div activate-input activate-select class="body">
+        <form class="form-horizontal" autocomplete="off" role="form" name="editForm" novalidate>
+              <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>计划名称 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line" ng-class="{ 'focused error' : this.editForm.name.$invalid &&  this.editForm.$submitted}">
+                                <input type="text" name="name" ng-model="changevm.name" class="form-control" ng-required="true"/>
+                            </div>
+                        </div>
+                        <label style="font-size:12px;display:block;margin-top:5px;font-weight:normal;color:#f44336;" ng-show="this.editForm.name.$invalid &&  this.editForm.$submitted">请填写标题</label>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>发送单位 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input type="hidden" name="sendDepartmentId" ng-model="changevm.sendDepartmentId" class="form-control"/>
+                                <input type="text" name="sendDepartmentName" ng-model="changevm.sendDepartmentName" readonly class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>要求 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line" ng-class="{ 'focused error' : this.editForm.requirement.$invalid &&  this.editForm.$submitted}">
+                                <textarea class="form-control" name="requirement" ng-model="changevm.requirement" rows="5" ng-required="true"></textarea>
+                            </div>
+                            <label ng-show="this.editForm.requirement.$invalid &&  this.editForm.$submitted"
+                                   class="error">请填写要求</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>学习计划类型 :</label>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <select class="form-control show-tick" ng-model="changevmTypeCode"
+                                        ng-options="type.label for type in roleConfigList"
+                                        name="typeCode"
+                                        ng-required="true">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>完成日期 :</label>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1">
+                        <div class="form-group">
+                            <div class="form-line" ng-class="{ 'focused error' : this.editForm.endtime.$invalid &&  this.editForm.$submitted}">
+                                <input type="text" name="endtime" ng-model="changevm.endTime"
+                                    class="form-control"
+                                    format="yyyy-mm-dd"
+                                    data-min-view="0" bs-datepicker
+                                    ng-required="true"/>
+                            </div>
+                            <label ng-show="this.editForm.endtime.$invalid &&  this.editForm.$submitted"
+                                   class="error">请选择完成日期</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 form-control-label">
+                        <label>计划内容 :</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="form-group">
+                            <div class="form-line" ng-class="{ 'focused error' : this.editForm.planContent.$invalid &&  this.editForm.$submitted}">
+                                <textarea ui-ueditor name="planContent" ng-model="changevm.content" ng-required="true"></textarea>
+                                <input type="hidden" name="state" ng-model="changevm.state" value="1">
+                            </div>
+                            <label ng-show="this.editForm.planContent.$invalid &&  this.editForm.$submitted"
+                                   class="error">请填写计划内容</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <input type="checkbox" id="isSynchro" class="filled-in chk-col-cyan" name="isSynchro" ng-model="isSynchro"><label for="isSynchro">是否同步到学习资料库</label>
+                        </div>
+                    </div>
+                &lt;!&ndash;{{reqFileModel.items}}&ndash;&gt;
+                <div class="table-responsive list-table-panel" style="font-size: 16px; margin-bottom: 20px;">
+                    <bsfiles ng-model="reqFileModel" />
+                </div>
+                <div class="table-responsive list-table-panel" style="font-size: 16px">
+                        <div class="list-table-title">
+                            <div class="table-title" >
+                                接收党委
+                            </div>
+                            <div class="table-tool">
+                                <button type="button" ng-if="typeMod!='d'" class="btn btn-primary dropdown-toggle" title="全部" ng-click="selectPartyCommitteeFull()" ng-disabled="enableChangeDW">
+                                    <span></span>全部
+                                </button>
+                                <button type="button" ng-if="typeMod!='d'" class="btn btn-primary dropdown-toggle" title="选择" ng-click="selectPartyCommittee()" ng-disabled="enableChangeDW">
+                                    <span></span>选择
+                                </button>
+                            </div>
+                        </div>
+                        <div class="outoflow" style="max-height: 300px;">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>党委名称</th>
+                                    <th>接收人(秘书)</th>
+                                    <th>接收时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in receiveDWs">
+                                    <th scope="row">{{$index+1}}</th>
+                                    <th>{{it.dwName}}</th>
+                                    <th>{{it.secretaryNames}}</th>
+                                    <th>{{it.receiveTime}}</th>
+                                    <th>
+                                        <button class="btn td-btn bg-pink waves-effect" ng-if="typeMod!='d'" ng-click="deleteReceiveDWs($index)" title="删除" ng-disabled="enableChangeDW">
+                                            &lt;!&ndash;<i class="material-icons td-icon">delete_forever</i>&ndash;&gt;
+                                            删除
+                                        </button>
+                                    </th>
+                                </tr>
+                                <tr ng-if="receiveDWs.length<=0">
+                                    <td colspan="5" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit" class="btn btn-primary" ng-if="typeMod!='d'" ng-click="submitData(this.editForm,0)">暂存</button>
+                &lt;!&ndash;<button type="submit" class="btn btn-primary" form="editForm" ng-if="typeMod!='d'" ng-click="submitData(editForm,1)">发布</button>&ndash;&gt;
+                <button type="submit" class="btn btn-primary" ng-click="submitData(this.editForm.$valid,1)" ng-if="typeMod!='d'">发布</button>
+            </div>
+        </form>
+    </div>
+</div>-->
+
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>计划名称</th>
+                        <td colspan="3" class="dj-col-3"
+                            ng-class="{ 'has-error' : this.editForm.name.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="name" ng-model="changevm.name" class="form-control"
+                                   ng-required="true"/>
+                            <span ng-show="this.editForm.name.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>发送单位</th>
+                        <td colspan="3" class="dj-col-3">
+                            {{changevm.sendDepartmentName}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>要求</th>
+                        <td colspan="3" class="dj-col-3"
+                            ng-class="{ 'has-error' : this.editForm.requirement.$invalid &&  this.editForm.$submitted}">
+                            <textarea class="form-control" name="requirement" ng-model="changevm.requirement" rows="5"
+                                      ng-required="true"></textarea>
+                            <span ng-show="this.editForm.requirement.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>学习计划类型</th>
+                        <td ng-class="{ 'has-error' : this.editForm.typeCode.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick" ng-model="changevmTypeCode"
+                                    ng-options="type.label for type in roleConfigList"
+                                    name="typeCode"
+                                    ng-required="true">
+                            </select>
+                            <span ng-show="this.editForm.typeCode.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>完成日期</th>
+                        <td ng-class="{ 'has-error' : this.editForm.endtime.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="endtime" ng-model="changevm.endTime"
+                                   class="form-control"
+                                   format="yyyy-mm-dd"
+                                   data-min-view="0" bs-datepicker
+                                   ng-required="true"/>
+                            <span ng-show="this.editForm.endtime.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>计划内容</th>
+                        <td colspan="3" class="dj-col-3">
+                            <textarea ui-ueditor name="planContent" ng-model="changevm.content"
+                                      ng-required="true"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="padding-top: 10px;">
+                <input type="checkbox" id="isSynchro" class="filled-in chk-col-cyan" name="isSynchro"
+                       ng-model="isSynchro"><label for="isSynchro">是否同步到学习资料库</label>
+            </div>
+            <bsfiles ng-model="reqFileModel"/>
+
+            <div class="dj-formtable">
+                <div class="table-responsive list-table-panel">
+                    <div class="list-table-title">
+                        <div class="table-title">
+                            接收党总支
+                        </div>
+                        <div class="table-tool">
+                            <button type="button" ng-if="typeMod!='d'" class="btn btn-primary dropdown-toggle"
+                                    title="全部" ng-click="selectPartyCommitteeFull()" ng-disabled="enableSelectAllDW">
+                                <span></span>全部
+                            </button>
+                            <button type="button" ng-if="typeMod!='d'" class="btn btn-primary dropdown-toggle"
+                                    title="选择" ng-click="selectPartyCommittee()" ng-disabled="enableChangeDW">
+                                <span></span>选择
+                            </button>
+                        </div>
+                    </div>
+                    <div class="outoflow" style="max-height: 300px;">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>党总支名称</th>
+                                <!--<th>接收人(秘书)</th>-->
+                                <!--<th>接收时间</th>-->
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in receiveDWs">
+                                <th scope="row">{{$index+1}}</th>
+                                <th>{{it.dwName}}</th>
+                                <!--<th>{{it.secretaryNames}}</th>-->
+                                <!--<th>{{it.receiveTime | date:'yyyy-MM-dd HH:mm:ss' }}</th>-->
+                                <th>
+                                    <button class="btn td-btn bg-pink waves-effect" ng-if="typeMod!='d'"
+                                            ng-click="deleteReceiveDWs($index)" title="删除">
+                                        <!--<i class="material-icons td-icon">delete_forever</i>-->
+                                        删除
+                                    </button>
+                                </th>
+                            </tr>
+                            <tr ng-if="receiveDWs.length<=0">
+                                <td colspan="5" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit" class="btn btn-primary" ng-if="typeMod!='d'"
+                        ng-click="submitData(this.editForm,0)">暂存
+                </button>
+                <!--<button type="submit" class="btn btn-primary" form="editForm" ng-if="typeMod!='d'" ng-click="submitData(editForm,1)">发布</button>-->
+                <button type="submit" class="btn btn-primary" ng-click="submitData(this.editForm.$valid,1)"
+                        ng-if="typeMod!='d'">发布
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

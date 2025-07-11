@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.CFLeaderAdminCQuery">
+
+    <select id="selectLeaderadminList" resultType="java.util.HashMap">
+        select us.RYBM,us.XM,us.SZDZBDM,zz.DZZMC,admin.CREATETIME
+        from CF_LEADERADMIN admin
+        inner join VM_RYJBXX us on admin.USERID = us.RYBM
+        inner join ZZ_ZZQKXX zz on us.SZDZBDM = zz.DZZDM
+        where 1=1
+        <if test="xm != null and xm != ''">
+            and us.XM like concat('%',#{xm},'%')
+        </if>
+        order by us.XMPY,us.RYJBXXBS
+    </select>
+</mapper>

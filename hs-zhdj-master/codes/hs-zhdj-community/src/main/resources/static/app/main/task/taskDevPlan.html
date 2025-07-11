@@ -1,0 +1,59 @@
+﻿<style type="text/css">
+    .popover {
+        outline: none;
+    }
+</style>
+<div ng-controller="taskDevPlanCtrl">
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td colspan="8" style="text-align:center; background-color:#f5f5f5">
+                <span style="color:black;"><strong>开发计划</strong></span>
+                <!--<span>
+                    <button type="button" class="btn btn-link" style="float:right;margin-right:3%; color:black;padding:1px;" data-placement="center" data-animation="am-fade-and-scale" ng-click="sendToSenior()"><strong>发起开发计划实施</strong></button>
+                    <button type="button" class="btn btn-link" style="float:right;margin-right:2%; color:black;padding:1px;" data-placement="center" data-animation="am-fade-and-scale" ng-click="sendToJunior()" ng-if="!readyonly"><strong>一键派发</strong></button>
+                </span>-->
+            </td>
+        </tr>
+        <tr style="background-color:#f0f8ff">
+            <th>系统</th>
+            <th>功能点</th>
+            <th>任务名称</th>
+            <!--<th>任务描述</th>-->
+            <th>责任人</th>
+            <th>预计完成时间</th>
+            <th>预计工作量</th>
+            <th ng-if="!params.readonly">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="it in items">
+            <td>{{it.SystemName}}</td>
+            <td>{{it.SysDutyName}}</td>
+            <td class="col-md-4">
+                <div id="note" data-placement="top" bs-popover data-content="{{it.TaskNote}}" data-title="任务描述"
+                     data-trigger="hover">{{it.TaskName}}
+                </div>
+            </td>
+            <!--<td style="width:15%"><div style='display:-webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;overflow:hidden;' data-placement="top" bs-popover data-content="{{it.TaskNote}}" data-title="任务描述" data-trigger="hover">{{it.TaskNote}}</div></td>-->
+            <td>{{it.UserName}}</td>
+            <td class="col-md-2">{{it.ExpectFinishDate}}</td>
+            <td>{{it.ExpectWorkValue}}</td>
+            <td ng-if="!params.readonly">
+                <button ng-if="(it.DevState==1||it.DevState==0)&&!readonly" class="btn btn-success btn-sm" title="修改"
+                        ng-click="showmodal(it)">
+                    <span class="glyphicon glyphicon-pencil "></span>
+                </button>
+                <button ng-if="it.DevState==2" class="btn btn-success btn-sm" title="已派送" value="">
+                    <span class="glyphicon glyphicon-send"></span>
+                </button>
+            </td>
+        </tr>
+        <tr ng-if="items.length<=0">
+            <td colspan="7" style="text-align:center">暂无数据</td>
+        </tr>
+        </tbody>
+    </table>
+    <pagination data-pageindex="finddata.pageindex" data-pagesize="finddata.pagesize"
+                data-ptotal="finddata.total"></pagination>
+</div>

@@ -1,0 +1,222 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="treeparams.selectdzzdm" data-selectdzzmc="treeparams.selectdzzmc"
+             data-defaultselected="treeparams.defaultselected" data-isunfold="treeparams.isunfold"
+             data-showdxz="treeparams.showdxz"></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="treeparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="treeparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>党组织工作经费年度</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="yearMonth" bs-datepicker class="form-control"
+                                                       data-autoclose="1"
+                                                       data-date-format="yyyy"
+                                                       data-date-type="date"
+                                                       data-min-view="2" data-start-view="2"
+                                                       ng-model="selectparams.fundYear"
+                                                       ng-change="search()"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>党费收缴月份</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="yearMonth" bs-datepicker class="form-control"
+                                                       data-autoclose="1"
+                                                       data-date-format="yyyyMM"
+                                                       data-date-type="date"
+                                                       data-min-view="1" data-start-view="1"
+                                                       ng-model="selectparams.duesYearMonth"
+                                                       ng-change="search()"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>三会一课月份</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="yearMonth" bs-datepicker class="form-control"
+                                                       data-autoclose="1"
+                                                       data-date-format="yyyyMM"
+                                                       data-date-type="date"
+                                                       data-min-view="1" data-start-view="1"
+                                                       ng-model="selectparams.meetingYearMonth"
+                                                       ng-change="search()"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>主题党日开展月份</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="yearMonth" bs-datepicker class="form-control"
+                                                       data-autoclose="1"
+                                                       data-date-format="yyyyMM"
+                                                       data-date-type="date"
+                                                       data-min-view="1" data-start-view="1"
+                                                       ng-model="selectparams.partydayYearMonth"
+                                                       ng-change="search()"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg2 col-md-2 dj-label">
+                                        <label>宣传阵地更新月份</label>
+                                    </div>
+                                    <div class="col-lg2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="yearMonth" bs-datepicker class="form-control"
+                                                       data-autoclose="1"
+                                                       data-date-format="yyyyMM"
+                                                       data-date-type="date"
+                                                       data-min-view="1" data-start-view="1"
+                                                       ng-model="selectparams.positionYearMonth"
+                                                       ng-change="search()"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <button class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button class="btn  btn-default1"
+                                    ng-click="export()">导出
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th rowspan="2">序号</th>
+                                    <th rowspan="2">所属党委</th>
+                                    <th rowspan="2">党组织名称</th>
+                                    <th rowspan="2">组织类别</th>
+                                    <th rowspan="2">基层分类</th>
+                                    <th colspan="3">党组织维护情况</th>
+                                    <th colspan="3">党组织工作经费预算维护情况</th>
+                                    <th colspan="2">党费收缴情况</th>
+                                    <th colspan="3">三会一课情况</th>
+                                    <th colspan="2">主题党日开展情况</th>
+                                    <th colspan="2">宣传阵地情况</th>
+                                </tr>
+                                <tr>
+                                    <th>组织类别</th>
+                                    <th>基层分类</th>
+                                    <th>职工数</th>
+
+                                    <th>年度</th>
+                                    <th>录入预算</th>
+                                    <th>大于100万</th>
+
+                                    <th>年月</th>
+                                    <th>是否缴费</th>
+
+                                    <th>年月</th>
+                                    <th>是否开展</th>
+                                    <th>指标是否录入</th>
+
+                                    <th>年月</th>
+                                    <th>是否开展</th>
+
+                                    <th>年月</th>
+                                    <th>是否更新</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">
+                                        {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                    </td>
+                                    <td>{{it.DWMC}}</td>
+                                    <td>{{it.DZZMC}}</td>
+                                    <td class="text-center">{{it.ZZLBMC}}</td>
+                                    <td class="text-center">{{it.JCZZFLMC}}</td>
+
+                                    <td class="text-center">{{it.ISZZLB}}</td>
+                                    <td class="text-center">{{it.ISJCZZFL}}</td>
+                                    <td class="text-center">{{it.ISZGS}}</td>
+
+                                    <td class="text-center">{{it.FUNDYEAR}}</td>
+                                    <td class="text-center">{{it.ISFUND}}</td>
+                                    <td class="text-center">{{it.IS100}}</td>
+
+                                    <td class="text-center">{{it.DUESMONTH}}</td>
+                                    <td class="text-center">{{it.ISDUES}}</td>
+
+                                    <td class="text-center">{{it.MEETINGMONTH}}</td>
+                                    <td class="text-center">{{it.ISMEETING}}</td>
+                                    <td class="text-center">{{it.ISPLAN}}</td>
+
+                                    <td class="text-center">{{it.PARTYDAYMONTH}}</td>
+                                    <td class="text-center">{{it.ISPARTYDAY}}</td>
+
+                                    <td class="text-center">{{it.POSITIONMONTH}}</td>
+                                    <td class="text-center">{{it.ISPOSITION}}</td>
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="20" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

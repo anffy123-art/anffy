@@ -1,0 +1,116 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div activate-input activate-select class="header search-header">
+                <div class="search-param-panel">
+                    <div class="search-input">
+                        <form class="form-horizontal">
+                            <div class="row clearfix form-inline">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <label>学习计划类型</label>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <select class="form-control show-tick" ng-model="selectPlanList.typeCode"
+                                                    ng-options="type.val as type.label for type in selectPlanListTypeCode"
+                                                    class="form-control"
+                                                    name="typeCode">
+                                                <option value="" selected>--全部--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <label>计划名称</label>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                                <input name="name" class="form-control" type="text"
+                                                ng-model="selectPlanList.name"
+                                                placeholder=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix form-inline">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <label>发布时间开始</label>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                                <input type="text" name="publishTimeStart" ng-model="selectPlanList.publishTimeStart"
+                                                class="form-control"
+                                                format="yyyy-mm-dd"
+                                                data-min-view="3" bs-datetimepicker
+                                                ng-required="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <label>发布结束时间</label>
+                                </div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="publishTimeEnd" ng-model="selectPlanList.publishTimeEnd"
+                                                    class="form-control"
+                                                    format="yyyy-mm-dd"
+                                                    data-min-view="3" bs-datetimepicker
+                                                    ng-required="true"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div>
+                            <button role-permission-code="selectPlanListList.btnSearch" class="btn btn-default1"
+                                    ng-click="selectPlanListSelect()">查询
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div activate-input class="body">
+                    <div class="table-responsive list-table-panel" style="font-size: 16px">
+                            <div class="outoflow" style="height: 350px;">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap" style="position:relative">
+                                    <thead>
+                                    <tr>
+                                        <th>选择</th>
+                                        <th>计划名称</th>
+                                        <th>发布时间</th>
+                                        <th>计划类型</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="it in receivePcommListPlan">
+                                        <th><input type="radio" id="{{it.id}}" name="itChecked" ng-model="itChecked" ng-checked="it.checked" ng-click="chkchildrenPlan(it)"><label for="{{it.id}}"></label></th>
+                                        <th>{{it.name}}</th>
+                                        <th>{{it.publishTime}}</th>
+                                        <th>{{it.typeName}}</th>
+                                    </tr>
+                                    <tr ng-if="receivePcommListPlan.length<=0">
+                                        <td colspan="4" style="text-align:center">暂无数据</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" ng-click="quedingxuyaoPlan()">选择</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

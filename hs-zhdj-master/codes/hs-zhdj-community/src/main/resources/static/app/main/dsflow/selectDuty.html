@@ -1,0 +1,41 @@
+﻿<div style="overflow:scroll" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" style="width:1100px">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <form class="form-horizontal formtable1 panel-body modal-body" role="form" name="saveSysDemandDuty">
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h5 style="display:inline-block;">{{demandApplyExtra.SystemName}}</h5>
+                    </div>
+                    <div class="panel panel-body">
+                        <bs_lvtree ng-model="selectDutyData.tree_option"></bs_lvtree>
+                    </div>
+                </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h5 style="display:inline-block;">功能点负责人</h5>
+                    </div>
+                    <div class="panel-body">
+                        <label class="input-group">
+                            <input name="Name" type="text" ng-model="chooseTwo.Name" class="form-control" required/>
+                            <span class="input-group-addon" data-url="../../api/MemManage/FindMemsdataByrolename"
+                                  data-datatext="chooseTwo.Name" data-aid="{{params.fid}}+高级开发工程师+"
+                                  data-dataval="chooseTwo.selectedID" title="团队人员选择" bsselectdata><i
+                                    class="glyphicon glyphicon-zoom-in"></i></span>
+                        </label>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" ng-click="save()"
+                        ng-disabled="saveSysDemandDuty.$invalid">添加
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="$hide()">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

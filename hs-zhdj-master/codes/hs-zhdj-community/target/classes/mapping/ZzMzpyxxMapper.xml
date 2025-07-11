@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.ZzMzpyxxMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.ZzMzpyxx">
+    <result column="MZPYXXBS" jdbcType="VARCHAR" property="mzpyxxbs" />
+    <result column="RYBM" jdbcType="VARCHAR" property="rybm" />
+    <result column="SZDZBDM" jdbcType="VARCHAR" property="szdzbdm" />
+    <result column="KZPYRQ" jdbcType="VARCHAR" property="kzpyrq" />
+    <result column="JSPYRQ" jdbcType="VARCHAR" property="jspyrq" />
+    <result column="PYJG" jdbcType="VARCHAR" property="pyjg" />
+    <result column="PYJCQK" jdbcType="VARCHAR" property="pyjcqk" />
+    <result column="PYJCYY" jdbcType="VARCHAR" property="pyjcyy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    MZPYXXBS, RYBM, SZDZBDM, KZPYRQ, JSPYRQ, PYJG, PYJCQK, PYJCYY
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.ZzMzpyxxExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zz_mzpyxx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.ZzMzpyxxExample">
+    delete from zz_mzpyxx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.ZzMzpyxx">
+    insert into zz_mzpyxx (MZPYXXBS, RYBM, SZDZBDM, 
+      KZPYRQ, JSPYRQ, PYJG, 
+      PYJCQK, PYJCYY)
+    values (#{mzpyxxbs,jdbcType=VARCHAR}, #{rybm,jdbcType=VARCHAR}, #{szdzbdm,jdbcType=VARCHAR}, 
+      #{kzpyrq,jdbcType=VARCHAR}, #{jspyrq,jdbcType=VARCHAR}, #{pyjg,jdbcType=VARCHAR}, 
+      #{pyjcqk,jdbcType=VARCHAR}, #{pyjcyy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.ZzMzpyxx">
+    insert into zz_mzpyxx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mzpyxxbs != null">
+        MZPYXXBS,
+      </if>
+      <if test="rybm != null">
+        RYBM,
+      </if>
+      <if test="szdzbdm != null">
+        SZDZBDM,
+      </if>
+      <if test="kzpyrq != null">
+        KZPYRQ,
+      </if>
+      <if test="jspyrq != null">
+        JSPYRQ,
+      </if>
+      <if test="pyjg != null">
+        PYJG,
+      </if>
+      <if test="pyjcqk != null">
+        PYJCQK,
+      </if>
+      <if test="pyjcyy != null">
+        PYJCYY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mzpyxxbs != null">
+        #{mzpyxxbs,jdbcType=VARCHAR},
+      </if>
+      <if test="rybm != null">
+        #{rybm,jdbcType=VARCHAR},
+      </if>
+      <if test="szdzbdm != null">
+        #{szdzbdm,jdbcType=VARCHAR},
+      </if>
+      <if test="kzpyrq != null">
+        #{kzpyrq,jdbcType=VARCHAR},
+      </if>
+      <if test="jspyrq != null">
+        #{jspyrq,jdbcType=VARCHAR},
+      </if>
+      <if test="pyjg != null">
+        #{pyjg,jdbcType=VARCHAR},
+      </if>
+      <if test="pyjcqk != null">
+        #{pyjcqk,jdbcType=VARCHAR},
+      </if>
+      <if test="pyjcyy != null">
+        #{pyjcyy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.ZzMzpyxxExample" resultType="java.lang.Long">
+    select count(*) from zz_mzpyxx
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update zz_mzpyxx
+    <set>
+      <if test="record.mzpyxxbs != null">
+        MZPYXXBS = #{record.mzpyxxbs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rybm != null">
+        RYBM = #{record.rybm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.szdzbdm != null">
+        SZDZBDM = #{record.szdzbdm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kzpyrq != null">
+        KZPYRQ = #{record.kzpyrq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jspyrq != null">
+        JSPYRQ = #{record.jspyrq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pyjg != null">
+        PYJG = #{record.pyjg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pyjcqk != null">
+        PYJCQK = #{record.pyjcqk,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pyjcyy != null">
+        PYJCYY = #{record.pyjcyy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update zz_mzpyxx
+    set MZPYXXBS = #{record.mzpyxxbs,jdbcType=VARCHAR},
+      RYBM = #{record.rybm,jdbcType=VARCHAR},
+      SZDZBDM = #{record.szdzbdm,jdbcType=VARCHAR},
+      KZPYRQ = #{record.kzpyrq,jdbcType=VARCHAR},
+      JSPYRQ = #{record.jspyrq,jdbcType=VARCHAR},
+      PYJG = #{record.pyjg,jdbcType=VARCHAR},
+      PYJCQK = #{record.pyjcqk,jdbcType=VARCHAR},
+      PYJCYY = #{record.pyjcyy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

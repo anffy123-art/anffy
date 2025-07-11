@@ -1,0 +1,42 @@
+﻿<div class="modal" tabindex="-1" role="dialog" id="selectParentMenu">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">选择父级菜单</h4>
+            </div>
+            <div class="panel-body modal-body">
+                <script type="text/ng-template" id="treeitem.html">
+                    <span>
+                        <a class="glyphicon {{menu.isExpand ? 'glyphicon-chevron-down' : 'glyphicon-chevron-right'}}"
+                           ng-click="loadChild(menu)"></a>
+                        <span class="ModulesSpan" ng-class="{depSelected:menu.menuid==curMenuID}"
+                              style="cursor: pointer;" ng-click="changeChoose(menu)">{{menu.menuname}}</span>
+                    </span>
+                    <div ng-hide="!menu.isExpand">
+                        <div class="treeitem" ng-repeat="menu in menu.childs" ng-include="'treeitem.html'"
+                             style="cursor: pointer; margin-top:2px"></div>
+                    </div>
+                </script>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div style="display:inline-block;">
+                            <label>所选择的父菜单为：</label>
+                            <span>{{FinalmenuParentName}}</span>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <ul style="list-style:none;padding:0px 15px; margin-top:5px" ng-repeat="menu in selectMenus"
+                            ng-include="'treeitem.html'"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="$hide()">取消</button>
+                <button type="submit" class="btn btn-success" ng-click="choose()" ng-disabled="chooseOne.hasName">添加
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

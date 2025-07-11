@@ -1,0 +1,78 @@
+<div activate-input activate-select class="header search-header" ng-if="selectparams.selectdzzmc!=''">
+    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+    <div class="search-param-panel">
+        <div class="search-input">
+            <form class="form-horizontal">
+                <div class="row clearfix form-inline">
+                    <div class="col-lg3 col-md-3 dj-label">
+                        <label>当前选中组织</label>
+                    </div>
+                    <div class="col-lg3 col-md-3">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <div class="input-group input-group-search">
+                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                           ng-model="selectparams.selectdzzmc" class="form-control"
+                                           ng-disabled="true"/>
+                                    <span class="input-group-addon"
+                                          ng-click="setisunfold()">选择</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="body">
+    <form class="form-horizontal" role="form" id="areaform" name="areaform"
+          novalidate>
+        <!--<div ng-if="selectparams.selectdzzmc!=''" style="padding-bottom: 5px;">当前选中组织：{{selectparams.selectdzzmc}}</div>-->
+        <div class="dj-formtable">
+            <div class="table-responsive list-table-panel">
+                <div class="list-table-title">
+                    <div class="table-title">
+                        数据列表
+                    </div>
+                    <div class="table-tool" ng-if="type==1 || (type==2 && isPartyZB==1)">
+                        <button role-permission-code="scoreProjectList.btnJtData" ng-if="type==2"
+                                class="btn btn-primary" ng-click="getJTData(2)" form="areaform">使用学院考核标准
+                        </button>
+                        <button role-permission-code="scoreProjectList.btnSave" type="submit" class="btn btn-primary"
+                                ng-click="saveData(areaform.$valid,2)" form="areaform">保存
+                        </button>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                    <thead>
+                    <tr>
+                        <th class="text-center" style="width: 80px;">序号</th>
+                        <th style="width: 150px;">项目</th>
+                        <th>考核内容和标准</th>
+                        <th style="width: 150px;">分值</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="it in area_dataList">
+                        <td scope="row" class="text-center">{{$index+1}}</td>
+                        <td>{{it.PROJECTNAME}}</td>
+                        <td ng-class="{ 'has-error' : invalidFee($index,areaform,'CONTENT') &&  areaform.$submitted}">
+                     <textarea type="text" autocomplete="off" class="form-control" name="CONTENT_{{$index}}"
+                               ng-model="it.CONTENT" rows="6" ng-required="true">
+                    </textarea>
+                        </td>
+                        <td ng-class="{ 'has-error' : invalidFee($index,areaform,'SCOREREFER') &&  areaform.$submitted}">
+                            <input type="text" autocomplete="off" class="form-control" name="SCOREREFER_{{$index}}"
+                                   ng-model="it.SCOREREFER" ng-required="true"/>
+                        </td>
+                    </tr>
+                    <tr ng-if="area_dataList.length<=0">
+                        <td colspan="5" style="text-align:center">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>

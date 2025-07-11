@@ -1,0 +1,103 @@
+﻿<div id="testProblemmodal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal formtable1" role="form" id="problemform" name="problemform"
+                      ng-submit="saveProblem(problemform.$valid)" novalidate>
+                    <table class="table table-bordered tform">
+                        <!--<tr>
+                            <th class="col-md-3"><span style="color:red;">*</span>功能点：</th>
+                            <td ng-class="{ 'has-error' : problemform.sysDutySelect.$invalid &&  (problemform.$submitted||issubmitted) }">
+                                <select class="form-control" ng-model="content.SysDutyID" ng-disabled="params.isShow"
+                                        ng-options="duty.SysDutyID as duty.SysDutyName group by duty.SystemName for duty in selectdatas.sysDutyList" ng-required="true" name="sysDutySelect">
+                                    <option value="" ng-readonly="params.isShow">--请选择--</option>
+                                </select>
+                                <span ng-show="problemform.sysDutySelect.$invalid &&  (problemform.$submitted||issubmitted)" class="help-block">请选择功能点</span>
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <th class="col-md-3">功能点：</th>
+                            <td><span>{{content.SysDutyName}}</span></td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3"><span style="color:red;">*</span>问题名称：</th>
+                            <td ng-class="{ 'has-error' : problemform.problemName.$invalid &&  (problemform.$submitted||issubmitted) }">
+                                <input type="text" ng-model="content.ProblemName" class="form-control"
+                                       ng-readonly="params.readonly" ng-required="true" name="problemName"
+                                       maxlength="255"/>
+                                <span ng-show="problemform.problemName.$invalid &&  (problemform.$submitted||issubmitted)"
+                                      class="help-block">请输入问题名称</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3"><span style="color:red;">*</span>问题描述：</th>
+                            <td ng-class="{ 'has-error' : problemform.problemDesc.$invalid &&  (problemform.$submitted||issubmitted) }">
+                                <textarea rows="5" class="form-control" ng-model="content.ProblemDescribe"
+                                          ng-readonly="params.readonly"
+                                          style="resize:none;width:100%;height:100%;padding:0" ng-required="true"
+                                          name="problemDesc"></textarea>
+                                <span ng-show="problemform.problemDesc.$invalid &&  (problemform.$submitted||issubmitted)"
+                                      class="help-block">请输入问题描述</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3"><span style="color:red;">*</span>问题类型：</th>
+                            <td ng-class="{ 'has-error' : problemform.problemType.$invalid && (problemform.$submitted||issubmitted) }">
+                                <select class="form-control" ng-model="content.ProblemType"
+                                        ng-disabled="params.readonly"
+                                        ng-options="type.DicKey as type.DicValue for type in selectdatas.problemTypeList"
+                                        ng-required="true" name="problemType">
+                                    <option value="" ng-readonly="params.isShow">--请选择--</option>
+                                </select>
+                                <span ng-show="problemform.problemType.$invalid  && (problemform.$submitted||issubmitted)"
+                                      class="help-block">请输入问题描述</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-md-3"><span style="color:red;">*</span>严重程度：</th>
+                            <td ng-class="{ 'has-error' : problemform.slv.$invalid &&  (problemform.$submitted||issubmitted) }">
+                                <select class="form-control" ng-model="content.SeriousLv" ng-disabled="params.readonly"
+                                        ng-options="lv.DicKey as lv.DicValue for lv in selectdatas.seriousLvList"
+                                        ng-required="true" name="slv">
+                                    <option value="" ng-readonly="params.isShow">--请选择--</option>
+                                </select>
+                                <span ng-show="problemform.slv.$invalid && (problemform.$submitted||issubmitted)"
+                                      class="help-block">请输入问题描述</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="text-align:center">问题截图</th>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div ng-if="files.length>0" class="imageDiv" ng-repeat="file in files">
+                                    <img class="thumbnail diyimg" ng-src="{{file.FileUrl}}"/>
+                                    <div class="cover" ng-click="delfile(file.FileId)" ng-if="!params.readonly">删除</div>
+                                    <div class="cover" ng-click="zoomImg(file.FileUrl)" ng-if="params.readonly"></div>
+                                </div>
+                                <div ng-if="files.length<=0 && params.readonly" style="text-align:center">暂无截图</div>
+                                <div class="addImages" ng-click="addFile(problemform.$valid)" ng-if="!params.readonly">
+                                    <!--multiple属性可选择多个图片上传-->
+                                    <input type="button" ng-model="file" class="diyfile"/>
+                                    <div class="text-detail">
+                                        <span>+</span>
+                                        <p>添加截图</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="form_foot">
+                        <button type="submit" class="btn btn-primary" ng-if="!params.readonly" form="problemform">保存
+                        </button>
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

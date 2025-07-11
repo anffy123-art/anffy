@@ -1,0 +1,28 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div ng-include="'../main/shyk/meetingmodel.html'"></div>
+            <div panel-title data-title="'会议签收'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table dj-table2">
+                    <tr>
+                        <th>未参加，请填写原因</th>
+                        <td ng-class="{ 'has-error' : this.editForm.userremark.$invalid &&  this.editForm.$submitted}">
+                            <textarea ng-model="meetingUserModel.userremark" class="form-control"
+                                      rows="5" ng-required="true" name="userremark"></textarea>
+                            <span ng-show="this.editForm.userremark.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">参加</button>
+                <button ng-if="difftime>30" class="btn btn-primary"
+                        ng-click="saveData(this.editForm.$valid)">请假
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

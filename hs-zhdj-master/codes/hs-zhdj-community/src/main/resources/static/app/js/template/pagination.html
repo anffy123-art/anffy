@@ -1,0 +1,85 @@
+﻿<div class="row">
+    <div class="col-md-12 form-inline" style="display: flex;
+        display: -webkit-flex;align-items: center;justify-content: flex-end;">
+        <div>
+            <div ng-if="ptotal>0" class="form-group">
+                <p style="margin: 0px;"> 第{{pageindex}}页/共{{pages}}页</p>
+            </div>
+        </div>
+        <div style="padding-right: 30px;padding-left: 10px;">
+            <nav ng-if="ptotal>0">
+                <style>
+                    a {
+                        cursor: pointer;
+                    }
+
+                    .pagination > li .pagination-icon {
+                        width: auto;
+                        height: 32px;
+                        -webkit-border-radius: 0;
+                        -moz-border-radius: 0;
+                        -ms-border-radius: 0;
+                        border-radius: 0;
+                        padding: 6px;
+                    }
+
+                    .pagination > li > a .material-icons {
+                        position: relative;
+                        bottom: 2px;
+                    }
+                </style>
+                <ul class="pagination" style="margin: 10px 0;">
+                    <li>
+                        <!--<a ng-click="PreviousFirst()">
+                            <span>&laquo;</span>
+                        </a>-->
+                        <a href="javascript:void(0);" class="waves-effect pagination-icon" ng-click="PreviousFirst()">
+                            <i class="material-icons">first_page</i>
+                        </a>
+                    </li>
+                    <li>
+                        <!--<a ng-click="Previous()">
+                            <span>&lt;</span>
+                        </a>-->
+                        <a href="javascript:void(0);" class="waves-effect pagination-icon" ng-click="Previous()">
+                            <i class="material-icons">chevron_left</i>
+                        </a>
+                    </li>
+                    <li ng-repeat="page in pageList" ng-class="{active: isActivePage(page)}">
+                        <a ng-click="selectPage(page)">{{ page }}</a>
+                    </li>
+                    <li>
+                        <!--<a ng-click="isLast==true? false:Next()">
+                            <span>&gt;</span>
+                        </a>-->
+                        <a href="javascript:void(0);" class="waves-effect pagination-icon"
+                           ng-click="isLast==true? false:Next()">
+                            <i class="material-icons">chevron_right</i>
+                        </a>
+                    </li>
+                    <li>
+                        <!--<a ng-click="NextLast()">
+                            <span>&raquo;</span>
+                        </a>-->
+                        <a href="javascript:void(0);" class="waves-effect pagination-icon" ng-click="NextLast()">
+                            <i class="material-icons">last_page</i>
+                        </a>
+                    </li>
+                    <li>
+                        <input style="width:60px;margin-left:15px" class="form-control" type="number"
+                               ng-model="skipPageNumber" name="skipPageNumber" min="1"/>
+                    </li>
+                    <li>
+                        <button style="margin-left:15px" class="btn btn-default" ng-click="skipPage(skipPageNumber)">
+                            跳转
+                        </button>
+                    </li>
+                    &nbsp;
+                    <li ng-if="mergetotal==null || mergetotal==''">共 {{ptotal}} 条</li>
+                    <li ng-if="mergetotal!=null && mergetotal!=''">共 {{mergetotal}} 条</li>
+                </ul>
+
+            </nav>
+        </div>
+    </div>
+</div>

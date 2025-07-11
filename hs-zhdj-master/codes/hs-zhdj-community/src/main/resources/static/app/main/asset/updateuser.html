@@ -1,0 +1,57 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div ng-include="'../main/asset/show.html'" onload="loadAsset()" ng-controller="assetShowCtrl"></div>
+
+            <div panel-title data-title="'修改保管人'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table dj-table3">
+                    <tr>
+                        <th>保管人</th>
+                        <td ng-class="{ 'has-error' : this.editForm.newusername.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 data-dataoptions="selectTakecareuser"
+                                 title="选择保管人" bsselectdata-pro>
+                                <input name="newusername" type="text" ng-model="dataModel.newusername"
+                                       class="form-control" ng-required="true"
+                                       ng-disabled="true"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.newusername.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>保管时间段</th>
+                        <td colspan="5" ng-class="{ 'has-error' : (this.editForm.newstartdate.$invalid || this.editForm.newenddate.$invalid) &&  this.editForm.$submitted}">
+                            <input style="width: 130px;display: inline;" name="newstartdate" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.newstartdate"
+                                   ng-required="true"
+                                   placeholder="" bs-datepicker/>
+                            至
+                            <input style="width: 130px;display: inline;" name="newenddate" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.newenddate"
+                                   ng-required="true"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="(this.editForm.newstartdate.$invalid || this.editForm.newenddate.$invalid) &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

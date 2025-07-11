@@ -1,0 +1,167 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="dj-list-content content1">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>标题</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input class="form-control" name="title" ng-model="selectdata.title" ng-keypress="($event.which === 13)?search():0"
+                                                       placeholder=""
+                                                       type="text"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2 dj-label">
+                                        <label>类型</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-change="search()"
+                                                        name="typevalue" ng-model="selectdata.typevalue"
+                                                        style="width: 240px"
+                                                        ng-options="op.val as op.label for op in ndList"
+                                                        required>
+                                                    <option value="">-- 请选择 --</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>截止开始时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input autoclose="true" autocomplete="off" ng-change="search()"
+                                                       bs-datepicker
+                                                       class="form-control"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       name="closebegindate"
+                                                       ng-model="selectdata.closebegindate" placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix form-inline" ng-show="isShow">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>截止结束时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input autoclose="true" autocomplete="off" ng-change="search()"
+                                                       bs-datepicker
+                                                       class="form-control"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       name="closeenddate"
+                                                       ng-model="selectdata.closeenddate" placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <span class="moreSpan" ng-click="isShowClick()" style='padding-right:1em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>
+                                <button class="btn btn-default1" ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                                <!--<button class="btn btn-default1" ng-click="editModal()" role-permission-code="ysjyb.btn.add">新增-->
+                                <!--</button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button class="btn btn-default1" ng-click="editModal()"
+                                    role-permission-code="ysjyb.btn.add">新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body" style="min-height: 500px">
+                    <div class="list-table-panel">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                            <thead>
+                            <tr>
+                                <th class="col-md-1">序号</th>
+                                <th class="col-md-4">标题</th>
+                                <th class="col-md-1">类型</th>
+                                <th class="col-md-1">单位数量</th>
+                                <th class="col-md-1">已接收数量</th>
+                                <th class="col-md-1">截止日期</th>
+                                <th class="col-md-1">创建日期</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="lm in items">
+                                <td scope="row" class="text-center">
+                                    {{selectdata.pagesize*(selectdata.pageindex-1)+$index+1}}
+                                </td>
+                                <td>{{lm.title}}</td>
+                                <td class="text-center">{{lm.typeName}}</td>
+                                <td class="text-center">
+                                    <button class="btn td-btn bg-light-green waves-effect"
+                                            ng-click="showDw(lm.zgtgid,null,'单位数量')">{{lm.dwsl==null?0:lm.dwsl}}
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn td-btn bg-light-green waves-effect"
+                                            ng-click="showDw(lm.zgtgid,'3,4','已接收数量')"> {{lm.jssl==null?0:lm.jssl}}
+                                    </button>
+                                </td>
+                                <td class="text-center">{{lm.closeDate|date:'yyyy-MM-dd'}}</td>
+                                <td class="text-center">{{lm.createTime|date:'yyyy-MM-dd'}}</td>
+                                <td class="text-center">{{lm.statusName}}</td>
+                                <th align="center" style="white-space: nowrap">
+                                    <button class="btn td-btn bg-light-green waves-effect"
+                                            ng-click="viewItem(lm.zgtgid)"
+                                            title="查看">
+                                        查看
+                                    </button>
+                                    <button class="btn td-btn bg-light-green waves-effect"
+                                            data-animation="am-fade-and-scale"
+                                            data-placement="center"
+                                            ng-click="editModal(lm.zgtgid)" ng-if="lm.statusName=='暂存'"
+                                            title="修改">
+                                        <!--<i class="material-icons td-icon">border_color</i>-->
+                                        修改
+                                    </button>
+                                    <button class="btn td-btn bg-pink waves-effect" ng-click="delItem(lm.zgtgid)"
+                                            ng-if="lm.statusName=='暂存'"
+                                            title="删除">
+                                        <!--<i class="material-icons td-icon">delete_forever</i>-->
+                                        删除
+                                    </button>
+                                </th>
+                            </tr>
+                            <tr ng-if="items.length<=0">
+                                <td colspan="9" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--参数含义：page-Index：当前页面，page-Size：每页显示多少数据，total-Length:数据总长度-->
+                    <pagination data-pageindex="selectdata.pageindex" data-pagesize="selectdata.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

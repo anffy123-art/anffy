@@ -1,0 +1,80 @@
+<div id="usermodal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" style="display: inline;">{{params.title}}</h4>
+                <button type="button" class="btn btn-primary" ng-click="changePassword()"
+                        style="position:relative;left: 580px">修改密码
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="usereditfrom" name="usereditfrom" autocomplete="off"
+                      ng-submit="submitUseredit(usereditfrom.$valid)" novalidate>
+                    <table class="table-form table-bordered">
+                        <tr>
+                            <th><span style="color:red;">*</span>用户名称：</th>
+                            <td ng-class="{ 'has-error' : usereditfrom.name.$invalid &&  usereditfrom.$submitted}">
+                                <input type="text" name="name" ng-model="userinfovm.name" maxlength="100"
+                                       class="form-control" ng-required="true" autocomplete="off" readonly/>
+                            </td>
+                            <th><span style="color:red;">*</span>登录帐号：</th>
+                            <td ng-class="{ 'has-error' : usereditfrom.userName.$invalid &&  usereditfrom.$submitted}">
+                                <input type="text" name="userName" ng-model="uservm.username" maxlength="100"
+                                       class="form-control" ng-required="true" readonly
+                                />
+                            </td>
+                        </tr>
+                        <!--<tr>-->
+                        <!--<th>所属园区：</th>-->
+                        <!--<td colspan="3">-->
+                        <!--<div class="input-group" ng-if="!isCompanyUser">-->
+                        <!--<input type="text"-->
+                        <!--name="parkIds" ng-model="selectpark.selectedLabeData"-->
+                        <!--class="form-control"-->
+                        <!--disabled/>-->
+                        <!--<span class="input-group-addon" data-dataoptions="selectpark" title="园区选择"-->
+                        <!--bsselectdata-pro><i class="glyphicon glyphicon-zoom-in"></i></span>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<span ng-if="isCompanyUser">{{selectpark.selectedLabeData}}</span>&ndash;&gt;-->
+                        <!--</td>-->
+                        <!--</tr>-->
+                        <tr>
+                            <th>登录账号：</th>
+                            <td>
+                                <input type="text" name="mobile" ng-model="userinfovm.mobile" maxlength="100"
+                                       class="form-control"/>
+                            </td>
+                            <th>微信：</th>
+                            <td>
+                                <input type="text" name="wechat" ng-model="userinfovm.wechat" maxlength="100"
+                                       class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>职位：</th>
+                            <td colspan="3">
+                                <input type="text" name="position" ng-model="userinfovm.position" maxlength="100"
+                                       class="form-control"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>头像：</th>
+                            <td rowspan="3" colspan="1">
+                                <img style="width: 220px;height:200px;" ng-if="pictureurl"
+                                     src="{{pictureurl}}">
+                            </td>
+                            <td colspan="2">
+                                <button type="button" class="btn btn-default1" ng-click="uploadpicture()">上传</button>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                <button type="submit" class="btn btn-primary" form="usereditfrom">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="dj-formtable">
+    <div class="table-responsive list-table-panel">
+        <div class="list-table-title">
+            <div class="table-title">
+
+            </div>
+            <div class="table-tool">
+                <ul class="header-dropdown">
+                    <li class="dropdown demo-icon-container main-card-more table-more">
+                        <a ng-click="showMore_dnpx()"
+                           class="dropdown-toggle demo-google-material-icon">
+                            <span class="icon-name">更多</span>
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>所属组织</th>
+                <th>荣誉名称</th>
+                <th>获得荣誉时间</th>
+                <th>等级</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in dnpxList">
+                <td scope="row" class="text-center">
+                    {{$index+1}}
+                </td>
+                <td>{{it.DZZMC}}</td>
+                <td>{{it.HONOURNAME}}</td>
+                <td class="text-center">{{it.HONOURTIME|date:'yyyy-MM-dd'}}</td>
+                <td class="text-center">{{it.LEVELNAME}}</td>
+            </tr>
+            <tr ng-if="dnpxList.length==0">
+                <td colspan="5" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

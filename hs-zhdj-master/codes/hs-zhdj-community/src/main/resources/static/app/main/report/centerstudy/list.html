@@ -1,0 +1,161 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="treeparams.selectdzzdm"
+             data-selectdzzmc="treeparams.selectdzzmc"
+             data-defaultselected="treeparams.defaultselected"
+             data-dzzdm="treeparams.dzzdm"
+             data-isunfold="treeparams.isunfold"
+             data-userid="selectparams.userid"
+             data-showdxz="treeparams.showdxz"
+             data-onlyshowdw="treeparams.onlyshowdw"
+             data-showlevel="300"></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="treeparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="treeparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>年度</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-model="selectparams.year"
+                                                        ng-change="search()"
+                                                        ng-options="type.dickey as type.dicvalue for type in yearList"
+                                                        class="form-control"
+                                                        name="year">
+                                                    <option value="" selected>--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <button class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div panel-title data-title="'中心组学习情况'"></div>
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>所属党组织</th>
+                                    <th>中心组成员数</th>
+                                    <th>本年度集中学习次数</th>
+                                    <th>专题研讨次数</th>
+                                    <th>集中学习出勤率</th>
+                                    <th>督学交流次数</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td>{{it.DZZMC}}</td>
+                                    <td class="text-center">{{userList.length}}</td>
+                                    <td class="text-center">{{it.NUM_JZXX}}</td>
+                                    <td class="text-center">{{it.NUM_ZTYT}}</td>
+                                    <td class="text-center">{{it.JZXXCQL}}%</td>
+                                    <td class="text-center">{{it.NUM_DXJL}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div panel-title data-title="'集中学习出勤率情况'"></div>
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th rowspan="2">所属党组织</th>
+                                    <th colspan="{{detailList.length>0?detailList.length:1}}">集中学习出勤率</th>
+                                    <th rowspan="2">年度学习次数</th>
+                                    <th rowspan="2">年度出勤率</th>
+                                </tr>
+                                <tr ng-if="detailList.length>0">
+                                    <th ng-repeat="it in detailList">{{it.STUDY_START_TIME | date:'yyyy年MM月dd日'}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td>{{it.DZZMC}}</td>
+                                    <td class="text-center" ng-repeat="it in detailList">
+                                        {{it.JZXXCQL}}%
+                                    </td>
+                                    <td class="text-center" ng-if="detailList.length<=0"></td>
+                                    <td class="text-center">{{it.NUM_JZXX}}</td>
+                                    <td class="text-center">{{it.JZXXCQL}}%</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div panel-title data-title="'中心组成员集中学习参学率情况'"></div>
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th rowspan="2">姓名</th>
+                                    <th colspan="{{detailList.length>0?detailList.length:1}}">集中学习时间</th>
+                                    <th rowspan="2">参学率</th>
+                                </tr>
+                                <tr ng-if="detailList.length>0">
+                                    <th ng-repeat="it in detailList">{{it.STUDY_START_TIME | date:'yyyy年MM月dd日'}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in userList">
+                                    <td>{{it.XM}}</td>
+                                    <td class="text-center" ng-repeat="dt in it.userStudyList">
+                                        {{dt.STUDYSTATE}}
+                                    </td>
+                                    <td ng-if="it.userStudyList.length==0">
+                                    </td>
+                                    <td class="text-center">
+                                        {{it.STUDYRATE}}%
+                                    </td>
+                                </tr>
+                                <tr ng-if="userList.length==0">
+                                    <td colspan="6" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

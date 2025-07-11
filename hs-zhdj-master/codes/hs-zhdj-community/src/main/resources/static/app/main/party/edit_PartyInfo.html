@@ -1,0 +1,209 @@
+<form class="form-horizontal" role="form" name="partyform" novalidate>
+    <div panel-title data-title="'党组织基本信息'"></div>
+    <div class="dj-formtable">
+        <table class="dj-table">
+            <tr>
+                <th>
+                    上级党组织代码
+                </th>
+                <td>
+                    {{parentParty.dzzdm}}
+                </td>
+                <th>上级党组织名称</th>
+                <td>
+                    {{parentParty.dzzmc}}
+                </td>
+            </tr>
+            <tr>
+                <th>党组织代码</th>
+                <td ng-class="{ 'has-error' : this.partyform.dzzdm_short.$invalid &&  this.partyform.$submitted}">
+                    <div class="input-group input-group-search" style="border-left-width: 0px;">
+                        <span class="input-group-addon">{{parentParty.dzzdm}}</span>
+                        <input type="text" name="dzzdm_short" ng-model="partyExt.dzzdm_short" maxlength="3"
+                               class="form-control" ng-required="true"
+                               ng-pattern="/^[a-zA-Z0-9]{3}$/"
+                               style="margin-top: 3px;box-shadow: none;" ng-disabled="!isAdd">
+
+                    </div>
+                    <span ng-show="this.partyform.dzzdm_short.$invalid &&  this.partyform.$submitted"
+                          class="error">请输入三位由数字、字母任意组合的代码..</span>
+                </td>
+                <!--<td>
+                    {{partyModel.dzzdm}}
+                </td>-->
+                <th>
+                    党组织名称
+                </th>
+                <td ng-class="{ 'has-error' : this.partyform.dzzmc.$invalid &&  this.partyform.$submitted}">
+                    <input type="text" name="dzzmc" ng-model="partyModel.dzzmc" maxlength="100"
+                           class="form-control" ng-required="true"/>
+                    <span ng-show="this.partyform.dzzmc.$invalid &&  this.partyform.$submitted"
+                          class="error">必填.</span>
+                </td>
+                <!--<td>
+                    {{partyModel.dzzmc}}
+                </td>-->
+            </tr>
+            <tr>
+                <th>组织类别</th>
+                <td ng-class="{ 'has-error' : this.partyform.zzlb.$invalid &&  this.partyform.$submitted}">
+                    <select class="form-control show-tick" ng-model="partyFBModel.zzlb"
+                            ng-options="type.bm as type.hzmc for type in zzlbdmList"
+                            class="form-control"
+                            name="zzlb" ng-required="true">
+                        <option value="" selected>--请选择--</option>
+                    </select>
+                    <span ng-show="this.partyform.zzlb.$invalid &&  this.partyform.$submitted"
+                          class="error">必填.</span>
+                </td>
+                <th>
+                    基层组织分类
+                </th>
+                <td>
+                    <select class="form-control show-tick"
+                            ng-model="partyFBModel.jczzfl"
+                            ng-options="type.bm as type.hzmc for type in jczzflList"
+                            class="form-control"
+                            name="jczzfl">
+                        <option value="" selected>--请选择--</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    建立党组织日期
+                </th>
+                <td>
+                    <!--{{partyModel.jldzzrq}}-->
+                    <input name="jldzzrq" class="form-control"
+                           autocomplete="off"
+                           autoclose="true"
+                           data-date-format="yyyy-MM-dd" data-date-type="date"
+                           ng-model="partyModel.jldzzrq"
+                           placeholder="" bs-datepicker/>
+                </td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <th>
+                    <!--职工数-->
+                </th>
+                <td>
+                    <!--<input type="number" name="zgrs" ng-model="partyFBModel.zgrs"-->
+                           <!--class="form-control" min="0" step="1"/>-->
+                </td>
+
+                <td colspan="2" ng-if="zzlbmc!='党委' && zzlbmc!='党工委' && zzlbmc!='党小组'"></td>
+
+                <th ng-if="zzlbmc=='党委' || zzlbmc=='党工委'">组织助理员</th>
+                <td ng-if="zzlbmc=='党委' || zzlbmc=='党工委'">
+                    <div class="input-group input-group-search"
+                         data-dataoptions="selectUser_zz"
+                         title="选择成员" bsselectdata-pro>
+                        <input name="zzzly" type="text" ng-model="selectUser_zz.selectedLabeData"
+                               class="form-control"
+                               ng-disabled="true"/>
+                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                    </div>
+                </td>
+
+                <th ng-if="zzlbmc=='党小组'">党小组组长</th>
+                <td ng-if="zzlbmc=='党小组'">
+                    <div class="input-group input-group-search"
+                         data-dataoptions="selectUser_dxzzz"
+                         title="选择成员" bsselectdata-pro>
+                        <input name="dxzzz" type="text" ng-model="selectUser_dxzzz.selectedLabeData"
+                               class="form-control"
+                               ng-disabled="true"/>
+                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-if="zzlbmc=='党委' || zzlbmc=='党工委'">
+                <th>宣传助理员</th>
+                <td>
+                    <div class="input-group input-group-search"
+                         data-dataoptions="selectUser_xc"
+                         title="选择成员" bsselectdata-pro>
+                        <input name="xczly" type="text" ng-model="selectUser_xc.selectedLabeData"
+                               class="form-control"
+                               ng-disabled="true"/>
+                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                    </div>
+                </td>
+                <th>纪检监察员</th>
+                <td>
+                    <div class="input-group input-group-search"
+                         data-dataoptions="selectUser_jj"
+                         title="选择成员" bsselectdata-pro>
+                        <input name="jjjcy" type="text" ng-model="selectUser_jj.selectedLabeData"
+                               class="form-control"
+                               ng-disabled="true"/>
+                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                    </div>
+                </td>
+            </tr>
+
+            <tr ng-if="zzlbmc=='党委' || zzlbmc=='党工委'">
+                <th>党群办主任</th>
+                <td>
+                    <div class="input-group input-group-search"
+                         data-dataoptions="selectUser_dqbzr"
+                         title="选择成员" bsselectdata-pro>
+                        <input name="dqbzr" type="text" ng-model="selectUser_dqbzr.selectedLabeData"
+                               class="form-control"
+                               ng-disabled="true"/>
+                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                    </div>
+                </td>
+                <th>综合部（党群工作部）部长</th>
+                <td>
+                    <div class="input-group input-group-search"
+                         data-dataoptions="selectUser_zhbbz"
+                         title="选择成员" bsselectdata-pro>
+                        <input name="zhbbz" type="text" ng-model="selectUser_zhbbz.selectedLabeData"
+                               class="form-control"
+                               ng-disabled="true"/>
+                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div panel-title data-title="'其他信息'"></div>
+    <div class="dj-formtable">
+        <table class="dj-table">
+            <tr>
+                <th>备注1</th>
+                <td>
+                    <input type="text" name="yl01" ng-model="partyModel.yl01"
+                           class="form-control"/>
+                </td>
+                <th>备注2</th>
+                <td>
+                    <input type="text" name="yl02" ng-model="partyModel.yl02"
+                           class="form-control"/>
+                </td>
+            </tr>
+            <tr>
+                <th>备注3</th>
+                <td>
+                    <input type="text" name="yl03" ng-model="partyModel.yl03"
+                           class="form-control"/>
+                </td>
+                <th>备注4</th>
+                <td>
+                    <input type="text" name="yl04" ng-model="partyModel.yl04"
+                           class="form-control"/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="form_foot">
+        <button type="button" class="btn btn-default" ng-click="pagechange()">取消</button>
+        <button type="submit" class="btn btn-primary"
+                ng-click="saveParty(this.partyform.$valid)"
+                ng-if="op!=0">保存
+        </button>
+    </div>
+</form>

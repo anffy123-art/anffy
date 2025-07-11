@@ -1,0 +1,87 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="dj-list-content content1">
+            <div class="card">
+                <div activate-input class="key-header" style="padding-top: 20px;">
+                    <div class="row clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-inline">
+                            <input size="80" ng-model="selectData.fileName" class="form-control key-input" type="text"
+                                   placeholder="  输入关键字查找">
+                            <a class="btn btn-default1" ng-click="searchFile()">
+                                搜索
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="key-body">
+                    <ul class="nav nav-tabs tab-col-deep-orange" style="font-size: 16px;margin-top: 10px;" role="tablist">
+                        <li ng-repeat="nav in navList" ng-class="{active:isSelected(nav.filetypeid)}">
+                            <a ng-click="selectTab(nav.filetypeid)" data-toggle="tab">
+                                {{nav.filetypename}}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="panel tab-body1">
+                        <div class="row clearfix">
+                            <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                                <div class="card" style="box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);">
+                                    <div class="header">
+                                        <div class="title">分类</div>
+                                    </div>
+                                    <div class="body">
+                                        <ul class="list-group">
+                                            <a ng-click="selectTree(it.filetypeid)" class="list-group-item"
+                                               ng-class="{'tree-active':isTreeSelect(it.filetypeid)}" ng-repeat="it in treeList">
+                                                {{it.filetypename}}
+                                            </a>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                                <div class="table-responsive list-table-panel">
+                                    <table class="table table-bordered table-striped table-hover js-basic-example dataTable table-text-clip">
+                                        <thead>
+                                        <tr>
+                                            <th class="col-md-2">制度编号</th>
+                                            <th class="col-md-8">文件名称</th>
+                                            <th class="col-md-2">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="f in fileList">
+                                            <td class="text-center">{{f.filecode}}</td>
+                                            <td title="{{ f.filename}}">{{ f.filename}}</td>
+                                            <td class="text-center">
+                                                <button class="btn td-btn bg-light-green waves-effect" title="查看"
+                                                        data-placement="center" data-animation="am-fade-and-scale"
+                                                        ng-click="viewFile(f.fileid,f.filename)">
+                                                    查看
+                                                </button>
+
+                                                <button class="btn td-btn bg-pink waves-effect" title="下载"
+                                                        ng-click="downloadFile(f.fileid)">
+                                                    下载
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr ng-if="fileList.length<=0">
+                                            <td colspan="5" style="text-align:center">暂无数据</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--参数含义：page-Index：当前页面，page-Size：每页显示多少数据，total-Length:数据总长度-->
+                                <pagination ng-if="fileList.length>0" data-pageindex="selectData.pageindex"
+                                            data-pagesize="selectData.pagesize" data-ptotal="selectData.ptotal"></pagination>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,182 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 70%;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">查看季度评分信息</h4>
+            </div>
+            <div activate-input class="body">
+                <form class="form-horizontal" role="form"
+                      name="editForm" novalidate>
+                    <div>
+                        <div class="row clearfix">
+                            <div class="col-lg-1 col-md-1 form-control-label">
+                                <label ng-if="dataModel.cgjqtype==1">责任岗</label>
+                                <label ng-if="dataModel.cgjqtype==2">责任区</label>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" name="partyname" ng-model="dataModel.name" maxlength="50"
+                                               class="form-control" disabled/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 form-control-label">
+                                <label>所属支部</label>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" name="partyname" ng-model="dataModel.partyname"
+                                               maxlength="50"
+                                               class="form-control" disabled/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 form-control-label">
+                                <label ng-if="dataModel.cgjqtype==1">岗位人员</label>
+                                <label ng-if="dataModel.cgjqtype==2">负责人</label>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" name="headusername" ng-model="dataModel.headusername"
+                                               maxlength="50"
+                                               class="form-control" disabled/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-1 col-md-1 form-control-label">
+                                <label>所属年度</label>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" name="partyname" ng-model="dataModel.year" maxlength="50"
+                                               class="form-control" disabled/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 form-control-label">
+                                <label>所属季度</label>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" name="partyname" ng-model="dataModel.quarter" maxlength="50"
+                                               class="form-control" disabled/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 form-control-label">
+                                <label>总分</label>
+                            </div>
+                            <div class="col-lg-2 col-md-2">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="text" name="score" ng-model="dataModel.score" maxlength="50"
+                                               class="form-control" disabled/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive list-table-panel">
+                        <div class="list-table-title">
+                            <div class="table-title">
+                                考核评分
+                            </div>
+                        </div>
+                        <div class="outoflow">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-1">序号</th>
+                                    <th class="col-md-2">项目</th>
+                                    <th class="col-md-2">考核内容和标准</th>
+                                    <th class="col-md-1">分值</th>
+                                    <th class="col-md-1">事由</th>
+                                    <th class="col-md-1">党支部初步加减分</th>
+                                    <th class="col-md-1">党员确认情况</th>
+                                    <th class="col-md-1">最终加减分</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in scoreDataList">
+                                    <td scope="row">{{$index+1}}</td>
+                                    <td>{{it.PROJECTNAME}}</td>
+                                    <td>
+                            <textarea type="text" autocomplete="off" class="form-control" name="CONTENT_{{$index}}"
+                                      ng-model="it.CONTENT" rows="3" disabled>
+                            </textarea>
+                                    </td>
+                                    <td>
+                                        {{it.SCOREREFER}}
+                                    </td>
+                                    <td>
+                             <textarea type="text" autocomplete="off" class="form-control" name="REASON_{{$index}}"
+                                       ng-model="it.REASON" rows="3" disabled>
+                            </textarea>
+                                    </td>
+                                    <td>
+                                        {{it.INITIALSCORE}}
+                                    </td>
+                                    <td>
+                                        {{it.CGJQSCORECHECKNAME}}
+                                    </td>
+                                    <td>
+                                        {{it.SCORE}}
+                                    </td>
+                                </tr>
+                                <tr ng-if="scoreDataList.length<=0">
+                                    <td colspan="8" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div ng-if="dataModel.cgjqtype==2" class="table-responsive list-table-panel">
+                        <div class="list-table-title">
+                            <div class="table-title">
+                                责任区成员
+                            </div>
+                        </div>
+                        <div class="outoflow" style="max-height: 300px;">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-1">序号</th>
+                                    <th class="col-md-2">姓名</th>
+                                    <th class="col-md-1">性别</th>
+                                    <th class="col-md-2">联系电话</th>
+                                    <th class="col-md-2">职务</th>
+                                    <th class="col-md-1">成员类型</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in userList">
+                                    <td scope="row">{{$index+1}}</td>
+                                    <td>{{it.XM}}</td>
+                                    <td>{{it.XBMC}}</td>
+                                    <td>{{it.MOBILE}}</td>
+                                    <td>{{it.POST}}</td>
+                                    <td>{{(it.RYBM!="" && it.RYBM!=null)?"党员":"群众"}}</td>
+                                </tr>
+                                <tr ng-if="userList.length<=0">
+                                    <td colspan="5" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form_foot" style="margin-top: 10px;">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">返回</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

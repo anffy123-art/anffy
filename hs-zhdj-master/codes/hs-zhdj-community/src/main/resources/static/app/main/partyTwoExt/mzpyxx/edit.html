@@ -1,0 +1,77 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{editParams.title}}</h4>
+            </div>
+            <div activate-input class="body">
+                <form class="form-horizontal" role="form" id="editForm"
+                      name="editForm" ng-submit="save(this.editForm.$valid)" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table">
+                            <tr>
+                                <th>
+                                    选择成员
+                                </th>
+                                <td ng-class="{ 'has-error' : this.editForm.xm.$invalid &&  this.editForm.$submitted}">
+                                    <div class="input-group input-group-search"
+                                         data-dataoptions="selectUserlist"
+                                         title="选择成员" bsselectdata-pro>
+                                        <input name="userName" type="text" ng-model="dataModel.userName"
+                                               class="form-control" ng-required="true"
+                                               ng-disabled="true"/>
+                                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                                    </div>
+                                    <span ng-show="this.editForm.xm.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>所属党支部</th>
+                                <td>{{dataModel.partyName}}</td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    开展评议日期
+                                </th>
+                                <td ng-class="{ 'has-error' : (this.editForm.kzpyrq.$invalid || this.editForm.jspyrq.$invalid) &&  this.editForm.$submitted}">
+                                    <input name="zlzbrq" class="form-control" style="width: 100px;display: inline;"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyyMMdd" data-date-type="string"
+                                           ng-model="dataModel.kzpyrq"
+                                           placeholder="" bs-datepicker ng-required="true"/>
+                                    <input name="jspyrq" class="form-control" style="width: 100px;display: inline;"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyyMMdd" data-date-type="string"
+                                           ng-model="dataModel.jspyrq"
+                                           placeholder="" bs-datepicker ng-required="true"/>
+                                    <span ng-show="(this.editForm.kzpyrq.$invalid || this.editForm.jspyrq.$invalid) &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>
+                                    评议结果
+                                </th>
+                                <td ng-class="{ 'has-error' : this.editForm.pyjg.$invalid &&  this.editForm.$submitted}">
+                                    <select class="form-control show-tick"
+                                            ng-model="dataModel.pyjg"
+                                            ng-options="type.BM as type.HZMC for type in pyjgList"
+                                            class="form-control"
+                                            name="pyjg">
+                                        <option value="">--请选择--</option>
+                                    </select>
+                                    <span ng-show="this.editForm.pyjg.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" form="editForm">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

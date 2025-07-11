@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.PartyHelpCQuery">
+    <select id="selectHelpList" resultType="com.px.partybuild.vo.PartyHelpVo">
+        select help.partyHelpID,help.userCode,help.year,help.recordStatus,help.approveUserID,help.createTime,
+        help.createUserId, help.createUserName, help.updateTime,
+        help.updateUserId,help.updateUserName,help.helpReason,help.approveTime
+        ,us.XM as userName,zz.DZZMC as partyName,zz.DZZDM as partyCode,approveUser.XM as approveUserName,dic.DICVALUE as recordStatusName,userinfo.USERNAME as userNo
+        from us_partyhelp help
+        inner join vm_ryjbxx us on help.userCode = us.RYBM
+        inner join zz_zzqkxx zz on us.SZDZBDM = zz.DZZDM
+        left join vm_ryjbxx approveUser on help.approveUserID = approveUser.RYBM
+        left join cf_dictionary dic on help.recordStatus = dic.DICKEY and dic.DICTYPEKEY = 'partyHelpStatus'
+        left join CF_USERS userinfo on us.RYBM=userinfo.USERID
+        <where>
+            <if test="partyHelpID!=null and partyHelpID!=''">
+                and help.partyHelpID = #{partyHelpID}
+            </if>
+            <if test="partyCode!=null and partyCode!=''">
+                and us.SZDZBDM like concat(#{partyCode},'%')
+            </if>
+            <if test="userName!=null and userName!=''">
+                and us.XM like concat('%',#{userName},'%')
+            </if>
+            <if test="userCode!=null and userCode!=''">
+                and us.RYBM like concat('%',#{userCode},'%')
+            </if>
+            <if test="year!=null">
+                and help.year = #{year}
+            </if>
+            <if test="recordStatus!=null">
+                and help.recordStatus = #{recordStatus}
+            </if>
+            <if test="concatUserNameList != null and concatUserNameList.size()>0">
+                and concat(us.XM,zz.DZZMC,help.year) in
+                <foreach collection="concatUserNameList" item="name" index="index" open="(" close=")" separator=",">
+                    #{name}
+                </foreach>
+            </if>
+        </where>
+        order by help.year desc,zz.DZZDM,us.RYBM
+    </select>
+
+    <update id="approve">
+        update us_partyhelp set approveUserID=#{approveUserID},approveTime=sysdate(),recordStatus=#{approveResult}
+        where partyHelpID in
+        <foreach collection="idList" item="id" open="(" close=")" separator="," index="index">
+            #{id}
+        </foreach>
+    </update>
+
+</mapper>

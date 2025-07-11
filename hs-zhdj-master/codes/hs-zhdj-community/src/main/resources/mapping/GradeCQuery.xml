@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.GradeCQuery">
+    <select id="selectGradeList" resultType="java.util.HashMap">
+        select b.*, z.DZZMC,x.hzmc as XJFSMC,
+        fb.ZZLB
+        from ZZ_BZJCXX b
+        inner join ZZ_ZZQKXX z on b.dzzdm= z.dzzdm
+        left join Zzzd_xjfsdm x on b.xjfs=x.bm
+        left join ZZ_ZZQKXXFB fb on z.DZZDM = fb.dzzdm
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and b.dzzdm like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="ldjtjc != null and ldjtjc != ''">
+            and b.ldjtjc like concat('%',#{ldjtjc},'%')
+        </if>
+        <if test="dzzmc != null and dzzmc != ''">
+            and z.dzzmc like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="xjfs != null and xjfs != ''">
+            and b.xjfs = #{xjfs}
+        </if>
+        <if test="gjjmrq_begin != null and gjjmrq_begin != ''">
+            and b.gjjmrq >= #{gjjmrq_begin}
+        </if>
+        <if test="gjjmrq_end != null and gjjmrq_end != ''">
+            and b.gjjmrq <![CDATA[ <= ]]> #{gjjmrq_end}
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(b.dzzdm,1,12) in(select dzzdm from ZZ_DZZFBQK where zzfb= #{zzfbType})
+        </if>
+        /*所属党组织代码*/
+        <if test="ssdzzdm != null and ssdzzdm != ''">
+            and b.dzzdm =#{ssdzzdm}
+        </if>
+        <if test="zzlb != null and zzlb.size()>0">
+            and fb.zzlb in
+            <foreach collection="zzlb" item="zzlb" index="index" open="(" close=")" separator=",">
+                #{zzlb}
+            </foreach>
+        </if>
+        <if test="jczzfl != null and jczzfl.size()>0">
+            and fb.jczzfl in
+            <foreach collection="jczzfl" item="jczzfl" index="index" open="(" close=")" separator=",">
+                #{jczzfl}
+            </foreach>
+        </if>
+        <if test="sfzdjc != null and sfzdjc ==1">
+            and fb.LDJTJC=b.LDJTJC
+        </if>
+        order by b.dzzdm,b.ldjtjc desc
+    </select>
+    <select id="selectGradeUserList" resultType="java.util.HashMap">
+        select c.*, z.DZZMC,rzfs.hzmc as RZFSMC,
+        zwmc.hzmc as ZWMCMC, zwjb.hzmc as ZWJBMC,
+        zzjzqk.HZMC as ZZJZQKMC,
+        uspoint.LDRYLXDMC,jszw.hzmc as JSZWMC,
+        zzfb.ZZLB,
+        bzjcxx.LDJTDXRQ
+        from ZZ_BZCYXX c
+        inner join ZZ_ZZQKXX z on c.dzzdm= z.dzzdm
+        left join zzzd_rzfs rzfs on c.rzfs = rzfs.bm
+        left join Zzzd_zwmc zwmc on c.zwmc = zwmc.bm
+        left join Zd_dzzwjbm zwjb on c.gzwjb = zwjb.bm
+        inner join VM_RYJBXX u on c.RYBM=u.RYBM
+        left join RS_RYJBXXFB fb on u.RYBM=fb.RYBM
+        left join zd_zyjszwdm jszw on u.xjszwmc=jszw.bm
+        left join zzzd_zzjzqk zzjzqk on c.ZZJZQK=zzjzqk.bm
+        left join VW_USERCONTACTPOINT uspoint on c.RYBM=uspoint.RYBM
+        inner join ZZ_ZZQKXXFB zzfb on c.DZZDM=zzfb.DZZDM
+        left join ZZ_BZJCXX bzjcxx on c.JC = bzjcxx.LDJTJC and c.DZZDM = bzjcxx.DZZDM
+        where 1=1
+        <if test="isMaxJc != null and isMaxJc ==1">
+             and c.JC=zzfb.LDJTJC
+        </if>
+        <if test="dzzdm != null and dzzdm != ''">
+            and c.dzzdm like concat('',#{dzzdm},'%')
+        </if>
+        <if test="ldjtjc != null and ldjtjc != ''">
+            and c.jc like concat('%',#{ldjtjc},'%')
+        </if>
+        <if test="dzzmc != null and dzzmc != ''">
+            and z.dzzmc like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="xm != null and xm != ''">
+            and c.xm like concat('%',#{xm},'%')
+        </if>
+        <!--<if test="zwmc != null and zwmc != ''">
+            and c.zwmc like '%'||#{zwmc}||'%'
+        </if>-->
+        <if test="rzfs != null and rzfs != ''">
+            and c.rzfs = #{rzfs}
+        </if>
+        <if test="onlyshow_dw!=null">
+            <if test="onlyshow_dw == 1">
+                and z.ZZLB in('611','200','271')
+            </if>
+            <if test="onlyshow_dw == 0">
+                and z.ZZLB not in('611','200','271')
+            </if>
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(c.dzzdm,1,12) in(select dzzdm from ZZ_DZZFBQK where zzfb= #{zzfbType})
+        </if>
+        /*所属党组织代码*/
+        <if test="ssdzzdm != null and ssdzzdm != ''">
+            and c.dzzdm =#{ssdzzdm}
+        </if>
+        <if test="zzjzqk != null and zzjzqk != ''">
+            and c.zzjzqk = #{zzjzqk}
+        </if>
+        <if test="zwmc != null and zwmc.size()>0">
+            and c.zwmc in
+            <foreach collection="zwmc" item="zwmc" index="index" open="(" close=")" separator=",">
+                #{zwmc}
+            </foreach>
+        </if>
+        order by u.XMPY,u.RYJBXXBS
+    </select>
+
+    <select id="selectMaxGradeUserList" resultType="java.util.HashMap">
+        select c.*, uz.dzzmc,rzfs.hzmc as RZFSMC,
+        zwmc.hzmc as ZWMCMC, zwjb.hzmc as ZWJBMC,
+        (case c.ZZJZQK when '1' then '专职' when '2' then '兼职' else '' end) as ZZJZQKMC,
+        uspoint.LDRYLXDMC,jszw.hzmc as JSZWMC,
+        u.ZWMC as XZZWMC
+        from ZZ_BZCYXX c
+        inner join ZZ_ZZQKXX z on c.dzzdm= z.dzzdm
+        inner join ZZ_ZZQKXXFB dzzfb on c.DZZDM=dzzfb.DZZDM and c.JC=dzzfb.LDJTJC
+        left join zzzd_rzfs rzfs on c.rzfs = rzfs.bm
+        left join Zzzd_zwmc zwmc on c.zwmc = zwmc.bm
+        left join Zd_dzzwjbm zwjb on c.gzwjb = zwjb.bm
+        inner join VM_RYJBXX u on c.RYBM=u.RYBM
+        inner join ZZ_ZZQKXX uz on u.SZDZBDM= uz.dzzdm
+        left join RS_RYJBXXFB fb on u.RYBM=fb.RYBM
+        left join zd_zyjszwdm jszw on u.xjszwmc=jszw.bm
+        left join VW_USERCONTACTPOINT uspoint on c.RYBM=uspoint.RYBM
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and c.dzzdm like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="ldjtjc != null and ldjtjc != ''">
+            and c.jc like concat('%',#{ldjtjc},'%')
+        </if>
+        <if test="dzzmc != null and dzzmc != ''">
+            and z.dzzmc like concat('%',#{dzzmc},'%')
+        </if>
+        <if test="xm != null and xm != ''">
+            and c.xm like concat('%',#{xm},'%')
+        </if>
+        <if test="zwmc != null and zwmc != ''">
+            and c.zwmc like concat('%',#{zwmc},'%')
+        </if>
+        <if test="rzfs != null and rzfs != ''">
+            and c.rzfs = #{rzfs}
+        </if>
+        <if test="onlyshow_dw!=null">
+            <if test="onlyshow_dw == 1">
+                and z.ZZLB in('611','200','271')
+            </if>
+            <if test="onlyshow_dw == 0">
+                and z.ZZLB not in('611','200','271')
+            </if>
+        </if>
+        <if test="zzfbType != null">
+            and SUBSTR(c.dzzdm,1,12) in(select dzzdm from ZZ_DZZFBQK where zzfb= #{zzfbType})
+        </if>
+        /*所属党组织代码*/
+        <if test="ssdzzdm != null and ssdzzdm != ''">
+            and c.dzzdm =#{ssdzzdm}
+        </if>
+        <if test="rybm != null and rybm != ''">
+            and c.RYBM = #{rybm}
+        </if>
+        order by u.XMPY,u.RYJBXXBS
+    </select>
+
+
+    <select id="selectMaxJCSJList" resultType="java.util.HashMap">
+        select DZZDM,max(LDJTDXRQ) as LDJTDXRQ from ZZ_BZJCXX c
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and c.dzzdm =#{dzzdm}
+        </if>
+        group by DZZDM
+
+    </select>
+
+    <select id="selectMaxJCList" resultType="java.util.HashMap">
+        select DZZDM,max(LDJTJC) as JC from ZZ_BZJCXX c
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and c.dzzdm =#{dzzdm}
+        </if>
+        group by DZZDM
+
+    </select>
+
+    <select id="selectMaxGradeList" resultType="java.util.HashMap">
+        select b.*, z.dzzmc
+        from ZZ_BZJCXX b
+        inner join ZZ_ZZQKXX z on b.dzzdm= z.dzzdm
+        inner join ZZ_ZZQKXXFB fb on z.DZZDM = fb.dzzdm and b.LDJTJC=fb.LDJTJC
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and z.dzzdm =#{dzzdm}
+        </if>
+        <if test="year != null">
+            and b.GJJMRQ is not null and SUBSTR(b.GJJMRQ,1,4)=#{year}
+        </if>
+        <if test="childDzzdm != null and childDzzdm != ''">
+            and z.dzzdm like concat('%',{childDzzdm},'%') and z.dzzdm <![CDATA[ <> ]]> #{childDzzdm}
+        </if>
+    </select>
+    <select id="selectReplaceTotalList" resultType="java.util.HashMap">
+        select zzlb.BM,zzlb.HZMC,ifnull(t1.count,0) as count from ZZZD_ZZLBDMNEW zzlb
+        left join (
+        select fb.ZZLB,count(1) as count
+        from ZZ_ZZQKXX zz
+        inner join ZZ_ZZQKXXFB fb on zz.DZZDM = fb.dzzdm
+        left join (
+            select distinct bz.DZZDM,bz.GJJMRQ from ZZ_ZZQKXXFB fb
+            inner join ZZ_BZJCXX bz on fb.DZZDM = bz.DZZDM and fb.LDJTJC = bz.LDJTJC
+            where bz.GJJMRQ is not null
+            ) t on zz.DZZDM = t.DZZDM
+            where 1=1
+            <if test="dzzdm != null and dzzdm != ''">
+                and zz.dzzdm like concat('%',#{dzzdm}'%')
+            </if>
+            <if test="year != null">
+                and ((t.GJJMRQ is not null and SUBSTR(t.GJJMRQ,1,4)=#{year}) or (zz.JLDZZRQ is not null and
+                SUBSTR(zz.JLDZZRQ,1,4)=#{year}))
+            </if>
+            group by fb.ZZLB
+        ) t1 on zzlb.BM = t1.ZZLB
+        where 1=1 and zzlb.BM in ('100','300','400')
+        order by zzlb.bm
+    </select>
+</mapper>

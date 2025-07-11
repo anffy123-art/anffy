@@ -1,0 +1,29 @@
+﻿<div class="panel panel-default formquery-panel-height">
+    <div class="panel-heading">
+        <h4>需求验收</h4>
+    </div>
+    <div class="panel-body">
+        <div class="panel-group" ng-model="flowdata.activePanelids" data-allow-multiple="true" role="tablist"
+             aria-multiselectable="true" bs-collapse>
+            <div class="panel panel-info" ng-repeat="panel in flowdata.flowStagePanels">
+                <div class="panel-heading" role="tab">
+                    <h4 class="panel-title">
+                        <a ng-click="applyclick($index)" bs-collapse-toggle>
+                            {{ panel.title }}
+                        </a>
+                    </h4>
+                </div>
+                <div class="panel-collapse" role="tabpanel" bs-collapse-target>
+                    <div class="panel-body">
+                        <div ng-include="panel.src" onload="loadPanel(panel.onloadfunc)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer panel_foot">
+        <input type="submit" name="btn_up" ng-hide="flowdata.readonly" ng-click="savedemandappilerMark()"
+               class="btn btn-danger" value="提交"/>
+        <input type="button" name="btn_change" class="btn btn-default" ng-click="pagechange()" value="取消"/>
+    </div>
+</div>

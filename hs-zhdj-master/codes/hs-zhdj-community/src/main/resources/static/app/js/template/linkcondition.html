@@ -1,0 +1,7 @@
+<span>
+    <a ng-class="{ true: 'condition-selected', false: 'condition' }[selected.length == 0 || null == selected]"
+       ng-click="selected = []">全部</a>
+    <a ng-repeat="item in sourceList" ng-class="{ true: 'condition-selected', false: 'condition' }[isExists(item[valueField])]"
+       ng-click="onClick(item[valueField])" ng-show="!defaultCount || isShowAll || $index<limit">{{item[textField]}}</a>
+    <a ng-show="defaultCount && (sourceList.length > limit)" class="right" ng-click="isShowAll = !isShowAll">{{showText}}</a>
+</span>

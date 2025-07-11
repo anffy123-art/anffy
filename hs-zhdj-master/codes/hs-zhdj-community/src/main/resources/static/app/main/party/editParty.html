@@ -1,0 +1,156 @@
+<div id="dicmodal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 1100px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{params.title}}</h3>
+            </div>
+            <div activate-input class="body">
+                <form class="form-horizontal" role="form" id="partyform"
+                      name="partyform" ng-submit="submitParty(partyform.$valid)" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table">
+                            <tr>
+                                <th>
+                                    上级党组织代码
+                                </th>
+                                <td>
+                                    {{parentParty.dzzdm}}
+                                </td>
+                                <th>上级党组织名称</th>
+                                <td>
+                                    {{parentParty.dzzmc}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>党组织代码</th>
+                                <td ng-class="{ 'has-error' : this.partyform.dzzdm.$invalid &&  this.partyform.$submitted}">
+                                    <div style="display: flex;">
+                                        {{parentParty.dzzdm}}
+                                        <input type="text" name="dzzdm" ng-model="dzzdm_short" maxlength="3"
+                                               class="form-control" ng-required="true"
+                                               ng-pattern="/^[a-zA-Z0-9]{3}$/"
+                                               style="margin-top: 3px;box-shadow: none;"
+                                        />
+                                    </div>
+                                    <span ng-show="this.partyform.dzzdm.$invalid &&  this.partyform.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>
+                                    党组织名称
+                                </th>
+                                <td ng-class="{ 'has-error' : this.partyform.dzzmc.$invalid &&  this.partyform.$submitted}">
+                                    <input type="text" name="dzzmc" ng-model="partyvm.dzzmc" maxlength="100"
+                                           class="form-control" ng-required="true"/>
+                                    <span ng-show="this.partyform.dzzmc.$invalid &&  this.partyform.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <th>组织类别</th>
+                                <td ng-class="{ 'has-error' : this.partyform.zzlb.$invalid &&  this.partyform.$submitted}">
+                                    <select class="form-control show-tick" ng-model="partyvm.zzlb"
+                                            ng-options="type.bm as type.hzmc for type in zzlbdmList"
+                                            class="form-control"
+                                            name="zzlb" ng-required="true">
+                                    </select>
+                                    <span ng-show="this.partyform.zzlb.$invalid &&  this.partyform.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>
+                                    基层组织分类
+                                </th>
+                                <td>
+                                    <select class="form-control show-tick" 
+                                            ng-model="partyvm.jczzfl"
+                                            ng-options="type.bm as type.hzmc for type in jczzflList"
+                                            class="form-control"
+                                            name="jczzfl">
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    建立党组织日期
+                                </th>
+                                <td>
+                                    <input name="jldzzrq" ng-model="partyvm.jldzzrq" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyyMMdd" data-date-type="date"
+                                           placeholder="" bs-datepicker/>
+                                </td>
+                                <th>
+                                    "三乘一体"党支部标识
+                                </th>
+                                <td>
+                                    <input type="text" name="scytdzb" ng-model="partyvm.scytdzb"
+                                           class="form-control"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    开展评议日期
+                                </th>
+                                <td>
+                                    <input name="kzpyrq" ng-model="partyvm.kzpyrq" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyyMMdd" data-date-type="date"
+                                           placeholder="" bs-datepicker/>
+                                </td>
+                                <th>
+                                    结束评议日期
+                                </th>
+                                <td>
+                                    <input name="jspyrq" ng-model="partyvm.jspyrq" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyyMMdd" data-date-type="date"
+                                           placeholder="" bs-datepicker/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>备注1</th>
+                                <td>
+                                    <input type="text" name="yl01" ng-model="partyvm.yl01" 
+                                           class="form-control"/>
+                                </td>
+                                <th>备注2</th>
+                                <td>
+                                    <input type="text" name="yl02" ng-model="partyvm.yl02" 
+                                           class="form-control"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>备注3</th>
+                                <td>
+                                    <input type="text" name="yl03" ng-model="partyvm.yl03" 
+                                           class="form-control"/>
+                                </td>
+                                <th>备注4</th>
+                                <td>
+                                    <input type="text" name="yl04" ng-model="partyvm.yl04" 
+                                           class="form-control"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>备注5</th>
+                                <td colspan="3">
+                                    <input type="text" name="yl05" ng-model="partyvm.yl05" maxlength="36"
+                                           class="form-control"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" form="partyform" ng-if="isDetail">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

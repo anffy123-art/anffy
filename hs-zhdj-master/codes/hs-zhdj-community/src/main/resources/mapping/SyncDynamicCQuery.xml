@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.SyncDynamicCQuery">
+    <insert id="InsertDynamicTable" parameterType="java.util.Map">
+        insert into ${tableName}
+        <foreach collection="row" index="key" separator="," open="(" close=")">
+            ${key}
+        </foreach>
+        <foreach collection="row" item="value" separator="," open="values(" close=")">
+            #{value}
+        </foreach>
+    </insert>
+    <select id="FindDataRowsByPK" parameterType="java.util.List">
+      select * from ${tableName} where ${primaryKey}
+      <foreach collection="ids" item="id" open="in (" close=")" separator=",">
+          #{ id }
+      </foreach>
+    </select>
+
+    <select id="GetNewDataRows" resultType="java.util.Map">
+        select * from ${ tableName } where OperateState='A' and OperateTime>=(sysdate - interval '30' MINUTE)
+    </select>
+    <update id="UpdateLocalDataRow" parameterType="java.util.Map">
+        update ${tableName}
+        <set>
+            <foreach collection="row" separator="," item="value" index="key">
+                <if test="key!=primaryKey">
+                    ${key}=#{value}
+                </if>
+            </foreach>
+        </set>
+        where ${primaryKey}=#{ row.get(primaryKey)}
+    </update>
+    <update id="UpdateDataRowState" parameterType="java.util.List">
+        update ${tableName} set SyncState='Y'
+        where ${ primaryKey } in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{ id }
+        </foreach>
+    </update>
+</mapper>

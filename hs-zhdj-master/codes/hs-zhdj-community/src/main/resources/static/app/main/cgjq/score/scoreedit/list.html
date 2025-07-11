@@ -1,0 +1,20 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="selectparams.selectdzzdm" data-selectdzzmc="selectparams.selectdzzmc"
+             data-zzfbtype="selectparams.zzfbType" data-isunfold="selectparams.isunfold" data-defaultselected="selectparams.defaultselected"></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <ul class="nav nav-tabs tab-col-deep-orange" role="tablist">
+                    <li ng-repeat="item in pageList" ng-class="{active:isSelected(item.id)}">
+                        <a ng-click="selectTab(item.id)" data-toggle="tab">
+                            {{item.title}}
+                        </a>
+                    </li>
+                </ul>
+                <div class="panel" ng-repeat="item in pageList" ng-show="isSelected(item.id)" ng-include="item.url">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

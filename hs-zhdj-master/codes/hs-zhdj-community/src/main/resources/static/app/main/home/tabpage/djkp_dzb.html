@@ -1,0 +1,41 @@
+<div class="dj-formtable">
+    <div class="header" style="padding-top: 0px;">
+        <h2 class="demo-icon-container">
+            <div class="demo-google-material-icon">
+                <span class="main-card-title">党建考评情况（{{djkpData.YEAR}}年）</span>
+            </div>
+        </h2>
+    </div>
+    <table class="dj-table">
+        <tr>
+            <th>第一季度</th>
+            <td>
+                <a ng-click="showDjkp()">{{djkpData.QUARTER1}}</a>
+            </td>
+            <th>第二季度</th>
+            <td>
+                <a ng-click="showDjkp()">{{djkpData.QUARTER2}}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>第三季度</th>
+            <td>
+                <a ng-click="showDjkp()">{{djkpData.QUARTER3}}</a>
+            </td>
+            <th>第四季度</th>
+            <td>
+                <a ng-click="showDjkp()">{{djkpData.QUARTER4}}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>年度评分</th>
+            <td>
+                <a ng-click="showDjkp()">{{djkpData.ANNUALSCORE}}</a>
+            </td>
+            <th>评定等级</th>
+            <td>
+                <a ng-click="showDjkp()">{{djkpData.JUDGELEVELNAME}}</a>
+            </td>
+        </tr>
+    </table>
+</div>

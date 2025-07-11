@@ -1,0 +1,644 @@
+/*--/404--*/
+.error_page {
+    /*background: #B33A30;*/
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background-image: url("../images/newbg1.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-size:100% 100%;
+}
+
+.error-top {
+    text-align: center;
+    margin: 7em auto;
+    background: #fff;
+    padding: 2em 2em;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    -o-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+    border: 1px solid rgba(213, 213, 214, 0.85);
+    width: 30%;
+    padding: 2em 2em;
+    position: absolute;
+    left: 35%;
+    top: 13%;
+}
+
+.error-top h3 {
+    font-size: 9em;
+    font-weight: bold;
+    margin: 0;
+    color: #052963;
+}
+
+.error-top h3 i {
+    font-size: 113px;
+    color: #00c6d7;
+}
+
+.error-top span {
+    font-size: 1.5em;
+    color: #333;
+}
+
+.error-top p {
+    font-size: 0.95em;
+    font-weight: 400;
+    color: #777;
+    margin: 10px 0;
+}
+
+a.read.fourth {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 400;
+    padding: 0.6em 1em;
+    display: inline-block;
+    margin: 0 auto;
+    margin-top: 1em;
+    background: #00c6d7;
+}
+
+a.read.fourth:hover {
+    background: #052963;
+}
+
+/*--//404--*/
+
+/*--/sign-in--*/
+.login input[type="text"], .login input[type="password"] {
+    width: 100%;
+    padding: 0.9em 1em 0.9em 4em;
+    color: #777;
+    font-size: 15px;
+    outline: none;
+    font-weight: 400;
+    border: 1px solid #ddd;
+    background: url("../images/icons.png") no-repeat 14px 17px;
+    margin: 0.3em 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.login input[type="password"] {
+    background: url("../images/icons.png") no-repeat 13px -33px;
+
+}
+
+.submit {
+    margin: 1em 0;
+}
+
+.login input[type="submit"] {
+    font-size: 20px;
+    font-weight: 400;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    padding: 10px 15px;
+    width: 100%;
+    border: 2px solid #ea4c89;
+    background: #ea4c89;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+}
+
+.login input[type="submit"]:hover {
+    background: none;
+    border: 2px solid #ea4c89;
+    color: #ea4c89;
+
+}
+
+.buttons {
+    margin: 1em 0 0em 0;
+}
+
+.buttons ul {
+    padding: 0;
+}
+
+.buttons ul li {
+    display: inline-block;
+    width: 38%;
+    margin-right: 8%;
+    float: left;
+}
+
+.buttons ul li.or {
+    width: 3%;
+    margin-top: 8px;
+    color: #777;
+}
+
+.buttons ul li.lost {
+    margin-right: 0;
+    float: right;
+}
+
+/* Sweep To Right */
+a.hvr-sweep-to-right {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    background: url("../images/fb.png") no-repeat 20px 9px #3b5998;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    padding: 0.7em 1em;
+    font-size: 1em;
+    color: #fff;
+}
+
+a.hvr-sweep-to-right:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #354d7d;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+
+a.hvr-sweep-to-right:hover, a.hvr-sweep-to-right:focus, a.hvr-sweep-to-right:active {
+    color: white;
+}
+
+a.hvr-sweep-to-right:hover:before, a.hvr-sweep-to-right:focus:before, a.hvr-sweep-to-right:active:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+}
+
+/* Sweep To Left */
+a.hvr-sweep-to-left {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    position: relative;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    width: 100%;
+    padding: 0.7em 1em;
+    font-size: 1em;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+    background: url("../images/tw.png") no-repeat 20px 13px #1ab2e8;
+
+}
+
+a.hvr-sweep-to-left:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #1499c8;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+
+a.hvr-sweep-to-left:hover, a.hvr-sweep-to-left:focus, a.hvr-sweep-to-left:active {
+    color: white;
+}
+
+a.hvr-sweep-to-left:hover:before, a.hvr-sweep-to-left:focus:before, a.hvr-sweep-to-left:active:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+}
+
+.new {
+    margin: 1em 0 0em 0;
+}
+
+.new p {
+    float: left;
+}
+
+.new p a, .new p.sign a, .new p.sign {
+    color: #777;
+    font-weight: 400;
+    font-size: 1em;
+}
+
+.new p a:hover, .new p.sign a:hover {
+    text-decoration: underline;
+}
+
+.new p.sign {
+    float: right;
+}
+
+.new p.sign a {
+    color: #00C6D7;
+}
+
+p.sign.up {
+    text-align: center;
+    float: none;
+    padding: 0;
+}
+
+/*--/login--*/
+
+h3.inner-tittle.t-inner {
+    font-size: 1.8em;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 0.7em;
+    color: #333;
+}
+
+.inner-tittle.page {
+    position: absolute;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+    top: 15%;
+    color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    left: 0px;
+}
+
+.inner-tittle.page > h2 {
+    font-size: 2.0em;
+}
+
+.inner-tittle.page > h2 > img {
+    width: 30px;
+    height: 30px;
+    padding-left: 2px;
+    margin-bottom: 5px;
+}
+
+.download-page {
+    position: absolute;
+    top:5%;
+    right: 5%;
+}
+
+.download-page a{
+    color: yellow;
+}
+
+/*20191024登录页面修改*/
+.pageMain {
+    background: #fff;
+}
+
+.area {
+    width: 80%;
+    margin: 0 auto;
+    clear: both;
+    overflow: hidden;
+}
+
+.common_container{
+    position: absolute; width: 100%; height: 100%; z-index: -1;
+}
+
+.common_top_title {
+    margin-left: 20px;
+}
+
+.common_top {
+    height: 100px;
+    line-height: 100px;
+    /*background: #fff;*/
+    width: 100%;
+    position: absolute;
+    z-index: 13;
+    top: 0;
+}
+
+.common_top_logo {
+    float: left;
+    font-size: 35px;
+    font-weight: bold;
+    color: #ec131e;
+}
+
+.common_top_logo img {
+    float: left;
+    margin: 25px 13px 0px 0px;
+}
+
+.common_top_logo span {
+    float: left;
+    color: #fff;
+}
+
+.common_top_link {
+    width: 30%;
+    float: right;
+    text-align: right;
+    font-size: 14px;
+}
+
+.common_top_link a {
+    color: #555;
+}
+
+.common_top_link a:hover {
+    color: #ec131e;
+}
+
+.common_top_link font {
+    color: #c2c2c2;
+    margin: 0px 6px;
+}
+
+.top_view {
+    background: #fff;
+    width: 100%;
+    overflow: auto;
+    top: 0px;
+    position: absolute;
+    z-index: 10;
+    bottom: 0px;
+    overflow: hidden;
+}
+
+
+.nav_box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.nav_box_left {
+    width: calc(100% - 550px);
+    display: flex;
+    justify-content: center;
+}
+
+.nav_box_left > .oath_content {
+    width: 650px;
+    text-align: center;
+}
+
+.nav_box_left > .oath_content > .oath_title {
+    font-size: 48px;
+    color: #FFFF00;
+    font-weight: bold;
+    letter-spacing:5px;
+}
+@media (min-width: 750px) {
+    .nav_box_left > .oath_content > .oath_title {
+        font-size: 3rem;//页面宽度大于640px时，字体变为16像素的1.2倍
+        text-align: left;
+    }
+}
+
+.nav_box_left > .oath_content > .oath_detail{
+    font-size: 22px;
+    color:white;
+}
+.nav_box_left > .oath_content > .oath_detail> .pl{
+    letter-spacing:0.2em;
+}
+.nav_box_left > .oath_content > .oath_detail> .pl> .fh{
+    font-family: 宋体;
+}
+
+@media (min-width: 880px) {
+    .nav_box_left > .oath_content > .oath_title {
+        font-size: 4rem;//页面宽度大于880px时，字体变为16像素的1.2倍
+        text-align: left;
+    }
+    .nav_box_left > .oath_content > .oath_detail{
+        font-size: 4rem;
+        text-align: left;
+    }
+}
+
+@media (min-width: 1460px) {
+    .nav_box_left > .oath_content > .oath_title {
+        font-size: 5rem;//页面宽度大于1460px时，字体变为16像素的1.2倍
+    }
+    .nav_box_left > .oath_content > .oath_detail{
+        font-size: 5rem;
+        text-align: left;
+    }
+
+}
+
+
+
+.nav_box_right {
+    width: 400px;
+    margin-right: 150px;
+}
+
+.common_login {
+    width: 390px;
+    border: #e2e2e2 1px solid;
+    height: auto;
+    float: right;
+    background: #FFF;
+}
+
+.common_login_content {
+    width: 326px;
+    margin: 0 auto;
+    padding: 25px 0px 25px 0px;
+}
+
+.common_login_title {
+    border-bottom: #e2e2e2 1px solid;
+    font-size: 20px;
+    color: #ec131e;
+    padding: 0px 0px 10px 0px;
+}
+
+.common_login_title img {
+    float: left;
+    margin: -6px 15px 0px 0px;
+}
+
+.common_login_input {
+    clear: both;
+    overflow: hidden;
+    margin: 5px 0px 0px 0px;
+}
+
+.common_login_user {
+    background: #fff;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    border: 1px solid #d6d6d6;
+    box-shadow: 0 0 6px rgba(0, 0, 0, .10);
+    border-radius: 3px;
+    margin: 15px 0px 0px 0px;
+}
+
+.common_login_user:hover {
+    border: 1px solid #c9c9c9;
+}
+
+.common_login_user span {
+    float: left;
+    width: 45px;
+}
+
+.common_login_user span img {
+    margin: -5px 0px 0px 10px;
+}
+
+.yzm_pic {
+    margin: 4px 0px 0px 10px;
+    float: left;
+}
+
+.common_error {
+    background: #ececec;
+    box-shadow: 0 0 0px rgba(0, 0, 0, .10);
+    border-radius: 3px;
+    height: 28px;
+    line-height: 28px;
+    vertical-align: middle;
+    text-align: center;
+    margin: 10px 0px 0px 0px;
+}
+
+.common_login_yzm font {
+    color: #333;
+    font-size: 14px;
+    float: left;
+    margin: 0px 0px 0px 10px;
+}
+
+.common_login_user input {
+    border: 1px solid #fcfcfc;
+    background: #fcfcfc;;
+    height: 30px;
+    margin: 4px 0px 0px 0px;
+    float: left;
+    width: 260px;
+    font-size: 14px;
+    font-family: "微软雅黑";
+    color: #333;
+}
+
+.common_login_yzm input {
+    width: 100px !important;
+    float: left;
+}
+
+.common_login_submit {
+    clear: both;
+    overflow: hidden;
+    margin: 20px 0px 0px 0px;
+}
+
+.common_login_submit button {
+    background: #ec131e;
+    height: 50px;
+    box-shadow: 0 0 0px rgba(0, 0, 0, .10);
+    border-radius: 3px;
+    width: 326px;
+    border: 0px;
+    line-height: 50px;
+    vertical-align: middle;
+    color: #FFF;
+    font-size: 20px;
+    font-family: "微软雅黑";
+    cursor: pointer;
+}
+
+.common_login_submit button:hover {
+    background: #ff000d;
+}
+
+.common_copy {
+    height: 140px;
+    background: #fff;
+    width: 100%;
+    position: absolute;
+    z-index: 200;
+    bottom: 0;
+    display: none;
+}
+
+.common_copy_text {
+    float: left;
+    font-size: 12px;
+    color: #999;
+    width: 724px;
+    margin-top: 25px;
+    line-height: 20px;
+}
+.common_copy_text>a{
+    text-decoration: underline; color: blue;
+}
+.common_copy_ewm {
+    color: rgb(51, 51, 51);
+    font: 12px 微软雅黑, 宋体, Verdana, Geneva, sans-serif;
+    float: right;
+    width: 200px;
+    margin: 18px 0px 0px 0px;
+}
+
+.common_copy_ewm span {
+    float: left;
+    text-align: right;
+    margin: 60px 0px 0px 0px;
+}
+
+.common_copy_ewm img {
+    width: 100px;
+    height: 100px;
+    float: right;
+    margin: 0px 0px 3px 0px;
+}
+
+.common_login_error{
+    margin-bottom: 0px;
+}
+/*end*/

@@ -1,0 +1,76 @@
+﻿<div id="todopanel" class="panel panel-default formquery-panel-height" style="min-height:450px;">
+    <div class="panel-heading"><h3>{{title}}</h3></div>
+    <div class="search-param-panel">
+        <form class="form-inline formquery">
+            <div class="form-group">
+                <label>日期：</label>
+                <input class="form-control" type="text" name="datebegin" data-date-type="string"
+                       data-date-format="yyyy-MM-dd" ng-model="data.dateb" bs-datepicker/>
+                到：<input class="form-control" ng-required="" ng-model="data.datee" data-date-type="string"
+                         data-date-format="yyyy-MM-dd" type="text" name="dateend" bs-datepicker/>
+            </div>
+            <div class="form-group formquery-btns-panel">
+                <button class="btn btn-primary" type="submit" ng-click="updata(id)">查询</button>
+            </div>
+        </form>
+
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <td>标题</td>
+            <td>类型</td>
+            <td>时间</td>
+            <td>操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><a data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal">xxxxx1</a></td>
+            <td><a bs-tooltip="tooltip">异常</a></td>
+            <td><a data-container="body" bs-aside="aside">2017-10-1</a>
+                <a class="btn btn-lg" data-template-url="tast/asideModal.html" data-placement="right"
+                   data-animation="am-slide-right" bs-aside="aside" data-container="body">模板</a>
+            </td>
+            <td>
+                <button type="button" data-animation="am-fade-and-slide-top" data-template-url="tast/todomodal.html"
+                        bs-modal="modal1"> 弹窗1
+                </button>
+                <button type="button" ng-click="showModal('xxxx')">弹窗2</button>
+                <button type="button" ng-click="showalert()">提示</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <form ng-submit="">
+        <div class="form-inline">
+            <div class="form-group formquery">
+                <label>日期：</label>
+                <input class="form-control" type="text" name="datebegin" data-date-type="string"
+                       data-date-format="yyyy-MM-dd" ng-model="data.dateb" bs-datepicker/>
+                到：<input class="form-control" ng-required="" ng-model="data.datee" data-date-type="string"
+                         data-date-format="yyyy-MM-dd" type="text" name="dateend" bs-datepicker/>
+            </div>
+            <div class="form-group formquery">
+                <label>负责人：</label>
+                <input class="form-control" type="text" name="Manager"/>
+            </div>
+            <div class="form-group formquery-btns-panel">
+                <button class="btn btn-primary" type="submit" ng-click="updata(id)">查询</button>
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="form-group formquery">
+                <label>日期：</label>
+                <input class="form-control" type="text" name="datebegin" data-date-type="string"
+                       data-date-format="yyyy-MM-dd" ng-model="data.dateb" bs-datepicker/>
+                到：<input class="form-control" ng-required="" ng-model="data.datee" data-date-type="string"
+                         data-date-format="yyyy-MM-dd" type="text" name="dateend" bs-datepicker/>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+

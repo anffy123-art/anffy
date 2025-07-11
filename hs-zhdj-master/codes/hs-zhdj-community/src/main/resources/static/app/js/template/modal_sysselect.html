@@ -1,0 +1,120 @@
+﻿<div id="sysselect" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" ng-class="{'level1':isZero,'level2':isOne,'level3':isTwo,'level4':isThree}">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="row">
+                        <div ng-class="{'col-md-8 col-md-offset-2':isZero,'col-md-5 col-md-offset-1 div-left':isOne,'col-md-4 div-left':isTwo,'col-md-3 div-left':isThree}">
+                            <div class="panel panel-default" style="padding-bottom:0px;">
+                                <div class="panel-heading text-center">系统<img style="height:18px"
+                                                                              ng-show="sysList.isloading"
+                                                                              src="../../scripts/loading-2.gif"/></div>
+                                <div class="panel-body" style="padding: 0px;overflow-y: auto;height:300px">
+                                    <select class="form-control"
+                                            style="padding: 5px 0px 5px 10px; font-size: 14px;height:inherit"
+                                            multiple="multiple" ng-dblclick="Add(0)"
+                                            ng-change="SelectChange(0,choosedSys,sysList)" ng-model="choosedSys"
+                                            ng-options="sys.SystemName for sys in sysList"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-class="{'col-md-5 div-right':isOne,'col-md-4 div-midle':isTwo,'col-md-3 div-midle':isThree}"
+                             ng-if="selectType>0">
+                            <div class="panel panel-default" style="padding-bottom:0px;">
+                                <div class="panel-heading text-center">模块<img style="height:18px"
+                                                                              ng-show="sysList.child.isloading"
+                                                                              src="../../scripts/loading-2.gif"/></div>
+                                <div class="panel-body" style="padding: 0px;overflow-y: auto;height:300px">
+                                    <select class="form-control"
+                                            style="padding: 5px 0px 5px 10px; font-size: 14px;height:inherit"
+                                            multiple="multiple" ng-dblclick="Add(0)"
+                                            ng-change="SelectChange(1,choosedModule,sysList.child)"
+                                            ng-model="choosedModule"
+                                            ng-options="module.SysDutyName for module in sysList.child"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-class="{'col-md-4 div-right':isTwo,'col-md-3 div-midle':isThree}" ng-if="selectType>1">
+                            <div class="panel panel-default" style="padding-bottom:0px;">
+                                <div class="panel-heading text-center">菜单<img style="height:18px"
+                                                                              ng-show="sysList.child.child.isloading"
+                                                                              src="../../scripts/loading-2.gif"/></div>
+                                <div class="panel-body" style="padding: 0px;overflow-y: auto;height:300px">
+                                    <select class="form-control"
+                                            style="padding: 5px 0px 5px 10px; font-size: 14px;height:inherit"
+                                            multiple="multiple" ng-dblclick="Add(0)"
+                                            ng-change="SelectChange(2,choosedMenu,sysList.child.child)"
+                                            ng-model="choosedMenu"
+                                            ng-options="menu.SysDutyName for menu in sysList.child.child"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-class="{'col-md-3 div-right':isThree}" ng-if="selectType>2">
+                            <div class="panel panel-default" style="padding-bottom:0px;">
+                                <div class="panel-heading text-center">功能<img style="height:18px"
+                                                                              ng-show="sysList.child.child.child.isloading"
+                                                                              src="../../scripts/loading-2.gif"/></div>
+                                <div class="panel-body" style="padding: 0px;overflow-y: auto;height:300px">
+                                    <select class="form-control"
+                                            style="padding: 5px 0px 5px 10px; font-size: 14px;height:inherit"
+                                            multiple="multiple" ng-dblclick="Add(0)"
+                                            ng-change="SelectChange(3,choosedFunc,sysList.child.child.child)"
+                                            ng-model="choosedFunc"
+                                            ng-options="func.SysDutyName for func in sysList.child.child.child"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="!singleMode">
+                    <hr/>
+                    <div class="div-center text-center">
+                        <button class="btn btn-success" ng-click="Add(0)">添加</button>
+                        <button class="btn btn-success" ng-click="Add(1)">全部添加</button>
+                        <button class="btn btn-danger" ng-click="Delete(1)">清空</button>
+                    </div>
+                    <hr/>
+                </div>
+                <div ng-if="!singleMode">
+                    <span>已选:{{selectedItems.length}}个</span>
+                    <div class="div-selected">
+                        <div ng-if="selectType==0" class="label label-primary label-selected"
+                             ng-repeat="item in selectedItems">
+                            <div style="font-size:16px;padding:5px;">{{item.SystemName}}</div>
+                            <span class="glyphicon glyphicon-remove" ng-click="Remove($index,selectedItems)"
+                                  style="background: #d9534f; color: #ffffff; padding: 2px; border-radius: 100%; position: absolute; top: -8px; right: -8px; cursor: pointer;"></span>
+                        </div>
+                        <div ng-if="selectType!=0" class="label label-primary label-selected"
+                             ng-repeat="item in selectedItems">
+                            <div style="font-size:16px;padding:5px;">{{item.SysDutyName}}</div>
+                            <span class="glyphicon glyphicon-remove" ng-click="Remove($index,selectedItems)"
+                                  style="background: #d9534f; color: #ffffff; padding: 2px; border-radius: 100%; position: absolute; top: -8px; right: -8px; cursor: pointer;"></span>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="singleMode">
+                    <div class="text-center" ng-if="selectedItems.length>0">
+                        选择：
+                        <div ng-if="selectType==0" class="label label-primary label-single">
+                            {{selectedItems[0].SystemName}}
+                        </div>
+                        <div ng-if="selectType!=0" class="label label-primary label-single">
+                            {{selectedItems[0].SysDutyName}}
+                        </div>
+                    </div>
+                </div>
+                <!--</div>-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="Confirm()">确定</button>
+            </div>
+
+        </div>
+    </div>
+</div>

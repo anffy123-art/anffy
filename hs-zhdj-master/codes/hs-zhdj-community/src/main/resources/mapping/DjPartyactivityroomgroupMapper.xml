@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DjPartyactivityroomgroupMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.DjPartyactivityroomgroup">
+    <id column="GROUPID" jdbcType="VARCHAR" property="groupid" />
+    <result column="PARTYACTIVITYROOMID" jdbcType="VARCHAR" property="partyactivityroomid" />
+    <result column="DZZDM" jdbcType="VARCHAR" property="dzzdm" />
+    <result column="DZZMC" jdbcType="VARCHAR" property="dzzmc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    GROUPID, PARTYACTIVITYROOMID, DZZDM, DZZMC
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.DjPartyactivityroomgroupExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dj_partyactivityroomgroup
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dj_partyactivityroomgroup
+    where GROUPID = #{groupid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dj_partyactivityroomgroup
+    where GROUPID = #{groupid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.DjPartyactivityroomgroupExample">
+    delete from dj_partyactivityroomgroup
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.DjPartyactivityroomgroup">
+    insert into dj_partyactivityroomgroup (GROUPID, PARTYACTIVITYROOMID, DZZDM, 
+      DZZMC)
+    values (#{groupid,jdbcType=VARCHAR}, #{partyactivityroomid,jdbcType=VARCHAR}, #{dzzdm,jdbcType=VARCHAR}, 
+      #{dzzmc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.DjPartyactivityroomgroup">
+    insert into dj_partyactivityroomgroup
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="groupid != null">
+        GROUPID,
+      </if>
+      <if test="partyactivityroomid != null">
+        PARTYACTIVITYROOMID,
+      </if>
+      <if test="dzzdm != null">
+        DZZDM,
+      </if>
+      <if test="dzzmc != null">
+        DZZMC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="groupid != null">
+        #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="partyactivityroomid != null">
+        #{partyactivityroomid,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzdm != null">
+        #{dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzmc != null">
+        #{dzzmc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.DjPartyactivityroomgroupExample" resultType="java.lang.Long">
+    select count(*) from dj_partyactivityroomgroup
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dj_partyactivityroomgroup
+    <set>
+      <if test="record.groupid != null">
+        GROUPID = #{record.groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyactivityroomid != null">
+        PARTYACTIVITYROOMID = #{record.partyactivityroomid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dzzdm != null">
+        DZZDM = #{record.dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dzzmc != null">
+        DZZMC = #{record.dzzmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dj_partyactivityroomgroup
+    set GROUPID = #{record.groupid,jdbcType=VARCHAR},
+      PARTYACTIVITYROOMID = #{record.partyactivityroomid,jdbcType=VARCHAR},
+      DZZDM = #{record.dzzdm,jdbcType=VARCHAR},
+      DZZMC = #{record.dzzmc,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.DjPartyactivityroomgroup">
+    update dj_partyactivityroomgroup
+    <set>
+      <if test="partyactivityroomid != null">
+        PARTYACTIVITYROOMID = #{partyactivityroomid,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzdm != null">
+        DZZDM = #{dzzdm,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzmc != null">
+        DZZMC = #{dzzmc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where GROUPID = #{groupid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.DjPartyactivityroomgroup">
+    update dj_partyactivityroomgroup
+    set PARTYACTIVITYROOMID = #{partyactivityroomid,jdbcType=VARCHAR},
+      DZZDM = #{dzzdm,jdbcType=VARCHAR},
+      DZZMC = #{dzzmc,jdbcType=VARCHAR}
+    where GROUPID = #{groupid,jdbcType=VARCHAR}
+  </update>
+</mapper>

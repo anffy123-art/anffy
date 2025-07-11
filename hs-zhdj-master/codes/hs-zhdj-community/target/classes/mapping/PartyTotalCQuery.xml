@@ -1,0 +1,1177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.PartyTotalCQuery">
+    <!--党组织数-->
+    <select id="selectPartytotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        count(1) as PARTYCOUNT,
+        sum(case when c.ZZLB in('100','200') then 1 else 0 end) as NUM_DW, -- 党委=
+        sum(case when c.ZZLB = '300' then 1 else 0 end) as NUM_DZZ, -- 党总支
+        sum(case when c.ZZLB = '400' then 1 else 0 end) as NUM_DZB, -- 党支部
+        sum(case when c.ZZLB = '500' then 1 else 0 end) as NUM_DXZ, -- 党小组
+        sum(case when c.ZZLB = '300' and c.JCZZFL='71' then 1 else 0 end) as NUM_DZZ_CJ, -- 院系党总支
+        sum(case when c.ZZLB = '300' and c.JCZZFL='51' then 1 else 0 end) as NUM_DZZ_LTX, -- 团委休党总支
+        sum(case when c.ZZLB = '400' and c.JCZZFL='21' then 1 else 0 end) as NUM_DZB_CJ, -- 机关党支部
+        sum(case when c.ZZLB = '400' and c.JCZZFL='71' then 1 else 0 end) as NUM_DZB_KS, -- 院系党支部
+        sum(case when c.ZZLB = '400' and c.JCZZFL='13' then 1 else 0 end) as NUM_DZB_BZ, -- 班组党支部
+        sum(case when c.ZZLB = '400' and c.JCZZFL='51' then 1 else 0 end) as NUM_DZB_LTX -- 团委休党支部
+        from ZZ_ZZQKXX z
+        inner join (
+        select z.DZZDM,z.DZZMC,fb.ZZLB,fb.JCZZFL
+        from ZZ_ZZQKXX z
+        inner join ZZ_ZZQKXXFB fb on z.DZZDM = fb.DZZDM
+        ) c on z.DZZDM = substr(c.DZZDM, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+    <!--创岗建区-->
+    <select id="selectCgjqtotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(s.NUM_XFG) as NUM_XFG,
+        sum(s.NUM_ZRQ) as NUM_ZRQ
+        from ZZ_ZZQKXX z
+        inner join (
+        select s.PARTYCODE,
+        sum(case when s.CGJQTYPE=1 then 1 else 0 end) as NUM_XFG,
+        sum(case when s.CGJQTYPE=2 then 1 else 0 end) as NUM_ZRQ
+        from CGJQ_POSTAREA_SCORE s
+        where s.GQTYPE=1 and s.OPERATESTATE not in('D')
+        <if test="year!=null">
+            and s.YEAR=#{year}
+        </if>
+        group by s.PARTYCODE
+        ) s on z.DZZDM=substr(s.PARTYCODE, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+
+    <!--党内品牌-->
+    <select id="selectDnpptotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(b.NUM_ZD) as NUM_ZD, -- 站段
+        sum(b.NUM_JT) as NUM_JT, -- 集团
+        sum(b.NUM_GT) as NUM_GT -- 国铁
+        from ZZ_ZZQKXX z
+        inner join (
+        select b.PARTYCODE,
+        sum(case when b.CREATTYPE=1 then 1 else 0 end) as NUM_ZD, -- 站段
+        sum(case when b.CREATTYPE=2 then 1 else 0 end) as NUM_JT, -- 集团
+        sum(case when b.CREATTYPE=3 then 1 else 0 end) as NUM_GT -- 国铁
+        from dj_brand b
+        where 1=1 and b.OPERATESTATE not in ('D')
+        <if test="year!=null">
+            and Extract(year from b.BRANDTIME)=#{year}
+        </if>
+        group by b.PARTYCODE
+        ) b on z.DZZDM=substr(b.PARTYCODE, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+
+    <!--活动室-->
+    <select id="selectActivityroomtotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(NUM) as NUM
+        from ZZ_ZZQKXX z
+        inner join (
+        select
+        r.PARTYCODE,
+        sum(1) as NUM
+        from dj_partyActivityRoom r
+        where 1=1 and r.OPERATESTATE not in ('D')
+        group by r.PARTYCODE
+        ) r on z.DZZDM=substr(r.PARTYCODE, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+
+    <!--宣传阵地-->
+    <select id="selectPubpositiontotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(NUM) as NUM
+        from ZZ_ZZQKXX z
+        inner join (
+        select p.PARTYCODE,
+        sum(1) as NUM
+        from PUB_PUBLICITYPOSITION p
+        where 1=1 and p.OPERATESTATE not in ('D')
+        group by p.PARTYCODE
+        ) p on z.DZZDM=substr(p.PARTYCODE, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+    <!--互联网工作群-->
+    <select id="selectWxgrouptotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(NUM) as NUM
+        from ZZ_ZZQKXX z
+        inner join (
+        select w.PARTYCODE,sum(1) as NUM
+        from dj_wxGroup w
+        where 1=1 and w.OPERATESTATE not in ('D')
+        group by w.PARTYCODE
+        ) w on z.DZZDM=substr(w.PARTYCODE, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+
+    <!--年度应换届党组织数-->
+    <select id="selectGroupReplacetotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(NUM_YHJDZB) as NUM_YHJDZB
+        from ZZ_ZZQKXX z
+        inner join (
+        select z.DZZDM,
+        sum(case when fb.ZZLB = '400' then 1 else 0 end) as NUM_YHJDZB
+        from ZZ_ZZQKXX z
+        inner join ZZ_ZZQKXXFB fb on z.DZZDM = fb.DZZDM
+        inner join (
+        select DZZDM
+        from ZZ_BZJCXX
+        where substr(GJJMRQ, 1, 4) = #{year}
+        group by DZZDM
+        union
+        select DZZDM from ZZ_ZZQKXX where substr(JLDZZRQ,1,4) = #{year}
+        ) c on z.DZZDM=c.DZZDM
+        group by z.DZZDM
+        ) c on z.DZZDM = substr(c.DZZDM, 1, length(z.DZZDM))
+        where 1 = 1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+    <!--年度已换届党组织数-->
+    <select id="selectGroupAlreadyReplacetotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(NUM_DZBHJS) as NUM_DZBHJS
+        from ZZ_ZZQKXX z
+        inner join (
+        select z.DZZDM,
+        sum(case when fb.ZZLB = '400' then 1 else 0 end) as NUM_DZBHJS
+        from ZZ_ZZQKXX z
+        inner join ZZ_ZZQKXXFB fb on z.DZZDM = fb.DZZDM
+        inner join (
+        select DZZDM
+        from ZZ_BZJCXX
+        where substr(LDJTDXRQ, 1, 4) = #{year}
+        group by DZZDM
+        union
+        select DZZDM from ZZ_ZZQKXX where substr(JLDZZRQ,1,4) = #{year}
+        ) c on z.DZZDM=c.DZZDM
+        group by z.DZZDM
+        ) c on z.DZZDM = substr(c.DZZDM, 1, length(z.DZZDM))
+        where 1 = 1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+
+    <!--在岗党员数-->
+    <select id="selectZgUsertotalList" resultType="java.util.HashMap">
+        select z.DZZDM,sum(NUM_ZGUSER) as NUM_ZGUSER,sum(NUM_LTX) as NUM_LTX,sum(NUM_SQRD) as NUM_SQRD,sum(NUM_JJFZ) as
+        NUM_JJFZ,sum(NUM_FZDX) as NUM_FZDX,sum(NUM_YBDY) as NUM_YBDY,
+        sum(NUM_ZSDY) as NUM_ZSDY
+        from ZZ_ZZQKXX z
+        inner join (
+        select us.SZDZBDM,
+        sum(case when us.RYZT in('2','3') and (us.GZGW not in('0500','0501','0502','0504') or us.GZGW is null) then 1
+        else 0 end) as NUM_ZGUSER, -- 在岗党员数
+        sum(case when us.RYZT in('2','3') and us.GZGW in('0500','0501','0502','0504') then 1 else 0 end) as NUM_LTX,
+        -- 离退休党员数
+        sum(case when us.RYZT ='1' then 1 else 0 end) as NUM_SQRD, -- 申请入党数
+        sum(case when us.RYZT ='5' then 1 else 0 end) as NUM_JJFZ, -- 积极分子数
+        sum(case when us.RYZT ='6' then 1 else 0 end) as NUM_FZDX, -- 发展对象数
+        sum(case when us.RYZT ='2' then 1 else 0 end) as NUM_YBDY, -- 预备党员数
+        sum(case when us.RYZT ='3' then 1 else 0 end) as NUM_ZSDY -- 正式党员
+        from VM_RYJBXX_ALL us
+        inner join ZZ_ZZQKXX z on us.SZDZBDM=z.DZZDM
+        inner join rs_ryjbxxfb fb on us.rybm = fb.rybm
+        where 1=1 and (fb.ISARCHIVE is null or fb.ISARCHIVE = 0)
+        <if test="isOnduty != null">
+            /*是否在岗*/
+            <if test="isOnduty == 1">
+                and (us.GZGW not in('0500','0501','0502','0504') or us.GZGW is null)
+            </if>
+            <if test="isOnduty == 0">
+                and us.GZGW in('0500','0501','0502','0504')
+            </if>
+        </if>
+        group by us.SZDZBDM
+        ) us on z.DZZDM=substr(us.SZDZBDM, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+
+    <!--党支部书记专职兼职情况-->
+    <select id="selectDZBSJtotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(NUM_ZZ) as NUM_ZZ, -- 专职
+        sum(NUM_JZ) as NUM_JZ, -- 兼职
+        sum(NUM_GZ) as NUM_GZ -- 挂职副书记
+        from ZZ_ZZQKXX z
+        inner join (
+        select c.DZZDM,
+        sum(case when c.ZZJZQK='1' then 1 else 0 end) as NUM_ZZ, -- 专职
+        sum(case when c.ZZJZQK='2' then 1 else 0 end) as NUM_JZ, -- 兼职
+        sum(case when c.ZZJZQK='3' then 1 else 0 end) as NUM_GZ -- 挂职副书记
+        from ZZ_BZCYXX c
+        inner join ZZ_ZZQKXXFB t on c.DZZDM = t.DZZDM and c.JC = t.LDJTJC
+        inner join VM_RYJBXX us on c.RYBM=us.RYBM
+        where c.ZWMC in('H010','H013')
+        group by c.DZZDM
+        ) c on z.DZZDM = substr(c.DZZDM, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+
+    <!--困难党员-->
+    <select id="selectGHBFtotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(NUM) as NUM
+        from ZZ_ZZQKXX z
+        inner join (
+        select w.DZZDM,sum(1) as NUM
+        from DJ_DNGHBF w
+        inner join DJ_DNGHBFMX d on w.ID=d.DNGHBFID
+        where 1=1 and w.OPERATESTATE not in ('D')
+        <if test="year!=null">
+            and Extract(year from d.CAREDATE)=#{year}
+        </if>
+        group by w.DZZDM
+        ) w on z.DZZDM=substr(w.DZZDM, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+    <!--中心组学习情况-->
+    <select id="selectZxzxxFaTotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(NUM_JZXX) as NUM_JZXX,
+        sum(NUM_ZTYT) as NUM_ZTYT,
+        sum(NUM_DXJL) as NUM_DXJL
+        from ZZ_ZZQKXX z
+        inner join (
+        select f.DW_ID as dzzdm,
+        sum(case when f.STUDY_MODALITY_CODE='1' then 1 else 0 end) as NUM_JZXX, -- 集中学习
+        sum(case when f.STUDY_MODALITY_CODE='2' then 1 else 0 end) as NUM_ZTYT, -- 专题研讨
+        sum(case when f.STUDY_MODALITY_CODE='5' then 1 else 0 end) as NUM_DXJL -- 督学交流
+        from ZZ_ZXZXX_FA f
+        where 1=1 and (f.DELETED=0 or f.deleted is null)
+        <if test="year!=null">
+            and Extract(year from f.STUDY_START_TIME)=#{year}
+        </if>
+        group by f.DW_ID
+        ) f on z.DZZDM=f.DZZDM -- on z.DZZDM=substr(f.DZZDM, 0, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+    </select>
+
+    <!--中心组学习出勤率-->
+    <select id="selectZxzxxCqlList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        round(sum(case when f.count>0 then round(ifnull(f.absentCount_JZXX,0)/f.count,4) else 0 end)/count(1),4)*100 as
+        JZXXCQL -- 集中学习出勤率
+        from ZZ_ZZQKXX z
+        inner join (
+        select f.ID,f.DW_ID as DZZDM,
+        count(1) as count,
+        sum(case when (u.absent is null or u.absent=0) then 1 else 0 end) as absentCount_JZXX
+        from ZZ_ZXZXX_FA f
+        inner join ZZ_ZXZXX_CJLDBZ u on f.ID=u.CASE_ID
+        where 1=1
+        and (f.deleted = 0 or f.deleted is null)
+        and (u.deleted = 0 or u.deleted is null)
+        and f.STUDY_MODALITY_CODE='1'
+        <if test="year!=null">
+            and Extract(year from f.STUDY_START_TIME)=#{year}
+        </if>
+        group by f.ID,f.DW_ID
+        ) f on z.DZZDM=f.DZZDM -- on z.DZZDM=substr(f.DZZDM, 0, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+
+    </select>
+
+    <!--中心组学习出勤率明细-->
+    <select id="selectZxzxxCqlDetailList" resultType="java.util.HashMap">
+        select z.DZZDM,f.STUDY_START_TIME,
+        round(sum(case when f.count>0 then round(ifnull(f.absentCount_JZXX,0)/f.count,4) else 0 end)/count(1),4)*100 as
+        JZXXCQL -- 集中学习出勤率
+        from ZZ_ZZQKXX z
+        inner join (
+        select f.ID,f.DW_ID as DZZDM,f.STUDY_START_TIME,
+        count(1) as count,
+        sum(case when f.STUDY_MODALITY_CODE='1' and (u.absent is null or u.absent=0) then 1 else 0 end) as
+        absentCount_JZXX
+        from ZZ_ZXZXX_FA f
+        inner join ZZ_ZXZXX_CJLDBZ u on f.ID=u.CASE_ID
+        where 1=1
+        and (f.deleted = 0 or f.deleted is null)
+        and (u.deleted = 0 or u.deleted is null)
+        and f.STUDY_MODALITY_CODE='1'
+        <if test="year!=null">
+            and Extract(year from f.STUDY_START_TIME)=#{year}
+        </if>
+        group by f.ID,f.DW_ID,f.STUDY_START_TIME
+        ) f on z.DZZDM=f.DZZDM -- on z.DZZDM=substr(f.DZZDM, 0, length(z.DZZDM))
+        where 1=1
+        and z.DZZDM =#{dzzdm}
+        group by z.DZZDM,f.STUDY_START_TIME
+        order by z.DZZDM,f.STUDY_START_TIME
+
+    </select>
+
+    <select id="selectZxzxxUserStudyList" resultType="java.util.HashMap">
+        select u.LEADER_USER_ID as rybm,f.STUDY_START_TIME,f.STUDY_MODALITY_CODE,u.absent
+        from ZZ_ZXZXX_FA f
+        inner join ZZ_ZXZXX_CJLDBZ u on f.ID=u.CASE_ID
+        where 1=1
+        and (f.deleted = 0 or f.deleted is null)
+        and (u.deleted = 0 or u.deleted is null)
+        and f.STUDY_MODALITY_CODE='1'
+        and f.DW_ID =#{dzzdm}
+        <if test="year!=null">
+            and Extract(year from f.STUDY_START_TIME)=#{year}
+        </if>
+
+    </select>
+
+    <select id="selectPartyDuesUserCount" resultType="java.util.HashMap">
+        select z.DZZDM,sum(num) USERCOUNT from ZZ_ZZQKXX z
+        inner join (
+          select z.DZZDM,count(1) as num from VM_RYJBXX u
+          inner join ZZ_ZZQKXX z on u.SZDZBDM=z.DZZDM
+          inner join rs_ryjbxxfb fb on u.RYBM = fb.RYBM
+          where 1=1 and fb.partyDuesStartMonth <![CDATA[ <= ]]> #{yearMonth}
+          group by z.DZZDM
+        ) u on z.DZZDM=substr(u.DZZDM,1,length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+    </select>
+
+    <!--统计党费缴纳报表-->
+    <!--<select id="selectPartyduesTotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        #{year} as year,
+        #{month} as month,
+        sum(ifnull(w.totalMoney,0)) as totalMoney,
+        sum(ifnull(w.totalUser,0)) as totalUser,
+        sum(ifnull(w.notDuesCount,0)) as notDuesCount,
+        sum(ifnull(w.notDuesMoney,0)) as notDuesMoney
+        from ZZ_ZZQKXX z
+        inner join (
+        select z.dzzdm,z.dzzmc,#{year} as year,#{month} as month,t1.totalMoney,t1.totalUser,t1.notDuesCount,t1.notDuesMoney
+        from ZZ_ZZQKXX z
+        left join (
+            select pd.YEAR,d.MONTH, us.SZDZBDM as dzzdm
+            ,sum(case when d.payState=1 then ifnull(d.money,0) else 0 end) as totalMoney
+            ,sum(case when d.payState=1 then 1 else 0 end) totalUser
+            ,sum(case when d.payState=1 then 0 else ifnull(pd.money,0) end) as notDuesMoney
+            ,sum(case when d.payState=1 then 0 else 1 end) notDuesCount
+            from VM_RYJBXX us
+            inner join ZZ_ZZQKXX z on us.SZDZBDM=z.DZZDM
+            left join US_PARTYDUES pd on pd.USERCODE = us.rybm and pd.YEAR=#{year}
+            left join US_PARTYDUES_DETAIL d on pd.PARTYDUESID=d.PARTYDUESID and d.MONTH=#{month}
+            inner join rs_ryjbxxfb fb on us.RYBM = fb.RYBM
+            where 1=1
+            and fb.partyDuesStartMonth <![CDATA[ <= ]]> #{yearMonth}
+            group by pd.YEAR,d.MONTH,z.DZZDM
+        ) t1 on z.dzzdm=t1.dzzdm
+        where 1=1 and z.DZZDM like concat('%',#{dzzdm},'%')
+        ) w on z.DZZDM=substr(w.DZZDM, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+    </select>-->
+    <!--<select id="selectPartyduesTotalListV2" resultType="com.px.partybuild.vo.PartyduesTotalVo">
+        select
+             #{year} as year
+             , #{month} as month
+             , p.DZZDM                            as partyCode
+             , p.DZZMC                            as partyName
+             , sum(ifnull(t.userCount, 0))        as userCount
+             , sum(ifnull(t.alreadyPayUserCount, 0)) as alreadyPayUserCount
+             , sum(ifnull(t.alreadyPayAmount, 0))    as alreadyPayAmount
+             , sum(ifnull(t.didnotPayUserCount, 0))  as didnotPayUserCount
+             , sum(ifnull(t.didnotPayAmount, 0))     as didnotPayAmount
+        from ZZ_ZZQKXX p
+                 left join (select p.DZZDM,
+                                   p.DZZMC,
+                                   ifnull(pu.userCount, 0)             as userCount,
+                                   ifnull(already.alreadyPayUserCount, 0) as alreadyPayUserCount,
+                                   ifnull(already.alreadyPayAmount, 0)    as alreadyPayAmount,
+                                   ifnull(didnot.didnotPayUserCount, 0)   as didnotPayUserCount,
+                                   ifnull(didnot.didnotPayAmount, 0)      as didnotPayAmount
+                            from ZZ_ZZQKXX p
+                                     left join (select p.DZZDM
+                                                     , p.DZZMC
+                                                     , sum(case when pu.RYBM is not null then 1 else 0 end) as userCount
+                                                from zz_zzqkxx p
+                                                         inner join vm_ryjbxx pu on p.DZZDM = pu.SZDZBDM
+                                                         inner join rs_ryjbxxfb fb on pu.RYBM = fb.RYBM
+                                                where 1 = 1 and fb.partyDuesStartMonth <![CDATA[ <= ]]> #{yearMonth}
+                                                group by p.DZZDM, p.DZZMC) pu on p.DZZDM = pu.DZZDM
+                                     left join (select p.DZZDM
+                                                     , p.DZZMC
+                                                     , sum(case when pdd.payState = 1 then ifnull(pdd.money, 0) else 0 end) as alreadyPayAmount    &#45;&#45; 已缴总额
+                                                     , sum(case when pdd.payState = 1 then 1 else 0 end)                       alreadyPayUserCount &#45;&#45; 已缴人数
+                                                from zz_zzqkxx p
+                                                         inner join us_partydues_detail pdd on p.DZZDM = pdd.PARTYCODE and pdd.MONTH = #{month}
+                                                         inner join us_partydues pd on pdd.PARTYDUESID = pd.PARTYDUESID and pd.YEAR = #{year}
+                                                where pdd.payState = 1
+                                                group by p.DZZDM, p.DZZMC) already on p.DZZDM = already.DZZDM
+                                     left join (select p.DZZDM
+                                                     , p.DZZMC
+                                                     , sum(1)                                as didnotPayUserCount
+                                                     , sum(case
+                                                               when pd.USERCODE is null and fb.isStudent = 1 then 0.2
+                                                               else ifnull(pd.money, 0) end) as didnotPayAmount
+                                                from zz_zzqkxx p
+                                                         inner join vm_ryjbxx pu on p.DZZDM = pu.SZDZBDM
+                                                         inner join rs_ryjbxxfb fb on pu.RYBM = fb.RYBM
+                                                         left join us_partydues pd on pu.RYBM = pd.USERCODE and pd.YEAR = #{year}
+                                                         left join us_partydues_detail pdd
+                                                                   on pd.PARTYDUESID = pdd.PARTYDUESID and pdd.MONTH = #{month}
+                                                where (pdd.payState is null or pdd.payState != 1) and fb.partyDuesStartMonth <![CDATA[ <= ]]> #{yearMonth}
+                                                group by p.DZZDM, p.DZZMC) didnot on p.DZZDM = didnot.DZZDM) t
+                           on p.DZZDM = substr(t.DZZDM, 1, length(p.DZZDM))
+        where 1=1 and p.DZZDM like concat('',#{gddwdm},'%')
+        <if test="parentPartyCode!=null and parentPartyCode!=''">
+            and p.DZZDM like concat('%',#{parentPartyCode},'%')
+        </if>
+        <if test="partyCode!=null and partyCode!=''">
+            and p.DZZDM = #{partyCode}
+        </if>
+        group by p.DZZDM, p.DZZMC
+        order by length(p.DZZDM), p.DZZDM
+    </select>-->
+
+    <select id="selectPartyduesTotalListV2" resultType="com.px.partybuild.vo.PartyduesTotalVo">
+        select
+               #{year}                            as `year`
+             , #{month}                           as `month`
+             , p.DZZDM                            as partyCode
+             , p.DZZMC                            as partyName
+             , sum(ifnull(t.userCount, 0))        as userCount
+             , sum(ifnull(t.alreadyPayUserCount, 0)) as alreadyPayUserCount
+             , sum(ifnull(t.alreadyPayAmount, 0))    as alreadyPayAmount
+             , sum(ifnull(t.didnotPayUserCount, 0))  as didnotPayUserCount
+             , sum(ifnull(t.didnotPayAmount, 0))     as didnotPayAmount
+        from ZZ_ZZQKXX p
+                 left join (
+            select p.DZZDM,p.DZZMC,sum(1) as userCount
+                 , sum(case when pdd.payState = 1 then ifnull(pdd.money, 0) else 0 end) as alreadyPayAmount    -- 已缴总额
+                 , sum(case when pdd.payState = 1 then 1 else 0 end)                       alreadyPayUserCount -- 已缴人数
+                 , sum(case when (pdd.payState is null or pdd.payState <![CDATA[ <> ]]> 1) then 1 else 0 end)                                as didnotPayUserCount -- 未缴人数
+                 , sum(case
+                            when (pdd.payState is null or pdd.payState <![CDATA[ <> ]]> 1) and pd.MONEY is null and fb.isStudent = 1 then 0.2
+                            when (pdd.payState is null or pdd.payState <![CDATA[ <> ]]> 1) and pd.MONEY is not null then ifnull(pd.money, 0)
+                            else 0 end)                                                                                       as didnotPayAmount    -- 未缴总额
+            from zz_zzqkxx p
+                     inner join us_party_month us on us.partyCode = p.DZZDM and us.yearMonth = #{yearMonth}
+                     inner join us_partydues pd on us.userCode = pd.USERCODE and pd.YEAR = #{year}
+                     inner join us_partydues_detail pdd on pd.PARTYDUESID = pdd.PARTYDUESID and pdd.MONTH = #{month}
+                     inner join rs_ryjbxxfb fb on us.userCode = fb.RYBM
+            where 1 = 1 and (fb.partyDuesStartMonth <![CDATA[ <= ]]> #{yearMonth} or fb.partyDuesStartMonth is null)
+            group by p.DZZDM,p.DZZMC
+        ) t
+                           on p.DZZDM = substr(t.DZZDM, 1, length(p.DZZDM))
+        where 1=1 and p.DZZDM like concat('',#{gddwdm},'%')
+        <if test="parentPartyCode!=null and parentPartyCode!=''">
+            and p.DZZDM like concat('%',#{parentPartyCode},'%')
+        </if>
+        <if test="partyCode!=null and partyCode!=''">
+            and p.DZZDM = #{partyCode}
+        </if>
+        group by p.DZZDM, p.DZZMC
+        order by length(p.DZZDM), p.DZZDM
+    </select>
+
+    <!--已缴党费成员-->
+    <select id="selectPartyduesUserList" resultType="java.util.HashMap">
+        select t1.xm1,t1.baseNumber1,t1.totalMoney1,t2.xm2,t2.baseNumber2,t2.totalMoney2
+        from (select ROWNUM as id,xm as xm1,baseNumber as baseNumber1,totalMoney as totalMoney1,null,null,null
+              from (
+                     select ROWNUM,MOD(ROWNUM, 2) as type,t.xm,t.totalMoney,t.BASENUMBER
+                     from (
+                            select us.XM,ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) as totalMoney,pd.BASENUMBER
+                            from US_PARTYDUES pd
+                                   inner join US_PARTYDUES_DETAIL d on pd.PARTYDUESID = d.PARTYDUESID and d.payState=1
+                                   inner join VM_RYJBXX_ALL us on pd.USERCODE = us.rybm
+                                   inner join ZZ_ZZQKXX z on us.SZDZBDM=z.DZZDM
+                                   where 1=1 and pd.YEAR=#{year} and d.MONTH=#{month}
+                                   and  us.SZDZBDM like concat( '%',#{dzzdm},'%')
+                            order by ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) desc
+                          ) t
+                   )
+              where 1 = 1 and type = 1
+              order by ROWNUM
+             ) t1
+        left join (
+          select ROWNUM as id,null,null,null,XM as xm2,BASENUMBER as baseNumber2,TOTALMONEY as totalMoney2
+          from (
+                 select ROWNUM,MOD(ROWNUM, 2) as type,t.xm,t.totalMoney,t.BASENUMBER
+                 from (
+                        select us.XM,ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) as totalMoney,pd.BASENUMBER
+                        from US_PARTYDUES pd
+                               inner join US_PARTYDUES_DETAIL d on pd.PARTYDUESID = d.PARTYDUESID and d.payState=1
+                               inner join VM_RYJBXX_ALL us on pd.USERCODE = us.rybm
+                               inner join ZZ_ZZQKXX z on us.SZDZBDM=z.DZZDM
+                               where 1=1 and pd.YEAR=#{year} and d.MONTH=#{month}
+                               and  us.SZDZBDM like concat('%',#{dzzdm},'%')
+                        order by ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) desc
+                      ) t
+               )
+          where 1 = 1 and type = 0
+          order by ROWNUM
+        ) t2 on t1.id = t2.id
+    </select>
+
+
+    <!--已缴党费成员（一行一个党员）-->
+    <select id="selectAlreadyPayUserList" resultType="com.px.partybuild.vo.PartyduesAlreadyPayDetailVo">
+        select
+               #{year}                            as `year`
+             , #{month}                           as `month`
+             , p.DZZDM                            as partyCode
+             , p.DZZMC                            as partyName
+             , um.userCode
+             , us.xm as userName
+             , ifnull(pdd.MONEY, 0)               as payAmount
+        from zz_zzqkxx p
+                 inner join us_party_month um on um.partyCode = p.DZZDM and um.yearMonth = #{yearMonth}
+                 inner join vm_ryjbxx_all us on um.userCode = us.rybm
+                 inner join US_PARTYDUES pd on um.userCode = pd.USERCODE
+                 inner join US_PARTYDUES_DETAIL pdd on pd.PARTYDUESID = pdd.PARTYDUESID
+        where pdd.payState = 1
+          and pd.YEAR = #{year}
+          and pdd.MONTH = #{month}
+          and um.partyCode like concat('%',#{partyCode},'%')
+        order by ifnull(pdd.MONEY, 0) desc,CONVERT(us.xm USING gbk)
+    </select>
+
+    <!--未缴党费成员-->
+    <select id="selectDidnotPayUserList" resultType="com.px.partybuild.vo.PartyduesDidnotPayDetailVo">
+        select #{year}                            as `year`
+             , #{month}                           as `month`
+             , p.DZZDM                            as partyCode
+             , p.DZZMC                            as partyName
+             , um.userCode
+             , us.xm as userName
+             , case
+                   when pdd.money is null and fb.isStudent = 1 then 0.2
+                   else ifnull(pdd.money, 0) end               as didNotPayAmount
+        from zz_zzqkxx p
+                 inner join us_party_month um on um.partyCode = p.DZZDM and um.yearMonth = #{yearMonth}
+                 inner join vm_ryjbxx_all us on um.userCode = us.rybm
+                 inner join US_PARTYDUES pd on um.userCode = pd.USERCODE
+                 inner join US_PARTYDUES_DETAIL pdd on pd.PARTYDUESID = pdd.PARTYDUESID
+                 inner join rs_ryjbxxfb fb on um.userCode = fb.RYBM
+        where (pdd.payState is null or pdd.payState <![CDATA[ <> ]]> 1)
+          and pd.YEAR = #{year} and pdd.MONTH = #{month}
+          and um.partyCode like concat('%',#{partyCode},'%')
+          and (fb.partyDuesStartMonth <![CDATA[ <= ]]> #{yearMonth} or fb.partyDuesStartMonth is null)
+        order by case
+                     when pdd.money is null and fb.isStudent = 1 then 0.2
+                     else ifnull(pdd.money, 0) end desc,CONVERT(us.xm USING gbk)
+    </select>
+
+    <!--统计党组织每月缴纳党费-->
+    <select id="selectPartyduesMonthTotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        #{year} as YEAR,
+        sum(ifnull(pd.month1, 0)) as MONTH1,
+        sum(ifnull(pd.month2, 0)) as MONTH2,
+        sum(ifnull(pd.month3, 0)) as MONTH3,
+        sum(ifnull(pd.month4, 0)) as MONTH4,
+        sum(ifnull(pd.month5, 0)) as MONTH5,
+        sum(ifnull(pd.month6, 0)) as MONTH6,
+        sum(ifnull(pd.month7, 0)) as MONTH7,
+        sum(ifnull(pd.month8, 0)) as MONTH8,
+        sum(ifnull(pd.month9, 0)) as MONTH9,
+        sum(ifnull(pd.month10, 0)) as MONTH10,
+        sum(ifnull(pd.month11, 0)) as MONTH11,
+        sum(ifnull(pd.month12, 0)) as MONTH12,
+        sum(ifnull(pd.total, 0)) as TOTAL
+        from ZZ_ZZQKXX z
+        inner join (
+        select us.SZDZBDM as dzzdm,
+        sum(case when d.MONTH = 1 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month1,
+        sum(case when d.MONTH = 2 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month2,
+        sum(case when d.MONTH = 3 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month3,
+        sum(case when d.MONTH = 4 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month4,
+        sum(case when d.MONTH = 5 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month5,
+        sum(case when d.MONTH = 6 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month6,
+        sum(case when d.MONTH = 7 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month7,
+        sum(case when d.MONTH = 8 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month8,
+        sum(case when d.MONTH = 9 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month9,
+        sum(case when d.MONTH = 10 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month10,
+        sum(case when d.MONTH = 11 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month11,
+        sum(case when d.MONTH = 12 then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as month12,
+        sum( ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0)) as total
+        from US_PARTYDUES pd
+        inner join US_PARTYDUES_DETAIL d on pd.PARTYDUESID = d.PARTYDUESID and d.payState=1
+        inner join VM_RYJBXX us on pd.USERCODE = us.rybm
+        inner join ZZ_ZZQKXX z on us.SZDZBDM = z.DZZDM
+        where 1=1 and us.SZDZBDM like concat('%',#{dzzdm},'%') and pd.YEAR=#{year}
+        group by us.SZDZBDM
+        ) pd on z.DZZDM = substr(pd.DZZDM, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+    </select>
+
+    <select id="selectPartyduesMonthTotalListV2" resultType="com.px.partybuild.vo.PartyduesTotalDetailVo">
+        select p.dzzmc as partyName
+             , p.dzzdm as partyCode
+             , #{year} as `year`
+             , p.`month` as `month`
+             , sum(ifnull(t.amount, 0)) amount
+        from (select p.dzzdm, p.dzzmc, dic.DICKEY as `month`, cast(concat(#{year}, lpad(dic.DICKEY, 2, '0')) as signed) as yearMonth
+              from zz_zzqkxx p,
+                   cf_dictionary dic
+              where dic.DICTYPEKEY = 'monthType') p
+                 left join (select upm.partyCode, pdd.yearMonth, sum(ifnull(pdd.MONEY, 0)) as amount
+                            from (select cast(concat(pd.YEAR, lpad(pdd.month, 2, '0')) as signed) as yearMonth
+                                       , pdd.MONEY
+                                       , pd.USERCODE
+                                  from us_partydues pd
+                                           inner join us_partydues_detail pdd on pd.PARTYDUESID = pdd.PARTYDUESID
+                                  where pd.YEAR = #{year}
+                                    and pdd.payState = 1) pdd
+                                     inner join us_party_month upm
+                                                on pdd.userCode = upm.userCode and upm.yearMonth = pdd.yearMonth
+                            group by upm.partyCode, pdd.yearMonth) t
+                           on p.DZZDM = substr(t.partyCode, 1, length(p.DZZDM)) and p.yearMonth = t.yearMonth
+        where 1=1 and p.DZZDM like concat('',#{gddwdm},'%')
+        <if test="partyCode != null  and partyCode != ''">
+            and p.dzzdm like concat('%',#{partyCode},'%')
+        </if>
+        group by p.dzzdm, p.dzzmc, p.yearMonth, p.`month`
+        order by length(p.DZZDM), p.DZZDM, p.yearMonth
+    </select>
+
+    <!--统计党组织季度缴纳党费-->
+    <select id="selectPartyduesQuarterTotalList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        #{year} as year,
+        sum(ifnull(pd.quarter1, 0)) as quarter1,
+        sum(ifnull(pd.quarter2, 0)) as quarter2,
+        sum(ifnull(pd.quarter3, 0)) as quarter3,
+        sum(ifnull(pd.quarter4, 0)) as quarter4,
+        sum(ifnull(pd.total, 0)) as total
+        from ZZ_ZZQKXX z
+        inner join (
+        select us.SZDZBDM as dzzdm,
+        sum(case when d.MONTH in (1, 2, 3) then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as quarter1,
+        sum(case when d.MONTH in (4, 5, 6) then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as quarter2,
+        sum(case when d.MONTH in (7, 8, 9) then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as quarter3,
+        sum(case when d.MONTH in (10, 11, 12) then ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0) else 0 end) as quarter4,
+        sum(ifnull(d.MONEY, 0) + ifnull(d.SPECIALEXPENSES, 0)) as total
+        from US_PARTYDUES pd
+        inner join US_PARTYDUES_DETAIL d on pd.PARTYDUESID = d.PARTYDUESID and d.payState=1
+        inner join VM_RYJBXX us on pd.USERCODE = us.rybm
+        inner join ZZ_ZZQKXX z on us.SZDZBDM = z.DZZDM
+        where 1=1 and us.SZDZBDM like concat ( '%',#{dzzdm},'%') and pd.YEAR=#{year}
+        group by us.SZDZBDM
+        ) pd on z.DZZDM = substr(pd.DZZDM, 1, length(z.DZZDM))
+        where 1=1
+        and z.dzzdm in
+        <foreach collection="dzzdmList" item="dzzdm" index="index" open="(" close=")" separator=",">
+            #{dzzdm}
+        </foreach>
+        group by z.DZZDM
+    </select>
+
+    <select id="selectZtdrTotalList" resultType="java.util.HashMap">
+        select z.DZZDM,z.DZZMC,zd.ID,zd.ACTIVITYTIME,zd.TITLE from DJ_ztdrxx zd
+        inner join ZZ_ZZQKXX z on zd.DZZDM = z.DZZDM
+        where 1=1
+        <if test="dzzdm!=null and dzzdm !=''">
+            and zd.dzzdm =#{dzzdm}
+        </if>
+        <if test="year!=null">
+            and date_format(zd.ACTIVITYTIME,'%Y')= #{year}
+        </if>
+        <if test="month!=null">
+            and date_format(zd.ACTIVITYTIME,'%m')= #{month}
+        </if>
+        order by z.DZZDM
+    </select>
+
+    <select id="selectLeaderUserTotalList" resultType="java.util.HashMap">
+        select SUBSTR(#{yearMonth},1,6) as YEARMONTH,us.XMPY,us.RYBM,us.xm,
+        (case when dw2.ZZLB =100 then dw2.DZZMC else dw.DZZMC end) as DWMC,
+        case when sum(case when l.LEADERTYPE is not null then 1 else 0 end)>0 then '是' else '否' end as ISWRITE
+        from vm_ryjbxx us
+        inner join RS_RYJBXXFB fb on us.RYBM = fb.RYBM
+        inner join ZZ_ZZQKXX dw on SUBSTR(us.SZDZBDM,1,12)=dw.DZZDM
+        left join (
+              select zz2.DZZDM,zz2.DZZMC,fb2.ZZLB from ZZ_ZZQKXX zz2 inner join ZZ_ZZQKXXFB fb2 on zz2.DZZDM=fb2.DZZDM
+        ) dw2 on SUBSTR(us.SZDZBDM,1,15)=dw2.DZZDM
+        left join US_USERLEADER l on us.RYBM = l.USERCODE  and l.LEADERTIME <![CDATA[ >= ]]> to_date(#{yearMonth},'yyyyMMdd')
+        where 1=1 and fb.SFSLDRY = 1 -- 领导人员
+        <if test="dzzdm!=null and dzzdm !=''">
+            and us.SZDZBDM like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="xm!=null and xm !=''">
+            and us.XM like concat ('%',#{xm},'%')
+        </if>
+        group by us.RYBM,us.xm,us.XMPY,us.RYJBXXBS,dw.DZZMC,dw2.DZZMC,dw2.ZZLB
+        order by us.XMPY,us.RYJBXXBS
+    </select>
+
+    <select id="selectSystemUseTotalList" resultType="java.util.HashMap">
+        select * from (
+            select zz.DZZDM,zz.DZZMC,zzlb.HZMC as ZZLBMC,jczzfl.HZMC as JCZZFLMC,
+            case when zzlb.bm is null then '无' else '有' end as ISZZLB,
+            case when jczzfl.bm is null then '无' else '有' end as ISJCZZFL,
+            case when fb.ZGRS is null then '无' else '有' end as ISZGS,
+
+            #{fundYear} as FUNDYEAR,
+            case when funds.PARTYCODE is null then '无' else '有' end as ISFUND,
+            case when funds.MONEY >100 then '有' else '无' end as IS100,
+
+            SUBSTR(#{duesYearMonth},1,6) as DUESMONTH,
+            case when dues.PARTYCODE is null then '否' else '是' end as ISDUES,
+
+            SUBSTR(#{meetingYearMonth},1,6) as MEETINGMONTH,
+            case when meeting.PARTYCODE is null then '否' else '是' end as ISMEETING,
+            case when plan.PARTYCODE is null then '否' else '是' end as ISPLAN,
+
+            SUBSTR(#{partydayYearMonth},1,6) as PARTYDAYMONTH,
+            case when partyday.PARTYCODE is null then '否' else '是' end as ISPARTYDAY,
+
+            SUBSTR(#{positionYearMonth},1,6) as POSITIONMONTH,
+            case when ppsi.PARTYCODE is null then '否' else '是' end as ISPOSITION,
+            (case when dw2.ZZLB =100 then dw2.DZZMC else dw.DZZMC end) as DWMC
+            from ZZ_ZZQKXX zz
+            left join ZZ_ZZQKXX dw on SUBSTR(zz.DZZDM,1,12)=dw.DZZDM
+            left join (
+                 select zz2.DZZDM,zz2.DZZMC,fb2.ZZLB from ZZ_ZZQKXX zz2 inner join ZZ_ZZQKXXFB fb2 on zz2.DZZDM=fb2.DZZDM
+            ) dw2 on SUBSTR(zz.DZZDM,1,15)=dw2.DZZDM
+            left join ZZ_ZZQKXXFB fb on zz.DZZDM = fb.DZZDM
+            left join ZZZD_ZZLBDMNEW zzlb on fb.ZZLB = zzlb.BM
+            left join ZZZD_JCZZFLNEW jczzfl on fb.JCZZFL = jczzfl.BM
+            left join (select PARTYCODE,max(ifnull(ACTIVITYFUNDS,0)+ifnull(REWARDFUNDS,0)) as MONEY from DJ_FundsBudget where SYNCSTATE <![CDATA[ <> ]]> 'D' and YEAR = #{fundYear} group by PARTYCODE) funds on zz.DZZDM = funds.PARTYCODE
+            left join (select detail.PARTYCODE from US_PARTYDUES ds
+                       inner join US_PARTYDUES_DETAIL detail on ds.PARTYDUESID = detail.PARTYDUESID
+                       where ds.SYNCSTATE <![CDATA[ <> ]]> 'D' and detail.SYNCSTATE <![CDATA[ <> ]]> 'D'
+                       and ds.YEAR = to_number(substr(#{duesYearMonth},1,4))
+                       and detail.MONTH = to_number(substr(#{duesYearMonth},5,2))
+                       group by detail.PARTYCODE) dues on zz.DZZDM = dues.PARTYCODE
+            left join (select PARTYCODE from SHYK_MEETING where SYNCSTATE <![CDATA[ <> ]]> 'D' and BEGINTIME <![CDATA[ >= ]]> date_format(#{meetingYearMonth},'yyyyMMdd')  group by PARTYCODE) meeting on zz.DZZDM = meeting.PARTYCODE
+            left join (select PARTYCODE from SHYK_PARTYPLAN where SYNCSTATE <![CDATA[ <> ]]> 'D' group by PARTYCODE) plan on zz.DZZDM = plan.PARTYCODE
+            left join (select dr.DZZDM as PARTYCODE from DJ_ZTDRXX dr
+                       where dr.SYNCSTATE <![CDATA[ <> ]]> 'D' and dr.ACTIVITYTIME <![CDATA[ >= ]]> date_format(#{partydayYearMonth},'%Y%m%d') group by dr.DZZDM) partyday on zz.DZZDM = partyday.PARTYCODE
+            left join (select psi.PARTYCODE as PARTYCODE from PUB_PUBLICITYPOSITION psi
+                       inner join PUB_PUBLICITYPOSITION_PANEL plan on psi.PUBLICITYPOSITIONID = plan.PUBLICITYPOSITIONID
+                       where psi.SYNCSTATE <![CDATA[ <> ]]> 'D' and plan.SYNCSTATE <![CDATA[ <> ]]> 'D' and plan.PANELTIME <![CDATA[ >= ]]> to_date(#{positionYearMonth},'yyyyMMdd')
+                       group by psi.PARTYCODE
+            ) ppsi on zz.DZZDM = ppsi.PARTYCODE
+            where 1=1 and (fb.ZZLB not in('500') or fb.zzlb is null)
+            and zz.DZZDM  <![CDATA[ <> ]]> '001091209'
+           <if test="dzzdm!=null and dzzdm !=''">
+               and zz.dzzdm like  concat ('%',#{dzzdm},'%')
+           </if>
+        ) t
+        order by t.DWMC,t.DZZDM
+    </select>
+
+
+    <select id="selectPartyLifeTotalList" resultType="java.util.HashMap">
+        select z.DZZDM as PARTYCODE,z.DZZMC,dr.partyday,zzsr.politics,#{year} YEAR
+        from ZZ_ZZQKXX z
+        inner join ZZ_ZZQKXXFB fb on z.DZZDM=fb.DZZDM
+        left join (
+             select zz.DZZDM PARTYCODE,
+             zz.DZZMC,
+             ifnull(sum(conut1),0) shyk_user,
+             ifnull(sum(conut2),0) shyk_branch,
+             ifnull(sum(conut3),0) shyk_group,
+             ifnull(sum(conut4),0) shyk_class
+             from ZZ_ZZQKXX zz
+             inner join (
+             select DZZDM,
+             sum(case when SHYKTYPE = 1 then 1 else 0 end) as conut1,
+             sum(case when SHYKTYPE = 2 then 1 else 0 end) as conut2,
+             sum(case when SHYKTYPE = 3 then 1 else 0 end) as conut3,
+             sum(case when SHYKTYPE = 4 then 1 else 0 end) as conut4
+             from (
+             select m.PARTYCODE as dzzdm,
+             m.SHYKTYPE
+             from SHYK_MEETING m
+             where extract(year from m.BEGINTIME)=#{year}
+             and m.OPERATESTATE != 'D'
+             )
+             group by dzzdm
+             ) u on zz.DZZDM = substr(u.dzzdm, 1, length(zz.DZZDM))
+             group by zz.DZZDM,zz.DZZMC
+        ) r on r.PARTYCODE=z.DZZDM----三会一课统计信息
+        left join (
+             select zz.DZZDM PARTYCODE,
+             zz.DZZMC,
+             ifnull(sum(ztcount),0) as partyday
+             from ZZ_ZZQKXX zz
+             inner join (
+             select zx.DZZDM,sum(1) as ztcount from DJ_ZTDRXX zx
+             where extract(year from zx.ACTIVITYTIME)=#{year}
+             and OPERATESTATE!='D'
+             group by zx.DZZDM
+             )d on zz.DZZDM=substr(d.dzzdm, 1, length(zz.DZZDM))
+             group by zz.DZZDM,zz.DZZMC
+        )dr on dr.PARTYCODE=z.DZZDM ---主题党日统计信息
+        left join (
+             select zz.DZZDM PARTYCODE,
+             zz.DZZMC,
+             ifnull(sum(polcount),0) as politics
+             from ZZ_ZZQKXX zz
+             inner join (
+             select zx.DZZDM,sum(1) as polcount from DJ_ZZSR zx
+             where extract(year from zx.ACTIVITYTIME)=#{year}
+             and OPERATESTATE!='D'
+             group by zx.DZZDM
+             )d on zz.DZZDM=substr(d.dzzdm, 1, length(zz.DZZDM))
+             group by zz.DZZDM,zz.DZZMC
+        )zzsr on zzsr.PARTYCODE=z.DZZDM ---政治生日统计信息
+        where 1=1 and fb.ZZLB not in(500) and z.DZZDM like '001091209%'
+        <if test="dzzdm!=null and dzzdm !=''">
+            and z.DZZDM like concat ( '%',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and z.DZZMC like concat ( '%',#{dzzmc},'%')
+        </if>
+        order by SUBSTR(z.DZZDM,1,LENGTH(z.DZZDM)-3),z.DZZDM
+    </select>
+
+    <select id="selectPartyLifeMonthTotalList" resultType="java.util.HashMap">
+        select zz.month,zz.DZZDM,zz.DZZMC,shyk.SHYKCOUNT,ztdr.PARTYDAYCOUNT,zzsr.POLITICSCOUNT
+        from
+        (
+           select t1.month,zz.DZZDM,zz.DZZMC,fb.ZZLB
+           from (select level month from dual connect by 0 + level <![CDATA[ <= ]]> 12) t1,ZZ_ZZQKXX zz
+           inner join ZZ_ZZQKXXFB fb on zz.DZZDM=fb.DZZDM
+        ) zz
+        left join (
+            select zz.MONTH,zz.DZZDM,zz.DZZMC,
+            ifnull(sum(shyk.count),0) as SHYKCOUNT
+            from (
+                select t1.month,zz.DZZDM,zz.DZZMC
+                from (select level month from dual connect by 0 + level <![CDATA[ <= ]]> 12) t1,ZZ_ZZQKXX zz
+            ) zz
+            inner join (
+                select m.PARTYCODE as dzzdm,extract(month from m.BEGINTIME) as month,count(1) as count
+                from SHYK_MEETING m
+                where extract(year from m.BEGINTIME)=#{year} and m.OPERATESTATE != 'D'
+                group by m.PARTYCODE,extract(month from m.BEGINTIME)
+            ) shyk on zz.DZZDM = substr(shyk.dzzdm, 1, length(zz.DZZDM)) and zz.month = shyk.month
+            where 1=1
+            <if test="dzzdm!=null and dzzdm !=''">
+                and zz.DZZDM like concat('%',#{dzzdm},'%')
+            </if>
+            <if test="dzzmc!=null and dzzmc !=''">
+                and zz.DZZMC like  concat('%',#{dzzmc},'%')
+            </if>
+            group by zz.DZZDM,zz.DZZMC,zz.MONTH
+        ) shyk on zz.DZZDM = shyk.DZZDM and zz.month = shyk.month
+        left join (
+            select zz.MONTH,zz.DZZDM,zz.DZZMC,
+            ifnull(sum(ztdr.count),0) as PARTYDAYCOUNT
+            from (
+                select t1.month,zz.DZZDM,zz.DZZMC
+                from (select level month from dual connect by 0 + level <![CDATA[ <= ]]> 12) t1,ZZ_ZZQKXX zz
+            ) zz
+            inner join (
+                select ztdr.DZZDM as dzzdm,extract(month from ztdr.ACTIVITYTIME) as month,count(1) as count
+                from DJ_ZTDRXX ztdr
+                where extract(year from ztdr.ACTIVITYTIME)=#{year} and ztdr.OPERATESTATE != 'D'
+                group by ztdr.DZZDM,extract(month from ztdr.ACTIVITYTIME)
+            ) ztdr on zz.DZZDM = substr(ztdr.dzzdm, 1, length(zz.DZZDM)) and zz.month = ztdr.month
+            where 1=1
+            <if test="dzzdm!=null and dzzdm !=''">
+                and zz.DZZDM like concat('%',#{dzzdm},'%')
+            </if>
+            <if test="dzzmc!=null and dzzmc !=''">
+                and zz.DZZMC like concat('%',#{dzzmc},'%')
+            </if>
+            group by zz.DZZDM,zz.DZZMC,zz.MONTH
+        ) ztdr on zz.DZZDM = ztdr.DZZDM and zz.month = ztdr.month
+        left join (
+            select zz.MONTH,zz.DZZDM,zz.DZZMC,
+            ifnull(sum(zzsr.count),0) as POLITICSCOUNT
+            from (
+                select t1.month,zz.DZZDM,zz.DZZMC
+                from (select level month from dual connect by 0 + level <![CDATA[ <= ]]> 12) t1,ZZ_ZZQKXX zz
+            ) zz
+            inner join (
+                select zzsr.DZZDM as dzzdm,extract(month from zzsr.ACTIVITYTIME) as month,count(1) as count
+                from DJ_ZZSR zzsr
+                where extract(year from zzsr.ACTIVITYTIME)=#{year} and zzsr.OPERATESTATE != 'D'
+                group by zzsr.DZZDM,extract(month from zzsr.ACTIVITYTIME)
+            ) zzsr on zz.DZZDM = substr(zzsr.dzzdm, 1, length(zz.DZZDM)) and zz.month = zzsr.month
+            where 1=1
+            <if test="dzzdm!=null and dzzdm !=''">
+                and zz.DZZDM like concat( '%',#{dzzdm},'%')
+            </if>
+            <if test="dzzmc!=null and dzzmc !=''">
+                and zz.DZZMC like concat ('%',#{dzzmc},'%')
+            </if>
+            group by zz.DZZDM,zz.DZZMC,zz.MONTH
+        ) zzsr on zz.DZZDM = zzsr.DZZDM and zz.month = zzsr.month
+        where 1=1 and zz.ZZLB not in(500) and zz.DZZDM like  '001091209%'
+        <if test="dzzdm!=null and dzzdm !=''">
+            and zz.DZZDM like concat( '%',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and zz.DZZMC like concat( '%',#{dzzmc},'%')
+        </if>
+        order by zz.DZZDM,zz.MONTH
+    </select>
+
+    <select id="selectPartyActivityTotalList" resultType="java.util.HashMap">
+        select z.DZZMC,z.DZZDM,cgjq.POSTCOUNT,cgjq.VANPOSTCOUNT,cgjq.ARERCOUNT,cgjq.REDARERCOUNT,
+        result.RESULTCOUNT ,brand.BRANDCOUNT,room.ACTIVITYROOMCOUNT,#{year} YEAR
+        from ZZ_ZZQKXX z
+        inner join ZZ_ZZQKXXFB fb on z.DZZDM=fb.DZZDM
+        left join (
+            select zz.DZZDM,
+            zz.DZZMC,
+            ifnull(sum(POSTCOUNT),0) POSTCOUNT,
+            ifnull(sum(VANPOSTCOUNT),0) VANPOSTCOUNT,
+            ifnull(sum(ARERCOUNT),0) ARERCOUNT,
+            ifnull(sum(REDARERCOUNT),0) REDARERCOUNT
+            from ZZ_ZZQKXX zz
+                 inner join (
+                 select dzzdm,
+                 sum(case when CGJQTYPE = 1 then 1 else 0 end) as POSTCOUNT,
+                 sum(case when CGJQTYPE = 1 and GQTYPE = 1 then 1 else 0 end) as VANPOSTCOUNT,
+                 sum(case when CGJQTYPE = 2 then 1 else 0 end) as ARERCOUNT,
+                 sum(case when CGJQTYPE = 2 and GQTYPE = 1 then 1 else 0 end) as REDARERCOUNT
+                 from (
+                 select cgjq.PARTYCODE as dzzdm,cgjq.CGJQTYPE,cgjq.GQTYPE
+                 from CGJQ_POSTAREA_SCORE cgjq
+                 where YEAR =#{year}
+                 and cgjq.OPERATESTATE != 'D'
+                 )
+                 group by dzzdm
+            ) u on zz.DZZDM = substr(u.dzzdm, 1, length(zz.DZZDM))
+            group by zz.DZZDM,zz.DZZMC
+        ) cgjq on cgjq.DZZDM=z.DZZDM ----创岗建区统计
+        left join (
+             select zz.DZZDM,
+             zz.DZZMC,
+             ifnull(sum(RESULTCOUNT),0) as RESULTCOUNT
+             from ZZ_ZZQKXX zz
+             inner join (
+                  select zx.PARTYCODE as dzzdm,sum(1) as RESULTCOUNT from DJ_RESULTMG zx
+                  where extract(year from zx.SCORETIME)=#{year}
+                  and OPERATESTATE!='D'
+                  group by zx.PARTYCODE
+             )d on zz.DZZDM=substr(d.dzzdm, 1, length(zz.DZZDM))
+             group by zz.DZZDM,zz.DZZMC
+        )result on result.DZZDM=z.DZZDM ---党建成果统计
+        left join (
+             select zz.DZZDM,
+             zz.DZZMC,
+             ifnull(sum(BRANDCOUNT),0) as BRANDCOUNT
+             from ZZ_ZZQKXX zz
+             inner join (
+                  select zx.PARTYCODE as dzzdm,sum(1) as BRANDCOUNT from DJ_BRAND zx
+                  where extract(year from zx.BRANDTIME)=#{year}
+                  and OPERATESTATE!='D'
+                  group by zx.PARTYCODE
+             )d on zz.DZZDM=substr(d.dzzdm, 1, length(zz.DZZDM))
+             group by zz.DZZDM,zz.DZZMC
+        )brand on brand.DZZDM=z.DZZDM ---党内品牌统计
+        left join (
+             select zz.DZZDM,
+             zz.DZZMC,
+             ifnull(sum(ACTIVITYROOMCOUNT),0) as ACTIVITYROOMCOUNT
+             from ZZ_ZZQKXX zz
+             inner join (
+                  select zx.PARTYCODE as dzzdm,sum(1) as ACTIVITYROOMCOUNT from DJ_PARTYACTIVITYROOM zx
+                  where 1=1
+                  and OPERATESTATE!='D'
+                  group by zx.PARTYCODE
+             )d on zz.DZZDM=substr(d.dzzdm, 1, length(zz.DZZDM))
+             group by zz.DZZDM,zz.DZZMC
+        )room on room.DZZDM=z.DZZDM ---党员活动室统计
+        where 1=1 and fb.ZZLB not in(500) and z.DZZDM like '001091209%'
+        <if test="dzzdm!=null and dzzdm !=''">
+            and z.DZZDM like concat ('%',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and z.DZZMC like concat ( '%',#{dzzmc},'%')
+        </if>
+        order by SUBSTR(z.DZZDM,1,LENGTH(z.DZZDM)-3),z.DZZDM
+    </select>
+
+    <select id="selectPartyActivityMonthTotalList" resultType="java.util.HashMap">
+        select zz.month,zz.DZZDM,zz.DZZMC,result.RESULTCOUNT,brand.BRANDCOUNT
+        from
+        (
+             select t1.month,zz.DZZDM,zz.DZZMC,fb.ZZLB
+             from (select level month from dual connect by 0 + level <![CDATA[ <= ]]> 12) t1,ZZ_ZZQKXX zz
+             inner join ZZ_ZZQKXXFB fb on zz.DZZDM=fb.DZZDM
+        ) zz
+        left join (
+             select zz.MONTH,zz.DZZDM,zz.DZZMC,
+             ifnull(sum(result.count),0) as RESULTCOUNT
+             from (
+                  select t1.month,zz.DZZDM,zz.DZZMC
+                  from (select level month from dual connect by 0 + level <![CDATA[ <= ]]> 12) t1,ZZ_ZZQKXX zz
+             ) zz
+             inner join (
+                  select result.PARTYCODE as dzzdm,extract(month from result.SCORETIME) as month,count(1) as count
+                  from DJ_RESULTMG result
+                  where extract(year from result.SCORETIME)=#{year} and result.OPERATESTATE != 'D'
+                  group by result.PARTYCODE,extract(month from result.SCORETIME)
+             ) result on zz.DZZDM = substr(result.dzzdm, 1, length(zz.DZZDM)) and zz.month = result.month
+             where 1=1
+             <if test="dzzdm!=null and dzzdm !=''">
+                 and zz.DZZDM like concat('%',#{dzzdm},'%')
+             </if>
+             <if test="dzzmc!=null and dzzmc !=''">
+                 and zz.DZZMC like concat( '%',#{dzzmc},'%')
+             </if>
+             group by zz.DZZDM,zz.DZZMC,zz.MONTH
+        ) result on zz.DZZDM = result.DZZDM and zz.month = result.month
+        left join (
+             select zz.MONTH,zz.DZZDM,zz.DZZMC,
+             ifnull(sum(brand.count),0) as BRANDCOUNT
+             from (
+                  select t1.month,zz.DZZDM,zz.DZZMC
+                  from (select level month from dual connect by 0 + level <![CDATA[ <= ]]> 12) t1,ZZ_ZZQKXX zz
+             ) zz
+             inner join (
+                  select brand.PARTYCODE as dzzdm,extract(month from brand.BRANDTIME) as month,count(1) as count
+                  from DJ_BRAND brand
+                  where extract(year from brand.BRANDTIME)=#{year} and brand.OPERATESTATE != 'D'
+                  group by brand.PARTYCODE,extract(month from brand.BRANDTIME)
+             ) brand on zz.DZZDM = substr(brand.dzzdm, 1, length(zz.DZZDM)) and zz.month = brand.month
+             where 1=1
+             <if test="dzzdm!=null and dzzdm !=''">
+                 and zz.DZZDM like concat('%',#{dzzdm},'%')
+             </if>
+             <if test="dzzmc!=null and dzzmc !=''">
+                 and zz.DZZMC like concat('%',#{dzzmc},'%')
+             </if>
+             group by zz.DZZDM,zz.DZZMC,zz.MONTH
+        ) brand on zz.DZZDM = brand.DZZDM and zz.month = brand.month
+        where 1=1 and zz.ZZLB not in(500) and zz.DZZDM like '001091209%'
+        <if test="dzzdm!=null and dzzdm !=''">
+            and zz.DZZDM like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="dzzmc!=null and dzzmc !=''">
+            and zz.DZZMC like concat( '%',#{dzzmc},'%')
+        </if>
+        order by zz.DZZDM,zz.MONTH
+    </select>
+
+    <!--中心组学习提醒-->
+    <select id="selectZxzxxWarnList" resultType="java.util.HashMap">
+        select z.DZZDM,
+        sum(ifnull(NUM_JZXX,0)) as NUM_JZXX,
+        sum(ifnull(NUM_ZTYT,0)) as NUM_ZTYT
+        from ZZ_ZZQKXX z
+        left join (
+        select f.DW_ID as dzzdm,
+        sum(case when f.STUDY_MODALITY_CODE='1' and date_format(f.STUDY_START_TIME, '%m') = #{month} then 1 else 0 end) as
+        NUM_JZXX, -- 集中学习
+        sum(case when f.STUDY_MODALITY_CODE='2' and date_format(f.STUDY_START_TIME, 'Q') = #{quarter} then 1 else 0 end) as
+        NUM_ZTYT -- 专题研讨
+        from ZZ_ZXZXX_FA f
+        where 1=1 and (f.DELETED=0 or f.deleted is null)
+        and Extract(year from f.STUDY_START_TIME)=#{year}
+        <if test="dzzdm!=null and dzzdm !=''">
+            and f.DW_ID = #{dzzdm}
+        </if>
+        group by f.DW_ID
+        ) f on z.DZZDM=f.DZZDM -- on z.DZZDM=substr(f.DZZDM, 0, length(z.DZZDM))
+        where 1=1
+        <if test="dzzdm!=null and dzzdm !=''">
+            and z.dzzdm = #{dzzdm}
+        </if>
+        group by z.DZZDM
+    </select>
+
+</mapper>

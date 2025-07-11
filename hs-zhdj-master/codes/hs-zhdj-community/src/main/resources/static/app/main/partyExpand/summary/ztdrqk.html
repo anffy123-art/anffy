@@ -1,0 +1,39 @@
+<div class="header">
+    <h2 class="demo-icon-container">
+        <div class="demo-google-material-icon">
+            <span class="icon-name">主题党日情况</span>
+        </div>
+    </h2>
+    <ul class="header-dropdown m-r--5">
+        <li class="dropdown demo-icon-container more">
+            <a bs-ui-sref="home.ztdrxx" class="dropdown-toggle demo-google-material-icon">
+                <span class="icon-name">更多</span>
+                <i class="material-icons">keyboard_arrow_right</i>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="zero-list-table-panel">
+    <div class="zero-source-table-div">
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>主题</th>
+                <th>时间</th>
+                <th>地点</th>
+                <th>内容</th>
+                <th>类别</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in dataList">
+                <td>{{it.title|limitTo:15:0}}<span ng-if="it.title.length>15">...</span></td>
+                <td>{{it.activitytime|date:'yyyy-MM-dd'}}</td>
+                <td>{{it.location|limitTo:15:0}}<span ng-if="it.location.length>15">...</span></td>
+                <td>{{it.subjectcontent|limitTo:15:0}}<span ng-if="it.subjectcontent.length>15">...</span></td>
+                <td>{{it.subjecttypename}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

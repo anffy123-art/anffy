@@ -1,0 +1,57 @@
+<div class="dj-formtable">
+    <div class="header" style="padding-top: 0px;">
+        <h2 class="demo-icon-container">
+            <div class="demo-google-material-icon">
+                <span class="main-card-title">职工思想动态情况（{{thoughtTotal.YEAR}}年{{thoughtTotal.MONTH}}月）</span>
+            </div>
+        </h2>
+    </div>
+    <table class="dj-table">
+        <tr>
+            <th>问题总数</th>
+            <td>
+                <a ng-click="showThought(null,null,null)">{{thoughtTotal.NUM_THOUGHTTYPE1+thoughtTotal.NUM_THOUGHTTYPE2+thoughtTotal.NUM_THOUGHTTYPE3+thoughtTotal.NUM_THOUGHTTYPE4+thoughtTotal.NUM_THOUGHTTYPE5+thoughtTotal.NUM_THOUGHTTYPE6}}</a>
+            </td>
+            <th>政策制度数</th>
+            <td>
+                <a ng-click="showThought(1,null,null)">{{thoughtTotal.NUM_THOUGHTTYPE1}}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>职工收入数</th>
+            <td>
+                <a ng-click="showThought(2,null,null)">{{thoughtTotal.NUM_THOUGHTTYPE2}}</a>
+            </td>
+            <th>生产生活数</th>
+            <td>
+                <a ng-click="showThought(3,null,null)">{{thoughtTotal.NUM_THOUGHTTYPE3}}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>福利待遇数</th>
+            <td>
+                <a ng-click="showThought(4,null,null)">{{thoughtTotal.NUM_THOUGHTTYPE4}}</a>
+            </td>
+            <th>工作相关数</th>
+            <td>
+                <a ng-click="showThought(5,null,null)">{{thoughtTotal.NUM_THOUGHTTYPE5}}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>其他诉求数</th>
+            <td>
+                <a ng-click="showThought(6,null,null)">{{thoughtTotal.NUM_THOUGHTTYPE6}}</a>
+            </td>
+            <th>销号整改数</th>
+            <td>
+                <a ng-click="showThought(null,1,null)">{{thoughtTotal.NUM_THOUGHTTYPE7}}</a>
+            </td>
+        </tr>
+        <tr>
+            <th>上报数量数</th>
+            <td colspan="3">
+                <a ng-click="showThought(null,null,1)">{{thoughtTotal.NUM_THOUGHTTYPE8}}</a>
+            </td>
+        </tr>
+    </table>
+</div>

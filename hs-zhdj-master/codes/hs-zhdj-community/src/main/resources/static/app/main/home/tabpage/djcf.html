@@ -1,0 +1,47 @@
+<div class="dj-formtable">
+    <div class="table-responsive list-table-panel">
+        <div class="list-table-title">
+            <div class="table-title">
+
+            </div>
+            <div class="table-tool">
+                <ul class="header-dropdown">
+                    <li class="dropdown demo-icon-container main-card-more table-more">
+                        <a ng-click="showMore_djcf()"
+                           class="dropdown-toggle demo-google-material-icon">
+                            <span class="icon-name">更多</span>
+                            <i class="material-icons">keyboard_arrow_right</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>违纪行为</th>
+                <th>批准日期</th>
+                <th>处分类型</th>
+                <th>批准单位</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in djcfList">
+                <td scope="row" class="text-center">
+                    {{$index+1}}
+                </td>
+                <td class="text-center">{{it.username}}</td>
+                <td class="text-center">{{it.offence}}</td>
+                <td class="text-center">{{it.approvaldate|date:'yyyy-MM-dd'}}</td>
+                <td class="text-center">{{it.punishtypename}}</td>
+                <td class="text-center">{{it.unit}}</td>
+            </tr>
+            <tr ng-if="djcfList.length==0">
+                <td colspan="6" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

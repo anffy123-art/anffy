@@ -1,0 +1,158 @@
+server:
+  #服务端口配置
+  port: ${SERVER_PORT:8062}
+  tomcat:
+    max-connections: 100000
+spring:
+  profiles:
+    include: dev
+
+  datasource:
+    name: party_build_db
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    druid:
+      #监控统计拦截的filters
+      filters: stat
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      #数据库连接基本属性
+      url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:party_build_db}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true
+      username: ${MYSQL_USERNAME:root}
+      password: ${MYSQL_PASSWORD:password}
+      #连接池初始化大小/最小/最大配置
+      initial-size: ${DRUID_INITIAL_SIZE:1}
+      min-idle: ${DRUID_MIN_IDLE:1}
+      max-active: ${DRUID_MAX_ACTIVE:20}
+      #获取连接等待超时时间(毫秒)
+      max-wait: ${DRUID_MAX_WAIT:60000}
+      #检测空闲连接的间隔时间(毫秒)
+      time-between-eviction-runs-millis: ${DRUID_TIME_BETWEEN_EVICTION:60000}
+      #连接在池中最小生存的时间(毫秒)
+      min-evictable-idle-time-millis: ${DRUID_MIN_EVICTABLE_TIME:300000}
+      validation-query: SELECT 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      #PSCache配置，mysql推荐设置为false
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 20
+  servlet:
+    multipart:
+      max-request-size: 50MB
+      max-file-size: 20MB
+  jackson:
+    time-zone: GMT+8
+  cache:
+    redis:
+      time-to-live: 60s
+    type: redis
+  redis:
+    #Redis连接配置
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    database: ${REDIS_DATABASE:0}
+    password: ${REDIS_PASSWORD:}
+    timeout: 10000
+    lettuce:
+      pool:
+        min-idle: 50
+        max-idle: 100
+        max-wait: -1
+        max-active: 100
+  mvc:
+    async:
+      request-timeout: 300000
+
+logging:
+  config: classpath:logback-spring.xml
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml,mapping/cquery/*.xml
+  type-aliases-package: com.px.partybuild.model
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+appconfig:
+  # 系统配置参数，影响用户参数验证
+  appid: ${APP_ID:changeit}
+  secret: ${APP_SECRET:changeit}
+
+  #开发环境配置
+  isDev: ${IS_DEV:false}
+  canLog: ${CAN_LOG:false}
+  canLoadDbImg: ${CAN_LOAD_DB_IMG:true}
+
+  #文件存储路径配置
+  uploadfile-url: ${UPLOAD_FILE_URL:/app/data/zhdj/sitefile}
+  desKey: ${DES_KEY:changeit}
+  payCert-url: ${PAY_CERT_URL:/app/data/zhdj/certs}
+  fileMgr-url: ${FILE_MGR_URL:/app/data/zhdj/sitefile/docs}
+
+  #党委代码配置
+  gddwdm: ${GDDWDM:'001091209017'}
+  sys-name: ${SYS_NAME:'智慧党建系统'}
+
+  #FTP服务器配置
+  ftp-host: ${FTP_HOST:localhost}
+  ftp-port: ${FTP_PORT:21}
+  ftp-user: ${FTP_USER:ftpuser}
+  ftp-pwd: ${FTP_PWD:ftppassword}
+  jcms-roleId: ${JCMS_ROLE_ID:11231}
+  
+  #APP DES加密配置
+  app-des-secret: ${APP_DES_SECRET:changeit}
+  app-des-vi: ${APP_DES_VI:changeit}
+  
+  #第三方服务接入配置
+  app-login-url: ${APP_LOGIN_URL:http://localhost:8088/login}
+  app-saveCheckMessage-url: ${APP_SAVE_CHECK_MESSAGE_URL:http://localhost:8088/sendMessage}
+  app-updateCheckMessage-url: ${APP_UPDATE_CHECK_MESSAGE_URL:http://localhost:8088/updateMessage}
+  app-fromSys: ${APP_FROM_SYS:dangjian}
+  
+  #特殊菜单过滤配置
+  menu-dwids: ${MENU_DWIDS:'001091209135'}
+  
+  #安全文件扩展名配置
+  safe-ext: ${SAFE_EXT:'.jpg,.png,.gif,.zip,.rar,.7z,.xls,.xlsx,.doc,.docx,.pdf,.ppt,.pptx,.jpeg,.txt,.mp4,.avi'}
+
+  #CAS单点登录配置
+  jxCasUrl: ${JX_CAS_URL:'https://cas.example.com'}
+  jxLocationUrl: ${JX_LOCATION_URL:'http://cas.example.com/cas-login'}
+
+  #定时任务配置
+  isBackService: ${IS_BACK_SERVICE:true}
+  sync-cron-usercount: ${SYNC_CRON_USERCOUNT:'0/5 * * * 1 ?'}
+  sync-cron-userage: ${SYNC_CRON_USERAGE:'0 0 23 1 1 ?'}
+  sync-cron-wechatpay: ${SYNC_CRON_WECHATPAY:'0/30 * * * 1 ? '}
+  sync-cron-partydues: ${SYNC_CRON_PARTYDUES:'0 0 13,23 * * ?'}
+  sync-cron-updateUserparty: ${SYNC_CRON_UPDATEUSERPARTY:'0 0 13,23 * * ?'}
+  
+  #跨域配置
+  corsUrl: ${CORS_URL:'http://localhost:8007/,http://localhost:8035/'}
+  
+jwt-config:
+  secret: ${JWT_SECRET:'changeit'}
+  expire: ${JWT_EXPIRE:1}
+  token-name: ${JWT_TOKEN_NAME:logintoken}
+  
+#微信支付配置
+wechat-pay-config:
+  appId: ${WECHAT_PAY_APP_ID:'changeit'}
+  mchId: ${WECHAT_PAY_MCH_ID:'changeit'}
+  mchKey: ${WECHAT_PAY_MCH_KEY:'changeit'}
+  keyPath: ${WECHAT_PAY_KEY_PATH:'/app/data/zhdj/certs/apiclient_cert.p12'}
+  notifyUrl: ${WECHAT_PAY_NOTIFY_URL:'http://example.com/wxapi/pay/notify'}
+  appSecret: ${WECHAT_PAY_APP_SECRET:'changeit'}
+  #微信授权回调地址
+  redirectURI: ${WECHAT_PAY_REDIRECT_URI:'http://example.com/hbPartyMobile/index.html'}
+  accessScope: ${WECHAT_PAY_ACCESS_SCOPE:'snsapi_base'}
+  
+wx:
+  cp:
+    configs:
+      corpId: ${WX_CP_CORP_ID:changeit}
+      corpsecret: ${WX_CP_CORP_SECRET:changeit}
+      agentId: ${WX_CP_AGENT_ID:1000004}
+      redirectUrl: ${WX_CP_REDIRECT_URL:example.com/ghsc/mobile}

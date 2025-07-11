@@ -1,0 +1,12 @@
+<div class="title-menu">
+    <ol class="breadcrumb gt_breadcrumb">
+        <li ng-repeat="it in items" style="padding-right: 5px;">
+            <a href="javascript:void(0);" ng-click="goto(it.menuno)" style="color: #666666">
+                <!--<i ng-if="$index==0" class="material-icons" ng-click="back()">reply</i>-->
+                {{it.menuname}}
+            </a>
+        </li>
+        <span style="display: inline;float:right" ng-transclude></span>
+    </ol>
+
+</div>

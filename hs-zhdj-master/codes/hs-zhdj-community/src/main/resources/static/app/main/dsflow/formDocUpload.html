@@ -1,0 +1,36 @@
+﻿<div ng-controller="formDocUploadCtrl">
+    <h4>上传</h4>
+    <form>
+        <table class="table table-bordered table-hover tlist">
+            <thead>
+            <tr>
+                <td><input name="all" type="radio" value="" ng-model="All" ng-click="selectAll(All)"/>全选</td>
+                <th>功能点</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in items">
+                <td>
+                    <input name="part" type="checkbox" value="" ng-model="part" ng-click="partAll(part,$index)"/>局部
+                </td>
+                <td>
+                    <div class="form-control" ng-click="getSon(it,$index)">
+                        {{it.SysDutyName}}
+                    </div>
+                    <div ng-if="flag==it.SysDutyName">
+                        <ul style="list-style:none">
+                            <li style="float:left" ng-repeat="its in itemAll[$index]">
+                                <input style="margin:auto" id="{{its.key}}" name="{{its.value}}" ng-model="its.checked"
+                                       ng-click="updateSelection($event,its.key)" type="checkbox"
+                                       value="{{its.value}}"/>{{its.value}}
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        {{selected}}
+        {{selectedTags}}
+    </form>
+</div>

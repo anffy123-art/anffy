@@ -1,0 +1,201 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="selectparams.selectdzzdm" data-selectdzzmc="selectparams.selectdzzmc"
+             data-isshowxz="selectparams.isshowxz" data-zzfbtype="selectparams.zzfbType"
+             data-defaultselected="selectparams.defaultselected" data-isunfold="selectparams.isunfold" data-onlyshowdw="selectparams.onlyshow_dw"></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="selectparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>姓名</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="name" class="form-control" type="text"
+                                                       ng-model="selectparams.userName" ng-keypress="($event.which === 13)?search():0"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>类别</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-change="search()"
+                                                        ng-model="selectparams.leaderType"
+                                                        ng-options="type.dickey as type.dicvalue for type in leaderTypeList"
+                                                        class="form-control"
+                                                        name="leaderType">
+                                                    <option value="">--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix form-inline" ng-show="isShow">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>开始时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="beginTime" class="form-control" ng-change="search()"
+                                                       autocomplete="off"
+                                                       autoclose="true"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       ng-model="selectparams.beginTime"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>结束时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="endTime" class="form-control" ng-change="search()"
+                                                       autocomplete="off"
+                                                       autoclose="true"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       ng-model="selectparams.endTime"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <span class="moreSpan" ng-click="isShowClick()" style='padding-right:1em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>
+                                <button  class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button role-permission-code="userLeaderList.btnAdd" class="btn btn-default1"
+                                    ng-click="addData()">新增
+                            </button>
+                            <button role-permission-code="userLeaderList.btnExport" class="btn btn-default1"
+                                    ng-click="import()">导入
+                            </button>
+                            <button role-permission-code="userLeaderList.btnExport" class="btn btn-default1"
+                                    ng-click="exportData()">导出
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>姓名</th>
+                                    <th>所属党委</th>
+                                    <th>所在党支部</th>
+                                    <th>党内职务</th>
+                                    <th>时间</th>
+                                    <th>地点</th>
+                                    <th>类别</th>
+                                    <!--<th>操作</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">
+                                        {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                    </td>
+                                    <td>{{it.USERNAME}}</td>
+                                    <td>{{it.PARTYNAME}}</td>
+                                    <td>{{it.USERPARTYNAME}}</td>
+                                    <td class="text-center">{{it.DNZW}}</td>
+                                    <td class="text-center">{{it.LEADERTIME|date:'yyyy-MM-dd'}}</td>
+                                    <td>{{it.ADDRESS}}</td>
+                                    <td>{{it.LEADERTYPENAME}}</td>
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="9" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="zero-target-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList" zero-table-height>
+                                    <td class="text-center">
+                                        <button ng-if="(it.CREATEUSERID==loginUserId && (dataScope==3 || dataScope==4 || dataScope==8)) || dataScope==1 || dataScope==2 || dataScope==7"
+                                                role-permission-code="userLeaderList.btnUpdate"
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="editData(it.USERLEADERID)"
+                                                title="编辑">
+                                            编辑
+                                        </button>
+                                        <button ng-if="(it.CREATEUSERID==loginUserId && (dataScope==3 || dataScope==4 || dataScope==8)) || dataScope==1 || dataScope==2 || dataScope==7"
+                                                role-permission-code="userLeaderList.btnDelete"
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="deleteData(it.USERLEADERID)"
+                                                title="删除">
+                                            删除
+                                        </button>
+                                        <button ng-if="(it.CREATEUSERID==loginUserId && (dataScope==3 || dataScope==4 || dataScope==8)) || dataScope==1 || dataScope==2 || dataScope==7"
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="showData(it.USERLEADERID)"
+                                                title="查看">
+                                            查看
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="1" style="text-align:center">无</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

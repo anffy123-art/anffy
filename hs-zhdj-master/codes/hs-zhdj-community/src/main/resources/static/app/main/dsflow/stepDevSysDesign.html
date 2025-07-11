@@ -1,0 +1,8 @@
+﻿<div ng-controller="stepDevSysDesignCtrl">
+    <div ng-model="stepdata.activePanelids" data-allow-multiple="true" role="tablist" aria-multiselectable="true"
+         bs-collapse>
+        <div ng-repeat="panel in stepdata.flowStagePanels">
+            <div ng-include="panel.src" onload="loadPanel(panel.onloadfunc)"></div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+<titlemenu></titlemenu>
+<div ng-if="op!=0" class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所属党组织</th>
+                        <td>
+                            {{dataModel.partyname}}
+                        </td>
+                        <th>金额（元）</th>
+                        <td ng-class="{ 'has-error' : this.editForm.money.$invalid &&  this.editForm.$submitted}">
+                            <input type="number" name="money" ng-model="dataModel.money"
+                                   maxlength="200"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.money.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>使用时间</th>
+                        <td ng-class="{ 'has-error' : this.editForm.usetime.$invalid &&  this.editForm.$submitted}">
+                            <input name="usetime" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.usetime"
+                                   ng-required="true"
+                                   data-max-date="{{maxDate}}"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="this.editForm.usetime.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th >支出类型</th>
+                        <td ng-class="{ 'has-error' : this.editForm.paytype.$invalid &&  this.editForm.$submitted}">
+                            <select class="form-control show-tick"
+                                    ng-model="dataModel.paytype"
+                                    ng-options="type.dickey as type.dicvalue for type in paytypeList"
+                                    class="form-control"
+                                    name="paytype"
+                                    ng-required="true">
+                            </select>
+                            <span ng-show="this.editForm.paytype.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>事由</th>
+                        <td colspan="3"
+                            ng-class="{ 'has-error' : this.editForm.reason.$invalid &&  this.editForm.$submitted}">
+                           <textarea ng-model="dataModel.reason" name="reason" rows="5"
+                                     class="form-control" type="text" ng-required="true"></textarea>
+                            <span ng-show="this.editForm.reason.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <bsfiles ng-model="reqFileModel"/>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)"
+                        ng-if="op!=0">提交
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div ng-if="op==0" class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>所属党组织</th>
+                        <td>
+                            {{dataModel.partyname}}
+                        </td>
+                        <th>金额（元）</th>
+                        <td>
+                            {{dataModel.money}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>使用时间</th>
+                        <td>
+                            {{dataModel.usetime|date:'yyyy-MM-dd'}}
+                        </td>
+                        <th>支出类型</th>
+                        <td>
+                            {{getPaytypeName()}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>事由</th>
+                        <td colspan="3">
+                            <pre>{{dataModel.reason}}</pre>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <bsfiles ng-model="reqFileModel"/>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+            </div>
+        </form>
+    </div>
+</div>

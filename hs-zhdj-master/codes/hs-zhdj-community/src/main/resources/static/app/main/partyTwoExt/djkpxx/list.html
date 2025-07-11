@@ -1,0 +1,176 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="selectparams.selectdzzdm" data-selectdzzmc="selectparams.selectdzzmc"
+             data-isshowxz="0"
+             data-parentcode="selectparams.parentcode"
+             data-parentname="selectparams.parentname"
+             data-dzzdm="selectparams.szdzzdm" data-userid="selectparams.userid"
+             data-dzzmc="selectparams.szdzzmc"
+             data-showtogglebtn="true"
+             data-onlyshowdw="selectparams.onlyshow_dw"
+             data-zzfbtype="selectparams.zzfbType"
+             data-isunfold="selectparams.isunfold"
+             data-defaultselected="selectparams.defaultselected"
+        ></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="selectparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>年度</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-change="search()"
+                                                        ng-model="selectparams.year"
+                                                        ng-options="type.dickey as type.dicvalue for type in yearList"
+                                                        class="form-control"
+                                                        name="year">
+                                                    <option value="">--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>评定等级</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-change="search()"
+                                                        ng-model="selectparams.judgeLevel"
+                                                        ng-options="type.dickey as type.dicvalue for type in judgeLevelList"
+                                                        class="form-control"
+                                                        name="judgeLevel">
+                                                    <option value="">--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <!--<span class="moreSpan" ng-click="isShowClick()" style='padding-right:2em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>-->
+                                <button class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button class="btn  btn-default1"
+                                    ng-click="export()">导出
+                            </button>
+                            <button class="btn btn-default1" ng-if="type==1" role-permission-code="djkpxx.btn.btnAdd"
+                                    ng-click="add()">新增
+                            </button>
+                            <button class="btn btn-default1" ng-if="type==2" role-permission-code="djkpxxDZB.btn.btnAdd"
+                                    ng-click="add()">新增
+                            </button>
+                            <button class="btn btn-default1" ng-if="type==1" role-permission-code="djkpxx.btn.btnBatchAdd"
+                                    ng-click="batchAdd()">批量新增
+                            </button>
+                            <button class="btn btn-default1" ng-if="type==2" role-permission-code="djkpxxDZB.btn.btnBatchAdd"
+                                    ng-click="batchAdd()">批量新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="table-responsive list-table-panel">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>所属党组织</th>
+                                <th>年度</th>
+                                <th>第一季度评分</th>
+                                <th>第二季度评分</th>
+                                <th>第三季度评分</th>
+                                <th>第四季度评分</th>
+                            <!--    <th ng-if="type==1">年度评分</th>-->
+                                <th>评定等级</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in dataList">
+                                <td scope="row" class="text-center">
+                                    {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                </td>
+                                <td>{{it.DZZMC}}</td>
+                                <td class="text-center">{{it.YEAR}}</td>
+                                <td class="text-center">{{it.QUARTER1}}</td>
+                                <td class="text-center">{{it.QUARTER2}}</td>
+                                <td class="text-center">{{it.QUARTER3}}</td>
+                                <td class="text-center">{{it.QUARTER4}}</td>
+                                <!--<td class="text-center"  ng-if="type==1">{{it.ANNUALSCORE}}</td>-->
+                                <td class="text-center">{{it.JUDGELEVELNAME}}</td>
+                                <td class="text-center">
+                                    <button class="btn td-btn bg-light-green waves-effect"
+                                            ng-click="detail(it.ID)"
+                                            title="查看">
+                                        查看
+                                    </button>
+                                    <button role-permission-code="djkpxx.btn.btnEdit"
+                                            class="btn td-btn bg-light-green waves-effect"
+                                            ng-click="edit(it.ID)"  ng-if="type==1"
+                                            title="修改">
+                                        修改
+                                    </button>
+                                    <button role-permission-code="djkpxx.btn.btnDel"
+                                            class="btn td-btn bg-pink waves-effect"  ng-if="type==1"
+                                            ng-click="delete(it.ID)" title="删除">
+                                        删除
+                                    </button>
+                                    <button role-permission-code="djkpxxDZB.btn.btnEdit"
+                                            class="btn td-btn bg-light-green waves-effect"
+                                            ng-click="edit(it.ID)"  ng-if="type==2"
+                                            title="修改">
+                                        修改
+                                    </button>
+                                    <button role-permission-code="djkpxxDZB.btn.btnDel"
+                                            class="btn td-btn bg-pink waves-effect"  ng-if="type==2"
+                                            ng-click="delete(it.ID)" title="删除">
+                                        删除
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

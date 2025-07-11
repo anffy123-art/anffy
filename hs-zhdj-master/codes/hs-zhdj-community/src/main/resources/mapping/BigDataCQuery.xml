@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.px.partybuild.mapper.BigDataCQuery">
+    <!--查询党组织分布情况-->
+    <select id="selectDzzfbqkList" resultType="java.util.HashMap">
+        select fzp.JGFZID as ZZFBDM,fzp.FZMC as ZZFBMC,count(1) as FBSL,fzp.ORDERBY from DJZZRS_JGFZ fzp
+        left join DJZZRS_JGFZ fz on fzp.JGFZID = fz.FJGFZID
+        left join DJZZRS_FZJGGL zzfz on (fz.JGFZID = zzfz.JGFZID or fzp.JGFZID = zzfz.JGFZID)
+        left join ZZ_ZZQKXX zz on zzfz.DZZBM = zz.DZZDM
+        where fzp.FJGFZID is null
+        group by fzp.JGFZID,fzp.FZMC,fzp.ORDERBY
+        order by ORDERBY
+    </select>
+
+    <!--统计党组织信息-->
+    <select id="selectDzzxxCount" resultType="java.util.HashMap">
+        select sum(case when fb.ZZLB in ('100', '200', '300', '400') then 1 else 0 end) as DZZSL,-- 党组织总数
+        sum(case when fb.ZZLB = '400' then 1 else 0 end) as DZBSL, -- 党支部数量
+        sum(us.USCOUNT) as DYSL -- 党员数量
+        from ZZ_ZZQKXX zz
+        inner join ZZ_ZZQKXXFB fb on zz.DZZDM = fb.DZZDM
+        <if test="province!='' and province!=null">
+            inner join (
+                select distinct zzdw.DZZDM
+                from ZZ_DWXX zzdw
+                inner join LZ_DWJBXX dw on zzdw.DWBSM = dw.FDWBSM
+                where 1=1  and dw.PROVINCE = #{province}
+            ) t on zz.DZZDM = t.DZZDM
+        </if>
+        left join (
+             select us.SZDZBDM,count(1) as USCOUNT
+             from VM_RYJBXX us
+             inner join ZZ_ZZQKXX uz on us.SZDZBDM = uz.DZZDM
+             <if test="province!='' and province!=null">
+                 inner join (
+                  select distinct zzdw.DZZDM
+                  from ZZ_DWXX zzdw
+                  inner join LZ_DWJBXX dw on zzdw.DWBSM = dw.FDWBSM
+                  where 1=1  and dw.PROVINCE = #{province}
+                  ) ut on uz.DZZDM = ut.DZZDM
+             </if>
+             where 1=1 and uz.DZZDM like concat('',#{gddwdm},'%')
+             group by us.SZDZBDM
+        ) us on zz.DZZDM=us.SZDZBDM
+        where 1=1 and zz.DZZDM like concat('',#{gddwdm},'%')
+    </select>
+
+    <!--统计党委数量-->
+    <select id="selectDwxxCount" resultType="java.util.HashMap">
+       select sum(case when fb.ZZLB in ('100', '200', '300', '400') then 1 else 0 end)   as DZZZS,-- 党组织总数
+       sum(case when fb.ZZLB = '100' then 1 else 0 end)                           as DWSL,-- 党委数量
+       sum(case when fb.ZZLB = '100' and length(zz.DZZDM) = 12 then 1 else 0 end) as YJDWSL,-- 一级党委
+       sum(case when fb.ZZLB = '100' and length(zz.DZZDM) = 15 then 1 else 0 end) as EJDWSL,-- 二级党委
+       sum(case when fb.ZZLB = '200' then 1 else 0 end)                           as DGWSL,-- 党工委数量
+       sum(case when fb.ZZLB = '300' then 1 else 0 end)                           as DZZSL, -- 党总支数量
+       sum(case when fb.ZZLB = '400' then 1 else 0 end)                           as DZBSL, -- 党支部数量
+       sum(case when fb.ZZLB = '300' and fzp.FZMC is not null then 1 else 0 end)  as DZZSL_YSZD,-- 党总支-运输站段数量
+       sum(case when fb.ZZLB = '400' and fzp.FZMC is not null then 1 else 0 end)  as DZBSL_YSZD, -- 党支部-运输站段数量
+       sum(case when fb.ZZLB = '400' and fb.JCZZFL='200' then 1 else 0 end)  as DZBSL_YX, -- 党支部-院系
+       sum(case when fb.ZZLB = '400' and fb.JCZZFL='300' then 1 else 0 end)  as DZBSL_ZH, -- 党支部-综合
+       sum(case when fb.ZZLB = '400' and fb.JCZZFL='400' then 1 else 0 end)  as DZBSL_LTX -- 党支部-离退休
+       from ZZ_ZZQKXX zz
+       inner join ZZ_ZZQKXXFB fb on zz.DZZDM = fb.DZZDM
+       left join DJZZRS_FZJGGL zzfz on SUBSTR(zz.DZZDM, 1, 12) = zzfz.DZZBM and zzfz.JGFZID is not null
+       left join DJZZRS_JGFZ fz on zzfz.JGFZID = fz.JGFZID
+       left join DJZZRS_JGFZ fzp on fz.FJGFZID = fzp.JGFZID and fzp.FZMC = '运输站段'
+        where 1=1 and zz.DZZDM like concat('',#{gddwdm},'%')
+    </select>
+
+    <!--统计党员数量-->
+    <select id="selectDyCount" resultType="java.util.HashMap">
+        select
+        (case t1.USERTYPE
+        when 1 then '党员总数'
+        when 2 then '停职党员数'
+        when 3 then '在职党员'
+        when 4 then '离退休'
+        when 5 then '其他'
+        when 6 then '正式党员'
+        when 7 then '预备党员'
+        when 8 then '入党申请人数'
+        when 9 then '入党积极分子'
+        when 10 then '发展对象'
+        else '' end) USERTYPENAME,
+        Coalesce(t2.NUM,t3.NUM,t4.NUM,t5.NUM,0) NUM
+        from (select dic.DICKEY as USERTYPE from cf_dictionary dic where dic.DICTYPEKEY='monthType' and dic.DICKEY <![CDATA[ <= ]]> 10 ) t1
+        /*党员总数*/
+        left join (select 1 USERTYPE, count(*) num from ZZ_RYJBXX  where 1=1 and SZDZBDM like concat('',#{gddwdm},'%')) t2 on t1.USERTYPE=t2.USERTYPE -- 党员总数
+        /*离退休 其他*/
+        left join (
+        select USERTYPE,count(*) NUM from (
+        select
+        (case when gzgw.HZMC in('离退休人员','离休干部') then 4
+        else 5 end) USERTYPE from ZZ_RYJBXX us
+        left join  zzzd_gzgw  gzgw on us.GZGW=gzgw.BM
+        where 1=1 and us.SZDZBDM like concat('',#{gddwdm},'%')
+        ) tt1 group by USERTYPE
+        ) t3 on t1.USERTYPE=t3.USERTYPE
+        /*正式党员 预备党员 入党申请人数 入党积极分子 发展对象*/
+        left join(
+        select USERTYPE,count(*) NUM from (
+        select
+        (case when ryzt.HZMC ='正式党员' then 6
+        when ryzt.HZMC ='预备党员' then 7
+        when ryzt.HZMC ='申请入党人' then 8
+        when ryzt.HZMC ='入党积极分子' then 9
+        when ryzt.HZMC ='发展对象' then 10
+        else 999
+        end) USERTYPE
+        from ZZ_RYJBXX us
+        left join zzzd_ryzt ryzt on us.RYZT=ryzt.BM
+        where 1=1 and us.SZDZBDM like concat('',#{gddwdm},'%')
+        ) tt2 group by USERTYPE
+        ) t4 on t1.USERTYPE=t4.USERTYPE
+        /*在职党员*/
+        left join (
+        select 3 USERTYPE,count(*) NUM from (
+        select distinct us.RYBM from ZZ_RYJBXX us
+        left join gg_zgjbxx info on us.RYBM = info.RYBM
+        left join zd_rylb rylb on info.RYLB = rylb.BM
+        where 1=1 and us.SZDZBDM like concat('',#{gddwdm},'%') and rylb.BM like concat('1%') and length(rylb.BM)=3 ) tt3 ) t5 on t1.USERTYPE=t5.USERTYPE
+
+        order by t1.USERTYPE
+    </select>
+
+    <!--统计党员性别-->
+    <select id="selectDyxbCount" resultType="java.util.HashMap">
+        select t1.SEXTYPE
+        ,(case t1.SEXTYPE
+        when 1 then '男'
+        when 2 then '女'
+        else '' end) SEXNAME
+        ,ifnull(t2.NUM,0) NUM
+        from (select dic.DICKEY as SEXTYPE from cf_dictionary dic where dic.DICTYPEKEY='monthType' and dic.DICKEY <![CDATA[ <= ]]> 2) t1
+        left join (select SEXTYPE,count(*) NUM from (
+        select distinct us.RYJBXXBS,us.RYBM,us.XB SEXTYPE
+        from VM_RYJBXX us
+        inner join ZZ_ZZQKXX zz on us.SZDZBDM = zz.DZZDM
+        where 1=1 and us.szdzbdm like concat('',#{gddwdm},'%')
+        <if test="dzzdm != null and dzzdm != ''">
+            and us.SZDZBDM like concat('',#{dzzdm},'%')
+        </if>
+        <if test="dwgzzlb !=null">
+            <if test="dwgzzlb == 1">
+                and us.ZWMC like '%党委书记%'
+            </if>
+            <if test="dwgzzlb == 2">
+                and us.ZWMC like '%党委副书记%'
+            </if>
+            <if test="dwgzzlb == 3">
+                and (us.ZWMC like '%支部书记%' or us.ZWMC like '%总支书记%')
+            </if>
+            <if test="dwgzzlb == 4">
+                and (us.ZWMC like '%支部副书记%' or us.ZWMC like '%总支副书记%')
+            </if>
+        </if>
+        <if test="isOnduty!=null and isOnduty==1">
+            and (us.GZGW not in('0500','0501','0502','0504') or us.GZGW is null)-- 在岗人员
+        </if>
+        ) tt1 group by SEXTYPE
+        ) t2 on t1.SEXTYPE=t2.SEXTYPE
+        order by t1.SEXTYPE
+    </select>
+
+    <!--统计党员年龄-->
+    <select id="selectDynlCount" resultType="java.util.HashMap">
+        select t1.AGETYPE
+        ,(case t1.AGETYPE
+        when 1 then '21-30'
+        when 2 then '31-40'
+        when 3 then '41-50'
+        when 4 then '51以上'
+        else '' end) AGENAME
+        ,ifnull(t2.num,0) NUM
+        from (select dic.DICKEY as AGETYPE from cf_dictionary dic where dic.DICTYPEKEY='monthType' and dic.DICKEY <![CDATA[ <= ]]> 4) t1
+        left join (select AGETYPE,count(*) num from (
+        select distinct RYBM,
+        (case when AGE>=21 and AGE <![CDATA[ <= ]]> 30 then 1
+        when AGE>=31 and AGE <![CDATA[ <= ]]> 40 then 2
+        when AGE>=41 and AGE <![CDATA[ <= ]]> 50 then 3
+        when AGE>=51 then 4
+        else 5
+        end) AGETYPE
+        from (
+        select distinct us.RYJBXXBS,us.RYBM,fb.NL AS AGE
+        from VM_RYJBXX us
+        inner join ZZ_ZZQKXX zz on us.SZDZBDM = zz.DZZDM
+        inner join RS_RYJBXXFB fb on us.RYBM = fb.RYBM
+        where 1=1 and us.SZDZBDM like concat('',#{gddwdm},'%')
+        <if test="dzzdm != null and dzzdm != ''">
+            and us.SZDZBDM like concat('',#{dzzdm},'%')
+        </if>
+        <if test="dwgzzlb !=null">
+            <if test="dwgzzlb == 1">
+                and us.ZWMC like '%党委书记%'
+            </if>
+            <if test="dwgzzlb == 2">
+                and us.ZWMC like '%党委副书记%'
+            </if>
+            <if test="dwgzzlb == 3">
+                and (us.ZWMC like '%支部书记%' or us.ZWMC like '%总支书记%')
+            </if>
+            <if test="dwgzzlb == 4">
+                and (us.ZWMC like '%支部副书记%' or us.ZWMC like '%总支副书记%')
+            </if>
+        </if>
+        <if test="isOnduty!=null and isOnduty==1">
+            and (us.GZGW not in('0500','0501','0502','0504') or us.GZGW is null)-- 在岗人员
+        </if>
+        ) tt1
+        ) tt2 group by AGETYPE
+        ) t2 on t1.AGETYPE=t2.AGETYPE
+        order by t1.AGETYPE
+    </select>
+
+    <!--统计党员党龄-->
+    <select id="selectDydlCount" resultType="java.util.HashMap">
+        select t1.AGETYPE
+        ,(case t1.AGETYPE
+        when 1 then '5年以下'
+        when 2 then '5-10年'
+        when 3 then '10-15年'
+        when 4 then '15年以上'
+        else '' end) AGENAME
+        ,ifnull(t2.num,0) NUM
+        from (select dic.DICKEY as AGETYPE from cf_dictionary dic where dic.DICTYPEKEY='monthType' and dic.DICKEY <![CDATA[ <= ]]> 4) t1
+        left join (select AGETYPE,count(*) num from (
+        select distinct RYBM,
+        (case when age <![CDATA[ < ]]> 5 then 1
+        when age>=5 and age <![CDATA[ < ]]> 10 then 2
+        when age>=10 and age <![CDATA[ < ]]> 15 then 3
+        when age>=15 then 4
+        else 5
+        end) ageType
+        from (
+        select distinct us.RYJBXXBS,us.RYBM,(date_format(sysdate(),'%Y%m%d') - us.sqrdrq) /10000 AS age
+        from VM_RYJBXX us
+        inner join ZZ_ZZQKXX zz on us.SZDZBDM = zz.DZZDM
+        where 1=1 and us.SZDZBDM like concat('',#{gddwdm},'%')
+        <if test="dzzdm != null and dzzdm != ''">
+            and us.SZDZBDM like concat('',#{dzzdm},'%')
+        </if>
+        <if test="dwgzzlb !=null">
+            <if test="dwgzzlb == 1">
+                and us.ZWMC like '%党委书记%'
+            </if>
+            <if test="dwgzzlb == 2">
+                and us.ZWMC like '%党委副书记%'
+            </if>
+            <if test="dwgzzlb == 3">
+                and (us.ZWMC like '%支部书记%' or us.ZWMC like '%总支书记%')
+            </if>
+            <if test="dwgzzlb == 4">
+                and (us.ZWMC like '%支部副书记%' or us.ZWMC like '%总支副书记%')
+            </if>
+        </if>
+        <if test="isOnduty!=null and isOnduty==1">
+            and (us.GZGW not in('0500','0501','0502','0504') or us.GZGW is null)-- 在岗人员
+        </if>
+        ) tt1
+        ) tt2 group by AGETYPE
+        ) t2 on t1.AGETYPE=t2.AGETYPE
+        order by t1.AGETYPE
+    </select>
+
+    <!--统计政工职务党员数量-->
+    <select id="selectZgzwCount" resultType="java.util.HashMap">
+        select zw.bm as code,zw.hzmc as name
+        ,sum(case when uszw.rybm is not null then 1 else 0 end) as count from Zzzd_Zwmc zw
+        left join (
+        select b.rybm,b.ZWMC from zz_bzcyxx b
+        inner join zz_zzqkxxfb fb on b.DZZDM = fb.DZZDM and b.jc = fb.LDJTJC
+        inner join zz_zzqkxx p on fb.DZZDM = p.DZZDM
+        inner join vm_ryjbxx us on b.rybm = us.RYBM
+        where (b.PZMZRQ is null or b.PZMZRQ='')
+        <if test="dzzdm != null and dzzdm != ''">
+            and us.SZDZBDM like concat('',#{dzzdm},'%')
+        </if>
+        ) uszw on zw.bm = uszw.ZWMC
+        group by zw.bm,zw.hzmc
+        order by zw.xh
+    </select>
+
+    <select id="CountRYZT" resultType="java.util.Map">
+        select d.HZMC,d.BM,ifnull(u.num,0) PGCOUNT from zzzd_ryzt d
+        left join (
+        select ut.RYZT,count(*) num from (
+        select distinct us.RYBM,us.RYZT
+        from VM_RYJBXX us
+        inner join ZZ_ZZQKXX zz on us.SZDZBDM = zz.DZZDM
+        inner join zzzd_ryzt d on us.RYZT=d.BM
+        where 1=1 -- t.RYZT in (2,3)
+        <if test="partyGroup !=null and partyGroup!=''">
+            and t.SZDZBDM like concat('',#{partyGroup},'%')
+        </if>
+        <if test="isOnduty!=null and isOnduty==1">
+            and (us.GZGW not in('0500','0501','0502','0504') or us.GZGW is null)-- 在岗人员
+        </if>
+        ) ut group by ut.RYZT
+        ) u on d.BM=u.RYZT
+        order by d.BM
+    </select>
+
+    <!--学历统计-->
+    <select id="selectUserEducationList" resultType="java.util.Map">
+        select t1.EDUCATIONTYPE
+        ,(case t1.EDUCATIONTYPE
+        when 1 then '研究生'
+        when 2 then '大学本科'
+        when 3 then '大学专科'
+        when 4 then '中专'
+        when 5 then '高中、中技'
+        when 6 then '其他'
+        else '' end) EDUCATIONNAME
+        ,ifnull(t2.num,0) NUM
+        from (select dic.DICKEY as EDUCATIONTYPE from cf_dictionary dic where dic.DICTYPEKEY='monthType' and dic.DICKEY <![CDATA[ <= ]]> 6) t1
+        left join (select EDUCATIONTYPE,count(*) num from (
+        select distinct us.RYBM,us.SZDZBDM,
+        (case when xl.HZMC in('研究生教育','博士研究生','硕士研究生','中央党校在职研究生','省（区、市）委党校在职研究生','研究生其他','研究生班') then 1
+        when xl.HZMC in('本科教育','大学本科') then 2
+        when xl.HZMC in('专科教育','大学专科') then 3
+        when xl.HZMC in('中等职业教育','中专') then 4
+        when xl.HZMC in('技校','高中及以下','高中') then 5
+        else 6 end) EDUCATIONTYPE
+        from VM_RYJBXX us
+        inner join ZZ_ZZQKXX zz on us.SZDZBDM = zz.DZZDM
+        left join zd_whcddm1 xl on us.XL=xl.BM -- 学历
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and us.SZDZBDM like concat('',#{dzzdm},'%')
+        </if>
+        <if test="dwgzzlb !=null">
+            <if test="dwgzzlb == 1">
+                and us.ZWMC like '%党委书记%'
+            </if>
+            <if test="dwgzzlb == 2">
+                and us.ZWMC like '%党委副书记%'
+            </if>
+            <if test="dwgzzlb == 3">
+                and (us.ZWMC like '%支部书记%' or us.ZWMC like '%总支书记%')
+            </if>
+            <if test="dwgzzlb == 4">
+                and (us.ZWMC like '%支部副书记%' or us.ZWMC like '%总支副书记%')
+            </if>
+        </if>
+        <if test="isOnduty!=null and isOnduty==1">
+            and (us.GZGW not in('0500','0501','0502','0504') or us.GZGW is null)-- 在岗人员
+        </if>
+        ) tt1 group by EDUCATIONTYPE
+        ) t2 on t1.EDUCATIONTYPE=t2.EDUCATIONTYPE
+        order by t1.EDUCATIONTYPE
+    </select>
+
+    <!--统计三会一课-->
+    <select id="selectShykCount" resultType="java.util.HashMap">
+        select dic.DICKEY SHYKTYPE,dic.DICVALUE SHYKTYPENAME,ifnull(m.num,0) NUM
+        from (select * from cf_dictionary where DICTYPEKEY='shykType' and OPERATESTATE <![CDATA[ <> ]]> 'D') dic
+        left join (
+        select mt.SHYKTYPE,count(*) num from shyk_meeting m
+                                       inner join shyk_meeting_type mt on m.meetingId = mt.meetingId
+                                       where m.OPERATESTATE <![CDATA[ <> ]]> 'D'
+                                         and mt.shykType in (1,2,3,4)
+        <if test="dzzdm != null and dzzdm != ''">
+            and m.PARTYCODE like concat('',#{dzzdm},'%')
+        </if>
+        group by mt.SHYKTYPE
+        ) m on dic.DICKEY=m.SHYKTYPE
+        order by dic.DICKEY
+    </select>
+
+
+    <!--统计党组织信息（首页）-->
+    <select id="selectDzzxxList" resultType="java.util.HashMap">
+        select t1.DZZTYPE
+        ,(case t1.DZZTYPE
+        when 1 then '党委'
+        when 2 then '党工委'
+        when 3 then '党总支'
+        when 4 then '党支部'
+        when 5 then '其他'
+        else '' end) TYPENAME
+        ,ifnull(t2.num,0) NUM
+        from (select dic.DICKEY as DZZTYPE from cf_dictionary dic where dic.DICTYPEKEY='monthType' and dic.DICKEY <![CDATA[ <= ]]> 5) t1
+        left join (select DZZTYPE,count(*) num from (select
+        (case
+        when ZZLB in ('611') and length(DZZDM)=12 then 1 -- 党委
+        when ZZLB in ('200','271') then 2 -- 党工委
+        when ZZLB in ('621') then 3 -- 党总支
+        when ZZLB in ('631','633') then 4 -- 党支部
+        else 5 end ) DZZTYPE, DZZMC, DZZDM from zz_zzqkxx p
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and p.DZZDM like concat('',#{dzzdm},'%')
+        </if>
+        ) tt1 group by DZZTYPE
+        ) t2 on t1.DZZTYPE=t2.DZZTYPE
+        order by t1.DZZTYPE
+    </select>
+
+    <!--统计党员信息（首页）-->
+    <select id="selectDyxxList" resultType="java.util.HashMap">
+
+    </select>
+
+    <!--统计数据（党员数量、三会一课数量、中心组学习数量）-->
+    <select id="selectAllDataTotal" resultType="java.util.HashMap">
+        select t1.DZZDM,t1.DZZMC,ifnull(t1.CHILDCOUNT,0) as CHILDCOUNT,ifnull(t2.userCount,0) as
+        USERCOUNT,ifnull(t3.meetingCount,0) as MEETINGCOUNT,
+        ifnull(t4.XXCount,0) as CENTERCOUNT
+        from (select distinct p.DZZDM,p.DZZMC,count(c.DZZDM) as CHILDCOUNT
+        from (select dzzdm,dzzmc, zzlb from zz_zzqkxx where length(DZZDM)=12 and DZZDM like concat('',#{gddwdm},'%') p
+        left join ZZ_ZZQKXX c on p.DZZDM=SUBSTR(c.DZZDM,1,12) --and length(c.DZZDM)>12
+        inner join ZZ_DZZFBQK zzfb on p.DZZDM=zzfb.DZZDM
+        group by p.DZZDM,p.DZZMC
+        ) t1 -- 党委信息
+        left join (
+        select SUBSTR(SZDZBDM,1,12) as DZZDM,count(u.RYBM) as userCount from vm_ryjbxx u group by SUBSTR(SZDZBDM,1,12)
+        ) t2 on t1.DZZDM=t2.DZZDM -- 党员数量
+        left join (
+        select SUBSTR(PARTYCODE,1,12) as DZZDM,count(m.MEETINGID) as meetingCount from SHYK_MEETING m where 1=1 and
+        OPERATESTATE <![CDATA[ <> ]]> 'D' and SHYKSTATUS not in (2) -- 排除已取消
+        <if test="beginTime != null and beginTime != '' ">
+            and m.BEGINTIME <![CDATA[ >= ]]> date_format(#{beginTime},'%Y-%m-%d')
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and m.ENDTIME <![CDATA[ < ]]> date_add(date_format(#{endTime},'%Y%m%d'),interval 1 day)
+        </if>
+        group by SUBSTR(PARTYCODE,1,12)
+        ) t3 on t1.DZZDM=t3.DZZDM -- 三会一课数量
+        left join (
+        select SUBSTR(DW_ID,1,12) as DZZDM,count(ID) as XXCount from ZZ_ZXZXX_FA WHERE deleted <![CDATA[ <> ]]> 1 group
+        by SUBSTR(DW_ID,1,12)
+        ) t4 on t1.DZZDM=t4.DZZDM -- 中心组学习数量
+
+        left join ZZ_DZZFBQK fbType on t1.DZZDM = fbType.DZZDM
+        where 1=1
+        <if test="zzfbType != null">
+            and SUBSTR(t1.DZZDM,1,12) in(select DZZDM from ZZ_DZZFBQK where ZZFB= #{zzfbType})
+        </if>
+        order by fbType.SORT
+    </select>
+
+    <select id="selectDYFZQKTotalList" resultType="java.util.HashMap">
+        SELECT t.ND,WMSYS.WM_CONCAT(t.JHFZDYSL) as JHFZDYSL,
+        WMSYS.WM_CONCAT(t.GR) as GR,
+        WMSYS.WM_CONCAT(t.SCGZDYX) SCGZDYX,
+        WMSYS.WM_CONCAT(t.GTLY) GTLY,
+        WMSYS.WM_CONCAT(t.XJMFRW) XJMFRW,
+        WMSYS.WM_CONCAT(t.GZSQT) GZSQT,
+        WMSYS.WM_CONCAT(t.GQTY) GQTY
+        FROM DSJ_DYFZQK t
+        where 1=1
+        <if test="ndList != null and ndList.size()>0">
+            and t.ND in
+            <foreach collection="ndList" item="nd" index="index" open="(" close=")" separator=",">
+                #{nd}
+            </foreach>
+        </if>
+        GROUP BY t.ND
+    </select>
+
+
+    <!--统计党组织-->
+    <select id="selectPartyCountList" resultType="java.util.HashMap">
+        select t1.ZZLB
+        ,(case t1.ZZLB
+        when 1 then '党委'
+        when 2 then '党总支'
+        when 3 then '党支部'
+        when 4 then '党小组'
+        else '其他' end) ZZLBMC
+        ,ifnull(t2.num,0) NUM
+        from (select dic.DICKEY as ZZLB from cf_dictionary dic where dic.DICTYPEKEY='monthType' and dic.DICKEY <![CDATA[ <= ]]> 5) t1
+        left join (select zzlb,count(*) num from (
+        select distinct z.DZZDM,z.DZZMC,
+        (case when zzlb.HZMC in('党委','党工委') then 1
+        when zzlb.HZMC in('党总支') then 2
+        when zzlb.HZMC in('党支部') then 3
+        when zzlb.HZMC in('党小组') then 4
+        else 5 end) as ZZLB
+        from ZZ_ZZQKXX z
+        left join ZZ_ZZQKXXFB fb on z.DZZDM=fb.DZZDM
+        left join ZZZD_ZZLBDMNEW zzlb on fb.ZZLB=zzlb.BM
+        where 1=1 and z.DZZDM like concat('',#{gddwdm},'%')
+        <if test="dzzdm != null and dzzdm != ''">
+            and z.DZZDM like concat('%',#{dzzdm},'%')
+        </if>
+        <if test="ssdzzdm != null and ssdzzdm != ''">
+            and z.DZZDM =#{ssdzzdm}
+        </if>
+        ) tt1 group by ZZLB
+        ) t2 on t1.ZZLB=t2.ZZLB
+        order by t1.ZZLB
+    </select>
+
+    <!--统计领导人员5+3-->
+    <select id="selectUserLeaderTotalList" resultType="java.util.HashMap">
+      select dickey as LEADERTYPE,t.USERCODE,ifnull(t.count,0) as COUNT,ifnull(t.quarter,0) QUARTER , d.DICVALUE as LEADERTYPENAME from (select * from CF_DICTIONARY where DICTYPEKEY='leaderType') d
+                                                                                                   left join (select us.XMPY,u.USERCODE,u.LEADERTYPE,count(*) as count,QUARTER ( LEADERTIME ) quarter from US_USERLEADER U
+                                                                                                   inner join VM_RYJBXX us on U.USERCODE = us.RYBM
+                                                                                                              where 1=1
+                                                                                                              and u.USERCODE=#{userCode}
+                                                                                                              and date_format(LEADERTIME,'%Y')=#{year}
+                                                                                                              group by us.XMPY,u.USERCODE,u.LEADERTYPE,QUARTER(LEADERTIME)
+        ) t on d.DICKEY=t.LEADERTYPE
+        order by DICKEY,t.XMPY
+    </select>
+
+    <!--统计中心组学习-->
+    <select id="selectUserZXZXXTotalList" resultType="java.util.HashMap">
+        select dickey as LEADERTYPE,t.LEADER_USER_ID,ifnull(t.count,0) as COUNT,ifnull(t.speaknumber,0) as SPEAKNUMBER from (select * from CF_DICTIONARY where DICTYPEKEY='zxzxxxxfaxxxs') d
+        left join (select u.LEADER_USER_ID,f.study_modality_code,count(*) as count,sum(u.SPEAKNUMBER) as speaknumber
+                   from ZZ_ZXZXX_FA F
+                   inner join ZZ_ZXZXX_CJLDBZ u on f.ID=u.CASE_ID
+                   where 1=1
+                   and f.DELETED = 0
+                   and u.DELETED = 0
+                   and u.LEADER_USER_ID=#{userCode}
+                   group by u.LEADER_USER_ID,f.STUDY_MODALITY_CODE
+        ) t on d.DICKEY=t.STUDY_MODALITY_CODE
+        order by DICKEY
+    </select>
+
+    <!--统计党员总数 在岗职工数 职工人数-->
+    <select id="selectPartyUserTotalList" resultType="java.util.HashMap">
+        select t.DZZDM,t.TOTAL,t.ZGCOUNT,fb.ZGRS,t.LTXCOUNT
+        from (
+        select DZZDM,sum(total) TOTAL,sum(zgcount) ZGCOUNT,sum(ltxcount) LTXCOUNT
+        from (
+        select substr(z.DZZDM, 1, length(#{dzzdm})) as DZZDM,
+        count(1) as total,
+        (sum(case when (us.GZGW not in('0500','0501','0502','0504') or us.GZGW is null) then 1 else 0 end)) zgcount,
+         (sum(case when us.GZGW in('0500','0501','0502','0504') then 1 else 0 end)) as ltxcount
+        from ZZ_ZZQKXX z
+        left join ZZ_ZZQKXXFB fb on z.DZZDM = fb.DZZDM
+        inner join VM_RYJBXX us on z.DZZDM = us.SZDZBDM
+        left join RS_RYJBXXFB usfb on us.RYBM = usfb.RYBM
+        where z.DZZDM like concat('',#{dzzdm},'%')
+        group by z.DZZDM
+        ) t1
+        group by DZZDM
+        ) t
+        left join ZZ_ZZQKXXFB fb on t.DZZDM = fb.DZZDM
+    </select>
+
+    <!--统计创岗建区-->
+    <select id="selectCGJQTotal" resultType="java.util.HashMap">
+        select ifnull(sum(case when s.CGJQTYPE=1 and s.GQTYPE=1 then 1 else 0 end),0) as POSTCOUNT,-- 党员先锋岗
+        ifnull(sum(case when s.CGJQTYPE=2 and s.GQTYPE=1 then 1 else 0 end),0) as AREACOUNT,-- 红旗责任区
+        ifnull(sum(case when s.CGJQTYPE=1 then 1 else 0 end),0) as POSTTOTAL,-- 责任岗
+        ifnull(sum(case when s.CGJQTYPE=2 then 1 else 0 end),0) as AREATOTAL -- 责任区
+        from CGJQ_POSTAREA_SCORE s
+        where 1=1 and s.OPERATESTATE <![CDATA[ <> ]]> 'D'
+        <if test="dzzdm!=null and dzzdm !=''">
+            and s.PARTYCODE like concat('',#{dzzdm},'%')
+        </if>
+        <if test="ssdzzdm!=null and ssdzzdm !=''">
+            and s.PARTYCODE = #{ssdzzdm}
+        </if>
+        <if test="year!=null">
+            and s.YEAR =#{year}
+        </if>
+    </select>
+
+    <select id="selectCGJQTotalList" resultType="java.util.HashMap">
+        select #{year} as YEAR,t1.QUARTER,ifnull(t2.POSTCOUNT,0) as POSTCOUNT,ifnull(t2.AREACOUNT,0) as AREACOUNT
+        from (select dic.DICKEY as QUARTER from cf_dictionary dic where dic.DICTYPEKEY='monthType' and dic.DICKEY <![CDATA[ <= ]]> 4) t1
+        left join (
+        select s.YEAR,s.QUARTER,
+        sum(case when s.CGJQTYPE=1 then 1 else 0 end) as postcount,
+        sum(case when s.CGJQTYPE=2 then 1 else 0 end) as areacount
+        from CGJQ_POSTAREA_SCORE s
+        where s.GQTYPE=1 and s.OPERATESTATE <![CDATA[ <> ]]> 'D'
+        and s.YEAR =#{year}
+        <if test="dzzdm!=null and dzzdm !=''">
+            and s.PARTYCODE like concat('',#{dzzdm},'%')
+        </if>
+        <if test="ssdzzdm!=null and ssdzzdm !=''">
+            and s.PARTYCODE = #{ssdzzdm}
+        </if>
+        group by s.YEAR,s.QUARTER
+        ) t2 on t1.QUARTER=t2.QUARTER
+        order by t1.QUARTER
+    </select>
+
+    <select id="selectPartyUserExpendTotalList" resultType="java.util.HashMap">
+        select t1.FLOWTYPE
+        ,ifnull(t2.num,0) NUM,
+        (case when t1.FLOWTYPE=1 then '有' || ifnull(t2.num,0) || '名党员待谈话！'
+        when t1.FLOWTYPE=2 then '有' || ifnull(t2.num,0) || '名入党积极分子待考察！'
+        when t1.FLOWTYPE=3 then '有' || ifnull(t2.num,0) || '名预备党员待转正！'
+        else '' end) as content,
+        (case when t1.FLOWTYPE=1 then 1
+        when t1.FLOWTYPE=2 then 3
+        when t1.FLOWTYPE=3 then 22
+        else 0 end) as beginSort,
+        (case when t1.FLOWTYPE=1 then 1
+        when t1.FLOWTYPE=2 then 5
+        when t1.FLOWTYPE=3 then 22
+        else 0 end) as endSort
+        from (select dic.DICKEY as FLOWTYPE from cf_dictionary dic where dic.DICTYPEKEY='monthType' and dic.DICKEY <![CDATA[ <= ]]> 3) t1
+        left join (select FLOWTYPE,count(JOINUSERID) as num
+        from (
+        select u.JOINUSERID,
+        uf.SORT,
+        (
+        case
+        when uf.SORT =1 then 1
+        when uf.SORT >= 3 and uf.SORT <![CDATA[ <= ]]> 5 then 2
+        when uf.SORT >=22 and uf.SORT <![CDATA[ <= ]]> 22 then 3 else 0 end
+        ) as FLOWTYPE
+        from PE_JOINUSER u
+        inner join VM_RYJBXX_ALL us on u.USERCODE=us.RYBM
+        inner join ZZ_ZZQKXX z on us.SZDZBDM=z.DZZDM
+        inner join (
+        select uf.JOINUSERID,max(f.SORT) SORT
+        from PE_JOINUSER u
+        inner join VM_RYJBXX_ALL us on u.USERCODE=us.RYBM
+        inner join PE_JOINUSER_FLOW uf on u.JOINUSERID=uf.JOINUSERID
+        inner join PE_FLOW f on uf.FLOWID = f.FLOWID
+        where 1=1 and us.RYZT in('1','2','5','6')
+        <if test="dzzdm != null and dzzdm != ''">
+            and us.SZDZBDM like concat('',#{dzzdm},'%')
+        </if>
+        group by uf.JOINUSERID
+        ) uf on u.JOINUSERID = uf.JOINUSERID
+        ) tt1
+        group by FLOWTYPE
+
+        ) t2 on t1.FLOWTYPE=t2.FLOWTYPE
+        order by t1.FLOWTYPE
+    </select>
+
+
+    <select id="selectZXZXXTotal" resultType="java.util.HashMap">
+        select bz.RYBM,bz.XM,ifnull(stud.count,0) COUNT,ifnull(stud.speaknumber,0) SPEAKNUMBER,
+        ifnull(stud.absentCount,0) ABSENTCOUNT,(case when stud.count>0 then round(ifnull(stud.absentCount,0)/stud.count,4) else 0 end)
+        as RATE,
+        uszw.DNZW as DNZW
+        from ZZ_BZCYXX bz
+        inner join VM_RYJBXX u on bz.RYBM=u.RYBM
+        left join vw_partyduty uszw on u.rybm=uszw.rybm -- 党内职务名称
+        inner join ZZ_ZZQKXXFB fb on bz.DZZDM=fb.DZZDM and bz.JC=fb.LDJTJC
+        left join(
+        select u.LEADER_USER_ID,count(*) as count,sum(u.SPEAKNUMBER) as speaknumber,
+        sum(case when (u.absent is null or u.absent=0) then 1 else 0 end) as absentCount
+        from ZZ_ZXZXX_FA F
+        inner join ZZ_ZXZXX_CJLDBZ u on f.ID=u.CASE_ID
+        where 1=1
+        and f.DELETED = 0
+        and u.DELETED = 0
+        <if test="year != null">
+            and date_format(F.STUDY_START_TIME,'%Y') = #{year}
+        </if>
+        group by u.LEADER_USER_ID
+        ) stud on bz.RYBM=stud.LEADER_USER_ID
+        where 1=1
+        <if test="dzzdm != null and dzzdm != ''">
+            and fb.DZZDM like concat('',#{dzzdm},'%')
+        </if>
+        <if test="ssdzzdm!=null and ssdzzdm !=''">
+            and fb.DZZDM = #{ssdzzdm}
+        </if>
+        order by u.XMPY,u.RYJBXXBS
+    </select>
+
+    <select id="selectDjkpxxTotalList" resultType="java.util.HashMap">
+        select dic.DICKEY as TYPE,dic.DICVALUE as NAME,count(1) as COUNT
+        from DJ_DJKPXX kp
+        inner join ZZ_ZZQKXX zz on kp.DZZDM = zz.DZZDM
+        inner join CF_DICTIONARY dic on kp.JUDGELEVEL = dic.DICKEY and dic.DICTYPEKEY='judgeLevel'
+        where kp.JUDGELEVEL in (1,2,3,4) and kp.OPERATESTATE <![CDATA[ <> ]]> 'D'
+        <if test="year != null">
+            and kp.YEAR = #{year}
+        </if>
+        group by dic.DICKEY,dic.DICVALUE
+        order by DICKEY
+    </select>
+
+    <select id="selectBrandTotalList" resultType="java.util.HashMap">
+        select dic.DICKEY as TYPE,dic.DICVALUE as NAME,count(1) as COUNT
+        from DJ_BRAND kp
+        inner join ZZ_ZZQKXX zz on kp.PartyCode = zz.DZZDM
+        inner join CF_DICTIONARY dic on kp.CREATTYPE = dic.DICKEY and dic.DICTYPEKEY='djBrand_creatType'
+        where 1=1 and kp.OPERATESTATE <![CDATA[ <> ]]> 'D'
+        group by dic.DICKEY,dic.DICVALUE
+        order by DICKEY
+    </select>
+
+    <select id="selectJlcfxxTotalList" resultType="java.util.HashMap">
+        /*select Extract(year from cf.APPROVALDATE) as year,
+        sum(case when cf.PUNISHTYPE=1 then 1 else 0 end) as count1,
+        sum(case when cf.PUNISHTYPE=2 then 1 else 0 end) as count2,
+        sum(case when cf.PUNISHTYPE=3 then 1 else 0 end) as count3,
+        sum(case when cf.PUNISHTYPE=4 then 1 else 0 end) as count4,
+        sum(case when cf.PUNISHTYPE=5 then 1 else 0 end) as count5
+        from DJ_JLCFXX cf
+        inner join ZZ_ZZQKXX zz on cf.DZZDM = zz.DZZDM
+        where 1=1 and  cf.OPERATESTATE  <![CDATA[ <> ]]> 'D'
+        group by Extract(year from cf.APPROVALDATE)
+        order by Extract(year from cf.APPROVALDATE)*/
+
+        select t.NAME, t.TYPE, t.YEAR,sum(case when cf.APPROVALDATE is not null then 1 else 0 end) as COUNT
+        from (
+        select dic.DICVALUE as NAME,dic.DICKEY as TYPE,year.DICVALUE as YEAR
+        from CF_DICTIONARY dic,
+        CF_DICTIONARY YEAR
+        where dic.DICTYPEKEY = 'punishType' and year.DICTYPEKEY = 'years'
+        ) t
+        left join (
+        select cf.PUNISHTYPE,cf.APPROVALDATE from  DJ_JLCFXX cf
+        inner join ZZ_ZZQKXX zz on cf.DZZDM = zz.DZZDM
+        where  1=1 and  cf.OPERATESTATE <![CDATA[ <> ]]> 'D'
+        ) cf on t.YEAR = Extract(year from cf.APPROVALDATE) and t.TYPE = cf.PUNISHTYPE
+        where 1=1
+        group by t.NAME, t.TYPE, t.YEAR
+        order by t.YEAR,t.TYPE, t.YEAR
+    </select>
+
+    <select id="selectPartyUserStatusTotalList" resultType="java.util.HashMap">
+        select t.partyCode,t.partyName,fb.zzlb as partyType,t.userStatus,t.userStatusName
+             ,sum(case when us.rybm is not null then 1 else 0 end) as userCount
+        from (
+                 select p.dzzdm as partyCode,p.dzzmc as partyName,t.bm as userStatus,t.hzmc as userStatusName from zz_zzqkxx p,zzzd_ryzt t
+             ) t
+                 inner join zz_zzqkxxfb fb on t.partyCode = fb.dzzdm
+                 left join vm_ryjbxx_all us on substr(us.szdzbdm,1,length(t.partyCode)) = t.partyCode
+                 left join rs_ryjbxxfb usfb on us.rybm = usfb.rybm
+        where 1=1 and (usfb.ISARCHIVE is null or usfb.ISARCHIVE = 0)
+        group by t.partyCode,t.partyName,fb.zzlb,t.userStatus,t.userStatusName
+    </select>
+
+    <select id="selectZzpxqkList" resultType="java.util.HashMap">
+        select year(honourtime) as year,count(1) as count from dj_dnpxxx where pxlx=2 and OPERATESTATE <![CDATA[ <> ]]> 'D' group by year(honourtime)
+    </select>
+
+    <select id="selectDnpxxxTotalList" resultType="java.util.HashMap">
+        select year(honourtime) as year
+            , sum(case when HONOURTYPE=3 then 1 else 0 end) as count_partyUser
+            , sum(case when HONOURTYPE=4 then 1 else 0 end) as count_workUser
+            from dj_dnpxxx where pxlx=1 and OPERATESTATE <![CDATA[ <> ]]> 'D' group by year(honourtime)
+    </select>
+    
+    <select id="selectPartyBrandTotalList" resultType="java.util.HashMap">
+        select year(BRANDTIME) as year,count(1) as count from dj_brand where OPERATESTATE <![CDATA[ <> ]]> 'D' group by year(BRANDTIME)
+    </select>
+
+    <select id="selectSzpyTotalList" resultType="java.util.HashMap">
+        select dic.DICKEY as typeValue,dic.DICVALUE as typeName,sum(case when prs.reportResult is null then 0 else 1 end) as count
+        from CF_DICTIONARY dic
+            left join pt_reportScore prs on prs.reportResult=dic.DICKEY
+            left join pt_reportdata prd on prd.reportId = prs.reportId
+            left join ZZ_ZZQKXX zz on prd.dzzdm = zz.DZZDM
+        where dic.DICTYPEKEY='reportResult'
+        group by dic.DICKEY,dic.DICVALUE
+        order by dic.DICKEY
+    </select>
+
+    <select id="selectDnghbfTotalList" resultType="java.util.HashMap">
+        select year(CAREDATE) as year,count(1) as count from dj_dnghbfmx where 1=1 group by year(CAREDATE)
+    </select>
+
+    <select id="selectZtdrTotalList" resultType="java.util.HashMap">
+        select month(ACTIVITYTIME) as month,count(1) as count from dj_ztdrxx where year(ACTIVITYTIME) = #{year} group by month(ACTIVITYTIME)
+    </select>
+
+</mapper>

@@ -1,0 +1,42 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div activate-input class="body">
+                    <div class="table-responsive list-table-panel" style="font-size: 16px">
+                            <div class="outoflow" style="height: 350px;">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap" style="position:relative">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>姓名</th>
+                                        <th>所在党支部列</th>
+                                        <th>任职时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="it in receivePcommListHostUser">
+                                        <th><input type="checkbox" id="{{it.RYBM}}" name="itChecked" ng-model="it.checked" ng-click="chkchildrenHostUser(it)"><label for="{{it.RYBM}}"></label></th>
+                                        <th>{{it.XM}}</th>
+                                        <th>{{it.DZZMC}}</th>
+                                        <th>{{it.PZRZRQ}}</th>
+                                    </tr>
+                                    <tr ng-if="receivePcommListPlan.length<=0">
+                                        <td colspan="3" style="text-align:center">暂无数据</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" ng-click="quedingxuyaoHostUser()">选择</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

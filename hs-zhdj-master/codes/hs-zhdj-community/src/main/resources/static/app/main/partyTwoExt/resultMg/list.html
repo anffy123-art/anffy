@@ -1,0 +1,162 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="selectparams.selectdzzdm" data-selectdzzmc="selectparams.selectdzzmc"
+             data-isshowxz="selectparams.isshowxz" data-zzfbtype="selectparams.zzfbType"
+             data-defaultselected="selectparams.defaultselected" data-isunfold="selectparams.isunfold"></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="selectparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>党建工作成果名称</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="name" class="form-control" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.name"
+                                                       type="text"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>获评开始时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="beginTime" class="form-control" ng-change="search()"
+                                                       ng-model="selectparams.beginTime"
+                                                       autocomplete="off"
+                                                       autoclose="true"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix form-inline" ng-show="isShow">
+
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>获评结束时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="endTime" class="form-control" ng-change="search()"
+                                                       ng-model="selectparams.endTime"
+                                                       autocomplete="off"
+                                                       autoclose="true"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <span class="moreSpan" ng-click="isShowClick()" style='padding-right:1em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>
+                                <button  class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+
+                            <button role-permission-code="DjResultMgList.btnExcel" class="btn btn-default1"
+                                    ng-click="exportData()">导出
+                            </button>
+                            <button role-permission-code="DjResultMgList.btnAdd" class="btn btn-default1"
+                                    ng-click="addData()">新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="table-responsive list-table-panel">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>排序</th>
+                                <th>所在党组织</th>
+                                <th>党建工作成果名称</th>
+                                <th>认定时间</th>
+                                <!--<th>主要做法及成效</th>-->
+                                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="it in dataList">
+                                <td scope="row" class="text-center">
+                                    {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                </td>
+                                <td>{{it.PARTYNAME}}</td>
+                                <td>{{it.RESULTNAME}}</td>
+                                <td class="text-center">{{it.SCORETIME|date:'yyyy-MM-dd'}}</td>
+                                <!--<td>{{it.SCORETEXT}}</td>-->
+                                <td class="text-center">
+                                    <button
+                                            class="btn td-btn bg-light-green waves-effect"
+                                            ng-click="showData(it.DJ_RESULTMGID)"
+                                            title="查看">
+                                        查看
+                                    </button>
+                                    <button
+                                            role-permission-code="DjResultMgList.btnEdit"
+                                            class="btn td-btn bg-light-green waves-effect"
+                                            ng-click="editData(it.DJ_RESULTMGID)"
+                                            title="编辑">
+                                        编辑
+                                    </button>
+                                    <button
+                                            role-permission-code="DjResultMgList.btnDel"
+                                            class="btn td-btn bg-light-green waves-effect"
+                                            ng-click="deleteData(it.DJ_RESULTMGID)"
+                                            title="删除">
+                                        删除
+                                    </button>
+                                    <!--DjResultMgList.btnDel-->
+                                </td>
+                            </tr>
+                            <tr ng-if="pageInfo.ptotal==0">
+                                <td colspan="15" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

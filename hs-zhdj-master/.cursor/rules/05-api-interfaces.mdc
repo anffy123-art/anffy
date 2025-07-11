@@ -1,0 +1,65 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# API接口结构
+
+智慧党建项目的主要API接口和使用规范。
+
+## 控制器组织结构
+所有API控制器位于[controller目录](mdc:codes/hs-zhdj-community/src/main/java/com/px/partybuild/controller)下，根据功能分为不同的控制器类。
+
+## 主要API接口
+智慧党建项目提供以下主要API接口：
+
+### 用户认证相关
+- `UserController` - 用户登录、登出、修改密码等
+- `UserRoleController` - 用户角色管理
+
+### 党员管理相关
+- `PartyUserController` - 党员信息管理
+- `PartyUserAdmitController` - 党员准入管理
+- `PartyOrgController` - 党组织管理
+
+### 党建活动相关
+- `PartyController` - 党建活动管理
+- `PartyTotalController` - 党建统计
+- `GradeController` - 评分相关
+
+### 系统管理相关
+- `MenuManageController` - 菜单管理
+- `ModularController` - 模块管理
+- `LogController` - 日志管理
+- `DictionaryController` - 字典管理
+
+### 文件管理相关
+- `FileMgrController` - 文件上传、下载等
+
+### 经费管理相关
+- `FundsController` - 党费管理、预算管理等
+
+## API请求与响应规范
+1. 请求格式：大多数API使用REST风格设计
+2. 响应格式：统一使用JSON格式
+3. 常见状态码：
+   - 200: 成功
+   - 400: 请求错误
+   - 401: 未授权
+   - 500: 服务器错误
+
+## 通用返回格式
+项目使用统一的JSON返回格式，包含如下字段：
+- `code`: 状态码
+- `msg`: 消息
+- `data`: 数据
+- `success`: 是否成功
+
+## 分页请求规范
+分页请求参数通常包含：
+- `pageNum`: 页码
+- `pageSize`: 每页大小
+
+## 身份验证
+所有需要认证的API请求需要在请求头中包含JWT令牌：
+- 请求头名称: `logintoken`

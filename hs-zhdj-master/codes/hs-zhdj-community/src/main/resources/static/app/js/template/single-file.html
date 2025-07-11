@@ -1,0 +1,9 @@
+<div>
+    <span ng-repeat="it in ngModel.items">
+        <a href="javascript:void(0);" ng-click="downFun(it.fileid)">
+            {{it.filename}}
+        </a>
+        <span class="glyphicon  glyphicon-trash"  ng-if="!readonly" style="cursor: pointer" ng-click="delfile(it.fileid)" aria-hidden="true"></span>
+    </span>
+    <span class="glyphicon  glyphicon-upload"  ng-if="!readonly" style="cursor: pointer" ng-click="upload()" aria-hidden="true">上传</span>
+</div>

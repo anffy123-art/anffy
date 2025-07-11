@@ -1,0 +1,33 @@
+<div class="modal" name="sendTempUser" tabindex="-1" role="dialog" style="min-height:500px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">发送邀请</h3>
+            </div>
+            <form class="form-horizontal formtable1 panel-body modal-body"
+                  role="form" id="sendMsgForm"
+                  name="sendMsgForm" style="padding: 10px; margin: 10px;" novalidate>
+                <table class="table table-bordered tform">
+                    <tr >
+                        <th class="col-md-2">登录账号:</th>
+                        <td ng-class="{ 'focused error' : sendMsgForm.mobile.$invalid &&  sendMsgForm.$submitted}">
+                            <input name="mobile" ng-required="true" type="text" ng-model="findData1.mobile" class="form-control"/>
+                            <label ng-show="sendMsgForm.mobile.$invalid &&  sendMsgForm.$submitted"
+                                   class="error">必填.</label>
+                        </td>
+                    </tr>
+                </table>
+                <div class="form_foot" id="buttons" style="text-align:center">
+                    <button id="submit" ng-click="sendMsg(sendMsgForm.$valid)" class="btn btn-danger" style="padding:4px 20px 4px 20px" type="submit">发送
+                    </button>
+                    <button id="cancel" type="button" class="btn btn-default" style="padding:4px 20px 4px 20px"
+                            ng-click="$hide()">取消
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

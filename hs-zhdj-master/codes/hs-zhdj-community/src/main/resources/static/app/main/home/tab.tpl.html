@@ -1,0 +1,28 @@
+<div class="nav-btn-panel">
+  <div class="nav-btn nav-btn-left">
+    <i ng-click="scrollLeft()" class="material-icons">keyboard_arrow_left</i>
+  </div>
+  <div class="nav-tabs-body">
+    <ul class="nav nav-btn-inline" role="tablist" ng-class="$navClass">
+
+      <li role="presentation"  ng-repeat="$pane in $panes track by $index" name="{{$pane.name}}" ng- ng-class="[ $isActive($pane, $index) ? $activeClass : '', $pane.disabled ? 'disabled' : '' ]">
+
+        <a class="li-a-title" role="tab"  data-toggle="tab" ng-click="!$pane.disabled && $pane.name && $setActive($pane.name || $index)" ng-bind-html="$pane.title" ng-keypress="$onKeyPress($event, $pane.name || $index)" data-index="{{ $index }}" aria-controls="$pane.title"  href="">
+        </a><i ng-show="$pane.panedata.canClose" ng-click="!$pane.disabled && tabClear($pane)" class="btn-i material-icons">clear</i>
+      </li>
+    </ul>
+  </div>
+  <div class="nav-btn nav-btn-right">
+    <i ng-click="scrollRight()" class="material-icons nav-btn">keyboard_arrow_right</i>
+  </div>
+</div>
+<!--
+<ul class="nav nav-btn-inline" role="tablist" ng-class="$navClass">
+      <li role="presentation" ng-repeat="$pane in $panes track by $index" ng-class="[ $isActive($pane, $index) ? $activeClass : '', $pane.disabled ? 'disabled' : '' ]">
+        <a class="li-a-title" role="tab" data-toggle="tab" ng-click="!$pane.disabled && $pane.name && $setActive($pane.name || $index)" ng-bind-html="$pane.title" ng-keypress="$onKeyPress($event, $pane.name || $index)" data-index="{{ $index }}" aria-controls="$pane.title"  href="">
+        </a><i ng-show="$pane.panedata.canClose" ng-click="!$pane.disabled && tabClear($pane)" class="btn-i material-icons">clear</i>
+      </li>
+    </ul>
+-->
+<div ng-transclude class="tab-content main-tab-content">
+</div>

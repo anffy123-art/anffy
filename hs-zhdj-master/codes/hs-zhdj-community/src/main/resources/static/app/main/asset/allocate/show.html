@@ -1,0 +1,56 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <div ng-include="'../main/asset/show.html'" onload="loadAsset()" ng-controller="assetShowCtrl"></div>
+        <div panel-title data-title="'资产调拨信息'"></div>
+        <div class="dj-formtable">
+            <table class="dj-table dj-table3">
+                <tr>
+                    <th>调拨前保管单位</th>
+                    <td>
+                        {{dataModel.oldpartyname}}
+                    </td>
+                    <th>调拨前保管人</th>
+                    <td>
+                        {{dataModel.oldusername}}
+                    </td>
+                    <th>调拨前保管时间</th>
+                    <td>
+                        {{dataModel.oldstartdate | date:'yyyy-MM-dd'}} 至 {{dataModel.oldenddate | date:'yyyy-MM-dd'}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>调拨后保管单位</th>
+                    <td>
+                        {{dataModel.newpartyname}}
+                    </td>
+                    <th>调拨后保管人</th>
+                    <td>
+                        {{dataModel.newusername}}
+                    </td>
+                    <th>调拨后保管时间</th>
+                    <td>
+                        {{dataModel.newstartdate | date:'yyyy-MM-dd'}} 至 {{dataModel.newenddate | date:'yyyy-MM-dd'}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>调拨时间</th>
+                    <td>
+                        {{dataModel.allocatedate | date:'yyyy-MM-dd'}}
+                    </td>
+                    <th>调拨人</th>
+                    <td>
+                        {{dataModel.allocateusername}}
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <th>备注</th>
+                    <td colspan="5">
+                        {{dataModel.remark}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

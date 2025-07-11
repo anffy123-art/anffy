@@ -1,0 +1,112 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <form ng-if="st==1" role="form" name="editForm" novalidate>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>党组织名称</th>
+                        <td ng-class="{ 'has-error' : this.editForm.partyname.$invalid &&  this.editForm.$submitted}">
+                            <div class="input-group input-group-search"
+                                 title="选择党组织" ng-click="selectParty()">
+                                <input type="text" name="partyname" ng-model="dataModel.partyname"
+                                       ng-required="true" ng-disabled="true"
+                                       class="form-control"/>
+                                <span class="input-group-addon"><i class="material-icons">search</i></span>
+                            </div>
+                            <span ng-show="this.editForm.partyname.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                        <th>认定时间</th>
+                        <td ng-class="{ 'has-error' : this.editForm.scoretime.$invalid &&  this.editForm.$submitted}">
+                            <input name="scoretime" class="form-control"
+                                   autocomplete="off"
+                                   autoclose="true"
+                                   data-date-format="yyyy-MM-dd" data-date-type="date"
+                                   ng-model="dataModel.scoretime"
+                                   ng-required="true"
+                                   data-max-date="{{maxDate}}"
+                                   placeholder="" bs-datepicker/>
+                            <span ng-show="this.editForm.scoretime.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>党建工作成果名称</th>
+                        <td colspan="3" ng-class="{ 'has-error' : this.editForm.resultname.$invalid &&  this.editForm.$submitted}">
+                            <input type="text" name="resultname" ng-model="dataModel.resultname"
+                                   maxlength="800"
+                                   class="form-control" ng-required="true"/>
+                            <span ng-show="this.editForm.resultname.$invalid &&  this.editForm.$submitted"
+                                  class="error">必填.</span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>主要做法及成就</th>
+                        <td colspan="3" ng-class="{ 'has-error' : this.editForm.scoretext.$invalid &&  this.editForm.$submitted}">
+                            <textarea name="scoretext" maxlength="2000" ng-pattern="/^[\s\S.]{1,2000}$/" ng-required="true" ng-model="dataModel.scoretext" style="width: 100%;" rows="5"></textarea>
+                            <span ng-show="this.editForm.scoretext.$invalid &&  this.editForm.$submitted"
+                                  class="error">不能超过2000字符.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>备注</th>
+                        <td colspan="3">
+                            <textarea maxlength="800" ng-model="dataModel.note" style="width: 100%;" rows="2"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="table-responsive list-table-panel" style="margin-bottom: 20px;">
+                <bsfiles ng-model="reqFileModel"/>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+                <button role-permission-code="djResultmgEdit.btnSave" type="submit"
+                        class="btn btn-primary"
+                        ng-click="submitData(this.editForm.$valid)">提交
+                </button>
+            </div>
+        </form>
+        <div ng-if="st!=1">
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>党组织名称</th>
+                        <td ng-bind="dataModel.partyname">
+                        </td>
+                        <th>认定时间</th>
+                        <td ng-bind="dataModel.scoretime|date:'yyyy-MM-dd'">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>党建工作成果名称</th>
+                        <td colspan="3" ng-bind="dataModel.resultname">
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>主要做法及成就</th>
+                        <td  colspan="3">
+                            <pre ng-bind-html="dataModel.scoretext"></pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>备注</th>
+                        <td ng-bind-html="dataModel.note" colspan="3">
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="table-responsive list-table-panel" style="margin-bottom: 20px;">
+                <bsfiles ng-model="reqFileModel"/>
+            </div>
+            <div class="form_foot">
+                <button type="button" class="btn btn-default" ng-click="pagechange();">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

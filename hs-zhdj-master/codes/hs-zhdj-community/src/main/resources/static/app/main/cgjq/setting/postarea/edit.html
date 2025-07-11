@@ -1,0 +1,146 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{params.title}}</h4>
+            </div>
+            <div activate-input class="body">
+                <form class="form-horizontal" role="form"
+                      name="editForm" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table">
+                            <tr>
+                                <th>
+                                    <span ng-if="dataModel.cgjqtype==1">岗位名称</span>
+                                    <span ng-if="dataModel.cgjqtype==2">责任区名称</span>
+                                </th>
+                                <td ng-class="{ 'has-error' : this.editForm.name.$invalid &&  this.editForm.$submitted}">
+                                    <input type="text" name="name" ng-model="dataModel.name" maxlength="1000"
+                                           class="form-control" ng-required="true"/>
+                                    <span ng-show="this.editForm.name.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>所属党支部</th>
+                                <td>
+                                    {{dataModel.partyname}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span ng-if="dataModel.cgjqtype==1">岗位人员</span>
+                                    <span ng-if="dataModel.cgjqtype==2">责任区负责人</span>
+                                </th>
+                                <td ng-class="{ 'has-error' : this.editForm.headusername.$invalid &&  this.editForm.$submitted}">
+                                    <!--点击修改进入修改页面，岗位人员不允许重新选择人员。-->
+                                    <div ng-if="params.isUpdate&&dataModel.cgjqtype==1">{{dataModel.headusername}}</div>
+                                    <div ng-if="params.isUpdate!=true||dataModel.cgjqtype!=1"
+                                         class="input-group input-group-search"
+                                         data-dataoptions="selectUserlist"
+                                         title="选择成员" bsselectdata-pro ng-click="selectUser(1)">
+                                        <input name="headusername" type="text" ng-model="dataModel.headusername"
+                                               class="form-control" ng-required="true"
+                                               ng-disabled="true"/>
+                                        <span class="input-group-addon"><i class="material-icons">search</i></span>
+                                    </div>
+                                    <span ng-show="this.editForm.headusername.$invalid &&  this.editForm.$submitted"
+                                          class="error">必填.</span>
+                                </td>
+                                <th>创建时间</th>
+                                <td>
+                                    {{dataModel.createtime|date:'yyyy-MM-dd'}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--责任区成员-->
+                    <div ng-if="dataModel.cgjqtype==2" class="table-responsive list-table-panel"
+                         style="font-size: 16px">
+                        <div class="list-table-title">
+                            <div class="table-title">
+                                成员管理
+                            </div>
+                            <div class="table-tool">
+                                <button type="button" class="btn btn-primary dropdown-toggle"
+                                        data-dataoptions="selectUserlist" title="选择成员"
+                                        ng-click="selectUser(2)"
+                                        bsselectdata-pro>
+                                    选择党员
+                                </button>
+                                <button type="button" class="btn btn-primary dropdown-toggle"
+                                        title="添加群众" ng-click="addUser()">
+                                    添加群众
+                                </button>
+                            </div>
+                        </div>
+                        <div class="outoflow" style="max-height: 300px;">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-1">序号</th>
+                                    <th class="col-md-2">姓名</th>
+                                    <th class="col-md-1">性别</th>
+                                    <th class="col-md-2">联系电话</th>
+                                    <th class="col-md-2">职务</th>
+                                    <th class="col-md-1">成员类型</th>
+                                    <th class="col-md-1">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in userList">
+                                    <td scope="row">{{$index+1}}</td>
+                                    <!--党员-->
+                                    <td ng-if="it.RYBM!='' && it.RYBM!=null">{{it.XM}}</td>
+                                    <td ng-if="it.RYBM!='' && it.RYBM!=null">{{it.XBMC}}</td>
+                                    <td ng-if="it.RYBM!='' && it.RYBM!=null">{{it.MOBILE}}</td>
+                                    <td ng-if="it.RYBM!='' && it.RYBM!=null">{{it.POST}}</td>
+                                    <!--群众-->
+                                    <td ng-if="it.RYBM=='' || it.RYBM==null"
+                                        ng-class="{ 'has-error' : invalidFee($index,editForm,'XM') &&  this.editForm.$submitted}">
+                                        <input type="text" autocomplete="off" class="form-control"
+                                               name="XM_{{$index}}"
+                                               ng-model="it.XM"
+                                               ng-required="true"/>
+                                    </td>
+                                    <td ng-if="it.RYBM==''|| it.RYBM==null">
+                                        <select class="form-control" name="XB_{{$index}}" ng-model="it.XB">
+                                            <option value="1">男</option>
+                                            <option value="1">女</option>
+                                        </select>
+                                    </td>
+                                    <td ng-if="it.RYBM==''|| it.RYBM==null">
+                                        <input type="text" autocomplete="off" class="form-control"
+                                               name="MOBILE_{{$index}}"
+                                               ng-model="it.MOBILE"/>
+                                    </td>
+                                    <td ng-if="it.RYBM=='' || it.RYBM==null">
+                                        <input type="text" autocomplete="off" class="form-control"
+                                               name="POST_{{$index}}"
+                                               ng-model="it.POST"/>
+                                    </td>
+                                    <td>{{(it.RYBM!="" && it.RYBM!=null)?"党员":"群众"}}</td>
+                                    <td>
+                                        <button class="btn td-btn bg-pink waves-effect"
+                                                ng-click="deleteUser($index)" title="删除">
+                                            <!--<i class="material-icons td-icon">delete_forever</i>-->
+                                            删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr ng-if="userList.length<=0">
+                                    <td colspan="7" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" ng-click="submitData(this.editForm.$valid)">提交
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

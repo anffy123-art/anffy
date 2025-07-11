@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.ApRolemodularMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.ApRolemodular">
+    <id column="RMID" jdbcType="VARCHAR" property="rmid" />
+    <result column="MODULARID" jdbcType="VARCHAR" property="modularid" />
+    <result column="ROLEID" jdbcType="VARCHAR" property="roleid" />
+    <result column="ISCOMMONUSE" jdbcType="INTEGER" property="iscommonuse" />
+    <result column="ORDERBY" jdbcType="INTEGER" property="orderby" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    RMID, MODULARID, ROLEID, ISCOMMONUSE, ORDERBY
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.ApRolemodularExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ap_rolemodular
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ap_rolemodular
+    where RMID = #{rmid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ap_rolemodular
+    where RMID = #{rmid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.ApRolemodularExample">
+    delete from ap_rolemodular
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.ApRolemodular">
+    insert into ap_rolemodular (RMID, MODULARID, ROLEID, 
+      ISCOMMONUSE, ORDERBY)
+    values (#{rmid,jdbcType=VARCHAR}, #{modularid,jdbcType=VARCHAR}, #{roleid,jdbcType=VARCHAR}, 
+      #{iscommonuse,jdbcType=INTEGER}, #{orderby,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.ApRolemodular">
+    insert into ap_rolemodular
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rmid != null">
+        RMID,
+      </if>
+      <if test="modularid != null">
+        MODULARID,
+      </if>
+      <if test="roleid != null">
+        ROLEID,
+      </if>
+      <if test="iscommonuse != null">
+        ISCOMMONUSE,
+      </if>
+      <if test="orderby != null">
+        ORDERBY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rmid != null">
+        #{rmid,jdbcType=VARCHAR},
+      </if>
+      <if test="modularid != null">
+        #{modularid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="iscommonuse != null">
+        #{iscommonuse,jdbcType=INTEGER},
+      </if>
+      <if test="orderby != null">
+        #{orderby,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.ApRolemodularExample" resultType="java.lang.Long">
+    select count(*) from ap_rolemodular
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ap_rolemodular
+    <set>
+      <if test="record.rmid != null">
+        RMID = #{record.rmid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modularid != null">
+        MODULARID = #{record.modularid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.roleid != null">
+        ROLEID = #{record.roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iscommonuse != null">
+        ISCOMMONUSE = #{record.iscommonuse,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderby != null">
+        ORDERBY = #{record.orderby,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ap_rolemodular
+    set RMID = #{record.rmid,jdbcType=VARCHAR},
+      MODULARID = #{record.modularid,jdbcType=VARCHAR},
+      ROLEID = #{record.roleid,jdbcType=VARCHAR},
+      ISCOMMONUSE = #{record.iscommonuse,jdbcType=INTEGER},
+      ORDERBY = #{record.orderby,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.ApRolemodular">
+    update ap_rolemodular
+    <set>
+      <if test="modularid != null">
+        MODULARID = #{modularid,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null">
+        ROLEID = #{roleid,jdbcType=VARCHAR},
+      </if>
+      <if test="iscommonuse != null">
+        ISCOMMONUSE = #{iscommonuse,jdbcType=INTEGER},
+      </if>
+      <if test="orderby != null">
+        ORDERBY = #{orderby,jdbcType=INTEGER},
+      </if>
+    </set>
+    where RMID = #{rmid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.ApRolemodular">
+    update ap_rolemodular
+    set MODULARID = #{modularid,jdbcType=VARCHAR},
+      ROLEID = #{roleid,jdbcType=VARCHAR},
+      ISCOMMONUSE = #{iscommonuse,jdbcType=INTEGER},
+      ORDERBY = #{orderby,jdbcType=INTEGER}
+    where RMID = #{rmid,jdbcType=VARCHAR}
+  </update>
+</mapper>

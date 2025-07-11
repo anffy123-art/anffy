@@ -1,0 +1,95 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="dj-list-content content1">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+
+                                    <div class="col-md-3 col-lg-3 dj-label">
+                                        <label>年度</label>
+                                    </div>
+                                    <div class="col-md-3 col-lg-3">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick"
+                                                        name="nd" required ng-model="selectdata.nd"
+                                                        ng-options="op.label as op.val for op in ndList">
+                                                    <option value="">-- 请选择 --</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div>
+                                <button class="btn btn-default1" role-permission-code="ysjyb.btn.search"
+                                        ng-click="search()">查询
+                                </button>
+                                <!--<button class="btn btn-default1" role-permission-code="ysjyb.btn.add"  ng-click="editModal()">新增</button>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <!--<button role-permission-code="home.programmeAdd" class="btn btn-default1"-->
+                            <!--ng-click="addData()">新增-->
+                            <!--</button>-->
+                            <button class="btn btn-default1" role-permission-code="ysjyb.btn.add"
+                                    ng-click="editModal()">新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="list-table-panel">
+                        <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                            <thead>
+                            <tr>
+                                <th class="col-md-2">序号</th>
+                                <th class="col-md-2">年度</th>
+                                <th class="col-md-2">创建人</th>
+                                <th class="col-md-2">创建时间</th>
+                                <th class="col-md-2">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="lm in items">
+                                <td scope="row" class="text-center">
+                                    {{selectdata.pagesize*(selectdata.pageindex-1)+$index+1}}
+                                </td>
+                                <td class="text-center">{{lm.nd}}</td>
+                                <td class="text-center">{{lm.cjrName}}</td>
+                                <td class="text-center">{{lm.cjsj|date:'yyyy-MM-dd'}}</td>
+                                <td align="center">
+                                    <button class="btn td-btn bg-light-green waves-effect" title="修改"
+                                            data-placement="center"
+                                            data-animation="am-fade-and-scale" ng-click="editModal(lm.nd)">
+                                        修改
+                                    </button>
+                                    <button class="btn td-btn bg-pink waves-effect" title="删除"
+                                            ng-click="delItem(lm.jfysid)">
+                                        删除
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr ng-if="items.length<=0">
+                                <td colspan="5" style="text-align:center">暂无数据</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--参数含义：page-Index：当前页面，page-Size：每页显示多少数据，total-Length:数据总长度-->
+                    <pagination data-pageindex="selectdata.pageindex" data-pagesize="selectdata.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

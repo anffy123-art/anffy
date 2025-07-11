@@ -1,0 +1,16 @@
+﻿<div style="padding:0px 15px;" class="col-md-12">
+    <label class="col-md-2" style="line-height: 35px;">{{title}}：</label>
+    <div style="display: inline-block;">
+        <input class="form-control col-md-6" type="text" id="{{SettingID}}" readonly="readonly"
+               style="width: 300px;line-height: 30px;" ng-model="upfile.name"/>
+        <!--<a href="javascript:;" name="file" class="btn btn-primary" style="margin-left:10px;position: relative; overflow: hidden;">
+            <input type="file" name="key" style="position: absolute;left: 0;top: 0;opacity: 0;cursor:pointer" ngf-select ng-model="upfile" class="form-control"  ng-change="valiFileType()"/>浏览
+        </a>
+        <button id="btn-upLoad" class="btn-upLoad btn btn-primary" ng-click="upfilemethod(upfile)" ng-hide="ngModel.readonly || upfile==null||upfile==''" >上传</button>-->
+        <button type="button" ng-hide="ngModel.readonly" class="btn btn-primary"
+                style="margin-left:10px;position: relative; overflow: hidden;" data-placement="center"
+                data-animation="am-fade-and-scale" ng-click="addFile()">新增
+        </button>
+    </div>
+
+</div>

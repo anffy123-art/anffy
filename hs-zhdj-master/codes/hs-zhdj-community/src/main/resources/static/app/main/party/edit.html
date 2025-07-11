@@ -1,0 +1,14 @@
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <ul class="nav nav-tabs tab-col-deep-orange" role="tablist">
+            <li ng-repeat="item in pageList" ng-class="{active:isSelected(item.id)}">
+                <a ng-click="selectTab(item.id)" data-toggle="tab">
+                    {{item.title}}
+                </a>
+            </li>
+        </ul>
+        <div style="padding-top: 10px;" ng-repeat="item in pageList" ng-show="isSelected(item.id)" ng-include="item.url">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DjWorkresourcelibrarytypeMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.DjWorkresourcelibrarytype">
+    <id column="FILETYPEID" jdbcType="VARCHAR" property="filetypeid" />
+    <result column="PARENTTYPEID" jdbcType="VARCHAR" property="parenttypeid" />
+    <result column="FILETYPENAME" jdbcType="VARCHAR" property="filetypename" />
+    <result column="TREELEVEL" jdbcType="INTEGER" property="treelevel" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    FILETYPEID, PARENTTYPEID, FILETYPENAME, TREELEVEL
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.DjWorkresourcelibrarytypeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dj_workresourcelibrarytype
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dj_workresourcelibrarytype
+    where FILETYPEID = #{filetypeid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dj_workresourcelibrarytype
+    where FILETYPEID = #{filetypeid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.DjWorkresourcelibrarytypeExample">
+    delete from dj_workresourcelibrarytype
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.DjWorkresourcelibrarytype">
+    insert into dj_workresourcelibrarytype (FILETYPEID, PARENTTYPEID, FILETYPENAME, 
+      TREELEVEL)
+    values (#{filetypeid,jdbcType=VARCHAR}, #{parenttypeid,jdbcType=VARCHAR}, #{filetypename,jdbcType=VARCHAR}, 
+      #{treelevel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.DjWorkresourcelibrarytype">
+    insert into dj_workresourcelibrarytype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="filetypeid != null">
+        FILETYPEID,
+      </if>
+      <if test="parenttypeid != null">
+        PARENTTYPEID,
+      </if>
+      <if test="filetypename != null">
+        FILETYPENAME,
+      </if>
+      <if test="treelevel != null">
+        TREELEVEL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="filetypeid != null">
+        #{filetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="parenttypeid != null">
+        #{parenttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="filetypename != null">
+        #{filetypename,jdbcType=VARCHAR},
+      </if>
+      <if test="treelevel != null">
+        #{treelevel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.DjWorkresourcelibrarytypeExample" resultType="java.lang.Long">
+    select count(*) from dj_workresourcelibrarytype
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dj_workresourcelibrarytype
+    <set>
+      <if test="record.filetypeid != null">
+        FILETYPEID = #{record.filetypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parenttypeid != null">
+        PARENTTYPEID = #{record.parenttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filetypename != null">
+        FILETYPENAME = #{record.filetypename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.treelevel != null">
+        TREELEVEL = #{record.treelevel,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dj_workresourcelibrarytype
+    set FILETYPEID = #{record.filetypeid,jdbcType=VARCHAR},
+      PARENTTYPEID = #{record.parenttypeid,jdbcType=VARCHAR},
+      FILETYPENAME = #{record.filetypename,jdbcType=VARCHAR},
+      TREELEVEL = #{record.treelevel,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.DjWorkresourcelibrarytype">
+    update dj_workresourcelibrarytype
+    <set>
+      <if test="parenttypeid != null">
+        PARENTTYPEID = #{parenttypeid,jdbcType=VARCHAR},
+      </if>
+      <if test="filetypename != null">
+        FILETYPENAME = #{filetypename,jdbcType=VARCHAR},
+      </if>
+      <if test="treelevel != null">
+        TREELEVEL = #{treelevel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where FILETYPEID = #{filetypeid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.DjWorkresourcelibrarytype">
+    update dj_workresourcelibrarytype
+    set PARENTTYPEID = #{parenttypeid,jdbcType=VARCHAR},
+      FILETYPENAME = #{filetypename,jdbcType=VARCHAR},
+      TREELEVEL = #{treelevel,jdbcType=INTEGER}
+    where FILETYPEID = #{filetypeid,jdbcType=VARCHAR}
+  </update>
+</mapper>

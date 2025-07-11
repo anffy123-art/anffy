@@ -1,0 +1,22 @@
+﻿.progress {
+    width: 330px;
+    border: 1px solid #ccc;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    font-weight: bold;
+    float: left;
+    margin-left: 30px;
+    margin-top: 3px;
+}
+
+.Bar {
+    width: 0%;
+    height: 28px;
+    text-align: center;
+    background: #00ffff;
+}
+
+.blue {
+    background: #85c3f1;
+}

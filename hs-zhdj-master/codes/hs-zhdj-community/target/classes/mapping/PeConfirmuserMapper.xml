@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.PeConfirmuserMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.PeConfirmuser">
+    <id column="CONFIRMUSERID" jdbcType="VARCHAR" property="confirmuserid" />
+    <result column="JOINUSERID" jdbcType="VARCHAR" property="joinuserid" />
+    <result column="PROGRESSTIME" jdbcType="TIMESTAMP" property="progresstime" />
+    <result column="CONFIRMTIME" jdbcType="TIMESTAMP" property="confirmtime" />
+    <result column="PUBLICTIME" jdbcType="TIMESTAMP" property="publictime" />
+    <result column="MEETINGID" jdbcType="VARCHAR" property="meetingid" />
+    <result column="GRADE" jdbcType="DECIMAL" property="grade" />
+    <result column="COMPREHENSIVEGRADE" jdbcType="DECIMAL" property="comprehensivegrade" />
+    <result column="GRADETIME" jdbcType="TIMESTAMP" property="gradetime" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="CREATEUSERID" jdbcType="VARCHAR" property="createuserid" />
+    <result column="CREATEUSERNAME" jdbcType="VARCHAR" property="createusername" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="UPDATEUSERID" jdbcType="VARCHAR" property="updateuserid" />
+    <result column="UPDATEUSERNAME" jdbcType="VARCHAR" property="updateusername" />
+    <result column="OPERATETIME" jdbcType="TIMESTAMP" property="operatetime" />
+    <result column="OPERATESTATE" jdbcType="VARCHAR" property="operatestate" />
+    <result column="SYNCSTATE" jdbcType="VARCHAR" property="syncstate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.px.partybuild.model.PeConfirmuserWithBLOBs">
+    <result column="TRAINOPINION" jdbcType="LONGVARCHAR" property="trainopinion" />
+    <result column="GROUPOPINION" jdbcType="LONGVARCHAR" property="groupopinion" />
+    <result column="PARTYUSEROPINION" jdbcType="LONGVARCHAR" property="partyuseropinion" />
+    <result column="MASSESOPINION" jdbcType="LONGVARCHAR" property="massesopinion" />
+    <result column="BRANCHOPINION" jdbcType="LONGVARCHAR" property="branchopinion" />
+    <result column="DECISIONCONTENT" jdbcType="LONGVARCHAR" property="decisioncontent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CONFIRMUSERID, JOINUSERID, PROGRESSTIME, CONFIRMTIME, PUBLICTIME, MEETINGID, GRADE, 
+    COMPREHENSIVEGRADE, GRADETIME, CREATETIME, CREATEUSERID, CREATEUSERNAME, UPDATETIME, 
+    UPDATEUSERID, UPDATEUSERNAME, OPERATETIME, OPERATESTATE, SYNCSTATE
+  </sql>
+  <sql id="Blob_Column_List">
+    TRAINOPINION, GROUPOPINION, PARTYUSEROPINION, MASSESOPINION, BRANCHOPINION, DECISIONCONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.px.partybuild.model.PeConfirmuserExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pe_confirmuser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.PeConfirmuserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pe_confirmuser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pe_confirmuser
+    where CONFIRMUSERID = #{confirmuserid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pe_confirmuser
+    where CONFIRMUSERID = #{confirmuserid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.PeConfirmuserExample">
+    delete from pe_confirmuser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.PeConfirmuserWithBLOBs">
+    insert into pe_confirmuser (CONFIRMUSERID, JOINUSERID, PROGRESSTIME, 
+      CONFIRMTIME, PUBLICTIME, MEETINGID, 
+      GRADE, COMPREHENSIVEGRADE, GRADETIME, 
+      CREATETIME, CREATEUSERID, CREATEUSERNAME, 
+      UPDATETIME, UPDATEUSERID, UPDATEUSERNAME, 
+      OPERATETIME, OPERATESTATE, SYNCSTATE, 
+      TRAINOPINION, GROUPOPINION, PARTYUSEROPINION, 
+      MASSESOPINION, BRANCHOPINION, DECISIONCONTENT
+      )
+    values (#{confirmuserid,jdbcType=VARCHAR}, #{joinuserid,jdbcType=VARCHAR}, #{progresstime,jdbcType=TIMESTAMP}, 
+      #{confirmtime,jdbcType=TIMESTAMP}, #{publictime,jdbcType=TIMESTAMP}, #{meetingid,jdbcType=VARCHAR}, 
+      #{grade,jdbcType=DECIMAL}, #{comprehensivegrade,jdbcType=DECIMAL}, #{gradetime,jdbcType=TIMESTAMP}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{createuserid,jdbcType=VARCHAR}, #{createusername,jdbcType=VARCHAR}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{updateuserid,jdbcType=VARCHAR}, #{updateusername,jdbcType=VARCHAR}, 
+      #{operatetime,jdbcType=TIMESTAMP}, #{operatestate,jdbcType=VARCHAR}, #{syncstate,jdbcType=VARCHAR}, 
+      #{trainopinion,jdbcType=LONGVARCHAR}, #{groupopinion,jdbcType=LONGVARCHAR}, #{partyuseropinion,jdbcType=LONGVARCHAR}, 
+      #{massesopinion,jdbcType=LONGVARCHAR}, #{branchopinion,jdbcType=LONGVARCHAR}, #{decisioncontent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.PeConfirmuserWithBLOBs">
+    insert into pe_confirmuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="confirmuserid != null">
+        CONFIRMUSERID,
+      </if>
+      <if test="joinuserid != null">
+        JOINUSERID,
+      </if>
+      <if test="progresstime != null">
+        PROGRESSTIME,
+      </if>
+      <if test="confirmtime != null">
+        CONFIRMTIME,
+      </if>
+      <if test="publictime != null">
+        PUBLICTIME,
+      </if>
+      <if test="meetingid != null">
+        MEETINGID,
+      </if>
+      <if test="grade != null">
+        GRADE,
+      </if>
+      <if test="comprehensivegrade != null">
+        COMPREHENSIVEGRADE,
+      </if>
+      <if test="gradetime != null">
+        GRADETIME,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="createuserid != null">
+        CREATEUSERID,
+      </if>
+      <if test="createusername != null">
+        CREATEUSERNAME,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+      <if test="updateuserid != null">
+        UPDATEUSERID,
+      </if>
+      <if test="updateusername != null">
+        UPDATEUSERNAME,
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME,
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE,
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE,
+      </if>
+      <if test="trainopinion != null">
+        TRAINOPINION,
+      </if>
+      <if test="groupopinion != null">
+        GROUPOPINION,
+      </if>
+      <if test="partyuseropinion != null">
+        PARTYUSEROPINION,
+      </if>
+      <if test="massesopinion != null">
+        MASSESOPINION,
+      </if>
+      <if test="branchopinion != null">
+        BRANCHOPINION,
+      </if>
+      <if test="decisioncontent != null">
+        DECISIONCONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="confirmuserid != null">
+        #{confirmuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="joinuserid != null">
+        #{joinuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="progresstime != null">
+        #{progresstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmtime != null">
+        #{confirmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publictime != null">
+        #{publictime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meetingid != null">
+        #{meetingid,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=DECIMAL},
+      </if>
+      <if test="comprehensivegrade != null">
+        #{comprehensivegrade,jdbcType=DECIMAL},
+      </if>
+      <if test="gradetime != null">
+        #{gradetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuserid != null">
+        #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetime != null">
+        #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        #{syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="trainopinion != null">
+        #{trainopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="groupopinion != null">
+        #{groupopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="partyuseropinion != null">
+        #{partyuseropinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="massesopinion != null">
+        #{massesopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="branchopinion != null">
+        #{branchopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="decisioncontent != null">
+        #{decisioncontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.PeConfirmuserExample" resultType="java.lang.Long">
+    select count(*) from pe_confirmuser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update pe_confirmuser
+    <set>
+      <if test="record.confirmuserid != null">
+        CONFIRMUSERID = #{record.confirmuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.joinuserid != null">
+        JOINUSERID = #{record.joinuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.progresstime != null">
+        PROGRESSTIME = #{record.progresstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.confirmtime != null">
+        CONFIRMTIME = #{record.confirmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.publictime != null">
+        PUBLICTIME = #{record.publictime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.meetingid != null">
+        MEETINGID = #{record.meetingid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grade != null">
+        GRADE = #{record.grade,jdbcType=DECIMAL},
+      </if>
+      <if test="record.comprehensivegrade != null">
+        COMPREHENSIVEGRADE = #{record.comprehensivegrade,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gradetime != null">
+        GRADETIME = #{record.gradetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createtime != null">
+        CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createuserid != null">
+        CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createusername != null">
+        CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatetime != null">
+        UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateuserid != null">
+        UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateusername != null">
+        UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatetime != null">
+        OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatestate != null">
+        OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.syncstate != null">
+        SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trainopinion != null">
+        TRAINOPINION = #{record.trainopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.groupopinion != null">
+        GROUPOPINION = #{record.groupopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.partyuseropinion != null">
+        PARTYUSEROPINION = #{record.partyuseropinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.massesopinion != null">
+        MASSESOPINION = #{record.massesopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.branchopinion != null">
+        BRANCHOPINION = #{record.branchopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.decisioncontent != null">
+        DECISIONCONTENT = #{record.decisioncontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update pe_confirmuser
+    set CONFIRMUSERID = #{record.confirmuserid,jdbcType=VARCHAR},
+      JOINUSERID = #{record.joinuserid,jdbcType=VARCHAR},
+      PROGRESSTIME = #{record.progresstime,jdbcType=TIMESTAMP},
+      CONFIRMTIME = #{record.confirmtime,jdbcType=TIMESTAMP},
+      PUBLICTIME = #{record.publictime,jdbcType=TIMESTAMP},
+      MEETINGID = #{record.meetingid,jdbcType=VARCHAR},
+      GRADE = #{record.grade,jdbcType=DECIMAL},
+      COMPREHENSIVEGRADE = #{record.comprehensivegrade,jdbcType=DECIMAL},
+      GRADETIME = #{record.gradetime,jdbcType=TIMESTAMP},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      TRAINOPINION = #{record.trainopinion,jdbcType=LONGVARCHAR},
+      GROUPOPINION = #{record.groupopinion,jdbcType=LONGVARCHAR},
+      PARTYUSEROPINION = #{record.partyuseropinion,jdbcType=LONGVARCHAR},
+      MASSESOPINION = #{record.massesopinion,jdbcType=LONGVARCHAR},
+      BRANCHOPINION = #{record.branchopinion,jdbcType=LONGVARCHAR},
+      DECISIONCONTENT = #{record.decisioncontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update pe_confirmuser
+    set CONFIRMUSERID = #{record.confirmuserid,jdbcType=VARCHAR},
+      JOINUSERID = #{record.joinuserid,jdbcType=VARCHAR},
+      PROGRESSTIME = #{record.progresstime,jdbcType=TIMESTAMP},
+      CONFIRMTIME = #{record.confirmtime,jdbcType=TIMESTAMP},
+      PUBLICTIME = #{record.publictime,jdbcType=TIMESTAMP},
+      MEETINGID = #{record.meetingid,jdbcType=VARCHAR},
+      GRADE = #{record.grade,jdbcType=DECIMAL},
+      COMPREHENSIVEGRADE = #{record.comprehensivegrade,jdbcType=DECIMAL},
+      GRADETIME = #{record.gradetime,jdbcType=TIMESTAMP},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      CREATEUSERID = #{record.createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{record.createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{record.updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{record.updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{record.updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.PeConfirmuserWithBLOBs">
+    update pe_confirmuser
+    <set>
+      <if test="joinuserid != null">
+        JOINUSERID = #{joinuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="progresstime != null">
+        PROGRESSTIME = #{progresstime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="confirmtime != null">
+        CONFIRMTIME = #{confirmtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publictime != null">
+        PUBLICTIME = #{publictime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meetingid != null">
+        MEETINGID = #{meetingid,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        GRADE = #{grade,jdbcType=DECIMAL},
+      </if>
+      <if test="comprehensivegrade != null">
+        COMPREHENSIVEGRADE = #{comprehensivegrade,jdbcType=DECIMAL},
+      </if>
+      <if test="gradetime != null">
+        GRADETIME = #{gradetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null">
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createuserid != null">
+        CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="createusername != null">
+        CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuserid != null">
+        UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateusername != null">
+        UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="trainopinion != null">
+        TRAINOPINION = #{trainopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="groupopinion != null">
+        GROUPOPINION = #{groupopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="partyuseropinion != null">
+        PARTYUSEROPINION = #{partyuseropinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="massesopinion != null">
+        MASSESOPINION = #{massesopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="branchopinion != null">
+        BRANCHOPINION = #{branchopinion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="decisioncontent != null">
+        DECISIONCONTENT = #{decisioncontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CONFIRMUSERID = #{confirmuserid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.px.partybuild.model.PeConfirmuserWithBLOBs">
+    update pe_confirmuser
+    set JOINUSERID = #{joinuserid,jdbcType=VARCHAR},
+      PROGRESSTIME = #{progresstime,jdbcType=TIMESTAMP},
+      CONFIRMTIME = #{confirmtime,jdbcType=TIMESTAMP},
+      PUBLICTIME = #{publictime,jdbcType=TIMESTAMP},
+      MEETINGID = #{meetingid,jdbcType=VARCHAR},
+      GRADE = #{grade,jdbcType=DECIMAL},
+      COMPREHENSIVEGRADE = #{comprehensivegrade,jdbcType=DECIMAL},
+      GRADETIME = #{gradetime,jdbcType=TIMESTAMP},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      TRAINOPINION = #{trainopinion,jdbcType=LONGVARCHAR},
+      GROUPOPINION = #{groupopinion,jdbcType=LONGVARCHAR},
+      PARTYUSEROPINION = #{partyuseropinion,jdbcType=LONGVARCHAR},
+      MASSESOPINION = #{massesopinion,jdbcType=LONGVARCHAR},
+      BRANCHOPINION = #{branchopinion,jdbcType=LONGVARCHAR},
+      DECISIONCONTENT = #{decisioncontent,jdbcType=LONGVARCHAR}
+    where CONFIRMUSERID = #{confirmuserid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.PeConfirmuser">
+    update pe_confirmuser
+    set JOINUSERID = #{joinuserid,jdbcType=VARCHAR},
+      PROGRESSTIME = #{progresstime,jdbcType=TIMESTAMP},
+      CONFIRMTIME = #{confirmtime,jdbcType=TIMESTAMP},
+      PUBLICTIME = #{publictime,jdbcType=TIMESTAMP},
+      MEETINGID = #{meetingid,jdbcType=VARCHAR},
+      GRADE = #{grade,jdbcType=DECIMAL},
+      COMPREHENSIVEGRADE = #{comprehensivegrade,jdbcType=DECIMAL},
+      GRADETIME = #{gradetime,jdbcType=TIMESTAMP},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      CREATEUSERID = #{createuserid,jdbcType=VARCHAR},
+      CREATEUSERNAME = #{createusername,jdbcType=VARCHAR},
+      UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+      UPDATEUSERID = #{updateuserid,jdbcType=VARCHAR},
+      UPDATEUSERNAME = #{updateusername,jdbcType=VARCHAR},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{syncstate,jdbcType=VARCHAR}
+    where CONFIRMUSERID = #{confirmuserid,jdbcType=VARCHAR}
+  </update>
+</mapper>

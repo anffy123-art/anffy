@@ -1,0 +1,32 @@
+<div class="modal" tabindex="-1" role="dialog" style="min-height:200px">
+    <div class="modal-dialog">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">清除登录账号</h3>
+            </div>
+            <div class="body">
+                <form activate-input class="form-horizontal" role="form" id="editForm" name="editForm"
+                      autocomplete="off"
+                      ng-submit="save(editForm.$valid)" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table">
+                            <tr>
+                                <th>登录账号</th>
+                                <td ng-class="{ 'has-error' : this.editForm.mobile.$invalid &&  this.editForm.$submitted}">
+                                    <input type="text" name="mobile" ng-model="mobile" maxlength="100"
+                                           class="form-control" ng-required="true"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" form="editForm">确定清除</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

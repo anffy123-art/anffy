@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.CfMessageMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.CfMessage">
+    <id column="MESSAGEID" jdbcType="VARCHAR" property="messageid" />
+    <result column="MSGTITLE" jdbcType="VARCHAR" property="msgtitle" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="FROMUSER" jdbcType="VARCHAR" property="fromuser" />
+    <result column="TOUSER" jdbcType="VARCHAR" property="touser" />
+    <result column="SENDTIME" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="STATE" jdbcType="DECIMAL" property="state" />
+    <result column="OPERATETIME" jdbcType="TIMESTAMP" property="operatetime" />
+    <result column="OPERATESTATE" jdbcType="VARCHAR" property="operatestate" />
+    <result column="SYNCSTATE" jdbcType="VARCHAR" property="syncstate" />
+    <result column="BUSINESSID" jdbcType="VARCHAR" property="businessid" />
+    <result column="MESSAGETYPE" jdbcType="DECIMAL" property="messagetype" />
+    <result column="SERVICEID" jdbcType="VARCHAR" property="serviceid" />
+    <result column="SERVICESTATE" jdbcType="DECIMAL" property="servicestate" />
+    <result column="SERVICEUPDATATIME" jdbcType="TIMESTAMP" property="serviceupdatatime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.px.partybuild.model.CfMessage">
+    <result column="MSGCONTENT" jdbcType="LONGVARCHAR" property="msgcontent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    MESSAGEID, MSGTITLE, URL, FROMUSER, TOUSER, SENDTIME, STATE, OPERATETIME, OPERATESTATE, 
+    SYNCSTATE, BUSINESSID, MESSAGETYPE, SERVICEID, SERVICESTATE, SERVICEUPDATATIME
+  </sql>
+  <sql id="Blob_Column_List">
+    MSGCONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.px.partybuild.model.CfMessageExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cf_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.CfMessageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cf_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cf_message
+    where MESSAGEID = #{messageid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cf_message
+    where MESSAGEID = #{messageid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.CfMessageExample">
+    delete from cf_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.CfMessage">
+    insert into cf_message (MESSAGEID, MSGTITLE, URL, 
+      FROMUSER, TOUSER, SENDTIME, 
+      STATE, OPERATETIME, OPERATESTATE, 
+      SYNCSTATE, BUSINESSID, MESSAGETYPE, 
+      SERVICEID, SERVICESTATE, SERVICEUPDATATIME, 
+      MSGCONTENT)
+    values (#{messageid,jdbcType=VARCHAR}, #{msgtitle,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{fromuser,jdbcType=VARCHAR}, #{touser,jdbcType=VARCHAR}, #{sendtime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=DECIMAL}, #{operatetime,jdbcType=TIMESTAMP}, #{operatestate,jdbcType=VARCHAR}, 
+      #{syncstate,jdbcType=VARCHAR}, #{businessid,jdbcType=VARCHAR}, #{messagetype,jdbcType=DECIMAL}, 
+      #{serviceid,jdbcType=VARCHAR}, #{servicestate,jdbcType=DECIMAL}, #{serviceupdatatime,jdbcType=TIMESTAMP}, 
+      #{msgcontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.CfMessage">
+    insert into cf_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageid != null">
+        MESSAGEID,
+      </if>
+      <if test="msgtitle != null">
+        MSGTITLE,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="fromuser != null">
+        FROMUSER,
+      </if>
+      <if test="touser != null">
+        TOUSER,
+      </if>
+      <if test="sendtime != null">
+        SENDTIME,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME,
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE,
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE,
+      </if>
+      <if test="businessid != null">
+        BUSINESSID,
+      </if>
+      <if test="messagetype != null">
+        MESSAGETYPE,
+      </if>
+      <if test="serviceid != null">
+        SERVICEID,
+      </if>
+      <if test="servicestate != null">
+        SERVICESTATE,
+      </if>
+      <if test="serviceupdatatime != null">
+        SERVICEUPDATATIME,
+      </if>
+      <if test="msgcontent != null">
+        MSGCONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="messageid != null">
+        #{messageid,jdbcType=VARCHAR},
+      </if>
+      <if test="msgtitle != null">
+        #{msgtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuser != null">
+        #{fromuser,jdbcType=VARCHAR},
+      </if>
+      <if test="touser != null">
+        #{touser,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="operatetime != null">
+        #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        #{syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="businessid != null">
+        #{businessid,jdbcType=VARCHAR},
+      </if>
+      <if test="messagetype != null">
+        #{messagetype,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceid != null">
+        #{serviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="servicestate != null">
+        #{servicestate,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceupdatatime != null">
+        #{serviceupdatatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgcontent != null">
+        #{msgcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.CfMessageExample" resultType="java.lang.Long">
+    select count(*) from cf_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cf_message
+    <set>
+      <if test="record.messageid != null">
+        MESSAGEID = #{record.messageid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgtitle != null">
+        MSGTITLE = #{record.msgtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromuser != null">
+        FROMUSER = #{record.fromuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.touser != null">
+        TOUSER = #{record.touser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendtime != null">
+        SENDTIME = #{record.sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.state != null">
+        STATE = #{record.state,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operatetime != null">
+        OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatestate != null">
+        OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.syncstate != null">
+        SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessid != null">
+        BUSINESSID = #{record.businessid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messagetype != null">
+        MESSAGETYPE = #{record.messagetype,jdbcType=DECIMAL},
+      </if>
+      <if test="record.serviceid != null">
+        SERVICEID = #{record.serviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.servicestate != null">
+        SERVICESTATE = #{record.servicestate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.serviceupdatatime != null">
+        SERVICEUPDATATIME = #{record.serviceupdatatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.msgcontent != null">
+        MSGCONTENT = #{record.msgcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update cf_message
+    set MESSAGEID = #{record.messageid,jdbcType=VARCHAR},
+      MSGTITLE = #{record.msgtitle,jdbcType=VARCHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      FROMUSER = #{record.fromuser,jdbcType=VARCHAR},
+      TOUSER = #{record.touser,jdbcType=VARCHAR},
+      SENDTIME = #{record.sendtime,jdbcType=TIMESTAMP},
+      STATE = #{record.state,jdbcType=DECIMAL},
+      OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      BUSINESSID = #{record.businessid,jdbcType=VARCHAR},
+      MESSAGETYPE = #{record.messagetype,jdbcType=DECIMAL},
+      SERVICEID = #{record.serviceid,jdbcType=VARCHAR},
+      SERVICESTATE = #{record.servicestate,jdbcType=DECIMAL},
+      SERVICEUPDATATIME = #{record.serviceupdatatime,jdbcType=TIMESTAMP},
+      MSGCONTENT = #{record.msgcontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cf_message
+    set MESSAGEID = #{record.messageid,jdbcType=VARCHAR},
+      MSGTITLE = #{record.msgtitle,jdbcType=VARCHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      FROMUSER = #{record.fromuser,jdbcType=VARCHAR},
+      TOUSER = #{record.touser,jdbcType=VARCHAR},
+      SENDTIME = #{record.sendtime,jdbcType=TIMESTAMP},
+      STATE = #{record.state,jdbcType=DECIMAL},
+      OPERATETIME = #{record.operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{record.operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{record.syncstate,jdbcType=VARCHAR},
+      BUSINESSID = #{record.businessid,jdbcType=VARCHAR},
+      MESSAGETYPE = #{record.messagetype,jdbcType=DECIMAL},
+      SERVICEID = #{record.serviceid,jdbcType=VARCHAR},
+      SERVICESTATE = #{record.servicestate,jdbcType=DECIMAL},
+      SERVICEUPDATATIME = #{record.serviceupdatatime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.CfMessage">
+    update cf_message
+    <set>
+      <if test="msgtitle != null">
+        MSGTITLE = #{msgtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="fromuser != null">
+        FROMUSER = #{fromuser,jdbcType=VARCHAR},
+      </if>
+      <if test="touser != null">
+        TOUSER = #{touser,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null">
+        SENDTIME = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=DECIMAL},
+      </if>
+      <if test="operatetime != null">
+        OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatestate != null">
+        OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      </if>
+      <if test="syncstate != null">
+        SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      </if>
+      <if test="businessid != null">
+        BUSINESSID = #{businessid,jdbcType=VARCHAR},
+      </if>
+      <if test="messagetype != null">
+        MESSAGETYPE = #{messagetype,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceid != null">
+        SERVICEID = #{serviceid,jdbcType=VARCHAR},
+      </if>
+      <if test="servicestate != null">
+        SERVICESTATE = #{servicestate,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceupdatatime != null">
+        SERVICEUPDATATIME = #{serviceupdatatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgcontent != null">
+        MSGCONTENT = #{msgcontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where MESSAGEID = #{messageid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.px.partybuild.model.CfMessage">
+    update cf_message
+    set MSGTITLE = #{msgtitle,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      FROMUSER = #{fromuser,jdbcType=VARCHAR},
+      TOUSER = #{touser,jdbcType=VARCHAR},
+      SENDTIME = #{sendtime,jdbcType=TIMESTAMP},
+      STATE = #{state,jdbcType=DECIMAL},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      BUSINESSID = #{businessid,jdbcType=VARCHAR},
+      MESSAGETYPE = #{messagetype,jdbcType=DECIMAL},
+      SERVICEID = #{serviceid,jdbcType=VARCHAR},
+      SERVICESTATE = #{servicestate,jdbcType=DECIMAL},
+      SERVICEUPDATATIME = #{serviceupdatatime,jdbcType=TIMESTAMP},
+      MSGCONTENT = #{msgcontent,jdbcType=LONGVARCHAR}
+    where MESSAGEID = #{messageid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.CfMessage">
+    update cf_message
+    set MSGTITLE = #{msgtitle,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      FROMUSER = #{fromuser,jdbcType=VARCHAR},
+      TOUSER = #{touser,jdbcType=VARCHAR},
+      SENDTIME = #{sendtime,jdbcType=TIMESTAMP},
+      STATE = #{state,jdbcType=DECIMAL},
+      OPERATETIME = #{operatetime,jdbcType=TIMESTAMP},
+      OPERATESTATE = #{operatestate,jdbcType=VARCHAR},
+      SYNCSTATE = #{syncstate,jdbcType=VARCHAR},
+      BUSINESSID = #{businessid,jdbcType=VARCHAR},
+      MESSAGETYPE = #{messagetype,jdbcType=DECIMAL},
+      SERVICEID = #{serviceid,jdbcType=VARCHAR},
+      SERVICESTATE = #{servicestate,jdbcType=DECIMAL},
+      SERVICEUPDATATIME = #{serviceupdatatime,jdbcType=TIMESTAMP}
+    where MESSAGEID = #{messageid,jdbcType=VARCHAR}
+  </update>
+</mapper>

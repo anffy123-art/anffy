@@ -1,0 +1,76 @@
+<div class="dj-formtable">
+    <table class="dj-table">
+        <tr>
+            <th>党员人数</th>
+            <td>
+                <a ng-click="showUser()">{{tab_dyfzData.dys}}</a>
+            </td>
+            <th>入党申请人数</th>
+            <td>
+                <!--<a ng-click="showUserExpand('F75088870EE64F06ABA7C2DE164CA024')">{{tab_dyfzData.sqrds}}</a>-->
+                {{tab_dyfzData.sqrds}}
+            </td>
+        </tr>
+        <tr>
+            <th>积极分子人数</th>
+            <td>
+                <!--<a ng-click="showUserExpand('4EE371E71B704DE1BCF4AB3863F759E1')">{{tab_dyfzData.rdjjfzs}}</a>-->
+                {{tab_dyfzData.rdjjfzs}}
+            </td>
+            <th>发展对象人数</th>
+            <td>
+                <!--<a ng-click="showUserExpand('744CB780E9324CD0A87E48EABB9137EA')">{{tab_dyfzData.fzdx}}</a>-->
+                {{tab_dyfzData.fzdx}}
+            </td>
+        </tr>
+        <tr>
+            <th>预备党员人数</th>
+            <td colspan="3">
+                <!--<a ng-click="showUserExpand(['5B5AA00289994D5F8704B25988CD0AC0','CA68082965F442F28AA7C18E37B14106'])">{{tab_dyfzData.ybdys}}</a>-->
+                {{tab_dyfzData.ybdys}}
+            </td>
+        </tr>
+    </table>
+    <!--<div class="table-responsive list-table-panel">
+        <div class="list-table-title">
+            <div class="table-title">
+                人员信息
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>姓名</th>
+                <th>加入支部</th>
+                <th>民族</th>
+                <th>籍贯</th>
+                <th>当前环节</th>
+                <th>进度</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="it in joinPartyUserList">
+                <td scope="row" class="text-center">
+                    {{$index+1}}
+                </td>
+                <td>{{it.NAME}}</td>
+                <td>{{it.PARTYNAME}}</td>
+                <td>{{it.NATIONALITY}}</td>
+                <td>{{it.NATIVEPLACE}}</td>
+                <td>{{it.FLOWNAME}}</td>
+                <td>
+                    <div class="progress" style="width: 150px;margin-bottom: 0px;height: 18px;">
+                        <div class="progress-bar" style="width:{{it.PROGRESS}}%">
+                            {{it.PROGRESS}}%
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-if="joinPartyUserList.length==0">
+                <td colspan="7" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>-->
+</div>

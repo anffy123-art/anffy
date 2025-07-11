@@ -1,0 +1,66 @@
+﻿<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel-body flowform">
+                    <div id="flowstep1"></div>
+                    <div style="padding-left:5px;">
+                        <div class="radio" ng-repeat="naction in flowdata.flowInfo.nextactions">
+                            <label>
+                                <input type="radio" name="optionsRadios" ng-value="naction"
+                                       ng-model="flowdata.selectedaction">
+                                {{naction.aname}}({{naction.pname}})
+                            </label>
+                        </div>
+                    </div>
+                    <div id="flowstep2" ng-hide="flowdata.selectedaction.flowtp==2"></div>
+                    <div class="div_selectinguser" ng-hide="flowdata.selectedaction.flowtp==2">
+                        <table class="table tablesorter table-bordered">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" ng-model="isAll" ng-click="selectAll()"></th>
+                                <th>角色</th>
+                                <th>环节处理人</th>
+                                <th class="th-dp">所属园区</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="fu in flowdata.flowUsers">
+                                <td><input ng-model="fu.checked" type="checkbox" ng-change="selectOne(fu)"/></td>
+                                <td>{{fu.frolename}}</td>
+                                <td>{{fu.fusername}}</td>
+                                <td class="td-dp" title="{{fu.dpname}}">{{fu.dpname}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="flowstep3" ng-hide="flowdata.selectedaction.flowtp==2"></div>
+                    <div class="div_selecteduser" ng-hide="flowdata.selectedaction.flowtp==2">
+                        <!--<div class="selecteduser">
+                            <label class="checkbox-inline "  ng-repeat="fu in flowdata.flowUsers|filter:{checked:true}">
+                                <input type="checkbox" ng-model="fu.checked" ng-checked="fu.checked"> {{fu.fusername}}
+                            </label>
+                        </div>-->
+                        <label class="selecteduser" ng-repeat="fu in flowdata.flowUsers|filter:{checked:true}">
+                            <input type="checkbox" ng-model="fu.checked" ng-checked="fu.checked"
+                                   ng-change="selectOne()"> {{fu.fusername}}
+                        </label>
+                    </div>
+                    <div id="flowstep4" ng-hide="flowdata.selectedaction.flowtp==2"></div>
+                    <div ng-hide="flowdata.selectedaction.flowtp==2">
+                        <textarea name="comment" ng-model="flowdata.comment" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-danger" ng-click="tonextstep()">提交</button>
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

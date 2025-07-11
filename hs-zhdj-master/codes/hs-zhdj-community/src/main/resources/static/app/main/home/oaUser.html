@@ -1,0 +1,32 @@
+<div id="oamodal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 500px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">请确认身份证号码</h3>
+            </div>
+            <div activate-input activate-select class="body">
+                <form class="form-horizontal" role="form" id="oaform"
+                      name="oaform" ng-submit="save(oaform.$valid)" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table">
+                            <tr>
+                                <td colspan="2">温馨提示：为配合统一身份认证升级改造，请确认您的身份证号码，否则后期可能无法登录系统。</td>
+                            </tr>
+                            <tr>
+                                <th>身份证号码</th>
+                                <td ng-class="{ 'has-error' : this.oaform.SFZH.$invalid &&  this.oaform.$submitted}">
+                                    <input type="text"  name="SFZH" ng-model="partyUserInfo.SFZH"
+                                           class="form-control" ng-required="true"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form_foot">
+                        <button type="submit" class="btn btn-primary" form="oaform">确认</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

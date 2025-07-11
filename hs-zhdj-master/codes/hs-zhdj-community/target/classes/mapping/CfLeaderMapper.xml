@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.CfLeaderMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.CfLeader">
+    <id column="LEADERGUID" jdbcType="VARCHAR" property="leaderguid" />
+    <result column="DPID" jdbcType="VARCHAR" property="dpid" />
+    <result column="POS" jdbcType="VARCHAR" property="pos" />
+    <result column="USERID" jdbcType="VARCHAR" property="userid" />
+    <result column="SEQUENCE" jdbcType="VARCHAR" property="sequence" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    LEADERGUID, DPID, POS, USERID, SEQUENCE
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.CfLeaderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cf_leader
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cf_leader
+    where LEADERGUID = #{leaderguid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cf_leader
+    where LEADERGUID = #{leaderguid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.CfLeaderExample">
+    delete from cf_leader
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.CfLeader">
+    insert into cf_leader (LEADERGUID, DPID, POS, 
+      USERID, SEQUENCE)
+    values (#{leaderguid,jdbcType=VARCHAR}, #{dpid,jdbcType=VARCHAR}, #{pos,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=VARCHAR}, #{sequence,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.CfLeader">
+    insert into cf_leader
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="leaderguid != null">
+        LEADERGUID,
+      </if>
+      <if test="dpid != null">
+        DPID,
+      </if>
+      <if test="pos != null">
+        POS,
+      </if>
+      <if test="userid != null">
+        USERID,
+      </if>
+      <if test="sequence != null">
+        SEQUENCE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="leaderguid != null">
+        #{leaderguid,jdbcType=VARCHAR},
+      </if>
+      <if test="dpid != null">
+        #{dpid,jdbcType=VARCHAR},
+      </if>
+      <if test="pos != null">
+        #{pos,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        #{sequence,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.CfLeaderExample" resultType="java.lang.Long">
+    select count(*) from cf_leader
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cf_leader
+    <set>
+      <if test="record.leaderguid != null">
+        LEADERGUID = #{record.leaderguid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dpid != null">
+        DPID = #{record.dpid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pos != null">
+        POS = #{record.pos,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        USERID = #{record.userid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequence != null">
+        SEQUENCE = #{record.sequence,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cf_leader
+    set LEADERGUID = #{record.leaderguid,jdbcType=VARCHAR},
+      DPID = #{record.dpid,jdbcType=VARCHAR},
+      POS = #{record.pos,jdbcType=VARCHAR},
+      USERID = #{record.userid,jdbcType=VARCHAR},
+      SEQUENCE = #{record.sequence,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.CfLeader">
+    update cf_leader
+    <set>
+      <if test="dpid != null">
+        DPID = #{dpid,jdbcType=VARCHAR},
+      </if>
+      <if test="pos != null">
+        POS = #{pos,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        USERID = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        SEQUENCE = #{sequence,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LEADERGUID = #{leaderguid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.CfLeader">
+    update cf_leader
+    set DPID = #{dpid,jdbcType=VARCHAR},
+      POS = #{pos,jdbcType=VARCHAR},
+      USERID = #{userid,jdbcType=VARCHAR},
+      SEQUENCE = #{sequence,jdbcType=VARCHAR}
+    where LEADERGUID = #{leaderguid,jdbcType=VARCHAR}
+  </update>
+</mapper>

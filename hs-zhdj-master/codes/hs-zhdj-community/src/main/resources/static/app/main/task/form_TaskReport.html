@@ -1,0 +1,45 @@
+﻿<div ng-controller="TaskReportCtrl">
+    <div class="panel-body">
+        <div class="search-param-panel">
+            <div class="form-group form_op_btns">
+                <button type="button" class="btn btn-primary" data-placement="center" data-animation="am-fade-and-scale"
+                        ng-hide="params.readonly" ng-click="savemodal()">新增
+                </button>
+            </div>
+        </div>
+        <table class="table table-bordered tlist">
+            <thead>
+            <tr>
+                <!--<th style="text-align:center">任务名称</th>-->
+                <th style="text-align:center">日期</th>
+                <th style="text-align:center">进度</th>
+                <th style="text-align:center">简述</th>
+                <th style="text-align:center">任务负责人</th>
+                <th style="text-align:center" ng-hide="params.readonly">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="TaskReport in TaskReportLists">
+                <td style="text-align:center">{{TaskReport.reportDate}}</td>
+                <td style="text-align:center">{{TaskReport.Progress}}%</td>
+                <td style="text-align:center">{{TaskReport.Note}}</td>
+                <td style="text-align:center">{{TaskReport.Tasker}}</td>
+                <td style="text-align:center" ng-hide="params.readonly">
+                    <button class="btn btn-success btn-sm" title="修改" data-placement="center"
+                            data-animation="am-fade-and-scale" ng-click="editmodal(TaskReport.TaskReportID)"><span
+                            class="glyphicon glyphicon-pencil "></span></button>
+                    <button class="btn btn-danger btn-sm" title="删除"><span class="glyphicon glyphicon-remove "
+                                                                           ng-click="deletetTaskReport(TaskReport.TaskReportID)"></span>
+                    </button>
+                </td>
+            </tr>
+            <tr ng-if="finddata.ptotal<=0">
+                <td colspan="6" style="text-align:center">暂无数据</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <pagination data-pageindex="finddata.pageindex" data-pagesize="finddata.pagesize"
+                    data-ptotal="finddata.ptotal"></pagination>
+    </div>
+</div>

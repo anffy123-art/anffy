@@ -1,0 +1,42 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 650px;">
+        <div class="card">
+            <div class="header" dragable-header>
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{exportParams.title}}</h4>
+            </div>
+            <div activate-input activate-select class="body">
+                <form class="form-horizontal" role="form" id="editForm"
+                      name="editForm" ng-submit="save(editForm.$valid)" novalidate>
+                    <div class="dj-formtable">
+                        <table class="dj-table dj-table3">
+                            <tr>
+                                <th>转出日期<span style="color: red">*</span></th>
+                                <td ng-class="{ 'has-error' : this.editForm.exportDate.$invalid &&  this.editForm.$submitted}">
+                                    <input name="exportDate" class="form-control"
+                                           autocomplete="off"
+                                           autoclose="true"
+                                           data-date-format="yyyy-MM-dd" data-date-type="string" ng-model="exportDate"
+                                           ng-required="true"
+                                           class="form-control" bs-datepicker/>
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                            <tr>
+                                <th>转出组织名称</th>
+                                <td colspan="3">
+                                    <input type="text" class="form-control" name="exportPartyName"
+                                           ng-model="exportPartyName"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form_foot">
+                        <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                        <button type="submit" class="btn btn-primary" form="editForm">确定转出</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

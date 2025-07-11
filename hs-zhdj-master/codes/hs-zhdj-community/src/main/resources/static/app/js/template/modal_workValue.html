@@ -1,0 +1,43 @@
+﻿<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width:60%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">{{title}}</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered tlist">
+                    <thead>
+                    <tr>
+                        <th>流程阶段</th>
+                        <th>工作量类型</th>
+                        <th>成员</th>
+                        <th>成员角色</th>
+                        <th>人/天</th>
+                        <th>备注</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="QuantityOfWork in QuantityOfWorkLists">
+                        <td>{{QuantityOfWork.FlowStageName}}</td>
+                        <td>{{QuantityOfWork.dicValue}}</td>
+                        <td>{{QuantityOfWork.Name}}</td>
+                        <td>{{QuantityOfWork.roleName}}</td>
+                        <td>{{QuantityOfWork.ValueOfDate}}</td>
+                        <td>{{QuantityOfWork.Note}}</td>
+                    </tr>
+                    <tr ng-if="finddata.ptotal<=0">
+                        <td colspan="6" style="text-align:center">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pagination ng-if="finddata.ptotal>0" data-pageindex="finddata.pageindex"
+                            data-pagesize="finddata.pagesize" data-ptotal="finddata.ptotal"></pagination>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+

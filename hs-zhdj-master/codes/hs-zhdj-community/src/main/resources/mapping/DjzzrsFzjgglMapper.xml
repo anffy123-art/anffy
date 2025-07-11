@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DjzzrsFzjgglMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.DjzzrsFzjggl">
+    <id column="GLID" jdbcType="VARCHAR" property="glid" />
+    <result column="DZZBM" jdbcType="VARCHAR" property="dzzbm" />
+    <result column="JGFZID" jdbcType="VARCHAR" property="jgfzid" />
+    <result column="FZZT" jdbcType="VARCHAR" property="fzzt" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_PERSON" jdbcType="VARCHAR" property="createPerson" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_PERSON" jdbcType="VARCHAR" property="updatePerson" />
+    <result column="COME_FROM" jdbcType="CHAR" property="comeFrom" />
+    <result column="VERSION" jdbcType="INTEGER" property="version" />
+    <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
+    <result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    GLID, DZZBM, JGFZID, FZZT, CREATE_TIME, CREATE_PERSON, UPDATE_TIME, UPDATE_PERSON, 
+    COME_FROM, VERSION, ORG_ID, REMARKS
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.DjzzrsFzjgglExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from djzzrs_fzjggl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from djzzrs_fzjggl
+    where GLID = #{glid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from djzzrs_fzjggl
+    where GLID = #{glid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.DjzzrsFzjgglExample">
+    delete from djzzrs_fzjggl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.DjzzrsFzjggl">
+    insert into djzzrs_fzjggl (GLID, DZZBM, JGFZID, 
+      FZZT, CREATE_TIME, CREATE_PERSON, 
+      UPDATE_TIME, UPDATE_PERSON, COME_FROM, 
+      VERSION, ORG_ID, REMARKS
+      )
+    values (#{glid,jdbcType=VARCHAR}, #{dzzbm,jdbcType=VARCHAR}, #{jgfzid,jdbcType=VARCHAR}, 
+      #{fzzt,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createPerson,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updatePerson,jdbcType=VARCHAR}, #{comeFrom,jdbcType=CHAR}, 
+      #{version,jdbcType=INTEGER}, #{orgId,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.DjzzrsFzjggl">
+    insert into djzzrs_fzjggl
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="glid != null">
+        GLID,
+      </if>
+      <if test="dzzbm != null">
+        DZZBM,
+      </if>
+      <if test="jgfzid != null">
+        JGFZID,
+      </if>
+      <if test="fzzt != null">
+        FZZT,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createPerson != null">
+        CREATE_PERSON,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updatePerson != null">
+        UPDATE_PERSON,
+      </if>
+      <if test="comeFrom != null">
+        COME_FROM,
+      </if>
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="orgId != null">
+        ORG_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="glid != null">
+        #{glid,jdbcType=VARCHAR},
+      </if>
+      <if test="dzzbm != null">
+        #{dzzbm,jdbcType=VARCHAR},
+      </if>
+      <if test="jgfzid != null">
+        #{jgfzid,jdbcType=VARCHAR},
+      </if>
+      <if test="fzzt != null">
+        #{fzzt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createPerson != null">
+        #{createPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatePerson != null">
+        #{updatePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="comeFrom != null">
+        #{comeFrom,jdbcType=CHAR},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.DjzzrsFzjgglExample" resultType="java.lang.Long">
+    select count(*) from djzzrs_fzjggl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update djzzrs_fzjggl
+    <set>
+      <if test="record.glid != null">
+        GLID = #{record.glid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dzzbm != null">
+        DZZBM = #{record.dzzbm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jgfzid != null">
+        JGFZID = #{record.jgfzid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fzzt != null">
+        FZZT = #{record.fzzt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createPerson != null">
+        CREATE_PERSON = #{record.createPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatePerson != null">
+        UPDATE_PERSON = #{record.updatePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comeFrom != null">
+        COME_FROM = #{record.comeFrom,jdbcType=CHAR},
+      </if>
+      <if test="record.version != null">
+        VERSION = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgId != null">
+        ORG_ID = #{record.orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null">
+        REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update djzzrs_fzjggl
+    set GLID = #{record.glid,jdbcType=VARCHAR},
+      DZZBM = #{record.dzzbm,jdbcType=VARCHAR},
+      JGFZID = #{record.jgfzid,jdbcType=VARCHAR},
+      FZZT = #{record.fzzt,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{record.createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{record.updatePerson,jdbcType=VARCHAR},
+      COME_FROM = #{record.comeFrom,jdbcType=CHAR},
+      VERSION = #{record.version,jdbcType=INTEGER},
+      ORG_ID = #{record.orgId,jdbcType=VARCHAR},
+      REMARKS = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.DjzzrsFzjggl">
+    update djzzrs_fzjggl
+    <set>
+      <if test="dzzbm != null">
+        DZZBM = #{dzzbm,jdbcType=VARCHAR},
+      </if>
+      <if test="jgfzid != null">
+        JGFZID = #{jgfzid,jdbcType=VARCHAR},
+      </if>
+      <if test="fzzt != null">
+        FZZT = #{fzzt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createPerson != null">
+        CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatePerson != null">
+        UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="comeFrom != null">
+        COME_FROM = #{comeFrom,jdbcType=CHAR},
+      </if>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null">
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where GLID = #{glid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.DjzzrsFzjggl">
+    update djzzrs_fzjggl
+    set DZZBM = #{dzzbm,jdbcType=VARCHAR},
+      JGFZID = #{jgfzid,jdbcType=VARCHAR},
+      FZZT = #{fzzt,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_PERSON = #{createPerson,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_PERSON = #{updatePerson,jdbcType=VARCHAR},
+      COME_FROM = #{comeFrom,jdbcType=CHAR},
+      VERSION = #{version,jdbcType=INTEGER},
+      ORG_ID = #{orgId,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR}
+    where GLID = #{glid,jdbcType=VARCHAR}
+  </update>
+</mapper>

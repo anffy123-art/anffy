@@ -1,0 +1,295 @@
+<style>
+    .panel {
+        padding-top: 20px;
+    }
+
+    .user_total > tbody > tr > td {
+        padding: 0 20px;
+    }
+</style>
+<titlemenu></titlemenu>
+<div class="dj-card">
+    <div class="dj-body" activate-input activate-select>
+        <div class="dj-formtable">
+            <table class="dj-table dj-table2">
+                <tr>
+                    <td colspan="2" style="color: red;font-size: 28px;width: 100%;text-align: center;padding: 5px 0;">
+                        <span ng-repeat="it in meetingTypeList">{{it.shykTypeName}}{{$last?'':'、'}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>所属党支部</th>
+                    <td>{{dataModel.partyname}}</td>
+                </tr>
+                <tr>
+                    <th>议题</th>
+                    <td>{{dataModel.topiccontent}}</td>
+                </tr>
+                <tr>
+                    <th>会议名称</th>
+                    <td>{{dataModel.meetingname}}</td>
+                </tr>
+                <tr>
+                    <th>会议地址</th>
+                    <td>{{dataModel.meetingaddress}}</td>
+                </tr>
+                <tr>
+                    <th>会议时间</th>
+                    <td>
+                        {{dataModel.begintime | date:'yyyy-MM-dd HH:mm'}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>是否第一议题</th>
+                    <td>{{dataModel.isfirsttopic ? '是' : '否'}}</td>
+                </tr>
+                <tr>
+                    <th>主持人</th>
+                    <td>{{dataModel.chairuser}}</td>
+                </tr>
+                <tr>
+                    <th>记录人</th>
+                    <td>{{dataModel.recorduser}}</td>
+                </tr>
+                <tr>
+                    <th>列席人员</th>
+                    <td>
+                        {{dataModel.attenduser}}
+                    </td>
+                </tr>
+                <tr>
+                    <th>参加会议人员</th>
+                    <td>
+                        <div class="table-responsive list-table-panel" style="padding-top: 10px;">
+                            <div class="outoflow" style="max-height: 300px;">
+                                <table class="gt-table gt-table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="th-rownum">序号</th>
+                                        <th>党员姓名</th>
+                                        <th>所在组织机构</th>
+                                        <th>是否参加</th>
+                                        <!--<th>是否签到</th>-->
+                                        <th>未参加原因</th>
+                                        <th ng-if="dataModel.shyktype==4"
+                                            role-permission-code="shykMeetingShow.btnEvaluate">党课评价情况
+                                        </th>
+                                        <th ng-if="dataModel.createuserid==loginUserId">
+                                            操作
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="it in userList">
+                                        <th class="text-center" scope="row">{{$index + 1}}</th>
+                                        <th class="text-center">{{it.XM}}</th>
+                                        <th>{{it.DZZMC}}</th>
+                                        <th class="text-center">{{it.SIGNINSTATUS == 2 ? "参加" : "未参加"}}</th>
+                                        <th>{{it.USERREMARK}}</th>
+                                        <th ng-if="dataModel.shyktype==4">
+                                            <button ng-if="it.ISEVALUATE==1" class="btn td-btn bg-pink waves-effect"
+                                                    ng-click="showEvaluate(it.MEETINGID,it.MEETINGUSERID)" title="查看">
+                                                查看
+                                            </button>
+                                        </th>
+                                        <th ng-if="dataModel.createuserid==loginUserId">
+                                            <button ng-if="it.SIGNINSTATUS==3"
+                                                    class="btn td-btn bg-pink waves-effect"
+                                                    ng-click="signin(it.MEETINGID,it.USERCODE,true)" title="参加">
+                                                参加
+                                            </button>
+                                            <button ng-if="it.SIGNINSTATUS==2"
+                                                    class="btn td-btn bg-pink waves-effect"
+                                                    title="未参加"
+                                                    ng-click="resetRemark(it.MEETINGID,it.USERCODE)"
+                                                    data-toggle="modal" data-target="#editNoSignin">
+                                                未参加
+                                            </button>
+                                        </th>
+                                    </tr>
+                                    <tr ng-if="userList.length<=0">
+                                        <td colspan="7" style="text-align:center">暂无数据</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>参会情况</th>
+                    <td>
+                        <table class="user_total">
+                            <tr>
+                                <td>参加会议人员：{{userList.length}}人</td>
+                                <td>已确认参加：{{(userList | filter:{'SIGNINSTATUS': '2'}).length }}人</td>
+                                <td>不能参加：{{(userList | filter:{'SIGNINSTATUS': '3'}).length }}人</td>
+                                <td>
+                                    占比：{{((userList | filter:{'SIGNINSTATUS': '2'}).length / userList.length) * 100 | number:2
+                                    }}%
+                                </td>
+                            </tr>
+                            <!--<tr ng-if="difftime <= 0">
+                                <td>应到人数：{{userList.length}}人</td>
+                                <td>实到人数：{{(userList | filter:{'CHECKINSTATUS':'1'}).length }}人</td>
+                                <td>缺席人数：{{(userList | filter:{'CHECKINSTATUS':'0'}).length }}人</td>
+                                <td></td>
+                            </tr>-->
+                        </table>
+                    </td>
+                </tr>
+                <tr ng-if="isShowDemocracyReview()">
+                    <th>民主评议党员名单</th>
+                    <td>
+                        <div class="table-responsive list-table-panel" style="padding-top: 10px;">
+                            <div class="outoflow" style="max-height: 300px;">
+                                <table class="gt-table gt-table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="th-rownum">序号</th>
+                                        <th>所属党组织</th>
+                                        <th style="width:150px;">姓名</th>
+                                        <th style="width:150px;">开展评议日期</th>
+                                        <th style="width:150px;">结束评议日期</th>
+                                        <th style="width:150px;">评议结果</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="it in democracyReviewList">
+                                        <th class="text-center" scope="row">{{$index + 1}}</th>
+                                        <th>{{it.partyName}}</th>
+                                        <th class="text-center">{{it.userName}}</th>
+                                        <th class="text-center">{{it.startdate | date:'yyyy-MM-dd'}}</th>
+                                        <th class="text-center">{{it.enddate | date:'yyyy-MM-dd'}}</th>
+                                        <th class="text-center">{{it.democracyReviewResultTypeName}}</th>
+                                    </tr>
+                                    <tr ng-if="democracyReviewList.length<=0">
+                                        <td colspan="7" style="text-align:center">暂无数据</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>会场照片</th>
+                    <td>
+                        <img-component data-filerefid="imgConfig1.filerefid" data-filetypeid="imgConfig1.filetypeid"
+                                       data-ismulti="imgConfig1.ismulti" data-height="imgConfig1.height"
+                                       data-readonly="imgConfig1.readonly" data-img-list="imgConfig1.imgList"
+                                       data-width="imgConfig1.width"></img-component>
+                        <div ng-if="imgConfig1.imgList.length<=0">
+                            <span>暂无</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>台账记录</th>
+                    <td>
+                        <img-component data-filerefid="imgConfig2.filerefid" data-filetypeid="imgConfig2.filetypeid"
+                                       data-ismulti="imgConfig1.ismulti" data-height="imgConfig2.height"
+                                       data-readonly="imgConfig2.readonly" data-img-list="imgConfig2.imgList"
+                                       data-width="imgConfig1.width"></img-component>
+                        <div ng-if="imgConfig2.imgList.length<=0">
+                            <span>暂无</span>
+                        </div>
+                    </td>
+                </tr>
+                <!--<tr>
+                    <th>会议记录</th>
+                    <td>
+                        <div style="padding-left: 0px;border: 1px solid #ddd; top:8px;margin: 10px 0;"
+                             ng-if="dataModel.meetingbriefcontent!=null && dataModel.meetingbriefcontent!=''">
+                            <span ng-bind-html="dataModel.meetingbriefcontent |showhtmlfilter"></span>
+                        </div>
+                        <div ng-if="dataModel.meetingbriefcontent==null || dataModel.meetingbriefcontent==''">
+                            <span>暂无</span>
+                        </div>
+                    </td>
+                </tr>-->
+                <tr>
+                    <th>会议决议</th>
+                    <td>
+                        <div ng-repeat="it in decisionList" style="padding-top: 10px;">
+                            <div class="card" style="box-shadow: none;border: 1px solid rgba(204, 204, 204, 0.35);">
+                                <div class="header" style="display:flex;justify-content: space-between;">
+                                    <h2>
+                                        会议决议 {{$index + 1}}
+                                    </h2>
+                                </div>
+                                <div class="body">
+                                    <span ng-bind-html="it.content|showhtmlfilter"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <bsfiles ng-model="reqFileModel"/>
+        </div>
+        <div class="form_foot">
+            <button type="button" class="btn btn-default" ng-click="pagechange();">返回</button>
+            <!--<button ng-if="difftime <= 30  && !isEnd && (dataModel.createuserid == loginUserId || meetingUserModel.checkinstatus == 1)"
+                    class="btn btn-default"
+                    title="二维码"
+                    data-toggle="modal" data-target="#showQrcode">
+                二维码
+            </button>-->
+        </div>
+    </div>
+</div>
+
+<!-- 模态框（Modal） 填写未参加原因-->
+<div class="modal fade" id="editNoSignin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    填写未参加原因
+                </h4>
+            </div>
+            <div class="modal-body">
+ <textarea name="userRemark" ng-model="editNoSigninModal.userRemark"
+           class="form-control" rows="3"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary"
+                        ng-click="signin(editNoSigninModal.MEETINGID,editNoSigninModal.USERCODE,false)">
+                    提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 查看二维码-->
+<div class="modal fade" id="showQrcode" tabindex="-1" role="dialog" aria-labelledby="myshowQrcode" aria-hidden="true">
+    <div class="modal-dialog" style="width: 450px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myshowQrcode">
+                    会议二维码
+                </h4>
+            </div>
+            <div class="modal-body">
+                <img src="{{qrcodeUrl}}"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary"
+                        ng-click="printQrcode()">
+                    打印
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>

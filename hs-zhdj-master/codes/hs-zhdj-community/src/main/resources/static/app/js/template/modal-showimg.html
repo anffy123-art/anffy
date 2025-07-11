@@ -1,0 +1,54 @@
+﻿<div class="img-list">
+    <div class="img-item" ng-repeat="it in imgList" style="width: {{widthStr}};">
+        <img style="width: 100%;height:{{height}}px;margin: 5px 0;cursor: pointer;"
+             ng-src="../../api/home/showImg/{{it.fileid}}"
+             data-toggle="modal"
+             data-target="#{{modalId}}" ng-click="showImg($index)"/>
+        <i ng-if="!readonly" class="material-icons remove-icon"
+           ng-click="deleteImg(it.fileid)">remove_circle_outline</i>
+    </div>
+    <i ng-if="!readonly && (ismulti || (!ismulti && imgList.length==0))" class="material-icons dj-add"
+       ng-class="imgList.length>0?'dj-add-pd':''"
+       ng-click="uploadImg()">add_circle_outline</i>
+</div>
+<!-- 查看大图-->
+<div class="modal fade text-center" id="{{modalId}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog bigimg-modal">
+        <div class="card">
+            <div class="header">
+                <div class="btn-tool" style="float: left !important;margin: 12px;">
+                    <button class="close" ng-click="up()" ng-if="showIndex>0" style="padding-right: 10px;">
+                        上一张
+                    </button>
+                    <button class="close" ng-click="next()" ng-if="showIndex<(imgList.length-1)">
+                        下一张
+                    </button>
+                </div>
+                <div class="btn-tool" style="float: left !important;margin: 12px;">
+                    <button class="close" ng-click="zoomIn()" style="padding-right: 10px;">
+                        <span class="glyphicon glyphicon-zoom-in btn-refresh-icon"></span>
+                    </button>
+                    <button class="close" ng-click="zoomOut()" style="padding-right: 10px;">
+                        <span class="glyphicon glyphicon-zoom-out btn-refresh-icon"></span>
+                    </button>
+                    <button class="close" ng-click="img.rotate=img.rotate+90">
+                        <span class="glyphicon glyphicon-repeat btn-refresh-icon"></span>
+                    </button>
+                </div>
+                <div class="btn-tool">
+                    <button type="button" class="close btn-close"
+                            data-dismiss="modal">
+                        &times;
+                    </button>
+                </div>
+            </div>
+            <div class="body" style="overflow: auto;display:block;margin: 50px;">
+                <div style="transform:scale({{img.scale}});">
+                    <img ng-src="../../api/home/showImg/{{imgList[showIndex].fileid}}"
+                         style="max-width: 100%;transform:rotate({{img.rotate}}deg);-webkit-transform:rotate({{img.rotate}}deg);-moz-transform:rotate({{img.rotate}}deg);"
+                         ng-click="img.rotate=img.rotate+90"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

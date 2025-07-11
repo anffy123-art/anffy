@@ -1,0 +1,14 @@
+.selected-icon {
+    border: 2px;
+    border-color: #8e25e6;
+    border-style: solid;
+}
+
+.wx-body-align {
+    text-align: center;
+}
+
+.wx-native-img {
+    width: 320px;
+    height: 320px;
+}

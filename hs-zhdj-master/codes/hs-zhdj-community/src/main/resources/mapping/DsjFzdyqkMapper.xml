@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.DsjFzdyqkMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.DsjFzdyqk">
+    <id column="FZDYQKBS" jdbcType="VARCHAR" property="fzdyqkbs" />
+    <result column="LBMC" jdbcType="VARCHAR" property="lbmc" />
+    <result column="SL" jdbcType="DECIMAL" property="sl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    FZDYQKBS, LBMC, SL
+  </sql>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.DsjFzdyqkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dsj_fzdyqk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dsj_fzdyqk
+    where FZDYQKBS = #{fzdyqkbs,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from dsj_fzdyqk
+    where FZDYQKBS = #{fzdyqkbs,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.DsjFzdyqkExample">
+    delete from dsj_fzdyqk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.DsjFzdyqk">
+    insert into dsj_fzdyqk (FZDYQKBS, LBMC, SL
+      )
+    values (#{fzdyqkbs,jdbcType=VARCHAR}, #{lbmc,jdbcType=VARCHAR}, #{sl,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.DsjFzdyqk">
+    insert into dsj_fzdyqk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fzdyqkbs != null">
+        FZDYQKBS,
+      </if>
+      <if test="lbmc != null">
+        LBMC,
+      </if>
+      <if test="sl != null">
+        SL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fzdyqkbs != null">
+        #{fzdyqkbs,jdbcType=VARCHAR},
+      </if>
+      <if test="lbmc != null">
+        #{lbmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sl != null">
+        #{sl,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.DsjFzdyqkExample" resultType="java.lang.Long">
+    select count(*) from dsj_fzdyqk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update dsj_fzdyqk
+    <set>
+      <if test="record.fzdyqkbs != null">
+        FZDYQKBS = #{record.fzdyqkbs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lbmc != null">
+        LBMC = #{record.lbmc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sl != null">
+        SL = #{record.sl,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update dsj_fzdyqk
+    set FZDYQKBS = #{record.fzdyqkbs,jdbcType=VARCHAR},
+      LBMC = #{record.lbmc,jdbcType=VARCHAR},
+      SL = #{record.sl,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.DsjFzdyqk">
+    update dsj_fzdyqk
+    <set>
+      <if test="lbmc != null">
+        LBMC = #{lbmc,jdbcType=VARCHAR},
+      </if>
+      <if test="sl != null">
+        SL = #{sl,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where FZDYQKBS = #{fzdyqkbs,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.DsjFzdyqk">
+    update dsj_fzdyqk
+    set LBMC = #{lbmc,jdbcType=VARCHAR},
+      SL = #{sl,jdbcType=DECIMAL}
+    where FZDYQKBS = #{fzdyqkbs,jdbcType=VARCHAR}
+  </update>
+</mapper>

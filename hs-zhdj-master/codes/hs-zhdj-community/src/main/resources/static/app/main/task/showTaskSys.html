@@ -1,0 +1,45 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="min-height:500px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="panel-heading modal-header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h3 class="modal-title">{{params.title}}</h3>
+
+            </div>
+            <form class="form-horizontal formtable1 panel-body modal-body">
+                <table class="table table-bordered tform">
+                    <tr>
+                        <th class="col-md-2">任务类型:</th>
+                        <td>
+                            {{content.taskType}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">任务负责人:</th>
+                        <td>
+                            {{content.taskerName}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">功能名称:</th>
+                        <td>
+                            {{content.SysDutyName}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-md-2">功能点描述:</th>
+                        <td>
+                            {{content.SysDutyNote}}
+                        </td>
+                    </tr>
+                </table>
+                <div class="form_foot">
+                    <button id="cancel" type="button" style="float:right;margin-right:5%" class="btn btn-primary"
+                            ng-click="$hide()">关闭
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

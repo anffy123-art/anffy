@@ -1,0 +1,22 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div class="dj-list-content content1">
+            <div class="card">
+                <div class="body">
+                    <ul class="nav nav-tabs tab-col-deep-orange" role="tablist">
+                        <li ng-repeat="item in pageList" ng-class="{active:isSelected(item.id)}">
+                            <a ng-click="selectTab(item.id)" data-toggle="tab">
+                                {{item.title}}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="panel" ng-repeat="item in pageList" ng-show="isSelected(item.id)">
+                        <div ng-include="item.url"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

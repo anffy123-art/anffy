@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.partybuild.mapper.ZzLearningplanMapper">
+  <resultMap id="BaseResultMap" type="com.px.partybuild.model.ZzLearningplan">
+    <id column="learningPlanID" jdbcType="VARCHAR" property="learningPlanID" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="partyCode" jdbcType="VARCHAR" property="partyCode" />
+    <result column="learningPlanType" jdbcType="INTEGER" property="learningPlanType" />
+    <result column="publicDate" jdbcType="DATE" property="publicDate" />
+    <result column="recordStatus" jdbcType="INTEGER" property="recordStatus" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="createUserId" jdbcType="VARCHAR" property="createUserId" />
+    <result column="createUserName" jdbcType="VARCHAR" property="createUserName" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="updateUserId" jdbcType="VARCHAR" property="updateUserId" />
+    <result column="updateUserName" jdbcType="VARCHAR" property="updateUserName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.px.partybuild.model.ZzLearningplanWithBLOBs">
+    <result column="request" jdbcType="LONGVARCHAR" property="request" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    learningPlanID, name, partyCode, learningPlanType, publicDate, recordStatus, createTime, 
+    createUserId, createUserName, updateTime, updateUserId, updateUserName
+  </sql>
+  <sql id="Blob_Column_List">
+    request, content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.px.partybuild.model.ZzLearningplanExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zz_learningplan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.px.partybuild.model.ZzLearningplanExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from zz_learningplan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zz_learningplan
+    where learningPlanID = #{learningPlanID,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from zz_learningplan
+    where learningPlanID = #{learningPlanID,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.px.partybuild.model.ZzLearningplanExample">
+    delete from zz_learningplan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.px.partybuild.model.ZzLearningplanWithBLOBs">
+    insert into zz_learningplan (learningPlanID, name, partyCode, 
+      learningPlanType, publicDate, recordStatus, 
+      createTime, createUserId, createUserName, 
+      updateTime, updateUserId, updateUserName, 
+      request, content)
+    values (#{learningPlanID,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{partyCode,jdbcType=VARCHAR}, 
+      #{learningPlanType,jdbcType=INTEGER}, #{publicDate,jdbcType=DATE}, #{recordStatus,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=VARCHAR}, #{createUserName,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=VARCHAR}, #{updateUserName,jdbcType=VARCHAR}, 
+      #{request,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.px.partybuild.model.ZzLearningplanWithBLOBs">
+    insert into zz_learningplan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="learningPlanID != null">
+        learningPlanID,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="partyCode != null">
+        partyCode,
+      </if>
+      <if test="learningPlanType != null">
+        learningPlanType,
+      </if>
+      <if test="publicDate != null">
+        publicDate,
+      </if>
+      <if test="recordStatus != null">
+        recordStatus,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="createUserId != null">
+        createUserId,
+      </if>
+      <if test="createUserName != null">
+        createUserName,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+      <if test="updateUserId != null">
+        updateUserId,
+      </if>
+      <if test="updateUserName != null">
+        updateUserName,
+      </if>
+      <if test="request != null">
+        request,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="learningPlanID != null">
+        #{learningPlanID,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="partyCode != null">
+        #{partyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="learningPlanType != null">
+        #{learningPlanType,jdbcType=INTEGER},
+      </if>
+      <if test="publicDate != null">
+        #{publicDate,jdbcType=DATE},
+      </if>
+      <if test="recordStatus != null">
+        #{recordStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="request != null">
+        #{request,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.px.partybuild.model.ZzLearningplanExample" resultType="java.lang.Long">
+    select count(*) from zz_learningplan
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update zz_learningplan
+    <set>
+      <if test="record.learningPlanID != null">
+        learningPlanID = #{record.learningPlanID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.partyCode != null">
+        partyCode = #{record.partyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.learningPlanType != null">
+        learningPlanType = #{record.learningPlanType,jdbcType=INTEGER},
+      </if>
+      <if test="record.publicDate != null">
+        publicDate = #{record.publicDate,jdbcType=DATE},
+      </if>
+      <if test="record.recordStatus != null">
+        recordStatus = #{record.recordStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUserId != null">
+        createUserId = #{record.createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserName != null">
+        createUserName = #{record.createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null">
+        updateUserId = #{record.updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateUserName != null">
+        updateUserName = #{record.updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.request != null">
+        request = #{record.request,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update zz_learningplan
+    set learningPlanID = #{record.learningPlanID,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      partyCode = #{record.partyCode,jdbcType=VARCHAR},
+      learningPlanType = #{record.learningPlanType,jdbcType=INTEGER},
+      publicDate = #{record.publicDate,jdbcType=DATE},
+      recordStatus = #{record.recordStatus,jdbcType=INTEGER},
+      createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      createUserId = #{record.createUserId,jdbcType=VARCHAR},
+      createUserName = #{record.createUserName,jdbcType=VARCHAR},
+      updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      updateUserId = #{record.updateUserId,jdbcType=VARCHAR},
+      updateUserName = #{record.updateUserName,jdbcType=VARCHAR},
+      request = #{record.request,jdbcType=LONGVARCHAR},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update zz_learningplan
+    set learningPlanID = #{record.learningPlanID,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      partyCode = #{record.partyCode,jdbcType=VARCHAR},
+      learningPlanType = #{record.learningPlanType,jdbcType=INTEGER},
+      publicDate = #{record.publicDate,jdbcType=DATE},
+      recordStatus = #{record.recordStatus,jdbcType=INTEGER},
+      createTime = #{record.createTime,jdbcType=TIMESTAMP},
+      createUserId = #{record.createUserId,jdbcType=VARCHAR},
+      createUserName = #{record.createUserName,jdbcType=VARCHAR},
+      updateTime = #{record.updateTime,jdbcType=TIMESTAMP},
+      updateUserId = #{record.updateUserId,jdbcType=VARCHAR},
+      updateUserName = #{record.updateUserName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.px.partybuild.model.ZzLearningplanWithBLOBs">
+    update zz_learningplan
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="partyCode != null">
+        partyCode = #{partyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="learningPlanType != null">
+        learningPlanType = #{learningPlanType,jdbcType=INTEGER},
+      </if>
+      <if test="publicDate != null">
+        publicDate = #{publicDate,jdbcType=DATE},
+      </if>
+      <if test="recordStatus != null">
+        recordStatus = #{recordStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        createUserId = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserName != null">
+        createUserName = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        updateUserId = #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserName != null">
+        updateUserName = #{updateUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="request != null">
+        request = #{request,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where learningPlanID = #{learningPlanID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.px.partybuild.model.ZzLearningplanWithBLOBs">
+    update zz_learningplan
+    set name = #{name,jdbcType=VARCHAR},
+      partyCode = #{partyCode,jdbcType=VARCHAR},
+      learningPlanType = #{learningPlanType,jdbcType=INTEGER},
+      publicDate = #{publicDate,jdbcType=DATE},
+      recordStatus = #{recordStatus,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      updateUserId = #{updateUserId,jdbcType=VARCHAR},
+      updateUserName = #{updateUserName,jdbcType=VARCHAR},
+      request = #{request,jdbcType=LONGVARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where learningPlanID = #{learningPlanID,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.px.partybuild.model.ZzLearningplan">
+    update zz_learningplan
+    set name = #{name,jdbcType=VARCHAR},
+      partyCode = #{partyCode,jdbcType=VARCHAR},
+      learningPlanType = #{learningPlanType,jdbcType=INTEGER},
+      publicDate = #{publicDate,jdbcType=DATE},
+      recordStatus = #{recordStatus,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      createUserName = #{createUserName,jdbcType=VARCHAR},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      updateUserId = #{updateUserId,jdbcType=VARCHAR},
+      updateUserName = #{updateUserName,jdbcType=VARCHAR}
+    where learningPlanID = #{learningPlanID,jdbcType=VARCHAR}
+  </update>
+</mapper>

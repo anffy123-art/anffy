@@ -1,0 +1,83 @@
+<div class="modal" tabindex="-1" role="dialog" name="m_selectTempUser">
+    <div class="modal-dialog" role="document" style="width: 800px;">
+        <div class="card">
+            <div class="header">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title">邀请人员</h4>
+            </div>
+            <div activate-input class="body">
+                <div class="search-param-panel">
+                    <div class="search-input">
+                        <form class="form-horizontal" role="form">
+                            <div class="row clearfix form-inline">
+                                <div class="col-lg-5 col-md-5 col-sm-4 col-xs-5">
+                                    <label>人员名称</label>
+                                </div>
+                                <div class="col-lg-7 col-md-7 col-sm-8 col-xs-7">
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" class="form-control" name="Name" ng-model="findData.name"
+                                                   placeholder="请输入人员名称"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div>
+                            <button class="btn btn-primary" ng-click="selectTempUser()">查询</button>
+                            <button class="btn btn-primary" title="新增" ng-click="addTempUser()">邀请</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="body" >
+                <div class="list-table-panel">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1">选择</th>
+                            <th class="col-md-1">姓名</th>
+                            <th class="col-md-2">登录账号</th>
+                            <th class="col-md-2">所在组织</th>
+                            <th class="col-md-1">邀请人</th>
+                            <th class="col-md-2">邀请时间</th>
+                            <th class="col-md-1">状态</th>
+                            <th class="col-md-2">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="u in tempUserList | filter:{userName:findData.name}">
+                            <td>
+                                <input type="checkbox" id="tu_checkbox_{{$index+1}}"
+                                       class="filled-in chk-col-red" ng-model="u.checked"
+                                       />
+                                <label ng-show="u.enable==3" class="checkbox_lable" style="top:6px;"
+                                       for="tu_checkbox_{{$index+1}}"></label>
+                            </td>
+                            <td>{{u.userName}}</td>
+                            <td>{{u.mobile}}</td>
+                            <td>{{u.partyName}}</td>
+                            <td>{{u.applierName}}</td>
+                            <td>{{u.applytime|date:'yyyy-MM-dd'}}</td>
+                            <td>{{u.enableName}}</td>
+                            <td>
+                                <button class="btn td-btn bg-pink waves-effect"
+                                        ng-click="deleteTempUser(u.tempuserid)" title="删除">
+                                    <!--<i class="material-icons td-icon">delete_forever</i>-->
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="selectedData()">选择</button>
+            </div>
+        </div>
+    </div>
+</div>

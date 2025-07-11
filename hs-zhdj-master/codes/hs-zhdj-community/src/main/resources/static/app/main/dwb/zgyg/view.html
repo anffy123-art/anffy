@@ -1,0 +1,105 @@
+<div class="card">
+    <titlemenu>
+        <button class="btn btn-default" ng-click="return();" type="button">返回</button>
+
+    </titlemenu>
+    <div activate-input activate-select class="body">
+        <form class="form-horizontal" name="editForm" novalidate role="form">
+            <div panel-title data-title="'政工约稿信息'"></div>
+            <div class="dj-formtable">
+                <table class="dj-table">
+                    <tr>
+                        <th>标题</th>
+                        <td colspan="3">
+                            {{dataModel.title}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>所属类型</th>
+                        <td>
+                            {{dataModel.typename}}
+                        </td>
+                        <th>截止日期</th>
+                        <td>
+                            {{dataModel.closedate|date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>要求</th>
+                        <td colspan="3" >
+                            <div ng-bind-html='dataModel.ask'></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+
+        <form class="form-horizontal" id="dydtform" name="dydtform" novalidate
+              role="form">
+            <div class="table-responsive list-table-panel dsj_dydt" style="font-size: 16px;">
+                <div class="list-table-title">
+                    <div class="table-title">
+                        约稿情况
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                    <thead>
+                    <tr>
+                        <th>名称</th>
+                        <th>开始月份</th>
+                        <th>结束月份</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="it in yg_dataList">
+                        <td align="center">
+                            {{it.title}}
+                        </td>
+                        <td align="center">
+                            {{it.begindate|date:'yyyy-MM-dd'}}
+                        </td>
+                        <td align="center">
+                            {{it.enddate|date:'yyyy-MM-dd'}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </form>
+        <div class="table-responsive list-table-panel" style="font-size: 16px;margin-top:20px">
+            <div class="list-table-title">
+                <div class="table-title">
+                    接收单位
+                </div>
+            </div>
+            <div class="outoflow" style="max-height: 300px;">
+                <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>党委名称</th>
+                        <th>负责人</th>
+                        <th>所在党支部</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="it in receiveDWs">
+                        <th scope="row">{{$index+1}}</th>
+                        <th>{{it.dwName}}</th>
+                        <th>{{it.leaderName}}</th>
+                        <th>{{it.leaderDzbName}}</th>
+                    </tr>
+                    <tr ng-if="receiveDWs.length<=0">
+                        <td colspan="5" style="text-align:center">暂无数据</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class=" list-table-panel" style="font-size: 16px; margin-bottom: 20px;">
+            <bsfiles ng-model="reqFileModel"/>
+        </div>
+
+    </div>
+</div>

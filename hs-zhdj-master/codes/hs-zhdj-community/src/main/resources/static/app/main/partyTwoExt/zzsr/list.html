@@ -1,0 +1,214 @@
+<titlemenu></titlemenu>
+<div class="dj-list">
+    <div class="dj-list-body">
+        <div party-tree data-selectdzzdm="selectparams.selectdzzdm" data-selectdzzmc="selectparams.selectdzzmc"
+             data-isshowxz="0"
+             data-parentcode="selectparams.parentcode"
+             data-parentname="selectparams.parentname"
+             data-dzzdm="selectparams.szdzzdm" data-userid="selectparams.userid"
+             data-dzzmc="selectparams.szdzzmc"
+             data-showtogglebtn="true"
+             data-onlyshowdw="selectparams.onlyshow_dw"
+             data-zzfbtype="selectparams.zzfbType"
+             data-isunfold="selectparams.isunfold"
+             data-defaultselected="selectparams.defaultselected"
+        ></div>
+        <div class="dj-list-content">
+            <div class="card">
+                <div activate-input activate-select class="header search-header">
+                    <div fold-partytree data-isunfold="selectparams.isunfold"></div>
+                    <div class="search-param-panel">
+                        <div class="search-input">
+                            <form class="form-horizontal">
+                                <div class="row clearfix form-inline">
+                                    <div class="col-lg-2 col-md-2 dj-label">
+                                        <label>当前选中组织</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <div class="input-group input-group-search">
+                                                    <input name="selectdzzmc" type="text" style="min-width: 90px"
+                                                           ng-model="selectparams.selectdzzmc" class="form-control"
+                                                           ng-disabled="true"/>
+                                                    <span class="input-group-addon"
+                                                          ng-click="setisunfold()">选择</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>标题</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="title" class="form-control" type="text" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.title"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>地点</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="location" class="form-control" type="text" ng-keypress="($event.which === 13)?search():0"
+                                                       ng-model="selectparams.location"
+                                                       placeholder=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row clearfix form-inline" ng-show="isShow">
+
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>主题</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <select class="form-control show-tick" ng-change="search()"
+                                                        ng-model="selectparams.subjectType"
+                                                        ng-options="type.dickey as type.dicvalue for type in positionLevelList"
+                                                        class="form-control"
+                                                        name="subjectType">
+                                                    <option value="">--全部--</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>开始时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="beginTime" class="form-control" ng-change="search()"
+                                                       autocomplete="off"
+                                                       autoclose="true"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       ng-model="selectparams.beginTime"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 dj-label">
+                                        <label>结束时间</label>
+                                    </div>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <div class="form-group">
+                                            <div class="form-line">
+                                                <input name="endTime" class="form-control" ng-change="search()"
+                                                       autocomplete="off"
+                                                       autoclose="true"
+                                                       data-date-format="yyyyMMdd" data-date-type="date"
+                                                       ng-model="selectparams.endTime"
+                                                       placeholder="" bs-datepicker/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="search-btn" style="margin-right: 20px;">
+                            <div style="min-width: 13em">
+                                <span class="moreSpan" ng-click="isShowClick()" style='padding-right:1em;cursor:pointer;'>{{moreTxt}}<i class="material-icons" style="position: relative;top:7px;">{{isShow ? 'expand_less' : 'expand_more'}}</i></span>
+                                <button class="btn btn-default1"
+                                        ng-click="search()">查询
+                                </button>
+                                <button  class="btn btn-default1 btn-reset"
+                                        ng-click="reset()">重置
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-btn" style="margin-right: 20px;">
+                        <div style="float: right">
+                            <button class="btn  btn-default1"
+                                    ng-click="export()">导出
+                            </button>
+                            <button class="btn btn-default1" role-permission-code="zzsr.btn.btnAdd"
+                                    ng-click="add()">新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="zero-list-table-panel">
+                        <div class="zero-source-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>所属党组织</th>
+                                    <th>标题</th>
+                                    <th>时间</th>
+                                    <th>地点</th>
+                                   <!-- <th>内容</th>-->
+                                    <th>主题</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList">
+                                    <td scope="row" class="text-center">
+                                        {{selectparams.pagesize*(selectparams.pageindex-1)+$index+1}}
+                                    </td>
+                                    <td>{{it.dzzmc}}</td>
+                                    <td>{{it.title|limitTo:15:0}}<span ng-if="it.title.length>15">...</span></td>
+                                    <td class="text-center">{{it.activitytime|date:'yyyy-MM-dd'}}</td>
+                                    <td>{{it.location|limitTo:15:0}}<span ng-if="it.location.length>15">...</span></td>
+
+                                    <!--<td>{{it.subjectcontent|limitTo:15:0}}<span
+                                            ng-if="it.subjectcontent.length>15">...</span></td>-->
+                                    <td class="text-center">{{it.subjecttypename}}</td>
+
+                                </tr>
+                                <tr ng-if="pageInfo.ptotal==0">
+                                    <td colspan="8" style="text-align:center">暂无数据</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="zero-target-table-div">
+                            <table class="table table-bordered table-striped table-hover js-basic-example dataTable text-nowrap">
+                                <thead>
+                                <th>操作</th>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="it in dataList" zero-table-height>
+                                    <td class="text-center">
+                                        <button
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="detail(it.id)"
+                                                title="查看">
+                                            查看
+                                        </button>
+                                        <button role-permission-code="zzsr.btn.btnEdit"
+                                                class="btn td-btn bg-light-green waves-effect"
+                                                ng-click="edit(it.id)"
+                                                title="修改">
+                                            修改
+                                        </button>
+                                        <button role-permission-code="zzsr.btn.btnDel"
+                                                class="btn td-btn bg-pink waves-effect"
+                                                ng-click="delete(it.id)" title="删除">
+                                            删除
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <pagination data-pageindex="selectparams.pageindex" data-pagesize="selectparams.pagesize"
+                                data-ptotal="pageInfo.ptotal"></pagination>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
